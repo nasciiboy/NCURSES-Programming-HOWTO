@@ -1,0 +1,214 @@
+/* WORG.css inspired by http://orgmode.org/worg/org-tutorials/orgtutorial_dto-es.html */
+:root {
+                         /* COLOR VARS    */
+    --ctitle : #ff4500;  /* #+TITLE:      */
+    --cstart1: #87cefa;  /* *             */
+    --cstart2: #eedd82;  /* **            */
+    --cstart3: #00ffff;  /* ***           */
+    --cstart4: #ff4500;  /* ****          */
+    --cstart5: #98fb98;  /* *****         */
+    --cstart6: #7fffd4;  /* ******        */
+    --cstart7: #b0c4de;  /* *******       */
+    --cstart8: #ffa074;  /* ********      */
+    --ctcode : #b3b3b3;  /* =code=        */
+    --cbcode : #ffffff;  /* block code    */
+    --clink  : #00ffff;  /* link          */
+    --cblinkh: #556b2f;  /* link bg hover */
+    --cflinkh: #ffffff;  /* link fg hover */
+    --cthead : #ff7f24;  /* table head    */
+    --ctbody : #87cefa;  /* table body    */
+}
+
+
+@font-face { font-family: text;           src: url(fonts/dejavu/dejavu-sans/DejaVuSans.ttf); }
+@font-face { font-family: text_bold;      src: url(fonts/dejavu/dejavu-sans/DejaVuSans-Bold.ttf); }
+@font-face { font-family: text_italic;    src: url(fonts/dejavu/dejavu-sans/DejaVuSans-Oblique.ttf); }
+@font-face { font-family: text_verse;     src: url(fonts/dejavu/dejavu-sans/DejaVuSans-Oblique.ttf); }
+@font-face { font-family: title;          src: url(fonts/fira/FiraSansOT-Regular.otf); }
+@font-face { font-family: heatline;       src: url(fonts/resamitz/Resamitz_0048.otf); }
+@font-face { font-family: codetext;       src: url(fonts/noto-serif/NotoSerif-Regular.ttf); }
+@font-face { font-family: codeblock;      src: url(fonts/monospace/Monospace.ttf); }
+@font-face { font-family: description_dt; src: url(fonts/roboto/Roboto-Bold.ttf); }
+@font-face { font-family: description_dd; src: url(fonts/roboto/Roboto-Black.ttf); }
+
+
+html { background: #000; color: #ffffff;
+       margin: 0;
+     }
+
+html body { color: white; font-size: 1.5em; font-family: text; line-height: 1.8em;
+            margin-top: 0; }
+
+html body #content { padding: 2em 2em 2em 2em; }
+
+/* ################# HEATLINES */
+html body #content h1 { color: var( --ctitle  ); font-size:   3em; font-family: title;    } /* TITLE    */
+html body #content h2 { color: var( --cstart1 ); font-size: 1.6em; font-family: heatline; } /* *        */
+html body #content h3 { color: var( --cstart2 ); font-size: 1.5em; font-family: heatline; } /* **       */
+html body #content h4 { color: var( --cstart3 ); font-size: 1.4em; font-family: heatline; } /* ***      */
+html body #content h5 { color: var( --cstart4 ); font-size: 1.3em; font-family: heatline; } /* ****     */
+html body #content h6 { color: var( --cstart5 ); font-size: 1.2em; font-family: heatline; } /* *****    */
+html body #content h7 { color: var( --cstart6 ); font-size: 1.1em; font-family: heatline; } /* ******   */
+html body #content h8 { color: var( --cstart7 ); font-size: 1.1em; font-family: heatline; } /* *******  */
+html body #content h9 { color: var( --cstart8 ); font-size: 1.1em; font-family: heatline; } /* ******** */
+
+html body #content h1 { line-height: 1em;                                                 } /* TITLE    */
+html body #content h2 { padding: 10px 0 10px 0; border-bottom: 1px solid #ddd;            } /* *        */
+html body #content h3 {                                                                   } /* **       */
+html body #content h4 {                                                                   } /* ***      */
+html body #content h5 {                                                                   } /* ****     */
+html body #content h6 {                                                                   } /* *****    */
+html body #content h7 {                                                                   } /* ******   */
+html body #content h8 {                                                                   } /* *******  */
+html body #content h9 {                                                                   } /* ******** */
+
+/* ###################### TEXT */
+html body #content .outline-text-2 { color: #ffffff; border-bottom: 5px solid #ddd; }       /* *        */
+html body #content .outline-text-3 { color: #ffffff; border-bottom: 5px solid #ddd; }       /* **       */
+html body #content .outline-text-4 { color: #ffffff; border-bottom: 5px solid #ddd; }       /* ***      */
+html body #content .outline-text-5 { color: #ffffff; border-bottom: 5px solid #ddd; }       /* ****     */
+html body #content .outline-text-6 { color: #ffffff; border-bottom: 5px solid #ddd; }       /* *****    */
+html body #content .outline-text-7 { color: #ffffff; border-bottom: 5px solid #ddd; }       /* ******   */
+html body #content .outline-text-8 { color: #ffffff; border-bottom: 5px solid #ddd; }       /* *******  */
+html body #content .outline-text-9 { color: #ffffff; border-bottom: 5px solid #ddd; }       /* ******** */
+
+/* ==> ################### TOC */
+html body #content #table-of-contents { background-color: #000; border: 1px solid #CCC;
+                                        position: fixed; right: 0em; top: 0em; overflow: auto;
+                                        max-height: 80%; max-width: 35%; float: right; z-index: 1;
+                                        box-shadow: 0 0 1em #777777; border-bottom-left-radius: 5px; }
+html body #content #table-of-contents h2 { color: #eedd82; background-color: #000;
+                                           font-size: .8em; text-align: center;
+                                           border: 0; padding: 0em 0.5em 0em 0.5em; }
+html body #content #table-of-contents #text-table-of-contents { display: none; text-align: left; }
+html body #content #table-of-contents:hover #text-table-of-contents { display: block; line-height: 1em;  }
+html body #content #table-of-contents:hover #text-table-of-contents ul { padding-left: 1em; padding-right: 1em; }
+html body #content #table-of-contents:hover #text-table-of-contents ul li { list-style: none; }
+html body #content
+#table-of-contents:hover #text-table-of-contents ul li a:hover
+                         { color: #fff; }
+
+/* *            */
+html body #content
+#table-of-contents:hover #text-table-of-contents ul li a
+{ text-decoration: none; color: var( --cstart1 ); font-size: .7em; }
+
+/* **           */
+html body #content
+#table-of-contents:hover #text-table-of-contents ul li ul li a
+                         { color: var( --cstart2 ); font-size: .6em; }
+/* ***          */
+html body #content
+#table-of-contents:hover #text-table-of-contents ul li ul li ul li a
+                         { color: var( --cstart3 ); font-size: .6em; }
+/* ****         */
+html body #content
+#table-of-contents:hover #text-table-of-contents ul li ul li ul li ul li a
+                         { color: var( --cstart4 ); font-size: .6em; }
+/* *****        */
+html body #content
+#table-of-contents:hover #text-table-of-contents ul li ul li ul li ul li ul li a
+                         { color: var( --cstart5 ); font-size: .6em; }
+/* ******       */
+html body #content
+#table-of-contents:hover #text-table-of-contents ul li ul li ul li ul li ul li ul li a
+                         { color: var( --cstart6 ); font-size: .6em; }
+/* *******      */
+html body #content
+#table-of-contents:hover #text-table-of-contents ul li ul li ul li ul li ul li ul li ul li a
+                         { color: var( --cstart7 ); font-size: .6em; }
+/* ********     */
+html body #content
+#table-of-contents:hover #text-table-of-contents ul li ul li ul li ul li ul li ul li ul li ul li a
+                         { color: var( --cstart8 ); font-size: .6em; }
+/* <== ################### TOC */
+
+
+/* ############## CODE IN TEXT */
+html body #content code { background-color: #000; color: var( --ctcode );
+                          font-size: 1em;  font-family: codetext;
+                          padding: 0px 0.2em; }
+
+/* BLOCKS ######## CODE BLOCKS */
+html body #content pre { background-color: #222222; color: var( --cbcode );
+                         font-size: 100%; text-align: left; font-family: codeblock;
+                         padding: 1.2em; overflow: auto; }
+
+html body #content pre.example { background-color: #222222; color: var( --cbcode );
+                                 font-size: 100%; text-align: left; font-family: codeblock;
+                                 padding: 1.2em; overflow: auto; }
+
+/* BLOCKS ############# CENTER */
+html body #content div.center { text-align: center; display: table; margin: 0 auto; }
+
+/* BLOCKS ############## VERSE */
+html body #content .verse { text-align: center; color: #b3b3b3;
+                            font-style: italic; font-family: text_verse; }
+
+/* BLOCKS ############## QUOTE */
+html body #content blockquote { display: table; margin: 0em auto;
+                                line-height: 1em; white-space: pre; }
+html body #content blockquote p { margin: 0; }
+
+/* BLOCKS ############# BLOCK */
+html body #content .block { border: 1px solid #ddd; }
+html body #content .block p { background-color: #000; color: var( --cbcode );
+                              font-size: 100%; white-space: pre; font-family: codeblock;
+                              padding: 0em 0em 1em 1em; border: 0; margin: 0;
+                              overflow: auto;  }
+
+/* BLOCKS ############ ITALIC */
+html body #content .italic { font-family: text_italic; }
+
+/* ############### FONT STYLE */
+html body #content b { font-family: text_bold; }     /* *BOLD*       */
+html body #content i { font-family: text_italic; }   /* /ITALIC/     */
+
+/* #################### LINKS */
+html body #content a { color: var( --clink ); text-decoration: underline; }
+html body #content a:hover { background-color: var( --cblinkh ); color: var( --cflinkh );
+                             text-decoration: none; }
+
+/* ############ FOOTNOTE LINK */
+html body #content a.footref { color: var( --clink ); text-decoration: none; }
+html body #content a.footref:hover { background-color: #556b2f; color: #ffffff; text-decoration: none; }
+html body #content a.footnum { color: var( --clink ); text-decoration: none; }
+html body #content a.footnum:hover { background-color: #556b2f; color: #ffffff; text-decoration: none; }
+
+/* #################### LIST  */
+html body #content ul.org-ul li { color: #fff; font-size: 1em;
+                                  list-style-type: square; }
+html body #content ul.org-ul li b { font-weight: bold; }
+html body #content ul.org-ul li p { color: #fff; font-size: 1em; }
+
+/* ############### DESCRIPTION */
+html body #content dl.org-dl { padding-bottom: 2em; }         /* body           */
+html body #content dl.org-dl dt { color: #daa520;             /* description dt */
+                                  font-size: 1.2em; font-family: description_dt;
+                                  margin-left: 0.6em; }
+html body #content dl.org-dl dd { color: #ffffff;             /* description dd */
+                                  font-size: 1.0em; font-family: description_dd; font-style: bold;
+                                  margin-left: 0.6em; }
+
+/* ####################### IMG */
+div.figure { text-align: center; }
+html body #content img { border: none; max-width: 100%;
+                         filter: grayscale( 100% ); filter: invert(100%); }
+html body #content img:hover { filter: none;
+                           /*  filter: grayscale(50%);
+                               filter: sepia(100%);
+                               filter: blur(10px);
+                               filter: brightness(0.5);
+                               filter: contrast(200%);
+                               filter: drop-shadow(16px 16px 10px black );
+                               filter: hue-rotate(90deg);
+                               filter: invert(100%);
+                               filter: opacity(50%);
+                               filter: saturate(200%); */ }
+
+/* ##################### TABLE */
+html body #content table { text-align: left; }
+html body #content table thead { border: none; color: var( --cthead ); background: #000; }
+html body #content table thead tr th { }
+html body #content table tbody { border-bottom: 2px solid #fff; color: var( --ctbody ); }
+html body #content table tbody tr td { }
