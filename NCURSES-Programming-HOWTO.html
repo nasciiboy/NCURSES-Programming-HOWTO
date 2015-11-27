@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>NCURSES Programming HOWTO</title>
-<!-- 2015-11-19 jue 15:07 -->
+<!-- 2015-11-27 vie 15:28 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="ppadala" />
@@ -22,7 +22,12 @@
 <ul>
 <li><a href="#sec-2-1">1.1. What is NCURSES?</a></li>
 <li><a href="#sec-2-2">1.2. What we can do with NCURSES</a></li>
-<li><a href="#sec-2-3">1.3. Where to get it</a></li>
+<li><a href="#sec-2-3">1.3. Where to get it</a>
+<ul>
+<li><a href="#sec-2-3-1"><i>Compiling the package</i></a></li>
+<li><a href="#sec-2-3-2"><i>Using the RPM</i></a></li>
+</ul>
+</li>
 <li><a href="#sec-2-4">1.4. Purpose/Scope of the document</a></li>
 <li><a href="#sec-2-5">1.5. About the Programs</a></li>
 <li><a href="#sec-2-6">1.6. Other Formats of the document</a>
@@ -352,7 +357,7 @@ terminals could be configured by sending a series of bytes. All the
 capabilities (such as moving the cursor to a new location, erasing
 part of the screen, scrolling the screen, changing modes etc.) of
 terminals could be accessed through these series of bytes. These
-control seeuqnces are usually called escape sequences, because they
+control sequences are usually called escape sequences, because they
 start with an escape(0x1B) character. Even today, with proper
 emulation, we can send escape sequences to the emulator and achieve
 the same effect on a terminal window.
@@ -469,11 +474,11 @@ be rearing to get started. NCURSES is usually shipped with your
 installation. In case you don't have the library or want to compile
 it on your own, read on.
 </p>
+</div>
 
-<p>
-<i>Compiling the package</i>
-</p>
-
+<div id="outline-container-sec-2-3-1" class="outline-4">
+<h4 id="sec-2-3-1"><i>Compiling the package</i></h4>
+<div class="outline-text-4" id="text-2-3-1">
 <p>
 NCURSES can be obtained from
 <a href="ftp://ftp.gnu.org/pub/gnu/ncurses/ncurses.tar.gz">ftp://ftp.gnu.org/pub/gnu/ncurses/ncurses.tar.gz</a> or any of the ftp
@@ -496,11 +501,12 @@ su root                                 # become root
 make install                            # install it
 </pre>
 </div>
+</div>
+</div>
 
-<p>
-<i>Using the RPM</i>
-</p>
-
+<div id="outline-container-sec-2-3-2" class="outline-4">
+<h4 id="sec-2-3-2"><i>Using the RPM</i></h4>
+<div class="outline-text-4" id="text-2-3-2">
 <p>
 NCURSES RPM can be found and downloaded from <a href="http://rpmfind.net">http://rpmfind.net</a>.
 The RPM can be installed with the following command after becoming
@@ -511,6 +517,7 @@ root.
 
 <pre class="src src-sh">rpm -i &lt;downloaded rpm&gt;
 </pre>
+</div>
 </div>
 </div>
 </div>
@@ -537,94 +544,111 @@ All the programs in the document are available in zipped form <a href="http://ww
 Unzip and untar it. The directory structure looks like this.
 </p>
 
-<pre class="example">
-ncurses
-   |
-   |----&gt; JustForFun     -- just for fun programs
-   |----&gt; basics         -- basic programs
-   |----&gt; demo           -- output files go into this directory after make
-   |          |
-   |          |----&gt; exe -- exe files of all example programs
-   |----&gt; forms          -- programs related to form library
-   |----&gt; menus          -- programs related to menus library
-   |----&gt; panels         -- programs related to panels library
-   |----&gt; perl           -- perl equivalents of the examples (contributed
-   |                            by Anuradha Ratnaweera)
-   |----&gt; Makefile       -- the top level Makefile
-   |----&gt; README         -- the top level README file. contains instructions
-   |----&gt; COPYING        -- copyright notice
-</pre>
+<div class="block">
+<p>
+<a href="ncurses_programs/">ncurses</a>
+   ┬
+   ├────&gt; <a href="ncurses_programs/JustForFun">JustForFun</a>     – just for fun programs
+   ├────&gt; <a href="ncurses_programs/basics">basics</a>         – basic programs
+   ├────&gt; <a href="ncurses_programs/demo">demo</a>           – output files go into this directory after make
+   │        ┬
+   │        └──────&gt; <a href="ncurses_programs/demo/exe">exe</a> – exe files of all example programs
+   ├────&gt; <a href="ncurses_programs/forms">forms</a>          – programs related to form library
+   ├────&gt; <a href="ncurses_programs/menus">menus</a>          – programs related to menus library
+   ├────&gt; <a href="ncurses_programs/panels">panels</a>         – programs related to panels library
+   ├────&gt; <a href="ncurses_programs/perl">perl</a>           – perl equivalents of the examples (contributed
+   │                            by Anuradha Ratnaweera)
+   ├────&gt; <a href="ncurses_programs/Makefile">Makefile</a>       – the top level Makefile
+   ├────&gt; <a href="ncurses_programs/README">README</a>         – the top level README file. contains instructions
+   └────&gt; <a href="ncurses_programs/COPYING">COPYING</a>        – copyright notice
+</p>
+
+</div>
 
 <p>
 The individual directories contain the following files.
 </p>
 
-<pre class="example">
+<div class="block">
+<p>
 Description of files in each directory
---------------------------------------
-JustForFun
-    |
-    |----&gt; hanoi.c   -- The Towers of Hanoi Solver
-    |----&gt; life.c    -- The Game of Life demo
-    |----&gt; magic.c   -- An Odd Order Magic Square builder
-    |----&gt; queens.c  -- The famous N-Queens Solver
-    |----&gt; shuffle.c -- A fun game, if you have time to kill
-    |----&gt; tt.c      -- A very trivial typing tutor
+––––––––––––––––––––––––––––––––––––––
+<a href="ncurses_programs/JustForFun">JustForFun</a>
+    ┬
+    ├────&gt; <a href="ncurses_programs/JustForFun/hanoi.c"><code>hanoi.c</code></a>   – The Towers of Hanoi Solver
+    ├────&gt; <a href="ncurses_programs/JustForFun/life.c"><code>life.c</code></a>    – The Game of Life demo
+    ├────&gt; <a href="ncurses_programs/JustForFun/magic.c"><code>magic.c</code></a>   – An Odd Order Magic Square builder
+    ├────&gt; <a href="ncurses_programs/JustForFun/queens.c"><code>queens.c</code></a>  – The famous N-Queens Solver
+    ├────&gt; <a href="ncurses_programs/JustForFun/shuffle.c"><code>shuffle.c</code></a> – A fun game, if you have time to kill
+    └────&gt; <a href="ncurses_programs/JustForFun/tt.c"><code>tt.c</code></a>      – A very trivial typing tutor
+</p>
 
-  basics
-    |
-    |----&gt; acs_vars.c            -- ACS_ variables example
-    |----&gt; hello_world.c         -- Simple "Hello World" Program
-    |----&gt; init_func_example.c   -- Initialization functions example
-    |----&gt; key_code.c            -- Shows the scan code of the key pressed
-    |----&gt; mouse_menu.c          -- A menu accessible by mouse
-    |----&gt; other_border.c        -- Shows usage of other border functions apa
-    |                               -- rt from box()
-    |----&gt; printw_example.c      -- A very simple printw() example
-    |----&gt; scanw_example.c       -- A very simple getstr() example
-    |----&gt; simple_attr.c         -- A program that can print a c file with
-    |                               -- comments in attribute
-    |----&gt; simple_color.c        -- A simple example demonstrating colors
-    |----&gt; simple_key.c          -- A menu accessible with keyboard UP, DOWN
-    |                               -- arrows
-    |----&gt; temp_leave.c          -- Demonstrates temporarily leaving curses mode
-    |----&gt; win_border.c          -- Shows Creation of windows and borders
-    |----&gt; with_chgat.c          -- chgat() usage example
+<p>
+<a href="ncurses_programs/basics">basics</a>
+  ┬
+  ├────&gt; <a href="ncurses_programs/basics/acs_vars.c"><code>acs_vars.c</code></a>            – ACS_ variables example
+  ├────&gt; <a href="ncurses_programs/basics/hello_world.c"><code>hello_world.c</code></a>         – Simple "Hello World" Program
+  ├────&gt; <a href="ncurses_programs/basics/init_func_example.c"><code>init_func_example.c</code></a>   – Initialization functions example
+  ├────&gt; <a href="ncurses_programs/basics/key_code.c"><code>key_code.c</code></a>            – Shows the scan code of the key pressed
+  ├────&gt; <a href="ncurses_programs/basics/mouse_menu.c"><code>mouse_menu.c</code></a>          – A menu accessible by mouse
+  ├────&gt; <a href="ncurses_programs/basics/other_border.c"><code>other_border.c</code></a>        – Shows usage of other border functions apa
+  │                                 – rt from box()
+  ├────&gt; <a href="ncurses_programs/basics/printw_example.c"><code>printw_example.c</code></a>      – A very simple printw() example
+  ├────&gt; <a href="ncurses_programs/basics/scanw_example.c"><code>scanw_example.c</code></a>       – A very simple getstr() example
+  ├────&gt; <a href="ncurses_programs/basics/simple_attr.c"><code>simple_attr.c</code></a>         – A program that can print a c file with
+  │                                 – comments in attribute
+  ├────&gt; <a href="ncurses_programs/basics/simple_color.c"><code>simple_color.c</code></a>        – A simple example demonstrating colors
+  ├────&gt; <a href="ncurses_programs/basics/simple_key.c"><code>simple_key.c</code></a>          – A menu accessible with keyboard UP, DOWN
+  │                                 – arrows
+  ├────&gt; <a href="ncurses_programs/basics/temp_leave.c"><code>temp_leave.c</code></a>          – Demonstrates temporarily leaving curses mode
+  ├────&gt; <a href="ncurses_programs/basics/win_border.c"><code>win_border.c</code></a>          – Shows Creation of windows and borders
+  └────&gt; <a href="ncurses_programs/basics/with_chgat.c"><code>with_chgat.c</code></a>          – chgat() usage example
+</p>
 
-  forms
-    |
-    |----&gt; form_attrib.c     -- Usage of field attributes
-    |----&gt; form_options.c    -- Usage of field options
-    |----&gt; form_simple.c     -- A simple form example
-    |----&gt; form_win.c        -- Demo of windows associated with forms
+<p>
+<a href="ncurses_programs/forms">forms</a>
+  ┬
+  ├────&gt; <a href="ncurses_programs/forms/form_attrib.c"><code>form_attrib.c</code></a>     – Usage of field attributes
+  ├────&gt; <a href="ncurses_programs/forms/form_options.c"><code>form_options.c</code></a>    – Usage of field options
+  ├────&gt; <a href="ncurses_programs/forms/form_simple.c"><code>form_simple.c</code></a>     – A simple form example
+  └────&gt; <a href="ncurses_programs/forms/form_win.c"><code>form_win.c</code></a>        – Demo of windows associated with forms
+</p>
 
-  menus
-    |
-    |----&gt; menu_attrib.c     -- Usage of menu attributes
-    |----&gt; menu_item_data.c  -- Usage of item_name() etc.. functions
-    |----&gt; menu_multi_column.c    -- Creates multi columnar menus
-    |----&gt; menu_scroll.c     -- Demonstrates scrolling capability of menus
-    |----&gt; menu_simple.c     -- A simple menu accessed by arrow keys
-    |----&gt; menu_toggle.c     -- Creates multi valued menus and explains
-    |                           -- REQ_TOGGLE_ITEM
-    |----&gt; menu_userptr.c    -- Usage of user pointer
-    |----&gt; menu_win.c        -- Demo of windows associated with menus
+<p>
+<a href="ncurses_programs/menus">menus</a>
+  ┬
+  ├────&gt; <a href="ncurses_programs/menus/menu_attrib.c"><code>menu_attrib.c</code></a>     – Usage of menu attributes
+  ├────&gt; <a href="ncurses_programs/menus/menu_item_data.c"><code>menu_item_data.c</code></a>  – Usage of <code>item_name()</code> etc.. functions
+  ├────&gt; <a href="ncurses_programs/menus/menu_multi_column.c"><code>menu_multi_column.c</code></a>    – Creates multi columnar menus
+  ├────&gt; <a href="ncurses_programs/menus/menu_scroll.c"><code>menu_scroll.c</code></a>     – Demonstrates scrolling capability of menus
+  ├────&gt; <a href="ncurses_programs/menus/menu_simple.c"><code>menu_simple.c</code></a>     – A simple menu accessed by arrow keys
+  ├────&gt; <a href="ncurses_programs/menus/menu_toggle.c"><code>menu_toggle.c</code></a>     – Creates multi valued menus and explains
+  │                               – <code>REQ_TOGGLE_ITEM</code>
+  ├────&gt; <a href="ncurses_programs/menus/menu_userptr.c"><code>menu_userptr.c</code></a>    – Usage of user pointer
+  └────&gt; <a href="ncurses_programs/menus/menu_win.c"><code>menu_win.c</code></a>        – Demo of windows associated with menus
+</p>
 
-  panels
-    |
-    |----&gt; panel_browse.c    -- Panel browsing through tab. Usage of user
-    |                           -- pointer
-    |----&gt; panel_hide.c      -- Hiding and Un hiding of panels
-    |----&gt; panel_resize.c    -- Moving and resizing of panels
-    |----&gt; panel_simple.c    -- A simple panel example
+<p>
+<a href="ncurses_programs/panels">panels</a>
+  ┬
+  ├────&gt; <a href="ncurses_programs/panels/panel_browse.c"><code>panel_browse.c</code></a>    – Panel browsing through tab. Usage of user
+  │                             – pointer
+  ├────&gt; <a href="ncurses_programs/panels/panel_hide.c"><code>panel_hide.c</code></a>      – Hiding and Un hiding of panels
+  ├────&gt; <a href="ncurses_programs/panels/panel_resize.c"><code>panel_resize.c</code></a>    – Moving and resizing of panels
+  └────&gt; <a href="ncurses_programs/panels/panel_simple.c"><code>panel_simple.c</code></a>    – A simple panel example
+</p>
 
-  perl
-    |----&gt; 01-10.pl          -- Perl equivalents of first ten example programs
-</pre>
+<p>
+<a href="ncurses_programs/perl">perl</a>
+  ┬
+  └────&gt; <a href="ncurses_programs/perl/"><code>01-10.pl</code></a>          – Perl equivalents of first ten example programs
+</p>
+
+</div>
 
 <p>
 There is a top level Makefile included in the main directory. It
-builds all the files and puts the ready-to-use exes in demo/exe
+builds all the files and puts the ready-to-use exes in <a href="ncurses_programs/demo/exe">demo/exe</a>
 directory. You can also do selective make by going into the
 corresponding directory.  Each directory contains a README file
 explaining the purpose of each c file in the directory.
@@ -799,10 +823,6 @@ preferred.
 <li>Add debug info. <code>_tracef</code>, <code>_tracemouse</code> stuff.
 </li>
 
-<li>Accessing termcap, terminfo using functions provided by ncurses
-package.
-</li>
-
 <li>Working on two terminals simultaneously.
 </li>
 
@@ -934,7 +954,7 @@ memory for curses library's data structures.
 <p>
 After this is done, we can do a variety of initializations to
 customize our curses settings. These details will be explained
-<i>later</i>.
+<a href="#INIT">later</a>.
 </p>
 </div>
 </div>
@@ -943,34 +963,34 @@ customize our curses settings. These details will be explained
 <h4 id="sec-3-2-2">2.2.2. The mysterious refresh()</h4>
 <div class="outline-text-4" id="text-3-2-2">
 <p>
-The next line printw prints the string "Hello World !!!" on to the
-screen. This function is analogous to normal printf in all
-respects except that it prints the data on a window called stdscr
-at the current (y,x) co-ordinates. Since our present co-ordinates
-are at 0,0 the string is printed at the left hand corner of the
-window.
+The next line <code>printw</code> prints the string "Hello World !!!" on to
+the screen. This function is analogous to normal <code>printf</code> in all
+respects except that it prints the data on a window called
+<code>stdscr</code> at the current (y,x) co-ordinates. Since our present
+co-ordinates are at 0,0 the string is printed at the left hand
+corner of the window.
 </p>
 
 <p>
-This brings us to that mysterious refresh(). Well, when we called
-printw the data is actually written to an imaginary window, which
-is not updated on the screen yet. The job of printw is to update a
-few flags and data structures and write the data to a buffer
-corresponding to stdscr. In order to show it on the screen, we
-need to call refresh() and tell the curses system to dump the
-contents on the screen.
+This brings us to that mysterious <code>refresh()</code>. Well, when we
+called <code>printw</code> the data is actually written to an imaginary
+window, which is not updated on the screen yet. The job of
+<code>printw</code> is to update a few flags and data structures and write
+the data to a buffer corresponding to <code>stdscr</code>. In order to show
+it on the screen, we need to call <code>refresh()</code> and tell the curses
+system to dump the contents on the screen.
 </p>
 
 <p>
 The philosophy behind all this is to allow the programmer to do
 multiple updates on the imaginary screen or windows and do a
-refresh once all his screen update is done. refresh() checks the
+refresh once all his screen update is done. <code>refresh()</code> checks the
 window and updates only the portion which has been changed. This
 improves performance and offers greater flexibility too. But, it
 is sometimes frustrating to beginners.  A common mistake committed
-by beginners is to forget to call refresh() after they did some
-update through printw() class of functions. I still forget to add
-it sometimes :-)
+by beginners is to forget to call <code>refresh()</code> after they did some
+update through <code>printw()</code> class of functions. I still forget to
+add it sometimes :-)
 </p>
 </div>
 </div>
@@ -980,10 +1000,10 @@ it sometimes :-)
 <div class="outline-text-4" id="text-3-2-3">
 <p>
 And finally don't forget to end the curses mode. Otherwise your
-terminal might behave strangely after the program quits. endwin()
-frees the memory taken by curses sub-system and its data
-structures and puts the terminal in normal mode. This function
-must be called after you are done with the curses mode.
+terminal might behave strangely after the program quits.
+<code>endwin()</code> frees the memory taken by curses sub-system and its
+data structures and puts the terminal in normal mode. This
+function must be called after you are done with the curses mode.
 </p>
 </div>
 </div>
@@ -1155,8 +1175,8 @@ This program is self-explanatory. But I used functions which aren't
 explained yet. The function <code>getch()</code> is used to get a character
 from user. It is equivalent to normal <code>getchar()</code> except that we
 can disable the line buffering to avoid &lt;enter&gt; after input. Look
-for more about =getch()=and reading keys in the <i>key management
-section</i>. The functions attron and attroff are used to switch some
+for more about =getch()=and reading keys in the <a href="#KEYS">key management
+section</a>. The functions attron and attroff are used to switch some
 attributes on and off respectively. In the example I used them to
 print the character in bold. These functions are explained in
 detail later.
@@ -1171,7 +1191,7 @@ detail later.
 <p>
 Before we plunge into the myriad ncurses functions, let me clear few
 things about windows. Windows are explained in detail in following
-<i>sections</i>
+<a href="#WINDOWS">sections</a>
 </p>
 
 <p>
@@ -1202,7 +1222,7 @@ position. Similarly the call to refresh(), works on stdscr only.
 </p>
 
 <p>
-Say you have created <i>windows</i> then you have to call a function with a
+Say you have created <a href="#WINDOWS">windows</a> then you have to call a function with a
 'w' added to the usual function.
 </p>
 
@@ -1276,7 +1296,7 @@ These functions put a single character into the current cursor
 location and advance the position of the cursor. You can give the
 character to be printed but they usually are used to print a
 character with some attributes. Attributes are explained in detail
-in later <i>sections</i> of the document. If a character is associated
+in later <a href="#ATTRIB">sections</a> of the document. If a character is associated
 with an attribute(bold, reverse video etc.), when curses prints the
 character, it is printed in that attribute.
 </p>
@@ -1300,7 +1320,7 @@ type char) bold and underlined, you would call addch() as below.
 </li>
 
 <li>By using functions like <code>attrset(),attron(),attroff()</code>. These
-functions are explained in the <i>Attributes</i> section.  Briefly, they
+functions are explained in the <a href="#ATTRIB">Attributes</a> section.  Briefly, they
 manipulate the current attributes of the given window.  Once set,
 the character printed in the window are associated with the
 attributes until it is turned off.
@@ -1483,7 +1503,7 @@ arguments. A common mistake by beginners is to pass x,y in that
 order.  If you are doing too many manipulations of (y,x)
 co-ordinates, think of dividing the screen into windows and
 manipulate each one separately.  Windows are explained in the
-<i>windows</i> section.
+<a href="#WINDOWS">windows</a> section.
 </p>
 </div>
 </div>
@@ -1524,8 +1544,8 @@ your program. Another widely used function is noecho(). As the name
 suggests, when this function is set (used), the characters that are
 keyed in by the user will not show up on the screen. The two
 functions cbreak() and noecho() are typical examples of key
-management. Functions of this genre are explained in the <i>key
-management section</i>.
+management. Functions of this genre are explained in the <a href="#KEYS">key
+management section</a>.
 </p>
 </div>
 </div>
@@ -1754,7 +1774,7 @@ COLOR_PAIR(n)   Color-pair number n
 
 <p>
 The last one is the most colorful one :-) Colors are explained in
-the <i>next sections</i>.
+the <a href="#color">next sections</a>.
 </p>
 
 <p>
@@ -4659,7 +4679,6 @@ int main()
 </pre>
 </div>
 
-
 <p>
 Watch the function call to <code>set_menu_format()</code>. It specifies the
 number of columns to be 3, thus displaying 3 items per row. We have
@@ -5716,7 +5735,7 @@ not. The following functions can assist in those operations.
 <div class="org-src-container">
 
 <pre class="src src-c">int set_field_status(FIELD *field,      /* field to alter */
-                     int status);         /* status to set */
+                     int status);       /* status to set  */
 
 int field_status(FIELD *field);         /* fetch status of field */
 </pre>

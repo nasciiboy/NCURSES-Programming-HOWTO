@@ -77,7 +77,7 @@
   capabilities (such as moving the cursor to a new location, erasing
   part of the screen, scrolling the screen, changing modes etc.) of
   terminals could be accessed through these series of bytes. These
-  control seeuqnces are usually called escape sequences, because they
+  control sequences are usually called escape sequences, because they
   start with an escape(0x1B) character. Even today, with proper
   emulation, we can send escape sequences to the emulator and achieve
   the same effect on a terminal window.
@@ -162,34 +162,34 @@
    installation. In case you don't have the library or want to compile
    it on your own, read on.
 
-   /Compiling the package/
+*** /Compiling the package/
 
-   NCURSES can be obtained from
-   [[ftp://ftp.gnu.org/pub/gnu/ncurses/ncurses.tar.gz]] or any of the ftp
-   sites mentioned in [[http://www.gnu.org/order/ftp.html]].
+    NCURSES can be obtained from
+    [[ftp://ftp.gnu.org/pub/gnu/ncurses/ncurses.tar.gz]] or any of the ftp
+    sites mentioned in [[http://www.gnu.org/order/ftp.html]].
 
-   Read the README and INSTALL files for details on to how to install
-   it.  It usually involves the following operations.
+    Read the README and INSTALL files for details on to how to install
+    it.  It usually involves the following operations.
 
-   #+BEGIN_SRC sh
-     tar zxvf ncurses<version>.tar.gz  # unzip and untar the archive
-     cd ncurses<version>               # cd to the directory
-     ./configure                             # configure the build according to your
-                                             # environment
-     make                                    # make it
-     su root                                 # become root
-     make install                            # install it
-   #+END_SRC
+    #+BEGIN_SRC sh
+      tar zxvf ncurses<version>.tar.gz  # unzip and untar the archive
+      cd ncurses<version>               # cd to the directory
+      ./configure                             # configure the build according to your
+                                              # environment
+      make                                    # make it
+      su root                                 # become root
+      make install                            # install it
+    #+END_SRC
 
-   /Using the RPM/
+*** /Using the RPM/
 
-   NCURSES RPM can be found and downloaded from [[http://rpmfind.net]].
-   The RPM can be installed with the following command after becoming
-   root.
+    NCURSES RPM can be found and downloaded from [[http://rpmfind.net]].
+    The RPM can be installed with the following command after becoming
+    root.
 
-   #+BEGIN_SRC sh
-     rpm -i <downloaded rpm>
-   #+END_SRC
+    #+BEGIN_SRC sh
+      rpm -i <downloaded rpm>
+    #+END_SRC
 
 ** 1.4. Purpose/Scope of the document
 
@@ -205,91 +205,92 @@
    All the programs in the document are available in zipped form [[http://www.tldp.org/HOWTO/NCURSES-Programming-HOWTO/ncurses_programs.tar.gz][here]].
    Unzip and untar it. The directory structure looks like this.
 
-   #+BEGIN_EXAMPLE
-     ncurses
-        |
-        |----> JustForFun     -- just for fun programs
-        |----> basics         -- basic programs
-        |----> demo           -- output files go into this directory after make
-        |          |
-        |          |----> exe -- exe files of all example programs
-        |----> forms          -- programs related to form library
-        |----> menus          -- programs related to menus library
-        |----> panels         -- programs related to panels library
-        |----> perl           -- perl equivalents of the examples (contributed
-        |                            by Anuradha Ratnaweera)
-        |----> Makefile       -- the top level Makefile
-        |----> README         -- the top level README file. contains instructions
-        |----> COPYING        -- copyright notice
-   #+END_EXAMPLE
+   #+BEGIN_BLOCK
+     [[file:ncurses_programs/][ncurses]]
+        ┬
+        ├────> [[file:ncurses_programs/JustForFun][JustForFun]]     – just for fun programs
+        ├────> [[file:ncurses_programs/basics][basics]]         – basic programs
+        ├────> [[file:ncurses_programs/demo][demo]]           – output files go into this directory after make
+        │        ┬
+        │        └──────> [[file:ncurses_programs/demo/exe][exe]] – exe files of all example programs
+        ├────> [[file:ncurses_programs/forms][forms]]          – programs related to form library
+        ├────> [[file:ncurses_programs/menus][menus]]          – programs related to menus library
+        ├────> [[file:ncurses_programs/panels][panels]]         – programs related to panels library
+        ├────> [[file:ncurses_programs/perl][perl]]           – perl equivalents of the examples (contributed
+        │                            by Anuradha Ratnaweera)
+        ├────> [[file:ncurses_programs/Makefile][Makefile]]       – the top level Makefile
+        ├────> [[file:ncurses_programs/README][README]]         – the top level README file. contains instructions
+        └────> [[file:ncurses_programs/COPYING][COPYING]]        – copyright notice
+   #+END_BLOCK
 
    The individual directories contain the following files.
 
-   #+BEGIN_EXAMPLE
+   #+BEGIN_BLOCK
      Description of files in each directory
-     --------------------------------------
-     JustForFun
-         |
-         |----> hanoi.c   -- The Towers of Hanoi Solver
-         |----> life.c    -- The Game of Life demo
-         |----> magic.c   -- An Odd Order Magic Square builder
-         |----> queens.c  -- The famous N-Queens Solver
-         |----> shuffle.c -- A fun game, if you have time to kill
-         |----> tt.c      -- A very trivial typing tutor
+     ––––––––––––––––––––––––––––––––––––––
+     [[file:ncurses_programs/JustForFun][JustForFun]]
+         ┬
+         ├────> [[file:ncurses_programs/JustForFun/hanoi.c][=hanoi.c=]]   – The Towers of Hanoi Solver
+         ├────> [[file:ncurses_programs/JustForFun/life.c][=life.c=]]    – The Game of Life demo
+         ├────> [[file:ncurses_programs/JustForFun/magic.c][=magic.c=]]   – An Odd Order Magic Square builder
+         ├────> [[file:ncurses_programs/JustForFun/queens.c][=queens.c=]]  – The famous N-Queens Solver
+         ├────> [[file:ncurses_programs/JustForFun/shuffle.c][=shuffle.c=]] – A fun game, if you have time to kill
+         └────> [[file:ncurses_programs/JustForFun/tt.c][=tt.c=]]      – A very trivial typing tutor
 
-       basics
-         |
-         |----> acs_vars.c            -- ACS_ variables example
-         |----> hello_world.c         -- Simple "Hello World" Program
-         |----> init_func_example.c   -- Initialization functions example
-         |----> key_code.c            -- Shows the scan code of the key pressed
-         |----> mouse_menu.c          -- A menu accessible by mouse
-         |----> other_border.c        -- Shows usage of other border functions apa
-         |                               -- rt from box()
-         |----> printw_example.c      -- A very simple printw() example
-         |----> scanw_example.c       -- A very simple getstr() example
-         |----> simple_attr.c         -- A program that can print a c file with
-         |                               -- comments in attribute
-         |----> simple_color.c        -- A simple example demonstrating colors
-         |----> simple_key.c          -- A menu accessible with keyboard UP, DOWN
-         |                               -- arrows
-         |----> temp_leave.c          -- Demonstrates temporarily leaving curses mode
-         |----> win_border.c          -- Shows Creation of windows and borders
-         |----> with_chgat.c          -- chgat() usage example
+       [[file:ncurses_programs/basics][basics]]
+         ┬
+         ├────> [[file:ncurses_programs/basics/acs_vars.c][=acs_vars.c=]]            – ACS_ variables example
+         ├────> [[file:ncurses_programs/basics/hello_world.c][=hello_world.c=]]         – Simple "Hello World" Program
+         ├────> [[file:ncurses_programs/basics/init_func_example.c][=init_func_example.c=]]   – Initialization functions example
+         ├────> [[file:ncurses_programs/basics/key_code.c][=key_code.c=]]            – Shows the scan code of the key pressed
+         ├────> [[file:ncurses_programs/basics/mouse_menu.c][=mouse_menu.c=]]          – A menu accessible by mouse
+         ├────> [[file:ncurses_programs/basics/other_border.c][=other_border.c=]]        – Shows usage of other border functions apa
+         │                                 – rt from box()
+         ├────> [[file:ncurses_programs/basics/printw_example.c][=printw_example.c=]]      – A very simple printw() example
+         ├────> [[file:ncurses_programs/basics/scanw_example.c][=scanw_example.c=]]       – A very simple getstr() example
+         ├────> [[file:ncurses_programs/basics/simple_attr.c][=simple_attr.c=]]         – A program that can print a c file with
+         │                                 – comments in attribute
+         ├────> [[file:ncurses_programs/basics/simple_color.c][=simple_color.c=]]        – A simple example demonstrating colors
+         ├────> [[file:ncurses_programs/basics/simple_key.c][=simple_key.c=]]          – A menu accessible with keyboard UP, DOWN
+         │                                 – arrows
+         ├────> [[file:ncurses_programs/basics/temp_leave.c][=temp_leave.c=]]          – Demonstrates temporarily leaving curses mode
+         ├────> [[file:ncurses_programs/basics/win_border.c][=win_border.c=]]          – Shows Creation of windows and borders
+         └────> [[file:ncurses_programs/basics/with_chgat.c][=with_chgat.c=]]          – chgat() usage example
 
-       forms
-         |
-         |----> form_attrib.c     -- Usage of field attributes
-         |----> form_options.c    -- Usage of field options
-         |----> form_simple.c     -- A simple form example
-         |----> form_win.c        -- Demo of windows associated with forms
+       [[file:ncurses_programs/forms][forms]]
+         ┬
+         ├────> [[file:ncurses_programs/forms/form_attrib.c][=form_attrib.c=]]     – Usage of field attributes
+         ├────> [[file:ncurses_programs/forms/form_options.c][=form_options.c=]]    – Usage of field options
+         ├────> [[file:ncurses_programs/forms/form_simple.c][=form_simple.c=]]     – A simple form example
+         └────> [[file:ncurses_programs/forms/form_win.c][=form_win.c=]]        – Demo of windows associated with forms
 
-       menus
-         |
-         |----> menu_attrib.c     -- Usage of menu attributes
-         |----> menu_item_data.c  -- Usage of item_name() etc.. functions
-         |----> menu_multi_column.c    -- Creates multi columnar menus
-         |----> menu_scroll.c     -- Demonstrates scrolling capability of menus
-         |----> menu_simple.c     -- A simple menu accessed by arrow keys
-         |----> menu_toggle.c     -- Creates multi valued menus and explains
-         |                           -- REQ_TOGGLE_ITEM
-         |----> menu_userptr.c    -- Usage of user pointer
-         |----> menu_win.c        -- Demo of windows associated with menus
+       [[file:ncurses_programs/menus][menus]]
+         ┬
+         ├────> [[file:ncurses_programs/menus/menu_attrib.c][=menu_attrib.c=]]     – Usage of menu attributes
+         ├────> [[file:ncurses_programs/menus/menu_item_data.c][=menu_item_data.c=]]  – Usage of =item_name()= etc.. functions
+         ├────> [[file:ncurses_programs/menus/menu_multi_column.c][=menu_multi_column.c=]]    – Creates multi columnar menus
+         ├────> [[file:ncurses_programs/menus/menu_scroll.c][=menu_scroll.c=]]     – Demonstrates scrolling capability of menus
+         ├────> [[file:ncurses_programs/menus/menu_simple.c][=menu_simple.c=]]     – A simple menu accessed by arrow keys
+         ├────> [[file:ncurses_programs/menus/menu_toggle.c][=menu_toggle.c=]]     – Creates multi valued menus and explains
+         │                               – =REQ_TOGGLE_ITEM=
+         ├────> [[file:ncurses_programs/menus/menu_userptr.c][=menu_userptr.c=]]    – Usage of user pointer
+         └────> [[file:ncurses_programs/menus/menu_win.c][=menu_win.c=]]        – Demo of windows associated with menus
 
-       panels
-         |
-         |----> panel_browse.c    -- Panel browsing through tab. Usage of user
-         |                           -- pointer
-         |----> panel_hide.c      -- Hiding and Un hiding of panels
-         |----> panel_resize.c    -- Moving and resizing of panels
-         |----> panel_simple.c    -- A simple panel example
+       [[file:ncurses_programs/panels][panels]]
+         ┬
+         ├────> [[file:ncurses_programs/panels/panel_browse.c][=panel_browse.c=]]    – Panel browsing through tab. Usage of user
+         │                             – pointer
+         ├────> [[file:ncurses_programs/panels/panel_hide.c][=panel_hide.c=]]      – Hiding and Un hiding of panels
+         ├────> [[file:ncurses_programs/panels/panel_resize.c][=panel_resize.c=]]    – Moving and resizing of panels
+         └────> [[file:ncurses_programs/panels/panel_simple.c][=panel_simple.c=]]    – A simple panel example
 
-       perl
-         |----> 01-10.pl          -- Perl equivalents of first ten example programs
-   #+END_EXAMPLE
+       [[file:ncurses_programs/perl][perl]]
+         ┬
+         └────> [[file:ncurses_programs/perl/][=01-10.pl=]]          – Perl equivalents of first ten example programs
+   #+END_BLOCK
 
    There is a top level Makefile included in the main directory. It
-   builds all the files and puts the ready-to-use exes in demo/exe
+   builds all the files and puts the ready-to-use exes in [[file:ncurses_programs/demo/exe][demo/exe]]
    directory. You can also do selective make by going into the
    corresponding directory.  Each directory contains a README file
    explaining the purpose of each c file in the directory.
@@ -396,9 +397,6 @@
 
    - Add debug info. =_tracef=, =_tracemouse= stuff.
 
-   - Accessing termcap, terminfo using functions provided by ncurses
-     package.
-
    - Working on two terminals simultaneously.
 
    - Add more stuff to miscellaneous section.
@@ -490,42 +488,42 @@
 
     After this is done, we can do a variety of initializations to
     customize our curses settings. These details will be explained
-    [[#INIT][later]].
+    [[@INIT][later]].
 
 *** 2.2.2. The mysterious refresh()
 
-    The next line printw prints the string "Hello World !!!" on to the
-    screen. This function is analogous to normal printf in all
-    respects except that it prints the data on a window called stdscr
-    at the current (y,x) co-ordinates. Since our present co-ordinates
-    are at 0,0 the string is printed at the left hand corner of the
-    window.
+    The next line =printw= prints the string "Hello World !!!" on to
+    the screen. This function is analogous to normal =printf= in all
+    respects except that it prints the data on a window called
+    =stdscr= at the current (y,x) co-ordinates. Since our present
+    co-ordinates are at 0,0 the string is printed at the left hand
+    corner of the window.
 
-    This brings us to that mysterious refresh(). Well, when we called
-    printw the data is actually written to an imaginary window, which
-    is not updated on the screen yet. The job of printw is to update a
-    few flags and data structures and write the data to a buffer
-    corresponding to stdscr. In order to show it on the screen, we
-    need to call refresh() and tell the curses system to dump the
-    contents on the screen.
+    This brings us to that mysterious =refresh()=. Well, when we
+    called =printw= the data is actually written to an imaginary
+    window, which is not updated on the screen yet. The job of
+    =printw= is to update a few flags and data structures and write
+    the data to a buffer corresponding to =stdscr=. In order to show
+    it on the screen, we need to call =refresh()= and tell the curses
+    system to dump the contents on the screen.
 
     The philosophy behind all this is to allow the programmer to do
     multiple updates on the imaginary screen or windows and do a
-    refresh once all his screen update is done. refresh() checks the
+    refresh once all his screen update is done. =refresh()= checks the
     window and updates only the portion which has been changed. This
     improves performance and offers greater flexibility too. But, it
     is sometimes frustrating to beginners.  A common mistake committed
-    by beginners is to forget to call refresh() after they did some
-    update through printw() class of functions. I still forget to add
-    it sometimes :-)
+    by beginners is to forget to call =refresh()= after they did some
+    update through =printw()= class of functions. I still forget to
+    add it sometimes :-)
 
 *** 2.2.3. About endwin()
 
     And finally don't forget to end the curses mode. Otherwise your
-    terminal might behave strangely after the program quits. endwin()
-    frees the memory taken by curses sub-system and its data
-    structures and puts the terminal in normal mode. This function
-    must be called after you are done with the curses mode.
+    terminal might behave strangely after the program quits.
+    =endwin()= frees the memory taken by curses sub-system and its
+    data structures and puts the terminal in normal mode. This
+    function must be called after you are done with the curses mode.
 
 * 3. The Gory Details
 
@@ -535,7 +533,7 @@
 
   Here we go...
 
-* 4. Initialization                                                   <<#INIT>>
+* 4. Initialization                                                   <<@INIT>>
 
   We now know that to initialize curses system the function initscr()
   has to be called. There are functions which can be called after this
@@ -646,7 +644,7 @@
    explained yet. The function =getch()= is used to get a character
    from user. It is equivalent to normal =getchar()= except that we
    can disable the line buffering to avoid <enter> after input. Look
-   for more about =getch()=and reading keys in the [[#KEYS][key management
+   for more about =getch()=and reading keys in the [[@KEYS][key management
    section]]. The functions attron and attroff are used to switch some
    attributes on and off respectively. In the example I used them to
    print the character in bold. These functions are explained in
@@ -656,7 +654,7 @@
 
   Before we plunge into the myriad ncurses functions, let me clear few
   things about windows. Windows are explained in detail in following
-  [[#WINDOWS][sections]]
+  [[@WINDOWS][sections]]
 
   A Window is an imaginary screen defined by curses system. A window
   does not mean a bordered window which you usually see on Win9X
@@ -677,7 +675,7 @@
   It prints the string on stdscr at the present cursor
   position. Similarly the call to refresh(), works on stdscr only.
 
-  Say you have created [[#WINDOWS][windows]] then you have to call a function with a
+  Say you have created [[@WINDOWS][windows]] then you have to call a function with a
   'w' added to the usual function.
 
   #+BEGIN_SRC c
@@ -725,7 +723,7 @@
    location and advance the position of the cursor. You can give the
    character to be printed but they usually are used to print a
    character with some attributes. Attributes are explained in detail
-   in later [[#ATTRIB][sections]] of the document. If a character is associated
+   in later [[@ATTRIB][sections]] of the document. If a character is associated
    with an attribute(bold, reverse video etc.), when curses prints the
    character, it is printed in that attribute.
 
@@ -742,7 +740,7 @@
      #+END_SRC
 
    - By using functions like =attrset(),attron(),attroff()=. These
-     functions are explained in the [[#ATTRIB][Attributes]] section.  Briefly, they
+     functions are explained in the [[@ATTRIB][Attributes]] section.  Briefly, they
      manipulate the current attributes of the given window.  Once set,
      the character printed in the window are associated with the
      attributes until it is turned off.
@@ -864,7 +862,7 @@
    order.  If you are doing too many manipulations of (y,x)
    co-ordinates, think of dividing the screen into windows and
    manipulate each one separately.  Windows are explained in the
-   [[#WINDOWS][windows]] section.
+   [[@WINDOWS][windows]] section.
 
 * 7. Input functions
 
@@ -890,7 +888,7 @@
    suggests, when this function is set (used), the characters that are
    keyed in by the user will not show up on the screen. The two
    functions cbreak() and noecho() are typical examples of key
-   management. Functions of this genre are explained in the [[#KEYS][key
+   management. Functions of this genre are explained in the [[@KEYS][key
    management section]].
 
 ** 7.2. scanw() class of functions
@@ -952,7 +950,7 @@
      }
    #+END_SRC
 
-* 8. Attributes                                                       <<#ATTRIB>>
+* 8. Attributes                                                       <<@ATTRIB>>
 
   We have seen an example of how attributes can be used to print
   characters with some special effects. Attributes, when set
@@ -1064,7 +1062,7 @@
    #+END_EXAMPLE
 
    The last one is the most colorful one :-) Colors are explained in
-   the [[#color][next sections]].
+   the [[@color][next sections]].
 
    We can OR(|) any number of above attributes to get a combined
    effect. If you wanted reverse video with blinking characters you
@@ -1171,7 +1169,7 @@
    This example also introduces us to the color world of curses.
    Colors will be explained in detail later. Use 0 for no color.
 
-* 9. Windows                                                          <<#WINDOWS>>
+* 9. Windows                                                          <<@WINDOWS>>
 
   Windows form the most important concept in curses. You have seen the
   standard window stdscr above where all the functions implicitly
@@ -1477,7 +1475,7 @@
      }
    #+END_SRC
 
-* 10. Colors                                                          <<#color>>
+* 10. Colors                                                          <<@color>>
 ** 10.1. The basics
 
    Life seems dull with no colors. Curses has a nice mechanism to
@@ -1590,7 +1588,7 @@
    find the color content and foreground, background combination for
    the pair.
 
-* 11. Interfacing with the key board                                  <<#KEYS>>
+* 11. Interfacing with the key board                                  <<@KEYS>>
 ** 11.1. The Basics
 
    No GUI is complete without a strong user interface and to interact
@@ -3509,7 +3507,6 @@
      }
    #+END_SRC
 
-
    Watch the function call to =set_menu_format()=. It specifies the
    number of columns to be 3, thus displaying 3 items per row. We have
    also switched off the showing descriptions with the function
@@ -4406,7 +4403,7 @@
 
     #+BEGIN_SRC c
       int set_field_status(FIELD *field,      /* field to alter */
-                           int status);         /* status to set */
+                           int status);       /* status to set  */
 
       int field_status(FIELD *field);         /* fetch status of field */
     #+END_SRC

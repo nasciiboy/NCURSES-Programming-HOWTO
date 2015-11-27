@@ -11,14 +11,13 @@
     --cstart7: #b0c4de;  /* *******       */
     --cstart8: #ffa074;  /* ********      */
     --ctcode : #b3b3b3;  /* =code=        */
-    --cbcode : #ffffff;  /* block code    */
+    --cbcode : #b3b3b3;  /* block code    */
     --clink  : #00ffff;  /* link          */
     --cblinkh: #556b2f;  /* link bg hover */
     --cflinkh: #ffffff;  /* link fg hover */
     --cthead : #ff7f24;  /* table head    */
     --ctbody : #87cefa;  /* table body    */
 }
-
 
 @font-face { font-family: text;           src: url(fonts/dejavu/dejavu-sans/DejaVuSans.ttf); }
 @font-face { font-family: text_bold;      src: url(fonts/dejavu/dejavu-sans/DejaVuSans-Bold.ttf); }
@@ -72,7 +71,7 @@ html body #content .outline-text-7 { color: #ffffff; border-bottom: 5px solid #d
 html body #content .outline-text-8 { color: #ffffff; border-bottom: 5px solid #ddd; }       /* *******  */
 html body #content .outline-text-9 { color: #ffffff; border-bottom: 5px solid #ddd; }       /* ******** */
 
-/* ==> ################### TOC */
+/* ####################### TOC */
 html body #content #table-of-contents { background-color: #000; border: 1px solid #CCC;
                                         position: fixed; right: 0em; top: 0em; overflow: auto;
                                         max-height: 80%; max-width: 35%; float: right; z-index: 1;
@@ -121,7 +120,6 @@ html body #content
 html body #content
 #table-of-contents:hover #text-table-of-contents ul li ul li ul li ul li ul li ul li ul li ul li a
                          { color: var( --cstart8 ); font-size: .6em; }
-/* <== ################### TOC */
 
 
 /* ############## CODE IN TEXT */
@@ -129,45 +127,57 @@ html body #content code { background-color: #000; color: var( --ctcode );
                           font-size: 1em;  font-family: codetext;
                           padding: 0px 0.2em; }
 
-/* BLOCKS ######## CODE BLOCKS */
-html body #content pre { background-color: #222222; color: var( --cbcode );
+/* BLOCK ########## CODE BLOCK */
+html body #content pre { background-color: #000; color: var( --cbcode );
                          font-size: 100%; text-align: left; font-family: codeblock;
-                         padding: 1.2em; overflow: auto; }
+                         padding: 1.2em; border: 1px solid #ddd; overflow: auto; }
 
-html body #content pre.example { background-color: #222222; color: var( --cbcode );
+html body #content pre.example { background-color: #000; color: var( --cbcode );
                                  font-size: 100%; text-align: left; font-family: codeblock;
-                                 padding: 1.2em; overflow: auto; }
+                                 padding: 1.2em; border: 1px solid #ddd; overflow: auto; }
 
-/* BLOCKS ############# CENTER */
-html body #content div.center { text-align: center; display: table; margin: 0 auto; }
-
-/* BLOCKS ############## VERSE */
-html body #content .verse { text-align: center; color: #b3b3b3;
-                            font-style: italic; font-family: text_verse; }
-
-/* BLOCKS ############## QUOTE */
-html body #content blockquote { display: table; margin: 0em auto;
-                                line-height: 1em; white-space: pre; }
-html body #content blockquote p { margin: 0; }
-
-/* BLOCKS ############# BLOCK */
+/* BLOCK ############## BLOCK */
 html body #content .block { border: 1px solid #ddd; }
 html body #content .block p { background-color: #000; color: var( --cbcode );
                               font-size: 100%; white-space: pre; font-family: codeblock;
                               padding: 0em 0em 1em 1em; border: 0; margin: 0;
                               overflow: auto;  }
+html body #content .block a code { color: var( --clink );
+                                   text-decoration: underline; }
+html body #content .block a:hover code { background-color: var( --cblinkh );
+                                         color: var( --cflinkh );
+                                         text-decoration: none; }
 
-/* BLOCKS ############ ITALIC */
+/* BLOCK ############## CENTER */
+html body #content div.center { text-align: center; display: table; margin: 0 auto; }
+
+/* BLOCK ############### VERSE */
+html body #content .verse { text-align: center; color: #b3b3b3;
+                            font-style: italic; font-family: text_verse; }
+
+/* BLOCK ############### QUOTE */
+html body #content blockquote { display: table; margin: 0em auto;
+                                line-height: 1em; white-space: pre; }
+html body #content blockquote p { margin: 0; }
+
+/* BLOCK ############# ITALIC */
 html body #content .italic { font-family: text_italic; }
 
 /* ############### FONT STYLE */
-html body #content b { font-family: text_bold; }     /* *BOLD*       */
-html body #content i { font-family: text_italic; }   /* /ITALIC/     */
+html body #content b          { font-family: text_bold; }       /* *BOLD*       */
+html body #content i          { font-family: text_italic; }     /* /ITALIC/     */
+html body #content .underline { text-decoration: underline; }   /* _UNDERLINE_  */
 
 /* #################### LINKS */
 html body #content a { color: var( --clink ); text-decoration: underline; }
 html body #content a:hover { background-color: var( --cblinkh ); color: var( --cflinkh );
                              text-decoration: none; }
+
+html body #content a code { color: var( --ctcode );
+                            text-decoration: underline; }
+html body #content a:hover code { background-color: var( --cblinkh );
+                                  color: var( --cflinkh );
+                                  text-decoration: none; }
 
 /* ############ FOOTNOTE LINK */
 html body #content a.footref { color: var( --clink ); text-decoration: none; }
@@ -182,13 +192,25 @@ html body #content ul.org-ul li b { font-weight: bold; }
 html body #content ul.org-ul li p { color: #fff; font-size: 1em; }
 
 /* ############### DESCRIPTION */
+/* html body #content dl.org-dl { padding-bottom: 2em; }         /\* body           *\/ */
+/* html body #content dl.org-dl dt { color: #daa520;             /\* description dt *\/ */
+/*                                   font-size: 1.2em; font-family: description_dt; */
+/*                                   margin-left: 0.6em; } */
+/* html body #content dl.org-dl dd { color: #ffffff;             /\* description dd *\/ */
+/*                                   font-size: 1.0em; font-family: description_dd; font-style: bold; */
+/*                                   margin-left: 0.6em; } */
+
 html body #content dl.org-dl { padding-bottom: 2em; }         /* body           */
 html body #content dl.org-dl dt { color: #daa520;             /* description dt */
                                   font-size: 1.2em; font-family: description_dt;
-                                  margin-left: 0.6em; }
+                                  margin-left: 0.6em; float: left; }
+html body #content dl.org-dl dd:before { color: #ffffff;      /* description dd */
+                                         content: ": ";
+                                         font-size: 1.0em; font-family: description_dd;
+                                         font-style: bold; white-space: pre; }
 html body #content dl.org-dl dd { color: #ffffff;             /* description dd */
                                   font-size: 1.0em; font-family: description_dd; font-style: bold;
-                                  margin-left: 0.6em; }
+                                  margin-left: 1em;  }
 
 /* ####################### IMG */
 div.figure { text-align: center; }
