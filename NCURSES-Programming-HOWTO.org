@@ -452,7 +452,7 @@
      compile and link: gcc <program file> -lncurses
    #+END_EXAMPLE
 
-   *Example 1. The Hello World !!! Program*
+   [[file:ncurses_programs/basics/hello_world.c][*Example 1. The Hello World !!! Program*]]
 
    #+BEGIN_SRC c
      #include <ncurses.h>
@@ -535,76 +535,77 @@
 
 * 4. Initialization                                                   <<@INIT>>
 
-  We now know that to initialize curses system the function initscr()
-  has to be called. There are functions which can be called after this
-  initialization to customize our curses session. We may ask the
-  curses system to set the terminal in raw mode or initialize color or
-  initialize the mouse etc.. Let's discuss some of the functions that
-  are normally called immediately after initscr();
+  We now know that to initialize curses system the function
+  =initscr()= has to be called. There are functions which can be
+  called after this initialization to customize our curses session. We
+  may ask the curses system to set the terminal in raw mode or
+  initialize color or initialize the mouse etc.. Let's discuss some of
+  the functions that are normally called immediately after
+  =initscr()=;
 
 ** 4.1. Initialization functions
-** 4.2. raw() and cbreak()
+*** 4.1.1. =raw()= and =cbreak()=
 
-   Normally the terminal driver buffers the characters a user types
-   until a new line or carriage return is encountered. But most
-   programs require that the characters be available as soon as the
-   user types them. The above two functions are used to disable line
-   buffering. The difference between these two functions is in the way
-   control characters like suspend (CTRL-Z), interrupt and quit
-   (CTRL-C) are passed to the program.  In the raw() mode these
-   characters are directly passed to the program without generating a
-   signal. In the =cbreak()= mode these control characters are
-   interpreted as any other character by the terminal driver. I
-   personally prefer to use raw() as I can exercise greater control
-   over what the user does.
+    Normally the terminal driver buffers the characters a user types
+    until a new line or carriage return is encountered. But most
+    programs require that the characters be available as soon as the
+    user types them. The above two functions are used to disable line
+    buffering. The difference between these two functions is in the
+    way control characters like suspend (CTRL-Z), interrupt and quit
+    (CTRL-C) are passed to the program.  In the =raw()= mode these
+    characters are directly passed to the program without generating a
+    signal. In the =cbreak()= mode these control characters are
+    interpreted as any other character by the terminal driver. I
+    personally prefer to use =raw()= as I can exercise greater control
+    over what the user does.
 
-** 4.3. echo() and noecho()
+*** 4.1.2. =echo()= and =noecho()=
 
-   These functions control the echoing of characters typed by the user
-   to the terminal. =noecho()= switches off echoing. The reason you
-   might want to do this is to gain more control over echoing or to
-   suppress unnecessary echoing while taking input from the user
-   through the getch() etc. functions. Most of the interactive
-   programs call =noecho()= at initialization and do the echoing of
-   characters in a controlled manner.  It gives the programmer the
-   flexibility of echoing characters at any place in the window
-   without updating current (y,x) co-ordinates.
+    These functions control the echoing of characters typed by the
+    user to the terminal. =noecho()= switches off echoing. The reason
+    you might want to do this is to gain more control over echoing or
+    to suppress unnecessary echoing while taking input from the user
+    through the =getch()= etc. functions. Most of the interactive
+    programs call =noecho()= at initialization and do the echoing of
+    characters in a controlled manner.  It gives the programmer the
+    flexibility of echoing characters at any place in the window
+    without updating current (y,x) co-ordinates.
 
-** 4.4. keypad()
+*** 4.1.3. =keypad()=
 
-   This is my favorite initialization function. It enables the reading
-   of function keys like F1, F2, arrow keys etc. Almost every
-   interactive program enables this, as arrow keys are a major part of
-   any User Interface. Do =keypad(stdscr, TRUE)= to enable this
-   feature for the regular screen (stdscr). You will learn more about
-   key management in later sections of this document.
+    This is my favorite initialization function. It enables the
+    reading of function keys like F1, F2, arrow keys etc. Almost every
+    interactive program enables this, as arrow keys are a major part
+    of any User Interface. Do =keypad(stdscr, TRUE)= to enable this
+    feature for the regular screen (stdscr). You will learn more about
+    key management in later sections of this document.
 
-** 4.5. halfdelay()
+*** 4.1.4. =halfdelay()=
 
-   This function, though not used very often, is a useful one at
-   times.  halfdelay()is called to enable the half-delay mode, which
-   is similar to the cbreak() mode in that characters typed are
-   immediately available to program. However, it waits for 'X' tenths
-   of a second for input and then returns ERR, if no input is
-   available. 'X' is the timeout value passed to the function
-   halfdelay(). This function is useful when you want to ask the user
-   for input, and if he doesn't respond with in certain time, we can
-   do some thing else. One possible example is a timeout at the
-   password prompt.
+    This function, though not used very often, is a useful one at
+    times.  =halfdelay()= is called to enable the half-delay mode,
+    which is similar to the =cbreak()= mode in that characters typed
+    are immediately available to program. However, it waits for 'X'
+    tenths of a second for input and then returns =ERR=, if no input
+    is available. 'X' is the timeout value passed to the function
+    =halfdelay()=. This function is useful when you want to ask the
+    user for input, and if he doesn't respond with in certain time, we
+    can do some thing else. One possible example is a timeout at the
+    password prompt.
 
-** 4.6. Miscellaneous Initialization functions
+** 4.2. Miscellaneous Initialization functions
 
    There are few more functions which are called at initialization to
    customize curses behavior. They are not used as extensively as
    those mentioned above. Some of them are explained where
    appropriate.
 
-** 4.7. An Example
+** 4.3. An Example
 
    Let's write a program which will clarify the usage of these
    functions.
 
-   *Example 2. Initialization Function Usage example*
+   [[file:ncurses_programs/basics/init_func_example.c][*Example 2. Initialization Function Usage example*]]
 
    #+BEGIN_SRC c
      #include <ncurses.h>
@@ -644,10 +645,10 @@
    explained yet. The function =getch()= is used to get a character
    from user. It is equivalent to normal =getchar()= except that we
    can disable the line buffering to avoid <enter> after input. Look
-   for more about =getch()=and reading keys in the [[@KEYS][key management
-   section]]. The functions attron and attroff are used to switch some
-   attributes on and off respectively. In the example I used them to
-   print the character in bold. These functions are explained in
+   for more about =getch()= and reading keys in the [[@KEYS][key management
+   section]]. The functions =attron= and =attroff= are used to switch
+   some attributes on and off respectively. In the example I used them
+   to print the character in bold. These functions are explained in
    detail later.
 
 * 5. A Word about Windows
@@ -672,8 +673,8 @@
     refresh();
   #+END_SRC
 
-  It prints the string on stdscr at the present cursor
-  position. Similarly the call to refresh(), works on stdscr only.
+  It prints the string on =stdscr= at the present cursor position.
+  Similarly the call to =refresh()=, works on =stdscr= only.
 
   Say you have created [[@WINDOWS][windows]] then you have to call a function with a
   'w' added to the usual function.
@@ -697,7 +698,7 @@
   #+END_SRC
 
   Usually the w-less functions are macros which expand to
-  corresponding w-function with stdscr as the window parameter.
+  corresponding w-function with =stdscr= as the window parameter.
 
 * 6. Output functions
 
@@ -770,7 +771,7 @@
 
    =waddch()= is similar to =addch()=, except that it adds a character
    into the given window. (Note that =addch()= adds a character into
-   the window =stdscr=.)
+   the window  =stdscr=.)
 
    In a similar fashion =mvwaddch()= function is used to add a
    character into the given window at the given coordinates.
@@ -806,7 +807,7 @@
 
 *** 6.3.4. A Simple printw example
 
-    *Example 3. A Simple printw example*
+    [[file:ncurses_programs/basics/][*Example 3. A Simple printw example*]]
 
     #+BEGIN_SRC c
       #include <ncurses.h>           /* ncurses.h includes stdio.h */
@@ -925,7 +926,7 @@
 
 ** 7.4. Some examples
 
-   *Example 4. A Simple scanw example*
+   [[file:ncurses_programs/basics/][*Example 4. A Simple scanw example*]]
 
    #+BEGIN_SRC c
      #include <ncurses.h>                     /* ncurses.h includes stdio.h           */
@@ -958,7 +959,7 @@
   manner. The following program takes a C file as input and prints the
   file with comments in bold. Scan through the code.
 
-  *Example 5. A Simple Attributes example*
+  [[file:ncurses_programs/basics/][*Example 5. A Simple Attributes example*]]
 
   #+BEGIN_SRC c
     /* pager functionality by Joseph Spainhour" <spainhou@bellsouth.net> */
@@ -1108,7 +1109,7 @@
 
    For each of the above functions we have a corresponding function
    with 'w' which operates on a particular window. The above functions
-   operate on stdscr.
+   operate on =stdscr=.
 
 ** 8.6. chgat() functions
 
@@ -1134,10 +1135,10 @@
    except that the w functions operate on the particular window. The
    mv functions first move the cursor then perform the work given to
    them. Actually chgat is a macro which is replaced by a wchgat()
-   with stdscr as the window. Most of the "w-less" functions are
+   with =stdscr= as the window. Most of the "w-less" functions are
    macros.
 
-   *Example 6. Chgat() Usage example*
+   [[file:ncurses_programs/basics/][*Example 6. Chgat() Usage example*]]
 
    #+BEGIN_SRC c
      #include <ncurses.h>
@@ -1172,7 +1173,7 @@
 * 9. Windows                                                          <<@WINDOWS>>
 
   Windows form the most important concept in curses. You have seen the
-  standard window stdscr above where all the functions implicitly
+  standard window =stdscr= above where all the functions implicitly
   operated on this window. Now to make design even a simplest GUI, you
   need to resort to windows. The main reason you may want to use
   windows is to manipulate parts of the screen separately, for better
@@ -1204,7 +1205,7 @@
    be used to draw a border around the window. Let's explore these
    functions in more detail in this example.
 
-   *Example 7. Window Border example*
+   [[file:ncurses_programs/basics/][*Example 7. Window Border example*]]
 
    #+BEGIN_SRC c
      #include <ncurses.h>
@@ -1350,7 +1351,7 @@
    horizontal or vertical line of the specified length at the
    specified position.
 
-   *Example 8. More border functions*
+   [[file:ncurses_programs/basics/][*Example 8. More border functions*]]
 
    #+BEGIN_SRC c
      #include <ncurses.h>
@@ -1482,7 +1483,7 @@
    handle colors. Let's get into the thick of the things with a small
    program.
 
-   *Example 9. A Simple Color example*
+   [[file:ncurses_programs/basics/][*Example 9. A Simple Color example*]]
 
    #+BEGIN_SRC c
      #include <ncurses.h>
@@ -1637,7 +1638,7 @@
 
 ** 11.2. A Simple Key Usage example
 
-   *Example 10. A Simple Key Usage example*
+   [[file:ncurses_programs/basics/][*Example 10. A Simple Key Usage example*]]
 
    #+BEGIN_SRC c
      #include <stdio.h>
@@ -1833,7 +1834,7 @@
    menu and enable mouse interaction. To make things simpler, key
    handling is removed.
 
-   *Example 11. Access the menu with mouse !!!*
+   [[file:ncurses_programs/basics/][*Example 11. Access the menu with mouse !!!*]]
 
    #+BEGIN_SRC c
      #include <ncurses.h>
@@ -2040,7 +2041,7 @@
    the curses mode. Here is an example showing the sequence of things
    to be done.
 
-   *Example 12. Temporarily Leaving Curses Mode*
+   [[file:ncurses_programs/basics/][*Example 12. Temporarily Leaving Curses Mode*]]
 
    #+BEGIN_SRC c
      #include <ncurses.h>
@@ -2075,7 +2076,7 @@
    some of the programs above. Here's an example showing all the
    characters.
 
-   *Example 13. ACS Variables Example*
+   [[file:ncurses_programs/basics/][*Example 13. ACS Variables Example*]]
 
    #+BEGIN_SRC c
      #include <ncurses.h>
@@ -2212,7 +2213,7 @@
         compile and link: gcc <program file> -lpanel -lncurses
    #+END_EXAMPLE
 
-   *Example 14. Panel basics*
+   [[file:ncurses_programs/basics/][*Example 14. Panel basics*]]
 
    #+BEGIN_SRC c
      #include <panel.h>
@@ -2266,7 +2267,7 @@
    3 windows which can be cycled through using tab. Have a look at the
    code.
 
-   *Example 15. Panel Window Browsing Example*
+   [[file:ncurses_programs/basics/][*Example 15. Panel Window Browsing Example*]]
 
    #+BEGIN_SRC c
      #include <panel.h>
@@ -2424,7 +2425,7 @@
    and press enter to end your resizing or moving. This example makes
    use of user data to get the required data to do the operations.
 
-   *Example 16. Panel Moving and Resizing example*
+   [[file:ncurses_programs/basics/][*Example 16. Panel Moving and Resizing example*]]
 
    #+BEGIN_SRC c
      #include <panel.h>
@@ -2699,7 +2700,7 @@
    or not is not working. A bug report was also presented by Michael
    Andres [[http://www.geocrawler.com/archives/3/344/1999/9/0/2643549/][here]]
 
-   *Example 17. Panel Hiding and Showing example*
+   [[file:ncurses_programs/basics/][*Example 17. Panel Hiding and Showing example*]]
 
    #+BEGIN_SRC c
      #include <panel.h>
@@ -2932,7 +2933,7 @@
      compile and link: gcc <program file> -lmenu -lncurses
    #+END_EXAMPLE
 
-   *Example 18. Menu Basics*
+   [[file:ncurses_programs/basics/][*Example 18. Menu Basics*]]
 
    #+BEGIN_SRC c
      #include <curses.h>
@@ -3123,13 +3124,13 @@
    with the menu. The menu sub window displays the menu items
    currently available for selection. But we didn't specify any window
    or sub window in the simple example. When a window is not
-   specified, stdscr is taken as the main window, and then menu system
+   specified, =stdscr= is taken as the main window, and then menu system
    calculates the sub window size required for the display of
    items. Then items are displayed in the calculated sub window. So
    let's play with these windows and display a menu with a border and
    a title.
 
-   *Example 19. Menu Windows Usage example*
+   [[file:ncurses_programs/basics/][*Example 19. Menu Windows Usage example*]]
 
    #+BEGIN_SRC c
      #include <menu.h>
@@ -3255,7 +3256,7 @@
    item. You can manually give =REQ_SCR_= operations to do
    scrolling. Let's see how it can be done.
 
-   *Example 20. Scrolling Menus example*
+   [[file:ncurses_programs/basics/][*Example 20. Scrolling Menus example*]]
 
    #+BEGIN_SRC c
      #include <curses.h>
@@ -3405,7 +3406,7 @@
    the cols variable. To make things simpler, the following example
    doesn't show descriptions for the items.
 
-   *Example 21. Milt Columnar Menus Example*
+   [[file:ncurses_programs/basics/][*Example 21. Milt Columnar Menus Example*]]
 
    #+BEGIN_SRC c
      #include <curses.h>
@@ -3551,7 +3552,7 @@
    can select more than one item. This brings us to the request
    =REQ_TOGGLE_ITEM=. Let's see it in action.
 
-   *Example 22. Multi Valued Menus example*
+   [[file:ncurses_programs/basics/][*Example 22. Multi Valued Menus example*]]
 
    #+BEGIN_SRC c
      #include <curses.h>
@@ -3673,7 +3674,7 @@
    like a grayed item in those fancy windows menus.  Let's put these
    concepts in practice with this example
 
-   *Example 23. Menu Options example*
+   [[file:ncurses_programs/basics/][*Example 23. Menu Options example*]]
 
    #+BEGIN_SRC c
      #include <menu.h>
@@ -3766,7 +3767,7 @@
    chosen (It's selected and may be the user pressed <ENTER>);
 
 
-   *Example 24. Menu User Pointer Usage*
+   [[file:ncurses_programs/basics/][*Example 24. Menu User Pointer Usage*]]
 
    #+BEGIN_SRC c
      #include <curses.h>
@@ -3929,7 +3930,7 @@
      compile and link: gcc <program file> -lform -lncurses
    #+END_EXAMPLE
 
-   *Example 25. Forms Basics*
+   [[file:ncurses_programs/basics/][*Example 25. Forms Basics*]]
 
    #+BEGIN_SRC c
      #include <form.h>
@@ -4118,7 +4119,7 @@
     display colored fields? Here's an example clarifying color
     attributes.
 
-    *Example 26. Form Attributes example*
+    [[file:ncurses_programs/basics/][*Example 26. Form Attributes example*]]
 
     #+BEGIN_SRC c
       #include <form.h>
@@ -4307,7 +4308,7 @@
     usage of some more options.  Other options are explained where
     appropriate.
 
-    *Example 27. Field Options Usage example*
+    [[file:ncurses_programs/basics/][*Example 27. Field Options Usage example*]]
 
     #+BEGIN_SRC c
       #include <form.h>
@@ -4556,7 +4557,7 @@
    an example with out much explanation. The functions are similar and
    they work the same way.
 
-   *Example 28. Form Windows Example*
+   [[file:ncurses_programs/basics/][*Example 28. Form Windows Example*]]
 
    #+BEGIN_SRC c
      #include <form.h>

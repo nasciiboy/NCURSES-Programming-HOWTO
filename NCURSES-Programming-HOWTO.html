@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>NCURSES Programming HOWTO</title>
-<!-- 2015-11-27 vie 15:28 -->
+<!-- 2015-11-29 dom 14:27 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="ppadala" />
@@ -56,13 +56,16 @@
 <li><a href="#sec-4">3. The Gory Details</a></li>
 <li><a href="#sec-5">4. Initialization                                                   </a>
 <ul>
-<li><a href="#sec-5-1">4.1. Initialization functions</a></li>
-<li><a href="#sec-5-2">4.2. raw() and cbreak()</a></li>
-<li><a href="#sec-5-3">4.3. echo() and noecho()</a></li>
-<li><a href="#sec-5-4">4.4. keypad()</a></li>
-<li><a href="#sec-5-5">4.5. halfdelay()</a></li>
-<li><a href="#sec-5-6">4.6. Miscellaneous Initialization functions</a></li>
-<li><a href="#sec-5-7">4.7. An Example</a></li>
+<li><a href="#sec-5-1">4.1. Initialization functions</a>
+<ul>
+<li><a href="#sec-5-1-1">4.1.1. <code>raw()</code> and <code>cbreak()</code></a></li>
+<li><a href="#sec-5-1-2">4.1.2. <code>echo()</code> and <code>noecho()</code></a></li>
+<li><a href="#sec-5-1-3">4.1.3. <code>keypad()</code></a></li>
+<li><a href="#sec-5-1-4">4.1.4. <code>halfdelay()</code></a></li>
+</ul>
+</li>
+<li><a href="#sec-5-2">4.2. Miscellaneous Initialization functions</a></li>
+<li><a href="#sec-5-3">4.3. An Example</a></li>
 </ul>
 </li>
 <li><a href="#sec-6">5. A Word about Windows</a></li>
@@ -905,7 +908,7 @@ compile and link: gcc &lt;program file&gt; -lncurses
 </pre>
 
 <p>
-<b>Example 1. The Hello World !!! Program</b>
+<a href="ncurses_programs/basics/hello_world.c"><b>Example 1. The Hello World !!! Program</b></a>
 </p>
 
 <div class="org-src-container">
@@ -1029,47 +1032,48 @@ Here we go&#x2026;
 <h2 id="sec-5">4. Initialization                                                   <a id="INIT" name="INIT"></a></h2>
 <div class="outline-text-2" id="text-5">
 <p>
-We now know that to initialize curses system the function initscr()
-has to be called. There are functions which can be called after this
-initialization to customize our curses session. We may ask the
-curses system to set the terminal in raw mode or initialize color or
-initialize the mouse etc.. Let's discuss some of the functions that
-are normally called immediately after initscr();
+We now know that to initialize curses system the function
+<code>initscr()</code> has to be called. There are functions which can be
+called after this initialization to customize our curses session. We
+may ask the curses system to set the terminal in raw mode or
+initialize color or initialize the mouse etc.. Let's discuss some of
+the functions that are normally called immediately after
+<code>initscr()</code>;
 </p>
 </div>
 
 <div id="outline-container-sec-5-1" class="outline-3">
 <h3 id="sec-5-1">4.1. Initialization functions</h3>
-</div>
-<div id="outline-container-sec-5-2" class="outline-3">
-<h3 id="sec-5-2">4.2. raw() and cbreak()</h3>
-<div class="outline-text-3" id="text-5-2">
+<div class="outline-text-3" id="text-5-1">
+</div><div id="outline-container-sec-5-1-1" class="outline-4">
+<h4 id="sec-5-1-1">4.1.1. <code>raw()</code> and <code>cbreak()</code></h4>
+<div class="outline-text-4" id="text-5-1-1">
 <p>
 Normally the terminal driver buffers the characters a user types
 until a new line or carriage return is encountered. But most
 programs require that the characters be available as soon as the
 user types them. The above two functions are used to disable line
-buffering. The difference between these two functions is in the way
-control characters like suspend (CTRL-Z), interrupt and quit
-(CTRL-C) are passed to the program.  In the raw() mode these
+buffering. The difference between these two functions is in the
+way control characters like suspend (CTRL-Z), interrupt and quit
+(CTRL-C) are passed to the program.  In the <code>raw()</code> mode these
 characters are directly passed to the program without generating a
 signal. In the <code>cbreak()</code> mode these control characters are
 interpreted as any other character by the terminal driver. I
-personally prefer to use raw() as I can exercise greater control
+personally prefer to use <code>raw()</code> as I can exercise greater control
 over what the user does.
 </p>
 </div>
 </div>
 
-<div id="outline-container-sec-5-3" class="outline-3">
-<h3 id="sec-5-3">4.3. echo() and noecho()</h3>
-<div class="outline-text-3" id="text-5-3">
+<div id="outline-container-sec-5-1-2" class="outline-4">
+<h4 id="sec-5-1-2">4.1.2. <code>echo()</code> and <code>noecho()</code></h4>
+<div class="outline-text-4" id="text-5-1-2">
 <p>
-These functions control the echoing of characters typed by the user
-to the terminal. <code>noecho()</code> switches off echoing. The reason you
-might want to do this is to gain more control over echoing or to
-suppress unnecessary echoing while taking input from the user
-through the getch() etc. functions. Most of the interactive
+These functions control the echoing of characters typed by the
+user to the terminal. <code>noecho()</code> switches off echoing. The reason
+you might want to do this is to gain more control over echoing or
+to suppress unnecessary echoing while taking input from the user
+through the <code>getch()</code> etc. functions. Most of the interactive
 programs call <code>noecho()</code> at initialization and do the echoing of
 characters in a controlled manner.  It gives the programmer the
 flexibility of echoing characters at any place in the window
@@ -1078,41 +1082,42 @@ without updating current (y,x) co-ordinates.
 </div>
 </div>
 
-<div id="outline-container-sec-5-4" class="outline-3">
-<h3 id="sec-5-4">4.4. keypad()</h3>
-<div class="outline-text-3" id="text-5-4">
+<div id="outline-container-sec-5-1-3" class="outline-4">
+<h4 id="sec-5-1-3">4.1.3. <code>keypad()</code></h4>
+<div class="outline-text-4" id="text-5-1-3">
 <p>
-This is my favorite initialization function. It enables the reading
-of function keys like F1, F2, arrow keys etc. Almost every
-interactive program enables this, as arrow keys are a major part of
-any User Interface. Do <code>keypad(stdscr, TRUE)</code> to enable this
+This is my favorite initialization function. It enables the
+reading of function keys like F1, F2, arrow keys etc. Almost every
+interactive program enables this, as arrow keys are a major part
+of any User Interface. Do <code>keypad(stdscr, TRUE)</code> to enable this
 feature for the regular screen (stdscr). You will learn more about
 key management in later sections of this document.
 </p>
 </div>
 </div>
 
-<div id="outline-container-sec-5-5" class="outline-3">
-<h3 id="sec-5-5">4.5. halfdelay()</h3>
-<div class="outline-text-3" id="text-5-5">
+<div id="outline-container-sec-5-1-4" class="outline-4">
+<h4 id="sec-5-1-4">4.1.4. <code>halfdelay()</code></h4>
+<div class="outline-text-4" id="text-5-1-4">
 <p>
 This function, though not used very often, is a useful one at
-times.  halfdelay()is called to enable the half-delay mode, which
-is similar to the cbreak() mode in that characters typed are
-immediately available to program. However, it waits for 'X' tenths
-of a second for input and then returns ERR, if no input is
-available. 'X' is the timeout value passed to the function
-halfdelay(). This function is useful when you want to ask the user
-for input, and if he doesn't respond with in certain time, we can
-do some thing else. One possible example is a timeout at the
+times.  <code>halfdelay()</code> is called to enable the half-delay mode,
+which is similar to the <code>cbreak()</code> mode in that characters typed
+are immediately available to program. However, it waits for 'X'
+tenths of a second for input and then returns <code>ERR</code>, if no input
+is available. 'X' is the timeout value passed to the function
+<code>halfdelay()</code>. This function is useful when you want to ask the
+user for input, and if he doesn't respond with in certain time, we
+can do some thing else. One possible example is a timeout at the
 password prompt.
 </p>
 </div>
 </div>
+</div>
 
-<div id="outline-container-sec-5-6" class="outline-3">
-<h3 id="sec-5-6">4.6. Miscellaneous Initialization functions</h3>
-<div class="outline-text-3" id="text-5-6">
+<div id="outline-container-sec-5-2" class="outline-3">
+<h3 id="sec-5-2">4.2. Miscellaneous Initialization functions</h3>
+<div class="outline-text-3" id="text-5-2">
 <p>
 There are few more functions which are called at initialization to
 customize curses behavior. They are not used as extensively as
@@ -1122,16 +1127,16 @@ appropriate.
 </div>
 </div>
 
-<div id="outline-container-sec-5-7" class="outline-3">
-<h3 id="sec-5-7">4.7. An Example</h3>
-<div class="outline-text-3" id="text-5-7">
+<div id="outline-container-sec-5-3" class="outline-3">
+<h3 id="sec-5-3">4.3. An Example</h3>
+<div class="outline-text-3" id="text-5-3">
 <p>
 Let's write a program which will clarify the usage of these
 functions.
 </p>
 
 <p>
-<b>Example 2. Initialization Function Usage example</b>
+<a href="ncurses_programs/basics/init_func_example.c"><b>Example 2. Initialization Function Usage example</b></a>
 </p>
 
 <div class="org-src-container">
@@ -1175,10 +1180,10 @@ This program is self-explanatory. But I used functions which aren't
 explained yet. The function <code>getch()</code> is used to get a character
 from user. It is equivalent to normal <code>getchar()</code> except that we
 can disable the line buffering to avoid &lt;enter&gt; after input. Look
-for more about =getch()=and reading keys in the <a href="#KEYS">key management
-section</a>. The functions attron and attroff are used to switch some
-attributes on and off respectively. In the example I used them to
-print the character in bold. These functions are explained in
+for more about <code>getch()</code> and reading keys in the <a href="#KEYS">key management
+section</a>. The functions <code>attron</code> and <code>attroff</code> are used to switch
+some attributes on and off respectively. In the example I used them
+to print the character in bold. These functions are explained in
 detail later.
 </p>
 </div>
@@ -1217,8 +1222,8 @@ refresh();
 </div>
 
 <p>
-It prints the string on stdscr at the present cursor
-position. Similarly the call to refresh(), works on stdscr only.
+It prints the string on <code>stdscr</code> at the present cursor position.
+Similarly the call to <code>refresh()</code>, works on <code>stdscr</code> only.
 </p>
 
 <p>
@@ -1252,7 +1257,7 @@ mvwprintw(win, y, x, string);  /* Move to (y, x) relative to window         */
 
 <p>
 Usually the w-less functions are macros which expand to
-corresponding w-function with stdscr as the window parameter.
+corresponding w-function with <code>stdscr</code> as the window parameter.
 </p>
 </div>
 </div>
@@ -1366,7 +1371,7 @@ can be replaced by
 <p>
 <code>waddch()</code> is similar to <code>addch()</code>, except that it adds a character
 into the given window. (Note that <code>addch()</code> adds a character into
-the window <code>stdscr</code>.)
+the window  <code>stdscr</code>.)
 </p>
 
 <p>
@@ -1430,7 +1435,7 @@ variable number of arguments are to be printed.
 <h4 id="sec-7-3-4">6.3.4. A Simple printw example</h4>
 <div class="outline-text-4" id="text-7-3-4">
 <p>
-<b>Example 3. A Simple printw example</b>
+<a href="ncurses_programs/basics/"><b>Example 3. A Simple printw example</b></a>
 </p>
 
 <div class="org-src-container">
@@ -1611,7 +1616,7 @@ user.
 <h3 id="sec-8-4">7.4. Some examples</h3>
 <div class="outline-text-3" id="text-8-4">
 <p>
-<b>Example 4. A Simple scanw example</b>
+<a href="ncurses_programs/basics/"><b>Example 4. A Simple scanw example</b></a>
 </p>
 
 <div class="org-src-container">
@@ -1654,7 +1659,7 @@ file with comments in bold. Scan through the code.
 </p>
 
 <p>
-<b>Example 5. A Simple Attributes example</b>
+<a href="ncurses_programs/basics/"><b>Example 5. A Simple Attributes example</b></a>
 </p>
 
 <div class="org-src-container">
@@ -1844,7 +1849,7 @@ parameters of type <code>attr_t</code>.
 <p>
 For each of the above functions we have a corresponding function
 with 'w' which operates on a particular window. The above functions
-operate on stdscr.
+operate on <code>stdscr</code>.
 </p>
 </div>
 </div>
@@ -1883,12 +1888,12 @@ Other functions wchgat(), mvchgat(), wchgat() behave similarly
 except that the w functions operate on the particular window. The
 mv functions first move the cursor then perform the work given to
 them. Actually chgat is a macro which is replaced by a wchgat()
-with stdscr as the window. Most of the "w-less" functions are
+with <code>stdscr</code> as the window. Most of the "w-less" functions are
 macros.
 </p>
 
 <p>
-<b>Example 6. Chgat() Usage example</b>
+<a href="ncurses_programs/basics/"><b>Example 6. Chgat() Usage example</b></a>
 </p>
 
 <div class="org-src-container">
@@ -1933,7 +1938,7 @@ Colors will be explained in detail later. Use 0 for no color.
 <div class="outline-text-2" id="text-10">
 <p>
 Windows form the most important concept in curses. You have seen the
-standard window stdscr above where all the functions implicitly
+standard window <code>stdscr</code> above where all the functions implicitly
 operated on this window. Now to make design even a simplest GUI, you
 need to resort to windows. The main reason you may want to use
 windows is to manipulate parts of the screen separately, for better
@@ -1976,7 +1981,7 @@ functions in more detail in this example.
 </p>
 
 <p>
-<b>Example 7. Window Border example</b>
+<a href="ncurses_programs/basics/"><b>Example 7. Window Border example</b></a>
 </p>
 
 <div class="org-src-container">
@@ -2151,7 +2156,7 @@ specified position.
 </p>
 
 <p>
-<b>Example 8. More border functions</b>
+<a href="ncurses_programs/basics/"><b>Example 8. More border functions</b></a>
 </p>
 
 <div class="org-src-container">
@@ -2295,7 +2300,7 @@ program.
 </p>
 
 <p>
-<b>Example 9. A Simple Color example</b>
+<a href="ncurses_programs/basics/"><b>Example 9. A Simple Color example</b></a>
 </p>
 
 <div class="org-src-container">
@@ -2501,7 +2506,7 @@ navigated by up and down arrows.
 <h3 id="sec-12-2">11.2. A Simple Key Usage example</h3>
 <div class="outline-text-3" id="text-12-2">
 <p>
-<b>Example 10. A Simple Key Usage example</b>
+<a href="ncurses_programs/basics/"><b>Example 10. A Simple Key Usage example</b></a>
 </p>
 
 <div class="org-src-container">
@@ -2741,7 +2746,7 @@ handling is removed.
 </p>
 
 <p>
-<b>Example 11. Access the menu with mouse !!!</b>
+<a href="ncurses_programs/basics/"><b>Example 11. Access the menu with mouse !!!</b></a>
 </p>
 
 <div class="org-src-container">
@@ -3002,7 +3007,7 @@ to be done.
 </p>
 
 <p>
-<b>Example 12. Temporarily Leaving Curses Mode</b>
+<a href="ncurses_programs/basics/"><b>Example 12. Temporarily Leaving Curses Mode</b></a>
 </p>
 
 <div class="org-src-container">
@@ -3046,7 +3051,7 @@ characters.
 </p>
 
 <p>
-<b>Example 13. ACS Variables Example</b>
+<a href="ncurses_programs/basics/"><b>Example 13. ACS Variables Example</b></a>
 </p>
 
 <div class="org-src-container">
@@ -3225,7 +3230,7 @@ compile and link: gcc &lt;program file&gt; -lpanel -lncurses
 </pre>
 
 <p>
-<b>Example 14. Panel basics</b>
+<a href="ncurses_programs/basics/"><b>Example 14. Panel basics</b></a>
 </p>
 
 <div class="org-src-container">
@@ -3290,7 +3295,7 @@ code.
 </p>
 
 <p>
-<b>Example 15. Panel Window Browsing Example</b>
+<a href="ncurses_programs/basics/"><b>Example 15. Panel Window Browsing Example</b></a>
 </p>
 
 <div class="org-src-container">
@@ -3466,7 +3471,7 @@ use of user data to get the required data to do the operations.
 </p>
 
 <p>
-<b>Example 16. Panel Moving and Resizing example</b>
+<a href="ncurses_programs/basics/"><b>Example 16. Panel Moving and Resizing example</b></a>
 </p>
 
 <div class="org-src-container">
@@ -3758,7 +3763,7 @@ Andres <a href="http://www.geocrawler.com/archives/3/344/1999/9/0/2643549/">here
 </p>
 
 <p>
-<b>Example 17. Panel Hiding and Showing example</b>
+<a href="ncurses_programs/basics/"><b>Example 17. Panel Hiding and Showing example</b></a>
 </p>
 
 <div class="org-src-container">
@@ -4032,7 +4037,7 @@ compile and link: gcc &lt;program file&gt; -lmenu -lncurses
 </pre>
 
 <p>
-<b>Example 18. Menu Basics</b>
+<a href="ncurses_programs/basics/"><b>Example 18. Menu Basics</b></a>
 </p>
 
 <div class="org-src-container">
@@ -4268,7 +4273,7 @@ window. The menu window displays any title or border associated
 with the menu. The menu sub window displays the menu items
 currently available for selection. But we didn't specify any window
 or sub window in the simple example. When a window is not
-specified, stdscr is taken as the main window, and then menu system
+specified, <code>stdscr</code> is taken as the main window, and then menu system
 calculates the sub window size required for the display of
 items. Then items are displayed in the calculated sub window. So
 let's play with these windows and display a menu with a border and
@@ -4276,7 +4281,7 @@ a title.
 </p>
 
 <p>
-<b>Example 19. Menu Windows Usage example</b>
+<a href="ncurses_programs/basics/"><b>Example 19. Menu Windows Usage example</b></a>
 </p>
 
 <div class="org-src-container">
@@ -4413,7 +4418,7 @@ scrolling. Let's see how it can be done.
 </p>
 
 <p>
-<b>Example 20. Scrolling Menus example</b>
+<a href="ncurses_programs/basics/"><b>Example 20. Scrolling Menus example</b></a>
 </p>
 
 <div class="org-src-container">
@@ -4574,7 +4579,7 @@ doesn't show descriptions for the items.
 </p>
 
 <p>
-<b>Example 21. Milt Columnar Menus Example</b>
+<a href="ncurses_programs/basics/"><b>Example 21. Milt Columnar Menus Example</b></a>
 </p>
 
 <div class="org-src-container">
@@ -4733,7 +4738,7 @@ can select more than one item. This brings us to the request
 </p>
 
 <p>
-<b>Example 22. Multi Valued Menus example</b>
+<a href="ncurses_programs/basics/"><b>Example 22. Multi Valued Menus example</b></a>
 </p>
 
 <div class="org-src-container">
@@ -4870,7 +4875,7 @@ concepts in practice with this example
 </p>
 
 <p>
-<b>Example 23. Menu Options example</b>
+<a href="ncurses_programs/basics/"><b>Example 23. Menu Options example</b></a>
 </p>
 
 <div class="org-src-container">
@@ -4972,7 +4977,7 @@ chosen (It's selected and may be the user pressed &lt;ENTER&gt;);
 
 
 <p>
-<b>Example 24. Menu User Pointer Usage</b>
+<a href="ncurses_programs/basics/"><b>Example 24. Menu User Pointer Usage</b></a>
 </p>
 
 <div class="org-src-container">
@@ -5171,7 +5176,7 @@ compile and link: gcc &lt;program file&gt; -lform -lncurses
 </pre>
 
 <p>
-<b>Example 25. Forms Basics</b>
+<a href="ncurses_programs/basics/"><b>Example 25. Forms Basics</b></a>
 </p>
 
 <div class="org-src-container">
@@ -5408,7 +5413,7 @@ attributes.
 </p>
 
 <p>
-<b>Example 26. Form Attributes example</b>
+<a href="ncurses_programs/basics/"><b>Example 26. Form Attributes example</b></a>
 </p>
 
 <div class="org-src-container">
@@ -5628,7 +5633,7 @@ appropriate.
 </p>
 
 <p>
-<b>Example 27. Field Options Usage example</b>
+<a href="ncurses_programs/basics/"><b>Example 27. Field Options Usage example</b></a>
 </p>
 
 <div class="org-src-container">
@@ -5942,7 +5947,7 @@ they work the same way.
 </p>
 
 <p>
-<b>Example 28. Form Windows Example</b>
+<a href="ncurses_programs/basics/"><b>Example 28. Form Windows Example</b></a>
 </p>
 
 <div class="org-src-container">

@@ -682,7 +682,7 @@
    #+END_EXAMPLE
 
    # *Example 1. The Hello World !!! Program*
-   *Ejemplo 1. El Programa Hello World !!!*
+   [[file:ncurses_programs/basics/hello_world.c][*Ejemplo 1. El Programa Hello World !!!*]]
 
    #+BEGIN_SRC c
      #include <ncurses.h>
@@ -804,20 +804,21 @@
     que haya terminado con el modo de curses.
 
 # * 3. The Gory Details
-* 3. los detalles sangrientos
+* 3. Los detalles sangrientos
 
   # Now that we have seen how to write a simple curses program let's get
   # into the details. There are many functions that help customize what
   # you see on screen and many features which can be put to full use.
-  Ahora que hemos visto cómo escribir un programa curses sencilla vamos a llegar
-  en los detalles. Hay muchas funciones que ayudan a personalizar lo
-  que se ve en pantalla y muchas características que pueden tener un uso completo.
+  Ahora que hemos visto cómo escribir un programa sencillo vamos a
+  entrar en detalles. Hay muchas funciones que ayudan a personalizar
+  lo que se ve en pantalla y muchas características que pueden tener
+  un uso completo.
 
   # Here we go...
   Aquí vamos...
 
 # * 4. Initialization                                                   <<@INIT>>
-* Inicialización 4. << # INIT >>
+* 4. Inicialización                                                   <<@INIT>>
 
   # We now know that to initialize curses system the function initscr()
   # has to be called. There are functions which can be called after this
@@ -825,127 +826,159 @@
   # curses system to set the terminal in raw mode or initialize color or
   # initialize the mouse etc.. Let's discuss some of the functions that
   # are normally called immediately after initscr();
-  Ahora sabemos que para inicializar el sistema curses del initscr función ()
-  ha de ser llamado. Hay funciones que se pueden llamar después de esta
-  inicialización de personalizar nuestra sesión de curses. Podemos pedir a la
-  curses sistema para configurar el terminal en modo raw o inicializar color o
-  inicializar el ratón, etc .. Vamos a discutir algunas de las funciones que
-  normalmente se llaman inmediatamente después initscr ();
+  Ahora sabemos que para inicializar el sistema curses la funcion
+  =initscr()= ha de ser llamada. Hay funciones que pueden ser llamadas
+  después de esta inicialización para personalizar nuestra sesión de
+  curses. Podemos cuestionar al sistema curses para configurar el
+  terminal en modo raw o inicializar el color o el ratón, etc .. Vamos
+  a discutir algunas de las funciones que normalmente se llaman
+  inmediatamente después de =initscr()=;
 
-# ** 4.1. Initialization functions
-# ** 4.2. raw() and cbreak()
 ** 4.1. Funciones de inicialización
-** 4.2. cruda () y cbreak ()
+*** 4.1.1. =raw()= and =cbreak()=
 
-   # Normally the terminal driver buffers the characters a user types
-   # until a new line or carriage return is encountered. But most
-   # programs require that the characters be available as soon as the
-   # user types them. The above two functions are used to disable line
-   # buffering. The difference between these two functions is in the way
-   # control characters like suspend (CTRL-Z), interrupt and quit
-   # (CTRL-C) are passed to the program.  In the raw() mode these
-   # characters are directly passed to the program without generating a
-   # signal. In the =cbreak()= mode these control characters are
-   # interpreted as any other character by the terminal driver. I
-   # personally prefer to use raw() as I can exercise greater control
-   # over what the user does.
-   Normalmente, el controlador de terminal amortigua los personajes un usuario
-   hasta que se encuentra una nueva línea o retorno de carro. Pero más
-   programas requieren que los personajes estén disponibles tan pronto como el
-   usuario escribe ellos. Las dos funciones anteriores se utilizan para desactivar la línea
-   buffering. La diferencia entre estas dos funciones es en la forma
-   caracteres de control como suspender (CTRL-Z), interrumpir y dejar de fumar
-   (CTRL-C) se pasa al programa. En el modo sin procesar () éstos
-   personajes están directamente pasan al programa sin generar una
-   señal. En el cbreak = () = modo estos caracteres de control son
-   interpretado como cualquier otro carácter por el conductor terminal. yo
-   prefiero personalmente para usar prima () que puedo ejercer un mayor control
-   más de lo que hace el usuario.
+    # Normally the terminal driver buffers the characters a user types
+    # until a new line or carriage return is encountered. But most
+    # programs require that the characters be available as soon as the
+    # user types them. The above two functions are used to disable line
+    # buffering. The difference between these two functions is in the way
+    # control characters like suspend (CTRL-Z), interrupt and quit
+    # (CTRL-C) are passed to the program.  In the raw() mode these
+    # characters are directly passed to the program without generating a
+    # signal. In the =cbreak()= mode these control characters are
+    # interpreted as any other character by the terminal driver. I
+    # personally prefer to use raw() as I can exercise greater control
+    # over what the user does.
+    Normalmente, el terminal maneja buffers de caracteres que el
+    usuario escribe hasta que se encuentra una línea nueva o retorno
+    de carro. Pero la mayoria de programas requiere que los caracteres
+    estén disponibles tan pronto como los escribe el usuario. Las dos
+    funciones anteriores se utilizan para desactivar el buffer de
+    línea. La diferencia entre estas dos funciones es la forma en que
+    los caracteres de control como suspender (CTRL-Z), interrumpir y
+    quitar (CTRL-C) se pasan al programa. En el modo =raw()= los
+    caracteres pasan directamente al programa sin generar una
+    señal. En el modo =cbreak()= estos caracteres de control son
+    interpretados como cualquier otro carácter por el controlador de
+    terminal. Personalmente prefiero usar =raw()= ya que puedo ejercer
+    un mayor control de lo que hace el usuario.
 
-# ** 4.3. echo() and noecho()
-** 4.3. echo () y noecho ()
+*** 4.1.2. =echo()= and =noecho()=
 
-   # These functions control the echoing of characters typed by the user
-   # to the terminal. =noecho()= switches off echoing. The reason you
-   # might want to do this is to gain more control over echoing or to
-   # suppress unnecessary echoing while taking input from the user
-   # through the getch() etc. functions. Most of the interactive
-   # programs call =noecho()= at initialization and do the echoing of
-   # characters in a controlled manner.  It gives the programmer the
-   # flexibility of echoing characters at any place in the window
-   # without updating current (y,x) co-ordinates.
-   Estas funciones controlan el eco de caracteres tecleada por el usuario
-   al terminal. = noecho () = se apaga eco. La razón por la que
-   puede ser que desee hacer esto es para ganar más control sobre eco o
-   suprimir el eco innecesaria al tomar la entrada del usuario
-   a través de la getch () etc. funciones. La mayor parte del interactivo
-   programas llaman = noecho () = en la inicialización y hacen el eco de
-   personajes de una manera controlada. Le da al programador la
-   flexibilidad de caracteres eco en cualquier lugar en la ventana
-   sin actualizar (y, x) coordenadas actuales.
+    # These functions control the echoing of characters typed by the user
+    # to the terminal. =noecho()= switches off echoing. The reason you
+    # might want to do this is to gain more control over echoing or to
+    # suppress unnecessary echoing while taking input from the user
+    # through the getch() etc. functions. Most of the interactive
+    # programs call =noecho()= at initialization and do the echoing of
+    # characters in a controlled manner.  It gives the programmer the
+    # flexibility of echoing characters at any place in the window
+    # without updating current (y,x) co-ordinates.
+    Estas funciones controlan el eco de caracteres generados por el
+    usuario al terminal. =noecho()= desactiva el eco. La posible razón
+    para hacer esto es mejorar el control sobre el eco o suprimir el
+    eco innecesario al tomar la entrada del usuario mediante funciones
+    =getch()=. La mayor parte de los programas interactivos llaman a
+    =noecho()= en la inicialización y realizan el eco de caracteres de
+    manera controlada. Esto le da al programador la flexibilidad de
+    imprimir caracteres en cualquier lugar en la ventana sin
+    actualizar las coordenadas actuales (y, x).
 
-# ** 4.4. keypad()
-** 4.4. teclado ()
+*** 4.1.3. =keypad()=
 
-   # This is my favorite initialization function. It enables the reading
-   # of function keys like F1, F2, arrow keys etc. Almost every
-   # interactive program enables this, as arrow keys are a major part of
-   # any User Interface. Do =keypad(stdscr, TRUE)= to enable this
-   # feature for the regular screen (stdscr). You will learn more about
-   # key management in later sections of this document.
-   Este es mi función de inicialización favorito. Permite la lectura
-   de teclas de función como F1, F2, flechas, etc. Casi todos los
-   programa interactivo permite esto, como teclas de dirección son una parte importante de
-   ninguna interfaz de usuario. Haga = teclado (stdscr, TRUE) = para habilitar esta
-   función para la pantalla regular (stdscr). Usted aprenderá más sobre
-   gestión de claves en las secciones posteriores de este documento.
+    # This is my favorite initialization function. It enables the reading
+    # of function keys like F1, F2, arrow keys etc. Almost every
+    # interactive program enables this, as arrow keys are a major part of
+    # any User Interface. Do =keypad(stdscr, TRUE)= to enable this
+    # feature for the regular screen (stdscr). You will learn more about
+    # key management in later sections of this document.
+    Este es mi función de inicialización favorita. Habilita la lectura
+    de teclas de función como F1, F2, teclas de direccion, etc. Casi
+    todos los programa interactivos permiten esto, Las teclas de
+    dirección son una parte importante de cualquier interfaz de
+    usuario. Coloque =keypad(stdscr, TRUE)= para habilitar esta
+    función en la pantalla (=stdscr=). Usted aprenderá más sobre
+    gestión de teclas en secciones posteriores de este documento.
 
-# ** 4.5. halfdelay()
-** 4.5. medio retraso ()
+*** 4.1.4. =halfdelay()=
 
-   # This function, though not used very often, is a useful one at
-   # times.  halfdelay()is called to enable the half-delay mode, which
-   # is similar to the cbreak() mode in that characters typed are
-   # immediately available to program. However, it waits for 'X' tenths
-   # of a second for input and then returns ERR, if no input is
-   # available. 'X' is the timeout value passed to the function
-   # halfdelay(). This function is useful when you want to ask the user
-   # for input, and if he doesn't respond with in certain time, we can
-   # do some thing else. One possible example is a timeout at the
-   # password prompt.
-   Esta función, aunque no se utiliza muy a menudo, es un ser de utilidad en
-   veces. medio retraso () es llamada para activar el modo de medio retraso, que
-   es similar al modo cbreak () en que los caracteres escritos son
-   disponible de inmediato para programar. Sin embargo, espera décimas 'x'
-   de un segundo para la entrada y luego devuelve ERR, si no hay entrada es
-   disponible. "X" es el valor de tiempo de espera pasa a la función
-   medio retraso (). Esta función es útil cuando se quiere pedir al usuario
-   para la entrada, y si no responde con en cierto tiempo, podemos
-   hacer algo más. Un ejemplo posible es un tiempo de espera en el
-   solicitud de contraseña.
+    # This function, though not used very often, is a useful one at
+    # times.  halfdelay()is called to enable the half-delay mode, which
+    # is similar to the cbreak() mode in that characters typed are
+    # immediately available to program. However, it waits for 'X' tenths
+    # of a second for input and then returns ERR, if no input is
+    # available. 'X' is the timeout value passed to the function
+    # halfdelay(). This function is useful when you want to ask the user
+    # for input, and if he doesn't respond with in certain time, we can
+    # do some thing else. One possible example is a timeout at the
+    # password prompt.
+    Esta función, aunque no se utiliza muy a menudo, en ocaciones
+    suele ser de utilidad. =halfdelay()= es llamada para activar el
+    modo de espera medio, que es similar al modo =cbreak()= en el que
+    los caracteres escritos estan disponibles de inmediato para el
+    programa. Sin embargo, espera 'X' décimas de segundo por la
+    entrada y luego devuelve =ERR=, si no hay entrada disponible. 'X'
+    es el valor de tiempo de espera pasado a la función =halfdelay()=.
+    Esta función es útil cuando se pide entrada al usuario, y si no
+    responde en cierto tiempo, podemos hacer algo más. Un ejemplo
+    posible es un tiempo de espera en la solicitud de contraseña.
 
 # ** 4.6. Miscellaneous Initialization functions
-** 4.6. Otras funciones de inicialización
+** 4.2. Otras funciones de inicialización
 
    # There are few more functions which are called at initialization to
    # customize curses behavior. They are not used as extensively as
    # those mentioned above. Some of them are explained where
    # appropriate.
-   Hay algunas funciones más que se llaman en la inicialización de
-   personalizar curses comportamiento. No se utilizan tan ampliamente como
-   los mencionados anteriormente. Algunos de ellos se explican donde
-   apropiado.
+   Hay algunas funciones más que se llaman en la inicialización para
+   personalizar el comportamiento de curses. No se utilizan tan
+   ampliamente como las mencionadas anteriormente. Algunas de estas se
+   explican donde es apropiado.
 
 # ** 4.7. An Example
-** 4.7. Un ejemplo
+** 4.3. Un ejemplo
 
    # Let's write a program which will clarify the usage of these
    # functions.
-   Vamos a escribir un programa que permitirá aclarar el uso de éstos
+   Vamos a escribir un programa que permitirá aclarar el uso de éstas
    funciones.
 
    # *Example 2. Initialization Function Usage example*
-   * Ejemplo 2. Inicialización Ejemplo de uso Función *
+   [[file:ncurses_programs/basics/init_func_example.c][*Ejemplo 2. Funciones de inicialización*]]
+
+   # #+BEGIN_SRC c
+   #   #include <ncurses.h>
+
+   #   int main()
+   #   {   int ch;
+
+   #     initscr();                      /* Start curses mode                */
+   #     raw();                          /* Line buffering disabled          */
+   #     keypad(stdscr, TRUE);           /* We get F1, F2 etc..              */
+   #     noecho();                       /* Don't echo() while we do getch   */
+
+   #     printw("Type any character to see it in bold\n");
+   #     ch = getch();                   /* If raw() hadn't been called
+   #                                      * we have to press enter before it
+   #                                      * gets to the program              */
+   #     if(ch == KEY_F(1))              /* Without keypad enabled this will */
+   #       printw("F1 Key pressed");     /*  not get to us either            */
+   #                                     /* Without noecho() some ugly escape
+   #                                      * charachters might have been printed
+   #                                      * on screen                        */
+   #     else
+   #       {   printw("The pressed key is ");
+   #           attron(A_BOLD);
+   #           printw("%c", ch);
+   #           attroff(A_BOLD);
+   #       }
+   #     refresh();                      /* Print it on to the real screen   */
+   #     getch();                        /* Wait for user input              */
+   #     endwin();                       /* End curses mode                  */
+
+   #     return 0;
+   #   }
+   # #+END_SRC
 
    #+BEGIN_SRC c
      #include <ncurses.h>
@@ -953,29 +986,29 @@
      int main()
      {   int ch;
 
-       initscr();                      /* Start curses mode                */
-       raw();                          /* Line buffering disabled          */
-       keypad(stdscr, TRUE);           /* We get F1, F2 etc..              */
-       noecho();                       /* Don't echo() while we do getch   */
+       initscr();                      /* Inicia el modo curses            */
+       raw();                          /* Desactiva buffer de linea        */
+       keypad(stdscr, TRUE);           /* Obtener F1, F2 etc..d            */
+       noecho();                       /* Sin echo() al hacer getch        */
 
-       printw("Type any character to see it in bold\n");
-       ch = getch();                   /* If raw() hadn't been called
-                                        * we have to press enter before it
-                                        * gets to the program              */
-       if(ch == KEY_F(1))              /* Without keypad enabled this will */
-         printw("F1 Key pressed");     /*  not get to us either            */
-                                       /* Without noecho() some ugly escape
-                                        * charachters might have been printed
-                                        * on screen                        */
+       printw("Pulse cualquier caracter para verlo remarcado\n");
+       ch = getch();                   /* Si no ha llamado a raw() tenemos
+                                        ,* que pulsar enter antes que que
+                                        ,* que llegue al programa           */
+       if(ch == KEY_F(1))              /* sin habilitar keypad esto no     */
+         printw("F1 Key pressed");     /* llegara a nosotros               */
+                                       /* Sin noecho() algunos feos
+                                        ,* caracteres de escape podrian ser
+                                        ,* impresos en pantalla             */
        else
-         {   printw("The pressed key is ");
+         {   printw("La tecla pulsada es ");
              attron(A_BOLD);
              printw("%c", ch);
              attroff(A_BOLD);
          }
-       refresh();                      /* Print it on to the real screen   */
-       getch();                        /* Wait for user input              */
-       endwin();                       /* End curses mode                  */
+       refresh();                      /* Imprime en la pantalla real      */
+       getch();                        /* Espera entrada de usuario        */
+       endwin();                       /* Termina modo curses              */
 
        return 0;
      }
@@ -990,25 +1023,26 @@
    # attributes on and off respectively. In the example I used them to
    # print the character in bold. These functions are explained in
    # detail later.
-   Este programa se explica por sí. Pero yo solía funciones que no son
-   sin embargo, ha explicado. La función = getch () = se utiliza para obtener un personaje
-   de usuario. Es equivalente a la normalidad = getchar () = excepto que
-   puede deshabilitar el almacenamiento en búfer de línea para evitar <enter> después de la entrada. Mira
-   para más información sobre = getch () = y claves de lectura en el [[@KEYS] [gestión de claves
-   sección]]. El attron funciones y attroff se utilizan para cambiar algunos
-   atributos y desactiva respectivamente. En el ejemplo que he usado para
-   imprimir el carácter en negrita. Estas funciones se explican en
-   detalle más adelante.
+   Este programa se explica por sí mismo. Pero hago uso de funciones
+   que aun no se han explicado. La función =getch()= se utiliza para
+   obtener un caracter del usuario. Es equivalente un =getchar()=
+   normal excepto que puede deshabilitar el buffer de línea para
+   evitar <enter> después de la entrada. Para más información sobre
+   =getch()= y lectura de teclas eche un vistazo a la seccion [[@KEYS][gestion
+   de teclado]]. Las funciones =attron= y =attroff= se utilizan para
+   cambiar y desactivar algunos atributos respectivamente. En el
+   ejemplo son usadas para imprimir el carácter en negrita. Estas
+   funciones se explican en detalle más adelante.
 
 # * 5. A Word about Windows
-* 5. Una palabra acerca de Windows
+* 5. Una indicacion acerca de las Ventanas
 
   # Before we plunge into the myriad ncurses functions, let me clear few
   # things about windows. Windows are explained in detail in following
   # [[@WINDOWS][sections]]
-  Antes de sumergirse en las funciones de ncurses innumerables, permítanme aclarar algunas
-  cosas de las ventanas. De Windows se explican en detalle en la siguiente
-  [[@WINDOWS] [Secciones]]
+  Antes de sumergirse en las innumerables funciones de ncurses,
+  permítanme aclarar algunas cosas acerca de las ventanas. Las
+  ventanas se explican en detalle en la siguientes [[@WINDOWS][secciones]]
 
   # A Window is an imaginary screen defined by curses system. A window
   # does not mean a bordered window which you usually see on Win9X
@@ -1018,61 +1052,82 @@
   # printing few strings, reading input etc., you can safely use this
   # single window for all of your purposes. You can also create windows
   # and call functions which explicitly work on the specified window.
-  Una ventana es una pantalla imaginaria definida por el sistema de curses. una ventana
-  no significa una ventana bordeada que por lo general se ve en Win9X
-  plataformas. Cuando curses se inicializa, se crea una ventana por defecto
-  nombrado = = stdscr que representa su 80x25 (o el tamaño de la ventana en
-  el que está ejecutando) pantalla. Si usted está haciendo tareas simples como
-  imprimir algunos hilos, lectura de entrada, etc., se puede utilizar con seguridad este
-  ventanilla única para todos sus propósitos. También se pueden crear ventanas
-  y llamar a funciones que trabajan de forma explícita en la ventana especificada.
+  Una ventana es una pantalla imaginaria definida por el sistema de
+  curses. una ventana no significa una ventana bordeada que por lo
+  general se ven en plataformas Win9X. Cuando inicializa curses, se
+  crea una ventana por defecto llamada =stdscr= que representa su
+  pantalla de 80x25 (o el tamaño de ventana en el que se está
+  ejecutando). Si está realizando tareas simples como imprimir algunas
+  cadenas, lectura de entrada, etc., puede utilizar con seguridad esta
+  única ventana para todos los propósitos. También se pueden crear
+  ventanas y llamar a funciones que trabajan de forma explícita en una
+  ventana especificada.
 
   # For example, if you call
-  Por ejemplo, si usted llama
+  Por ejemplo, si usted llama a
+
+  # #+BEGIN_SRC c
+  #   printw("Hi There !!!");
+  #   refresh();
+  # #+END_SRC
 
   #+BEGIN_SRC c
-    printw("Hi There !!!");
+    printw("Hola ahi !!!");
     refresh();
   #+END_SRC
 
   # It prints the string on stdscr at the present cursor
   # position. Similarly the call to refresh(), works on stdscr only.
-  Se imprime la cadena en stdscr en el cursor presente
-  posición. Del mismo modo la llamada a refresh (), funciona sólo en stdscr.
+  Imprime la cadena en =stdscr= en la posicion actual del cursor. Del
+  mismo modo la llamada a =refresh()=, funciona sólo en =stdscr=.
 
   # Say you have created [[@WINDOWS][windows]] then you have to call a function with a
   # 'w' added to the usual function.
-  Digamos que usted ha creado [[@WINDOWS] [windows]], entonces tienen que llamar a una función con un
-  'w' añadido a la función habitual.
+  Digamos que ha creado [[@WINDOWS][ventanas]] entonces tiene que llamar a
+  una función con una 'w' añadida a la función habitual.
+
+  # #+BEGIN_SRC c
+  #   wprintw(win, "Hi There !!!");
+  #   wrefresh(win);
+  # #+END_SRC
 
   #+BEGIN_SRC c
-    wprintw(win, "Hi There !!!");
+    wprintw(win, "Hola ahi !!!");
     wrefresh(win);
   #+END_SRC
 
   # As you will see in the rest of the document, naming of functions
   # follow the same convention. For each function there usually are
   # three more functions.
-  Como se verá en el resto del documento, nombrando de funciones
-  seguir la misma convención. Para cada función hay por lo general son
+  Como se verá en el resto del documento, Los nombres de funcione
+  siguen la misma convención. Para cada función por lo general hay
   tres funciones más.
 
+  # #+BEGIN_SRC c
+  #   printw(string);           /* Print on stdscr at present cursor position     */
+  #   mvprintw(y, x, string);   /* Move to (y, x) then print string               */
+  #   wprintw(win, string);     /* Print on window win at present cursor position */
+  #                             /* in the window                                  */
+  #   mvwprintw(win, y, x, string);  /* Move to (y, x) relative to window         */
+  #                                  /* co-ordinates and then print               */
+  # #+END_SRC
+
   #+BEGIN_SRC c
-    printw(string);           /* Print on stdscr at present cursor position     */
-    mvprintw(y, x, string);   /* Move to (y, x) then print string               */
-    wprintw(win, string);     /* Print on window win at present cursor position */
-                              /* in the window                                  */
-    mvwprintw(win, y, x, string);  /* Move to (y, x) relative to window         */
-                                   /* co-ordinates and then print               */
+    printw(string);           /* Imprime en stdscr en la posicion actual del cursor */
+    mvprintw(y, x, string);   /* Mueve a (y, x) luego imprime la cadena             */
+    wprintw(win, string);     /* Imprime en la ventana win en la actual posicion    */
+                              /* del cursor en la ventana                           */
+    mvwprintw(win, y, x, string);  /* Mueve a las coordenadas (y, x) relativas      */
+                                   /* a la ventana y luego imprime                  */
   #+END_SRC
 
   # Usually the w-less functions are macros which expand to
   # corresponding w-function with stdscr as the window parameter.
-  Por lo general, las funciones-less W son macros que se expanden hasta
-  funciones w correspondiente con stdscr como parámetro ventana.
+  Por lo general, las funciones sin-w son macros que se expanden a la
+  correspondiente funcion-w con =stdscr= como parámetro de ventana.
 
 # * 6. Output functions
-* Funciones 6. Salida
+* 6. Funciones Salida
 
   # I guess you can't wait any more to see some action. Back to our
   # odyssey of curses functions. Now that curses is initialized, let's
@@ -1185,7 +1240,7 @@
    # the window =stdscr=.)
    waddch = () = es similar a addch = () =, excepto que se añade un carácter
    en la ventana dada. (Tenga en cuenta que = addch () = añade un carácter en
-   la ventana stdscr = =.)
+   la ventana=stdscr= = =.)
 
    # In a similar fashion =mvwaddch()= function is used to add a
    # character into the given window at the given coordinates.
@@ -1245,7 +1300,7 @@
 *** 6.3.4. Un ejemplo simple printw
 
     # *Example 3. A Simple printw example*
-    * Ejemplo 3. Un ejemplo printw simple *
+    [[file:ncurses_programs/basics/][*Ejemplo 3. Un ejemplo printw simple*]]
 
     #+BEGIN_SRC c
       #include <ncurses.h>           /* ncurses.h includes stdio.h */
@@ -1331,7 +1386,7 @@
    [[@WINDOWS] [Windows]] sección.
 
 # * 7. Input functions
-* Funciones 7. entrada
+* 7. Funciones entrada
 
   # Well, printing without taking input, is boring. Let's see functions
   # which allow us to get input from user. These functions also can be
@@ -1435,7 +1490,7 @@
 ** 7.4. Algunos ejemplos
 
    # *Example 4. A Simple scanw example*
-   * Ejemplo 4. Un ejemplo scanw simple *
+   [[file:ncurses_programs/basics/][*Ejemplo 4. Un ejemplo scanw simple*]]
 
    #+BEGIN_SRC c
      #include <ncurses.h>                     /* ncurses.h includes stdio.h           */
@@ -1475,7 +1530,7 @@
   presentar con comentarios en negrita. Escanear a través del código.
 
   # *Example 5. A Simple Attributes example*
-  * Ejemplo 5. Un simple ejemplo de atributos *
+  [[file:ncurses_programs/basics/][*Ejemplo 5. Un simple ejemplo de atributos*]]
 
   #+BEGIN_SRC c
     /* pager functionality by Joseph Spainhour" <spainhou@bellsouth.net> */
@@ -1697,7 +1752,7 @@
    # operate on stdscr.
    Para cada una de las funciones anteriores que tenemos una función correspondiente
    con 'w', que opera en una ventana en particular. Las funciones anteriores
-   operar en stdscr.
+   operar en=stdscr=.
 
 # ** 8.6. chgat() functions
 ** 8.6. chgat funciones ()
@@ -1741,11 +1796,11 @@
    excepto que las funciones W operan en la ventana particular. los
    funciones mv primero mover el cursor a continuación, realice el trabajo dado a
    ellos. En realidad chgat es una macro que se sustituye por un wchgat ()
-   con stdscr como la ventana. La mayor parte de las funciones de "w-menos" son
+   con=stdscr= como la ventana. La mayor parte de las funciones de "w-menos" son
    macros.
 
    # *Example 6. Chgat() Usage example*
-   * Ejemplo 6. Chgat () Ejemplo de uso *
+   [[file:ncurses_programs/basics/][*Ejemplo 6. Chgat () Ejemplo de uso*]]
 
    #+BEGIN_SRC c
      #include <ncurses.h>
@@ -1794,7 +1849,7 @@
   # writing big, complex GUIs this is of pivotal importance before you
   # start doing anything.
   Ventanas forman el concepto más importante en curses. Has visto el
-  ventana stdscr estándar por encima de donde están todas las funciones de forma implícita
+  ventana=stdscr= estándar por encima de donde están todas las funciones de forma implícita
   operado en esta ventana. Ahora para hacer el diseño incluso una interfaz gráfica de usuario sencilla, que
   tenga que recurrir a las ventanas. La principal razón es posible que desee utilizar
   ventanas es manipular partes de la pantalla por separado, para una mejor
@@ -1844,7 +1899,7 @@
    funciones en más detalle en este ejemplo.
 
    # *Example 7. Window Border example*
-   * Ejemplo Ejemplo 7. Ventana de Fronteras *
+   [[file:ncurses_programs/basics/][*Ejemplo 7. Ventana de Fronteras*]]
 
    #+BEGIN_SRC c
      #include <ncurses.h>
@@ -2026,7 +2081,7 @@
    posición especificada.
 
    # *Example 8. More border functions*
-   * Ejemplo 8. Más funciones fronterizas *
+   [[file:ncurses_programs/basics/][*Ejemplo 8. Más funciones fronterizas*]]
 
    #+BEGIN_SRC c
      #include <ncurses.h>
@@ -2164,7 +2219,7 @@
    programa.
 
    # *Example 9. A Simple Color example*
-   * Ejemplo 9. Un ejemplo simple de color *
+   [[file:ncurses_programs/basics/][*Ejemplo 9. Un ejemplo simple de color*]]
 
    #+BEGIN_SRC c
      #include <ncurses.h>
@@ -2385,7 +2440,7 @@
 ** 11.2. Un ejemplo de uso de claves simple
 
    # *Example 10. A Simple Key Usage example*
-   * Ejemplo 10. Un ejemplo de uso de claves simple *
+   [[file:ncurses_programs/basics/][*Ejemplo 10. Un ejemplo de uso de claves simple*]]
 
    #+BEGIN_SRC c
      #include <stdio.h>
@@ -2608,7 +2663,7 @@
    se elimina la manipulación.
 
    # *Example 11. Access the menu with mouse !!!*
-   * Ejemplo 11. Acceda al menú con el ratón !!! *
+   [[file:ncurses_programs/basics/][*Ejemplo 11. Acceda al menú con el ratón !!!*]]
 
    #+BEGIN_SRC c
      #include <ncurses.h>
@@ -2739,7 +2794,7 @@
    valor del intervalo anterior. El valor predeterminado es una quinta parte de un segundo.
 
 # * 13. Screen Manipulation
-* Manipulación 13. Pantalla
+* 13. Manipulación Pantalla
 
   # In this section, we will look into some functions, which allow us to
   # manage the screen efficiently and to write some fancy programs. This
@@ -2879,7 +2934,7 @@
    para acabar.
 
    # *Example 12. Temporarily Leaving curses Mode*
-   * Ejemplo 12. Temporalmente Dejando Modo curses *
+   [[file:ncurses_programs/basics/][*Ejemplo 12. Temporalmente Dejando Modo curses*]]
 
    #+BEGIN_SRC c
      #include <ncurses.h>
@@ -2923,7 +2978,7 @@
    caracteres.
 
    # *Example 13. ACS Variables Example*
-   * Ejemplo 13. ACS Variables Ejemplo *
+   [[file:ncurses_programs/basics/][*Ejemplo 13. ACS Variables Ejemplo*]]
 
    #+BEGIN_SRC c
      #include <ncurses.h>
@@ -3122,7 +3177,7 @@
    #+END_EXAMPLE
 
    # *Example 14. Panel basics*
-   * Ejemplo 14. fundamentos del panel *
+   [[file:ncurses_programs/basics/][*Ejemplo 14. fundamentos del panel*]]
 
    #+BEGIN_SRC c
      #include <panel.h>
@@ -3186,7 +3241,7 @@
    código.
 
    # *Example 15. Panel Window Browsing Example*
-   * Ventana Ejemplo 15. Panel de Navegación Ejemplo *
+   [[file:ncurses_programs/basics/][*Ventana Ejemplo 15. Panel de Navegación Ejemplo*]]
 
    #+BEGIN_SRC c
      #include <panel.h>
@@ -3375,7 +3430,7 @@
    uso de los datos del usuario para obtener los datos necesarios para hacer las operaciones.
 
    # *Example 16. Panel Moving and Resizing example*
-   * Ejemplo Panel 16. Traslado y ejemplo cambio de tamaño *
+   [[file:ncurses_programs/basics/][*Ejemplo 16 Panel. Traslado y ejemplo cambio de tamaño*]]
 
    #+BEGIN_SRC c
      #include <panel.h>
@@ -3681,7 +3736,7 @@
    Andres [[http://www.geocrawler.com/archives/3/344/1999/9/0/2643549/][here]]
 
    # *Example 17. Panel Hiding and Showing example*
-   * Ejemplo Panel 17. Ocultar y mostrar ejemplo *
+   [[file:ncurses_programs/basics/][*Ejemplo Panel 17. Ocultar y mostrar ejemplo*]]
 
    #+BEGIN_SRC c
      #include <panel.h>
@@ -3959,7 +4014,7 @@
    # + END_EXAMPLE
 
    # *Example 18. Menu Basics*
-   * Ejemplo 18. Conceptos básicos de menú *
+   [[file:ncurses_programs/basics/][*Ejemplo 18. Conceptos básicos de menú*]]
 
    #+BEGIN_SRC c
      #include <curses.h>
@@ -4256,14 +4311,14 @@
    con el menú. La ventana de submenú muestra los elementos del menú
    Actualmente disponible para la selección. Pero no especificamos cualquier ventana
    o ventana secundaria en el sencillo ejemplo. Cuando una ventana no es
-   especificado, stdscr se toma como la ventana principal y, a continuación sistema de menús
+   especificado,=stdscr= se toma como la ventana principal y, a continuación sistema de menús
    calcula el tamaño de la ventana sub requerido para la visualización de
    artículos. A continuación se muestran los elementos en la ventana sub calculada. Asi que
    Vamos a jugar con estas ventanas y mostrar un menú con un borde y
    un título.
 
    # *Example 19. Menu Windows Usage example*
-   * Ejemplo 19. Menú Ejemplo de uso de Windows *
+   [[file:ncurses_programs/basics/][*Ejemplo 19. Menú Ejemplo de uso de Windows*]]
 
    #+BEGIN_SRC c
      #include <menu.h>
@@ -4403,7 +4458,7 @@
    desplazamiento. Vamos a ver cómo se puede hacer.
 
    # *Example 20. Scrolling Menus example*
-   * Ejemplo Ejemplo 20. Desplazamiento Menús *
+   [[file:ncurses_programs/basics/][*Ejemplo Ejemplo 20. Desplazamiento Menús*]]
 
    #+BEGIN_SRC c
      #include <curses.h>
@@ -4572,7 +4627,7 @@
    no muestra las descripciones de los artículos.
 
    # *Example 21. Milt Columnar Menus Example*
-   * Ejemplo 21. Milt columnas Menús Ejemplo *
+   [[file:ncurses_programs/basics/][*Ejemplo 21. Milt columnas Menús Ejemplo*]]
 
    #+BEGIN_SRC c
      #include <curses.h>
@@ -4753,7 +4808,7 @@
    = = REQ_TOGGLE_ITEM. Vamos a ver en acción.
 
    # *Example 22. Multi Valued Menus example*
-   * Ejemplo 22. Multi ejemplo Menús Valorado *
+   [[file:ncurses_programs/basics/][*Ejemplo 22. Multi ejemplo Menús Valorado*]]
 
    #+BEGIN_SRC c
      #include <curses.h>
@@ -4905,7 +4960,7 @@
    conceptos en la práctica con este ejemplo
 
    # *Example 23. Menu Options example*
-   * Ejemplo 23. Opciones del menú de ejemplo *
+   [[file:ncurses_programs/basics/][*Ejemplo 23. Opciones del menú de ejemplo*]]
 
    #+BEGIN_SRC c
      #include <menu.h>
@@ -5005,8 +5060,7 @@
 
 
    # *Example 24. Menu User Pointer Usage*
-
-   * Ejemplo 24. Menú Uso Puntero Usuario *
+   [[file:ncurses_programs/basics/][*Ejemplo 24. Menú Uso Puntero Usuario*]]
 
    #+BEGIN_SRC c
      #include <curses.h>
@@ -5213,7 +5267,7 @@
    #+END_EXAMPLE
 
    # *Example 25. Forms Basics*
-   * Ejemplo 25. Formularios Básicos *
+   [[file:ncurses_programs/basics/][*Ejemplo 25. Formularios Básicos*]]
 
    #+BEGIN_SRC c
      #include <form.h>
@@ -5492,7 +5546,7 @@
     atributos.
 
     # *Example 26. Form Attributes example*
-    * Ejemplo Formulario 26. Atributos ejemplo *
+   [[file:ncurses_programs/basics/][*Ejemplo Formulario 26. Atributos ejemplo*]]
 
     #+BEGIN_SRC c
       #include <form.h>
@@ -5771,7 +5825,7 @@
     apropiado.
 
     # *Example 27. Field Options Usage example*
-    * Opciones de campo Ejemplo 27. Ejemplo de uso *
+    [[file:ncurses_programs/basics/][*Opciones de campo Ejemplo 27. Ejemplo de uso*]]
 
     #+BEGIN_SRC c
       #include <form.h>
@@ -6151,7 +6205,7 @@
    que funcionan de la misma manera.
 
    # *Example 28. Form Windows Example*
-   * Ejemplo 28. Ejemplo de formularios Windows *
+    [[file:ncurses_programs/basics/][*Ejemplo 28. Ejemplo de formularios Windows*]]
 
    #+BEGIN_SRC c
      #include <form.h>
