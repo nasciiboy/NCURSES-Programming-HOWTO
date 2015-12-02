@@ -1,0 +1,126 @@
+#+TITLE: curs_border_set 3x
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  =border_set=, =wborder_set=, =box_set=, =hline_set=, =whline_set=,
+  =mvhline_set=, =mvwhline_set=, =vline_set=, =wvline_set=,
+  =mvvline_set=, =mvwvline_set= - create =curses= borders or lines
+  using complex characters and renditions
+
+* SYNOPSIS
+
+  #+BEGIN_SRC c
+    #include <curses.h>
+
+    int border_set(
+       const cchar_t *ls, const cchar_t *rs,
+       const cchar_t *ts, const cchar_t *bs,
+       const cchar_t *tl, const cchar_t *tr,
+       const cchar_t *bl, const cchar_t *br );
+    int wborder_set(
+       WINDOW *win,
+       const cchar_t *ls, const cchar_t *rs,
+       const cchar_t *ts, const cchar_t *bs,
+       const cchar_t *tl, const cchar_t *tr,
+       const cchar_t *bl, const cchar_t *br);
+    int box_set(
+       WINDOW *win,
+       const cchar_t *verch,
+       const cchar_t *horch);
+    int hline_set(
+       const cchar_t *wch, int n);
+    int whline_set(
+       WINDOW *win,
+       const cchar_t *wch, int n);
+    int mvhline_set(
+       int y, int x,
+       const cchar_t *wch, int n);
+    int mvwhline_set(
+       WINDOW *win,
+       int y, int x,
+       const cchar_t *wch, int n);
+    int vline_set(
+       const cchar_t *wch, int n);
+    int wvline_set(
+       WINDOW *win,
+       const cchar_t *wch, int n);
+    int mvvline_set(
+       int y, int x,
+       const cchar_t *wch, int n);
+    int mvwvline_set(
+       WINDOW *win,
+       int y, int x,
+       const cchar_t *wch, int n);
+  #+END_SRC
+
+* DESCRIPTION
+
+  The =border_set= and =wborder_set= functions draw a border around
+  the edges of the current or specified window.  These functions do
+  not change the cursor position, and do not wrap.
+
+  Other than the window, each argument is a complex character with
+  attributes:
+
+  * =ls= - left side,
+  * =rs= - right side,
+  * =ts= - top side,
+  * =bs= - bottom side,
+  * =tl= - top left-hand corner,
+  * =tr= - top right-hand corner,
+  * =bl= - bottom left-hand corner, and
+  * =br= - bottom right-hand corner.
+
+  If any of these arguments is zero, then the corresponding default
+  values (defined in =curses.h=) are used instead:
+
+  * =WACS_VLINE=,
+  * =WACS_VLINE=,
+  * =WACS_HLINE=,
+  * =WACS_HLINE=,
+  * =WACS_ULCORNER=,
+  * =WACS_URCORNER=,
+  * =WACS_LLCORNER=, and
+  * =WACS_LRCORNER=.
+
+  =box_set(win, verch, horch);= is a shorthand for the following call:
+
+  #+BEGIN_SRC c
+    wborder_set(win, verch, verch, horch, horch,
+                NULL, NULL, NULL, NULL);
+  #+END_SRC
+
+  The =*line_set= functions use /wch/ to draw a line starting at the
+  current cursor position in the window.  The line is at most /n/
+  characters long or as many as fit into the window.  The current
+  cursor position is not changed.
+
+  The =hline_set=, =mvhline_set=, =mvwhline_set=, and =whline_set=
+  functions draw a line proceeding toward the last column of the same
+  line.
+
+  The =vline_set=, =mvvline_set=, =mvwvline_set=, and =wvline_set=
+  functions draw a line proceeding toward the last line of the window.
+
+* NOTES
+
+  Note that =border_set=, =hline_set=, =mvhline_set=, =mvvline_set=,
+  =mvwhline_set=, =mvwvline_set=, and =vline_set= may be macros.
+
+* RETURN VALUE
+
+  Upon successful completion, these functions return =OK=.  Otherwise,
+  they return =ERR=.
+
+  Functions using a window parameter return an error if it is null.
+
+  Functions with a "mv" prefix first perform a cursor movement using
+  =wmove=, and return an error if the position is outside the window,
+  or if the window pointer is null.
+
+* SEE ALSO
+
+  [[file:ncurses.3x.org][ncurses(3x)]], [[file:curs_add_wch.3x.org][curs_add_wch(3x)]], [[file:curs_border.3x.org][curs_border(3x)]],  [[file:curs_outopts.3x.org][curs_outopts(3x)]]

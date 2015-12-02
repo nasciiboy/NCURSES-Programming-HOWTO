@@ -1,0 +1,27 @@
+#+TITLE: clear 1
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  =clear= - clear the terminal screen
+
+* SYNOPSIS
+
+  =clear=
+
+* DESCRIPTION
+
+  =clear= clears your screen if this is possible, including its
+  scrollback buffer (if the extended "E3" capability is defined).
+  =clear= looks in the environment for the terminal type and then in
+  the terminfo database to determine how to clear the screen.
+
+  =clear= ignores any command-line parameters that may be present.
+
+* SEE ALSO
+
+  [[file:tput.1.org][tput(1)]], [[file:terminfo.5.org][terminfo(5)]]
+
+  This describes =ncurses= version 6.0 (patch 20151024).

@@ -709,16 +709,17 @@
   There are three classes of functions which you can use to do output
   on screen.
 
-  1. addch() class: Print single character with attributes
+  1. =addch()= class: Print single character with attributes
 
-  2. printw() class: Print formatted output similar to printf()
+  2. =printw()= class: Print formatted output similar to =printf()=
 
-  3. addstr() class: Print strings
+  3. =addstr()= class: Print strings
+
 
   These functions can be used interchangeably and it's a matter of
   style as to which class is used. Let's see each one in detail.
 
-** 6.1. addch() class of functions
+** 6.1. =addch()= class of functions
 
    These functions put a single character into the current cursor
    location and advance the position of the cursor. You can give the
@@ -734,17 +735,18 @@
    - By OR'ing a single character with the desired attribute
      macros. These attribute macros could be found in the header file
      =ncurses.h=. For example, you want to print a character ch(of
-     type char) bold and underlined, you would call addch() as below.
+     type char) bold and underlined, you would call =addch()= as
+     below.
 
      #+BEGIN_SRC c
        addch(ch | A_BOLD | A_UNDERLINE);
      #+END_SRC
 
-   - By using functions like =attrset(),attron(),attroff()=. These
-     functions are explained in the [[@ATTRIB][Attributes]] section.  Briefly, they
-     manipulate the current attributes of the given window.  Once set,
-     the character printed in the window are associated with the
-     attributes until it is turned off.
+   - By using functions like =attrset()=, =attron()=, =attroff()=.
+     These functions are explained in the [[@ATTRIB][Attributes]] section.
+     Briefly, they manipulate the current attributes of the given
+     window.  Once set, the character printed in the window are
+     associated with the attributes until it is turned off.
 
 
    Additionally, =curses= provides some special characters for
@@ -753,7 +755,7 @@
    header file =ncurses.h=. Try looking for macros beginning with
    =ACS_= in this file.
 
-** 6.2. mvaddch(), waddch() and mvwaddch()
+** 6.2. =mvaddch()=, =waddch()= and =mvwaddch()=
 
    =mvaddch()= is used to move the cursor to a given point, and then
    print.  Thus, the calls:
@@ -771,7 +773,7 @@
 
    =waddch()= is similar to =addch()=, except that it adds a character
    into the given window. (Note that =addch()= adds a character into
-   the window  =stdscr=.)
+   the window =stdscr=.)
 
    In a similar fashion =mvwaddch()= function is used to add a
    character into the given window at the given coordinates.
@@ -781,12 +783,12 @@
    character by character. Fortunately, =ncurses= provides
    =printf=-like or =puts=-like functions.
 
-** 6.3. printw() class of functions
+** 6.3. =printw()= class of functions
 
    These functions are similar to =printf()= with the added capability
    of printing at any position on the screen.
 
-*** 6.3.1. printw() and mvprintw
+*** 6.3.1. =printw()= and =mvprintw=
 
     These two functions work much like =printf()=. =mvprintw()= can be
     used to move the cursor to a position and then print. If you want
@@ -795,33 +797,33 @@
     why one should avoid using =mvprintw()=, you have the flexibility
     to manipulate.
 
-*** 6.3.2. wprintw() and mvwprintw
+*** 6.3.2. =wprintw()= and =mvwprintw=
 
     These two functions are similar to above two except that they
     print in the corresponding window given as argument.
 
-*** 6.3.3. vwprintw()
+*** 6.3.3. =vwprintw()=
 
     This function is similar to =vprintf()=. This can be used when
     variable number of arguments are to be printed.
 
 *** 6.3.4. A Simple printw example
 
-    [[file:ncurses_programs/basics/][*Example 3. A Simple printw example*]]
+    [[file:ncurses_programs/basics/printw_example.c][*Example 3. A Simple printw example*]]
 
     #+BEGIN_SRC c
-      #include <ncurses.h>           /* ncurses.h includes stdio.h */
+      #include <ncurses.h>              /* ncurses.h includes stdio.h            */
       #include <string.h>
 
       int main()
       {
-        char mesg[]="Just a string";           /* message to be appeared on the screen  */
-        int row,col;                           /* to store the number of rows and       *
-                                                * the number of colums of the screen    */
-        initscr();                             /* start the curses mode */
-        getmaxyx(stdscr,row,col);              /* get the number of rows and columns    */
+        char mesg[]="Just a string";    /* message to be appeared on the screen  */
+        int row,col;                    /* to store the number of rows and       *
+                                         * the number of colums of the screen    */
+        initscr();                      /* start the curses mode                 */
+        getmaxyx(stdscr,row,col);       /* get the number of rows and columns    */
         mvprintw(row/2,(col-strlen(mesg))/2,"%s",mesg);
-                                               /* print the message at the center of the screen */
+                                        /* print the message at the center of the screen */
         mvprintw(row-2,0,"This screen has %d rows and %d columns\n",row,col);
         printw("Try resizing your window(if possible) and then run this program again");
         refresh();
@@ -843,24 +845,25 @@
     function we don't pass pointers to it, we just give two integer
     variables.
 
-** 6.4. addstr() class of functions
+** 6.4. =addstr()= class of functions
 
    =addstr()= is used to put a character string into a given
    window. This function is similar to calling =addch()= once for each
    character in a given string. This is true for all output
    functions. There are other functions from this family such as
    =mvaddstr(),mvwaddstr()= and =waddstr()=, which obey the naming
-   convention of curses.(e.g. mvaddstr() is similar to the respective
-   calls move() and then addstr().) Another function of this family is
-   addnstr(), which takes an integer parameter(say n)
-   additionally. This function puts at most n characters into the
-   screen. If n is negative, then the entire string will be added.
+   convention of curses.(e.g. =mvaddstr()= is similar to the
+   respective calls =move()= and then =addstr()=.) Another function of
+   this family is =addnstr()=, which takes an integer parameter(say
+   =n=) additionally. This function puts at most =n= characters into
+   the screen. If =n= is negative, then the entire string will be
+   added.
 
 ** 6.5. A word of caution
 
-   All these functions take y co-ordinate first and then x in their
-   arguments. A common mistake by beginners is to pass x,y in that
-   order.  If you are doing too many manipulations of (y,x)
+   All these functions take =y= co-ordinate first and then =x= in
+   their arguments. A common mistake by beginners is to pass =x=, =y=
+   in that order.  If you are doing too many manipulations of (y,x)
    co-ordinates, think of dividing the screen into windows and
    manipulate each one separately.  Windows are explained in the
    [[@WINDOWS][windows]] section.
@@ -871,51 +874,51 @@
   which allow us to get input from user. These functions also can be
   divided into three categories.
 
-  1. getch() class: Get a character
+  1. =getch()= class: Get a character
 
-  2. scanw() class: Get formatted input
+  2. =scanw()= class: Get formatted input
 
-  3. getstr() class: Get strings
+  3. =getstr()= class: Get strings
 
-** 7.1. getch() class of functions
+** 7.1. =getch()= class of functions
 
    These functions read a single character from the terminal. But
    there are several subtle facts to consider. For example if you
-   don't use the function cbreak(), curses will not read your input
+   don't use the function =cbreak()=, curses will not read your input
    characters contiguously but will begin read them only after a new
-   line or an EOF is encountered. In order to avoid this, the cbreak()
-   function must used so that characters are immediately available to
-   your program. Another widely used function is noecho(). As the name
-   suggests, when this function is set (used), the characters that are
-   keyed in by the user will not show up on the screen. The two
-   functions cbreak() and noecho() are typical examples of key
-   management. Functions of this genre are explained in the [[@KEYS][key
-   management section]].
+   line or an EOF is encountered. In order to avoid this, the
+   =cbreak()= function must used so that characters are immediately
+   available to your program. Another widely used function is
+   =noecho()=. As the name suggests, when this function is set (used),
+   the characters that are keyed in by the user will not show up on
+   the screen. The two functions =cbreak()= and =noecho()= are typical
+   examples of key management. Functions of this genre are explained
+   in the [[@KEYS][key management section]].
 
-** 7.2. scanw() class of functions
+** 7.2. =scanw()= class of functions
 
    These functions are similar to =scanf()= with the added capability
    of getting the input from any location on the screen.
 
-*** 7.2.1. scanw() and mvscanw
+*** 7.2.1. =scanw()= and =mvscanw=
 
     The usage of these functions is similar to that of =sscanf()=,
     where the line to be scanned is provided by =wgetstr()=
     function. That is, these functions call to =wgetstr()=
     function(explained below) and uses the resulting line for a scan.
 
-*** 7.2.2. wscanw() and mvwscanw()
+*** 7.2.2. =wscanw()= and =mvwscanw()=
 
     These are similar to above two functions except that they read
     from a window, which is supplied as one of the arguments to these
     functions.
 
-*** 7.2.3. vwscanw()
+*** 7.2.3. =vwscanw()=
 
     This function is similar to =vscanf()=. This can be used when a
     variable number of arguments are to be scanned.
 
-** 7.3. getstr() class of functions
+** 7.3. =getstr()= class of functions
 
    These functions are used to get strings from the terminal. In
    essence, this function performs the same task as would be achieved
@@ -1021,14 +1024,14 @@
   Don't worry about all those initialization and other crap.
   Concentrate on the while loop. It reads each character in the file
   and searches for the pattern /*. Once it spots the pattern, it
-  switches the BOLD attribute on with = attron()= . When we get the
-  pattern */ it is switched off by = attroff()= .
+  switches the BOLD attribute on with =attron()= . When we get the
+  pattern */ it is switched off by =attroff()= .
 
   The above program also introduces us to two useful functions
-  =getyx() = and =move()=. The first function gets the co-ordinates of
-  the present cursor into the variables y, x. Since getyx() is a macro
-  we don't have to pass pointers to variables. The function =move()=
-  moves the cursor to the co-ordinates given to it.
+  =getyx()= and =move()=. The first function gets the co-ordinates of
+  the present cursor into the variables y, x. Since =getyx()= is a
+  macro we don't have to pass pointers to variables. The function
+  =move()= moves the cursor to the co-ordinates given to it.
 
   The above program is really a simple one which doesn't do much. On
   these lines one could write a more useful program which reads a C
@@ -1037,15 +1040,15 @@
 
 ** 8.1. The details
 
-   Let's get into more details of attributes. The functions =attron(),
-   attroff(), attrset() =, and their sister functions = attr_get()=
-   etc.. can be used to switch attributes on/off , get attributes and
-   produce a colorful display.
+   Let's get into more details of attributes. The functions
+   =attron()=, =attroff()=, =attrset()=, and their sister functions
+   =attr_get()= etc.. can be used to switch attributes on/off , get
+   attributes and produce a colorful display.
 
    The functions attron and attroff take a bit-mask of attributes and
    switch them on or off, respectively. The following video
-   attributes, which are defined in <curses.h> can be passed to these
-   functions.
+   attributes, which are defined in =<curses.h>= can be passed to
+   these functions.
 
    #+BEGIN_EXAMPLE
      A_NORMAL        Normal display (no highlight)
@@ -1073,14 +1076,14 @@
      attron(A_REVERSE | A_BLINK);
    #+END_SRC
 
-** 8.2. attron() vs attrset()
+** 8.2. =attron()= vs =attrset()=
 
-   Then what is the difference between attron() and attrset()? attrset
-   sets the attributes of window whereas attron just switches on the
-   attribute given to it. So attrset() fully overrides whatever
-   attributes the window previously had and sets it to the new
-   attribute(s). Similarly attroff() just switches off the
-   attribute(s) given to it as an argument. This gives us the
+   Then what is the difference between =attron()= and =attrset()=?
+   attrset sets the attributes of window whereas attron just switches
+   on the attribute given to it. So =attrset()= fully overrides
+   whatever attributes the window previously had and sets it to the
+   new =attribute(s)=. Similarly =attroff()= just switches off the
+   =attribute(s)= given to it as an argument. This gives us the
    flexibility of managing attributes easily.But if you use them
    carelessly you may loose track of what attributes the window has
    and garble the display. This is especially true while managing
@@ -1111,9 +1114,9 @@
    with 'w' which operates on a particular window. The above functions
    operate on =stdscr=.
 
-** 8.6. chgat() functions
+** 8.6. =chgat()= functions
 
-   The function chgat() is listed in the end of the man page
+   The function =chgat()= is listed in the end of the man page
    =curs_attr=. It actually is a useful one. This function can be used
    to set attributes for a group of characters without moving. I mean
    it !!! without moving the cursor :-) It changes the attributes of a
@@ -2036,7 +2039,7 @@
    save the tty modes with a call to =def_prog_mode()= and then call
    =endwin()= to end the curses mode. This will leave you in the
    original tty mode. To get back to curses once you are done, call
-   =reset_prog_mode() =. This function returns the tty to the state
+   =reset_prog_mode()=. This function returns the tty to the state
    stored by =def_prog_mode()=. Then do refresh(), and you are back to
    the curses mode. Here is an example showing the sequence of things
    to be done.

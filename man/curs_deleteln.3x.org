@@ -1,0 +1,67 @@
+#+TITLE: curs_deleteln 3x
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  =deleteln=, =wdeleteln=, =insdelln=, =winsdelln=, =insertln=,
+  =winsertln= - delete and insert lines in a =curses= window
+
+* SYNOPSIS
+
+  #+BEGIN_SRC c
+    #include <curses.h>
+
+    int deleteln(void);
+    int wdeleteln(WINDOW *win);
+    int insdelln(int n);
+    int winsdelln(WINDOW *win, int n);
+    int insertln(void);
+    int winsertln(WINDOW *win);
+  #+END_SRC
+
+* DESCRIPTION
+
+  The =deleteln= and =wdeleteln= routines delete the line under the
+  cursor in the window; all lines below the current line are moved up
+  one line.  The bottom line of the window is cleared.  The cursor
+  position does not change.
+
+  The =insdelln= and =winsdelln= routines, for positive n, insert /n/
+  lines into the specified window above the current line.  The /n/
+  bottom lines are lost.  For negative n, delete /n/ lines (starting
+  with the one under the cursor), and move the remaining lines up.
+  The bottom /n/ lines are cleared.  The current cursor position
+  remains the same.
+
+  The =insertln= and =winsertln= routines insert a blank line above
+  the current line and the bottom line is lost.
+
+* RETURN VALUE
+
+  All routines return the integer =ERR= upon failure and an =OK= (SVr4
+  specifies only "an integer value other than =ERR=") upon successful
+  completion.
+
+  X/Open defines no error conditions.  In this implementation, if the
+  window parameter is null, an error is returned.
+
+* PORTABILITY
+
+  These functions are described in the XSI Curses standard, Issue 4.
+  The standard specifies that they return =ERR= on failure, but
+  specifies no error conditions.
+
+* NOTES
+
+  Note that all but =winsdelln= may be macros.
+
+  These routines do not require a hardware line delete or insert
+  feature in the terminal.  In fact, they will not use hardware line
+  delete/insert unless =idlok(..., TRUE)= has been set on the current
+  window.
+
+* SEE ALSO
+
+  [[file:ncurses.3x.org][curses(3x)]]

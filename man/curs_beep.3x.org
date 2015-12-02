@@ -1,0 +1,46 @@
+#+TITLE: curs_beep 3x
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  =beep=, =flash= - =curses= bell and screen flash routines
+
+* SYNOPSIS
+
+  #+BEGIN_SRC c
+    #include <curses.h>
+
+    int beep(void);
+    int flash(void);
+  #+END_SRC
+
+* DESCRIPTION
+
+  The =beep= and =flash= routines are used to alert the terminal user.
+  The routine =beep= sounds an audible alarm on the terminal, if
+  possible; otherwise it flashes the screen (visible bell).  The
+  routine =flash= flashes the screen, and if that is not possible,
+  sounds the alert.  If neither alert is possible, nothing happens.
+  Nearly all terminals have an audible alert (bell or beep), but only
+  some can flash the screen.
+
+* RETURN VALUE
+
+  These routines return =OK= if they succeed in beeping or flashing,
+  =ERR= otherwise.
+
+* EXTENSIONS
+
+  SVr4's =beep= and =flash= routines always returned =OK=, so it was
+  not possible to tell when the beep or flash failed.
+
+* PORTABILITY
+
+  These functions are described in the XSI Curses standard, Issue 4.
+  Like SVr4, it specifies that they always return =OK=.
+
+* SEE ALSO
+
+  [[file:ncurses.3x.org][curses(3x)]]

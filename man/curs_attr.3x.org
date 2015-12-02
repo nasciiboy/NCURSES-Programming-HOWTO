@@ -1,0 +1,247 @@
+#+TITLE: curs_attr 3x
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  =attroff=, =wattroff=, =attron=, =wattron=, =attrset=, =wattrset=,
+  =color_set=, =wcolor_set=, =standend=, =wstandend=, =standout=,
+  =wstandout=, =attr_get=, =wattr_get=, =attr_off=, =wattr_off=,
+  =attr_on=, =wattr_on=, =attr_set=, =wattr_set=, =chgat=, =wchgat=,
+  =mvchgat=, =mvwchgat=, =PAIR_NUMBER= - =curses= character and window
+  attribute control routines
+
+* SYNOPSIS
+
+  #+BEGIN_SRC c
+    #include <curses.h>
+    int attroff(int attrs);
+    int wattroff(WINDOW *win, int attrs);
+    int attron(int attrs);
+    int wattron(WINDOW *win, int attrs);
+    int attrset(int attrs);
+    int wattrset(WINDOW *win, int attrs);
+    int color_set(short color_pair_number, void* opts);
+    int wcolor_set(WINDOW *win, short color_pair_number, void* opts);
+    int standend(void);
+    int wstandend(WINDOW *win);
+    int standout(void);
+    int wstandout(WINDOW *win);
+    int attr_get(attr_t *attrs, short *pair, void *opts);
+    int wattr_get(WINDOW *win, attr_t *attrs, short *pair, void *opts);
+    int attr_off(attr_t attrs, void *opts);
+    int wattr_off(WINDOW *win, attr_t attrs, void *opts);
+    int attr_on(attr_t attrs, void *opts);
+    int wattr_on(WINDOW *win, attr_t attrs, void *opts);
+    int attr_set(attr_t attrs, short pair, void *opts);
+    int wattr_set(WINDOW *win, attr_t attrs, short pair, void *opts);
+    int chgat(int n, attr_t attr, short color, const void *opts);
+    int wchgat(WINDOW *win, int n, attr_t attr, short color, const void *opts);
+    int mvchgat(int y, int x, int n, attr_t attr, short color, const void *opts);
+    int mvwchgat(WINDOW *win, int y, int x, int n, attr_t attr, short color, const void *opts);
+  #+END_SRC
+
+* DESCRIPTION
+
+  These routines manipulate the current attributes of the named
+  window.  The current attributes of a window apply to all characters
+  that are written into the window with =waddch=, =waddstr= and
+  =wprintw=.  Attributes are a property of the character, and move
+  with the character through any scrolling and insert/delete
+  line/character operations.  To the extent possible, they are
+  displayed as appropriate modifications to the graphic rendition of
+  characters put on the screen.
+
+** attrset
+
+   The routine =attrset= sets the current attributes of the given
+   window to /attrs/.  The routine =attroff= turns off the named
+   attributes without turning any other attributes on or off.  The
+   routine =attron= turns on the named attributes without affecting
+   any others.  The routine standout is the same as
+   =attron(A_STANDOUT)=.  The routine =standend= is the same as
+   =attrset(A_NORMAL)= or =attrset(0)=, that is, it turns off all
+   attributes.
+
+   The =attrset= and related routines do not affect the attributes
+   used when erasing portions of the window.  See [[file:curs_bkgd.3x.org][curs_bkgd(3x)]] for
+   functions which modify the attributes used for erasing and
+   clearing.
+
+** attr_set
+
+   The =attrset= routine is actually a legacy feature predating SVr4
+   curses but kept in X/Open Curses for the same reason that SVr4
+   curses kept it: compatibility.  The routine =attr_set= provides for
+   passing a color-pair parameter.
+
+   The remaining =attr_*= functions operate exactly like the
+   corresponding =attr*= functions, except that they take arguments of
+   type =attr_t= rather than =int=.
+
+** color_set
+
+   The routine =color_set= sets the current color of the given window
+   to the foreground/background combination described by the
+   =color_pair_number=.  The parameter opts is reserved for future
+   use, applications must supply a null pointer.
+
+** attr_get
+
+   The routine =wattr_get= returns the current attribute and color
+   pair for the given window; =attr_get= returns the current attribute
+   and color pair for =stdscr=.
+
+   There is no corresponding =attrget= function as such in X/Open
+   Curses, although =ncurses= provides =getattrs= (see
+   [[file:curs_legacy.3x.org][curs_legacy(3x)]]).
+
+** chgat
+
+   The routine =chgat= changes the attributes of a given number of
+   characters starting at the current cursor location of =stdscr=.  It
+   does not update the cursor and does not perform wrapping.  A
+   character count of -1 or greater than the remaining window width
+   means to change attributes all the way to the end of the current
+   line.  The =wchgat= function generalizes this to any window; the
+   =mvwchgat= function does a cursor move before acting.  In these
+   functions, the color argument is a color-pair index (as in the
+   first argument of init_pair, see [[file:curs_color.3x.org][curs_color(3x)]]).  The =opts=
+   argument is not presently used, but is reserved for the future
+   (leave it =NULL=).
+
+** Attributes
+
+   The following video attributes, defined in =<curses.h>=, can be
+   passed to the routines =attron=, =attroff=, and =attrset=, or OR'd
+   with the characters passed to =addch= (see [[file:curs_addch.3x.org][curs_addch(3x)]]).
+
+   | Name            | Description                             |
+   |-----------------+-----------------------------------------|
+   | ~A_NORMAL~      | Normal display (no highlight)           |
+   | ~A_STANDOUT~    | Best highlighting mode of the terminal. |
+   | ~A_UNDERLINE~   | Underlining                             |
+   | ~A_REVERSE~     | Reverse video                           |
+   | ~A_BLINK~       | Blinking                                |
+   | ~A_DIM~         | Half bright                             |
+   | ~A_BOLD~        | Extra bright or bold                    |
+   | ~A_PROTECT~     | Protected mode                          |
+   | ~A_INVIS~       | Invisible or blank mode                 |
+   | ~A_ALTCHARSET~  | Alternate character set                 |
+   | ~A_ITALIC~      | Italics (non-X/Open extension)          |
+   | ~A_CHARTEXT~    | Bit-mask to extract a character         |
+   |                 |                                         |
+   | ~COLOR_PAIR(n)~ | Color-pair number /n/                   |
+
+   These video attributes are supported by =attr_on= and related
+   functions (which also support the attributes recognized by
+   =attron=, etc.):
+
+   | Name            | Description          |
+   |-----------------+----------------------|
+   | ~WA_HORIZONTAL~ | Horizontal highlight |
+   | ~WA_LEFT~       | Left highlight       |
+   | ~WA_LOW~        | Low highlight        |
+   | ~WA_RIGHT~      | Right highlight      |
+   | ~WA_TOP~        | Top highlight        |
+   | ~WA_VERTICAL~   | Vertical highlight   |
+
+   For consistency
+
+   The following macro is the reverse of =COLOR_PAIR(n)=:
+
+   - =PAIR_NUMBER(attrs)= :: Returns the pair number associated with
+                             the =COLOR_PAIR(n)= attribute.
+
+
+   The return values of many of these routines are not meaningful
+   (they are implemented as macro-expanded assignments and simply
+   return their argument).  The SVr4 manual page claims (falsely) that
+   these routines always return =1=.
+
+* NOTES
+
+  Note that =attroff=, =wattroff=, =attron=, =wattron=, =attrset=,
+  =wattrset=, =standend= and =standout= may be macros.
+
+  =COLOR_PAIR= values can only be OR'd with attributes if the pair
+  number is less than 256.  The alternate functions such as
+  =color_set= can pass a color pair value directly.  However, ncurses
+  ABI 4 and 5 simply OR this value within the alternate functions.
+  You must use =ncurses= ABI 6 to support more than 256 color pairs.
+
+* PORTABILITY
+
+  These functions are supported in the XSI Curses standard, Issue 4.
+  The standard defined the dedicated type for highlights, =attr_t=,
+  which is not defined in SVr4 curses.  The functions taking =attr_t=
+  arguments are not supported under SVr4.
+
+  The XSI Curses standard states that whether the traditional
+  functions =attron=/=attroff=/=attrset= can manipulate attributes
+  other than =A_BLINK=, =A_BOLD=, =A_DIM=, =A_REVERSE=, =A_STANDOUT=,
+  or =A_UNDERLINE= is "unspecified".  Under this implementation as
+  well as SVr4 =curses=, these functions correctly manipulate all
+  other highlights (specifically, =A_ALTCHARSET=, =A_PROTECT=, and
+  =A_INVIS=).
+
+  This implementation provides the =A_ITALIC= attribute for terminals
+  which have the =enter_italics_mode= (sitm) and exit_italics_mode
+  (ritm) capabilities.  Italics are not mentioned in X/Open Curses.
+  Unlike the other video attributes, =I_ITALIC= is unrelated to the
+  =set_attributes= capabilities.  This implementation makes the
+  assumption that =exit_attribute_mode= may also reset italics.
+
+  XSI Curses added the new entry points, =attr_get=, =attr_on=,
+  =attr_off=, =attr_set=, =wattr_on=, =wattr_off=, =wattr_get=,
+  =wattr_set=.  These are intended to work with a new series of
+  highlight macros prefixed with =WA_=.  The older macros have direct
+  counterparts in the newer set of names:
+
+  | Name            | Description                             |
+  |-----------------+-----------------------------------------|
+  | ~WA_NORMAL~     | Normal display (no highlight)           |
+  | ~WA_STANDOUT~   | Best highlighting mode of the terminal. |
+  | ~WA_UNDERLINE~  | Underlining                             |
+  | ~WA_REVERSE~    | Reverse video                           |
+  | ~WA_BLINK~      | Blinking                                |
+  | ~WA_DIM~        | Half bright                             |
+  | ~WA_BOLD~       | Extra bright or bold                    |
+  | ~WA_ALTCHARSET~ | Alternate character set                 |
+
+  Very old versions of this library did not force an update of the
+  screen when changing the attributes.  Use =touchwin= to force the
+  screen to match the updated attributes.
+
+  The XSI curses standard specifies that each pair of corresponding =A_=
+  and =WA_=-using functions operates on the same current-highlight
+  information.
+
+  The XSI standard extended conformance level adds new highlights
+  =A_HORIZONTAL=, =A_LEFT=, =A_LOW=, =A_RIGHT=, =A_TOP=, =A_VERTICAL=
+  (and corresponding =WA_= macros for each).  As of August 2013, no
+  known terminal provides these highlights (i.e., via the =sgr1=
+  capability).
+
+* RETURN VALUE
+
+  All routines return the integer =OK= on success, or =ERR= on
+  failure.
+
+  X/Open does not define any error conditions.
+
+  This implementation returns an error if the window pointer is null.
+  The =wcolor_set= function returns an error if the color pair
+  parameter is outside the range =0..COLOR_PAIRS-1=.  This
+  implementation also provides =getattrs= for compatibility with older
+  versions of curses.
+
+  Functions with a "mv" prefix first perform a cursor movement using
+  =wmove=, and return an error if the position is outside the window,
+  or if the window pointer is null.
+
+* SEE ALSO
+
+  [[file:ncurses.3x.org][curses(3x)]], [[file:curs_addch.3x.org][curs_addch(3x)]], [[file:curs_addstr.3x.org][curs_addstr(3x)]],
+  [[file:curs_bkgd.3x.org][curs_bkgd(3x)]], [[file:curs_printw.3x.org][curs_printw(3x)]], [[file:curs_variables.3x.org][curs_variables(3x)]]

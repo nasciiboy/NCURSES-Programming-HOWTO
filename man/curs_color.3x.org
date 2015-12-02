@@ -1,0 +1,308 @@
+#+TITLE: curs_color 3x
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  =start_color=, =init_pair=, =init_color=, =has_colors=,
+  =can_change_color=, =color_content=, =pair_content=, =COLOR_PAIR= -
+  =curses= color manipulation routines
+
+* SYNOPSIS
+
+  #+BEGIN_SRC c
+    include <curses.h>
+
+    int start_color(void);
+    int init_pair(short pair, short f, short b);
+    int init_color(short color, short r, short g, short b);
+    bool has_colors(void);
+    bool can_change_color(void);
+    int color_content(short  color, short *r, short *g, short *b);
+    int pair_content(short pair, short *f, short *b);
+  #+END_SRC
+
+* DESCRIPTION
+
+** Overview
+
+   =curses= supports color attributes on terminals with that
+   capability.  To use these routines =start_color= must be called,
+   usually right after =initscr=.  Colors are always used in pairs
+   (referred to as color-pairs).  A color-pair consists of a
+   foreground color (for characters) and a background color (for the
+   blank field on which the characters are displayed).  A programmer
+   initializes a colorpair with the routine =init_pair=.  After it has
+   been initialized, =COLOR_PAIR(n)=, a macro defined in =<curses.h>=,
+   can be used as a new video attribute.
+
+   If a terminal is capable of redefining colors, the programmer can
+   use the routine =init_color= to change the definition of a color.
+   The routines =has_colors= and =can_change_color= return =TRUE= or
+   =FALSE=, depending on whether the terminal has color capabilities
+   and whether the programmer can change the colors.  The routine
+   =color_content= allows a programmer to extract the amounts of red,
+   green, and blue components in an initialized color.  The routine
+   =pair_content= allows a programmer to find out how a given
+   color-pair is currently defined.
+
+** Color Rendering
+
+   The =curses= library combines these inputs to produce the actual
+   foreground and background colors shown on the screen:
+
+   * per-character video attributes (e.g., via =waddch=),
+
+   * the window attribute (e.g., by =wattrset=), and
+
+   * the background character (e.g., =wbkgdset=).
+
+
+  Per-character and window attributes are usually set by a parameter
+  containing video attributes including a =COLOR_PAIR= value.  Some
+  functions such as =wattr_set= use a separate parameter which is the
+  color pair number.
+
+  The background character is a special case: it includes a character
+  value, just as if it were passed to =waddch=.
+
+  The =curses= library does the actual work of combining these color
+  pairs in an internal function called from =waddch=:
+
+  * If the parameter passed to =waddch= is blank, and it uses the
+    special color pair 0,
+
+    * =curses= next checks the window attribute.
+
+    * If the window attribute does not use color pair 0, =curses= uses
+      the color pair from the window attribute.
+
+    * Otherwise, =curses= uses the background character.
+
+  * If the parameter passed to =waddch= is not blank, or it does not
+    use the special color pair 0, =curses= prefers the color pair from
+    the parameter, if it is nonzero.  Otherwise, it tries the window
+    attribute next, and finally the background character.
+
+
+  Some =curses= functions such as =wprintw= call =waddch=.  Those do
+  not combine its parameter with a color pair.  Consequently those
+  calls use only the window attribute or the background character.
+
+** Routine Descriptions
+
+   The =start_color= routine requires no arguments.  It must be called
+   if the programmer wants to use colors, and before any other color
+   manipulation routine is called.  It is good practice to call this
+   routine right after =initscr=.  =start_color= does this:
+
+   * It initializes two global variables, =COLORS= and =COLOR_PAIRS=
+     (respectively defining the maximum number of colors and
+     color-pairs the terminal can support).
+
+   * It initializes the special color pair =0= to the default
+     foreground and background colors.  No other color pairs are
+     initialized.
+
+   * It restores the colors on the terminal to the values they had
+     when the terminal was just turned on.
+
+   * If the terminal supports the =initc= (=initialize_color=)
+     capability, =start_color= initializes its internal table
+     representing the red, green and blue components of the color
+     palette.
+
+     The components depend on whether the terminal uses CGA (aka
+     "ANSI") or HLS (i.e., the =hls= (=hue_lightness_saturation=)
+     capability is set).  The table is initialized first for eight
+     basic colors (black, red, green, yellow, blue, magenta, cyan, and
+     white), and after that (if the terminal supports more than eight
+     colors) the components are initialized to =1000=.
+
+     =start_color= does not attempt to set the terminal's color
+     palette to match its built-in table.  An application may use
+     =init_color= to alter the internal table along with the
+     terminal's color.
+
+
+  These limits apply to color values and color pairs.  Values outside
+  these limits are not legal, and may result in a runtime error:
+
+  * =COLORS= corresponds to the terminal database's =max_colors=
+    capability, which is typically a signed 16-bit integer (see
+    [[file:terminfo.5.org][terminfo(5)]]).
+
+  * color values are expected to be in the range =0= to =COLORS-1=,
+    inclusive (including 0 and =COLORS-1=).
+
+  * a special color value =-1= is used in certain extended functions
+    to denote the default color (see use_default_colors).
+
+  * =COLOR_PAIRS= corresponds to the terminal database's =max_pairs=
+    capability, which is typically a signed 16-bit integer (see
+    [[file:terminfo.5.org][terminfo(5)]]).
+
+  * legal color pair values are in the range =1= to =COLOR_PAIRS-1=,
+    inclusive.
+
+  * color pair =0= is special; it denotes "no color".
+
+    Color pair =0= is assumed to be white on black, but is actually
+    whatever the terminal implements before color is initialized.  It
+    cannot be modified by the application.
+
+
+  The =init_pair= routine changes the definition of a colorpair.  It
+  takes three arguments: the number of the colorpair to be changed,
+  the foreground color number, and the background color number.  For
+  portable applications:
+
+  * The first argument must be a legal color pair value.  If default
+    colors are used (see =use_default_colors=) the upper limit is
+    adjusted to allow for extra pairs which use a default color in
+    foreground and/or background.
+
+  * The second and third arguments must be legal color values.
+
+
+  If the color-pair was previously initialized, the screen is
+  refreshed and all occurrences of that color-pair are changed to the
+  new definition.
+
+  As an extension, =ncurses= allows you to set color pair =0= via the
+  =assume_default_colors= routine, or to specify the use of default
+  colors (color number =-1=) if you first invoke the
+  =use_default_colors= routine.
+
+  The =init_color= routine changes the definition of a color.  It
+  takes four arguments: the number of the color to be changed followed
+  by three RGB values (for the amounts of red, green, and blue
+  components).  The first argument must be a legal color value;
+  default colors are not allowed here.  (See the section *Colors* for
+  the default color index.)  Each of the last three arguments must be
+  a value in the range =0= through =1000=.  When =init_color= is used,
+  all occurrences of that color on the screen immediately change to
+  the new definition.
+
+  The =has_colors= routine requires no arguments.  It returns =TRUE=
+  if the terminal can manipulate colors; otherwise, it returns
+  =FALSE=.  This routine facilitates writing terminalindependent
+  programs.  For example, a programmer can use it to decide whether to
+  use color or some other video attribute.
+
+  The =can_change_color= routine requires no arguments.  It returns
+  =TRUE= if the terminal supports colors and can change their
+  definitions; other, it returns =FALSE=.  This routine facilitates
+  writing terminal-independent programs.
+
+  The =color_content= routine gives programmers a way to find the
+  intensity of the red, green, and blue (RGB) components in a color.
+  It requires four arguments: the color number, and three addresses of
+  =short='s for storing the information about the amounts of red,
+  green, and blue components in the given color.  The first argument
+  must be a legal color value, i.e., =0= through =COLORS-1=,
+  inclusive.  The values that are stored at the addresses pointed to
+  by the last three arguments are in the range =0= (no component)
+  through =1000= (maximum amount of component), inclusive.
+
+  The =pair_content= routine allows programmers to find out what
+  colors a given color-pair consists of.  It requires three arguments:
+  the color-pair number, and two addresses of =short='s for storing
+  the foreground and the background color numbers.  The first argument
+  must be a legal color value, i.e., in the range 1 through
+  =COLOR_PAIRS-1=, inclusive.  The values that are stored at the
+  addresses pointed to by the second and third arguments are in the
+  range =0= through =COLORS=, inclusive.
+
+** Colors
+
+   In =<curses.h>= the following macros are defined.  These are the
+   standard colors (ISO-6429).  =curses= also assumes that
+   =COLOR_BLACK= is the default background color for all terminals.
+
+   * =COLOR_BLACK=
+   * =COLOR_RED=
+   * =COLOR_GREEN=
+   * =COLOR_YELLOW=
+   * =COLOR_BLUE=
+   * =COLOR_MAGENTA=
+   * =COLOR_CYAN=
+   * =COLOR_WHITE=
+
+* RETURN VALUE
+
+  The routines =can_change_color()= and =has_colors()= return =TRUE=
+  or =FALSE=.
+
+  All other routines return the integer =ERR= upon failure and an =OK=
+  (SVr4 specifies only "an integer value other than =ERR=") upon
+  successful completion.
+
+  X/Open defines no error conditions.  This implementation will return
+  =ERR= on attempts to use color values outside the range 0 to
+  =COLORS-1= (except for the default colors extension), or use color
+  pairs outside the range 0 to =COLOR_PAIRS-1=.  Color values used in
+  =init_color= must be in the range =0= to =1000=.  An error is
+  returned from all functions if the terminal has not been
+  initialized.  An error is returned from secondary functions such as
+  =init_pair= if =start_color= was not called.
+
+  - =init_color=  :: returns an error if the terminal does not support
+                     this feature, e.g., if the =initialize_color=
+                     capability is absent from the terminal
+                     description.
+
+  - =start_color= :: returns an error if the color table cannot be
+                     allocated.
+
+* NOTES
+
+  In the =ncurses= implementation, there is a separate color
+  activation flag, color palette, color pairs table, and associated
+  =COLORS= and =COLOR_PAIRS= counts for each screen; the =start_color=
+  function only affects the current screen.  The SVr4/XSI interface is
+  not really designed with this in mind, and historical
+  implementations may use a single shared color palette.
+
+  Note that setting an implicit background color via a color pair
+  affects only character cells that a character write operation
+  explicitly touches.  To change the background color used when parts
+  of a window are blanked by erasing or scrolling operations, see
+  [[file:curs_bkgd.3x.org][curs_bkgd(3x)]].
+
+  Several caveats apply on 386 and 486 machines with VGAcompatible
+  graphics:
+
+  * =COLOR_YELLOW= is actually brown.  To get yellow, use
+    =COLOR_YELLOW= combined with the =A_BOLD= attribute.
+
+  * The =A_BLINK= attribute should in theory cause the background to
+    go bright.  This often fails to work, and even some cards for
+    which it mostly works (such as the Paradise and compatibles) do
+    the wrong thing when you try to set a bright "yellow" background
+    (you get a blinking yellow foreground instead).
+
+  * Color RGB values are not settable.
+
+* PORTABILITY
+
+  This implementation satisfies XSI Curses's minimum maximums for
+  =COLORS= and =COLOR_PAIRS=.
+
+  The =init_pair= routine accepts negative values of foreground and
+  background color to support the =use_default_colors= extension, but
+  only if that routine has been first invoked.
+
+  The assumption that =COLOR_BLACK= is the default background color
+  for all terminals can be modified using the =assume_default_colors=
+  extension.
+
+  This implementation checks the pointers, e.g., for the values
+  returned by =color_content= and =pair_content=, and will treat those
+  as optional parameters when null.
+
+* SEE ALSO
+
+  [[file:ncurses.3x.org][curses(3x)]], [[file:curs_initscr.3x.org][curs_initscr(3x)]], [[file:curs_attr.3x.org][curs_attr(3x)]], [[file:curs_variables.3x.org][curs_variables(3x)]],
+  [[file:default_colors.3x.org][default_colors(3x)]]

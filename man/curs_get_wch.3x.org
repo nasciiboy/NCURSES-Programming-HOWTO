@@ -1,0 +1,91 @@
+#+TITLE: curs_get_wch 3x
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  =get_wch=, =wget_wch=, =mvget_wch=, =mvwget_wch=, =unget_wch= - get
+  (or push back) a wide character from =curses= terminal keyboard
+
+* SYNOPSIS
+
+  #+BEGIN_SRC c
+    #include <curses.h>
+
+    int get_wch(wint_t *wch);
+    int wget_wch(WINDOW *win, wint_t *wch);
+    int mvget_wch(int y, int x, wint_t *wch);
+    int mvwget_wch(WINDOW *win, int y, int x, wint_t *wch);
+    int unget_wch(const wchar_t wch);
+  #+END_SRC
+
+* DESCRIPTION
+
+  The =get_wch=, =wget_wch=, =mvget_wch=, and =mvwget_wch= functions
+  read a character from the terminal associated with the current or
+  specified window.  In no-delay mode, if no input is waiting, the
+  value =ERR= is returned.  In delay mode, the program waits until the
+  system passes text through to the program.  Depending on the setting
+  of =cbreak=, this is after one character (cbreak mode), or after the
+  first newline (nocbreak mode).  In half-delay mode, the program
+  waits until the user types a character or the specified timeout
+  interval has elapsed.
+
+  Unless =noecho= has been set, these routines echo the character into
+  the designated window.
+
+  If the window is not a pad and has been moved or modified since the
+  last call to =wrefresh=, =wrefresh= will be called before another
+  character is read.
+
+  If =keypad= is enabled, these functions respond to the pressing of a
+  function key by setting the object pointed to by /wch/ to the
+  corresponding =KEY_= value defined in =<curses.h>= and returning
+  =KEY_CODE_YES=.  If a character (such as escape) that could be the
+  beginning of a function key is received, =curses= sets a timer.  If
+  the remainder of the sequence does arrive within the designated
+  time, =curses= passes through the character; otherwise, =curses=
+  returns the function key value.  For this reason, many terminals
+  experience a delay between the time a user presses the escape key
+  and the time the escape is returned to the program.
+
+  The =unget_wch= function pushes the wide character /wch/ back onto
+  the head of the input queue, so the wide character is returned by
+  the next call to =get_wch=.  The pushback of one character is
+  guaranteed.  If the program calls =unget_wch= too many times without
+  an intervening call to =get_wch=, the operation may fail.
+
+* NOTES
+
+  The header file =<curses.h>= automatically includes the header file
+  =<stdio.h>=.
+
+  Applications should not define the escape key by itself as a
+  single-character function.
+
+  When using =get_wch=, =wget_wch=, =mvget_wch=, or =mvwget_wch=,
+  applications should not use =nocbreak= mode and =echo= mode at the
+  same time.  Depending on the state of the tty driver when each
+  character is typed, the program may produce undesirable results.
+
+  All functions except =wget_wch= and =unget_wch= may be macros.
+
+* RETURN VALUE
+
+  When =get_wch=, =wget_wch=, =mvget_wch=, and =mvwget_wch= functions
+  successfully report the pressing of a function key, they return
+  =KEY_CODE_YES=.  When they successfully report a wide character,
+  they return =OK=.  Otherwise, they return =ERR=.
+
+  Upon successful completion, =unget_wch= returns =OK=.  Otherwise,
+  the function returns =ERR=.
+
+  Functions with a "mv" prefix first perform a cursor movement using
+  =wmove=, and return an error if the position is outside the window,
+  or if the window pointer is null.
+
+* SEE ALSO
+
+  [[file:ncurses.3x.org][curses(3x)]], [[file:curs_getch.3x.org][curs_getch(3x)]], [[file:curs_ins_wch.3x.org][curs_ins_wch(3x)]], [[file:curs_inopts.3x.org][curs_inopts(3x)]],
+  [[file:curs_move.3x.org][curs_move(3x)]], [[file:curs_refresh.3x.org][curs_refresh(3x)]]

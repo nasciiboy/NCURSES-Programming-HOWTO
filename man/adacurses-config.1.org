@@ -1,0 +1,99 @@
+#+TITLE: ADACURSES 1
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  adacurses-config - helper script for AdaCurses libraries
+
+* SYNOPSIS
+
+  =adacurses-config= [options]
+
+* DESCRIPTION
+
+  This  is  a  shell  script which simplifies configuring an
+  application  to  use  the  AdaCurses  library  binding  to
+  ncurses.
+
+* OPTIONS
+
+  + --cflags  :: echos the gnat (Ada compiler) flags needed to compile
+                 with AdaCurses.
+
+  + --libs    :: echos the gnat libraries needed to link with
+                 AdaCurses.
+
+  + --version :: echos the release+patchdate version of the ncurses
+                 libraries used to configure and build AdaCurses.
+
+  + --help    :: prints a list of the =adacurses-config= script's
+                 options.
+
+
+  If no options are given, =adacurses-config= prints the combination
+  of =--cflags= and =--libs= that =gnatmake= expects (see example).
+
+* EXAMPLE
+
+  For example, supposing that you want to compile the "Hello World!"
+  program for AdaCurses.  Make a file named "hello.adb":
+
+  #+BEGIN_EXAMPLE
+    with Terminal_Interface.Curses; use Terminal_Interface.Curses;
+
+    procedure Hello is
+
+      Visibility : Cursor_Visibility := Invisible;
+      done : Boolean := False;
+      c : Key_Code;
+
+    begin
+
+      Init_Screen;
+      Set_Echo_Mode (False);
+
+      Set_Cursor_Visibility (Visibility);
+      Set_Timeout_Mode (Standard_Window, Non_Blocking, 0);
+
+      Move_Cursor (Line => Lines / 2, Column => (Columns - 12) / 2);
+      Add (Str => "Hello World!");
+
+      while not done loop
+
+        c := Get_Keystroke (Standard_Window);
+        case c is
+        when Character'Pos ('q') => done := True;
+        when others => null;
+        end case;
+
+        Nap_Milli_Seconds (50);
+
+      end loop;
+
+      End_Windows;
+
+    end Hello;
+  #+END_EXAMPLE
+
+  Then, using
+
+  #+BEGIN_EXAMPLE
+    gnatmake  `adacurses-config  --cflags` hello -largs
+    `adacurses-config --libs`
+  #+END_EXAMPLE
+
+  or (simpler):
+
+  #+BEGIN_EXAMPLE
+    gnatmake hello `adacurses-config`
+  #+END_EXAMPLE
+
+  you will compile and link the program.
+
+* SEE ALSO
+
+  [[file:ncurses.3x.org][curses(3x)]]
+
+  This describes =ncurses= version 5.9 (patch 20150215).

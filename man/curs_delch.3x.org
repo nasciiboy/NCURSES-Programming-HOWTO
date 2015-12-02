@@ -1,0 +1,53 @@
+#+TITLE: curs_delch 3x
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  =delch=, =wdelch=, =mvdelch=, =mvwdelch= - delete character under
+  the cursor in a =curses= window
+
+* SYNOPSIS
+
+  #+BEGIN_SRC c
+    #include <curses.h>
+
+    int delch(void);
+    int wdelch(WINDOW *win);
+    int mvdelch(int y, int x);
+    int mvwdelch(WINDOW *win, int y, int x);
+  #+END_SRC
+
+* DESCRIPTION
+
+  These routines delete the character under the cursor; all characters
+  to the right of the cursor on the same line are moved to the left
+  one position and the last character on the line is filled with a
+  blank.  The cursor position does not change (after moving to y, x,
+  if specified).  (This does not imply use of the hardware delete
+  character feature.)
+
+* RETURN VALUE
+
+  All routines return the integer =ERR= upon failure and an =OK= (SVr4
+  specifies only "an integer value other than =ERR=") upon successful
+  completion.
+
+  Functions with a "mv" prefix first perform a cursor movement using
+  =wmove=, and return an error if the position is outside the window,
+  or if the window pointer is null.
+
+* NOTES
+
+  Note that =delch=, =mvdelch=, and =mvwdelch= may be macros.
+
+* PORTABILITY
+
+  These functions are described in the XSI Curses standard, Issue 4.
+  The standard specifies that they return =ERR= on failure, but
+  specifies no error conditions.
+
+* SEE ALSO
+
+  [[file:ncurses.3x.org][curses(3x)]]

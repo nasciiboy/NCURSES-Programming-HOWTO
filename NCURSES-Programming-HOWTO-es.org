@@ -1127,36 +1127,37 @@
   correspondiente funcion-w con =stdscr= como parámetro de ventana.
 
 # * 6. Output functions
-* 6. Funciones Salida
+* 6. Funciones de Salida
 
   # I guess you can't wait any more to see some action. Back to our
   # odyssey of curses functions. Now that curses is initialized, let's
   # interact with world.
-  Supongo que no se puede esperar más para ver algo de acción. Volver a la nuestra
-  odisea de funciones curses. Ahora que curses es inicializado, vamos a
-  interactuar con el mundo.
+  Supongo que no puede esperar más para ver algo de acción. De nuevo a
+  nuestra odisea de funciones. Ahora que curses esta inicializado,
+  vamos a interactuar con el mundo.
 
   # There are three classes of functions which you can use to do output
   # on screen.
-  Hay tres clases de funciones que se pueden utilizar para hacer la salida
-  en la pantalla.
+  Hay tres clases de funciones que se pueden utilizar para manejar la
+  salida en la pantalla.
 
   # 1. addch() class: Print single character with attributes
-  1. addch () Clase: Imprimir carácter individual con atributos
+  1. Clase =addch()=: Imprimir carácter individual con atributos
 
   # 2. printw() class: Print formatted output similar to printf()
-  2. printw () Clase: Imprimir salida con formato similar a printf ()
+  2. Clase =printw()=: Imprimir salida con formato similar a
+     =printf()=
 
   # 3. addstr() class: Print strings
-  3. addstr () de clase: las cadenas de impresión
+  3. Clase =addstr()=: Imprimir cadenas
 
   # These functions can be used interchangeably and it's a matter of
   # style as to which class is used. Let's see each one in detail.
-  Estas funciones se pueden utilizar indistintamente y es una cuestión de
-  se utiliza el estilo en cuanto a qué clase. Veamos cada uno de ellos en detalle.
+  Estas funciones se pueden utilizar indistintamente y es cuestión de
+  estilo elegir la clase a utilizar. Veamos cada una a detalle.
 
 # ** 6.1. addch() class of functions
-** 6.1. addch () clase de funciones
+** 6.1. Clase de funciones =addch()=
 
    # These functions put a single character into the current cursor
    # location and advance the position of the cursor. You can give the
@@ -1165,27 +1166,28 @@
    # in later [[@ATTRIB][sections]] of the document. If a character is associated
    # with an attribute(bold, reverse video etc.), when curses prints the
    # character, it is printed in that attribute.
-   Estas funciones ponen un solo carácter en el cursor
-   ubicación y avanzar la posición del cursor. Usted puede dar el
-   carácter a imprimir pero por lo general se utilizan para imprimir una
-   personaje con algunos atributos. Los atributos se explican en detalle
-   en posteriores [[@ATTRIB] [secciones]] del documento. Si un personaje está asociado
-   con un atributo (negrita, inversa de vídeo, etc.), cuando curses imprime el
-   carácter, que se imprime en ese atributo.
+   Estas funciones colocan un solo carácter en la posicion del cursor
+   y avanzan la posición del cursor. Puede dar el carácter a imprimir
+   pero por lo general se utilizan para imprimir un caracter con
+   algunos atributos. Los atributos se explican a detalle en
+   posteriores [[@ATTRIB][secciones]] del documento. Si un caracter está asociado a
+   un atributo (negrita, vídeo inverso, etc.), cuando curses imprime
+   el carácter, este se imprime con ese atributo.
 
    # In order to combine a character with some attributes, you have two
    # options:
-   Con el fin de combinar un personaje con algunos atributos, tienes dos
+   A fin de combinar un caracter con algunos atributos, tiene dos
    Opciones:
 
    # - By OR'ing a single character with the desired attribute
    #   macros. These attribute macros could be found in the header file
    #   =ncurses.h=. For example, you want to print a character ch(of
    #   type char) bold and underlined, you would call addch() as below.
-   - Por OR'ing un solo personaje con el atributo deseado
-     macros. Estas macros de atributos se podían encontrar en el archivo de cabecera
-     = = ncurses.h. Por ejemplo, si desea imprimir un carácter ch (de
-     tipo char) negrita y subrayado, ustedes llamarían addch () de la siguiente manera.
+   - con el operador OR enmascarar un solo caracter y la macro del
+     atributo deseado. Estas macros de atributos se encuentran en el
+     archivo de cabecera =ncurses.h=. Por ejemplo, si desea imprimir
+     un carácter =ch= (de tipo char) negrita y subrayado, llamaría a
+     =addch()= de la siguiente manera.
 
      #+BEGIN_SRC c
        addch(ch | A_BOLD | A_UNDERLINE);
@@ -1196,11 +1198,11 @@
    #   manipulate the current attributes of the given window.  Once set,
    #   the character printed in the window are associated with the
    #   attributes until it is turned off.
-   - Mediante el uso de funciones como = attrset (), attron (), attroff () =. Estas
-     funciones se explican en el [[@ATTRIB] [atributos]] sección. Brevemente, se
-     manipular los atributos actuales de la ventana dada. Una vez establecido,
-     el carácter impreso en la ventana están asociados con la
-     atributos hasta que se apaga.
+   - Mediante funciones como =attrset()=, =attron()=, =attroff()=.
+     Estas funciones se explican en la sección [[@ATTRIB][Attributos]]. Brevemente,
+     se pueden manipular los atributos actuales de una ventana
+     dada. Una vez establecidos, el carácter impreso está asociado con
+     los atributos hasta que se desactivan.
 
 
    # Additionally, =curses= provides some special characters for
@@ -1209,22 +1211,26 @@
    # header file =ncurses.h=. Try looking for macros beginning with
    # =ACS_= in this file.
 
-   Además, = = curses proporciona algunos caracteres especiales para
-   gráficos basados ​​en caracteres. Puede dibujar tablas, horizontal o
-   líneas verticales, etc Usted puede encontrar todos los caracteres avaliable en el
-   archivo de cabecera = ncurses.h =. Trate de buscar macros que comienzan con
-   = = ACS_ en este archivo.
+   Adicionalmente, =curses= proporciona algunos caracteres especiales
+   para gráficos basados ​​en caracteres. Puede dibujar tablas, líneas
+   horizontales o verticales, etc. Puede encontrar todos los
+   caracteres disponibles en el archivo de cabecera =ncurses.h=.
+   Intente buscando macros que inicien con =ACS_= en dicho archivo.
 
 # ** 6.2. mvaddch(), waddch() and mvwaddch()
-** 6.2. mvaddch (), waddch () y mvwaddch ()
+** 6.2. =mvaddch()=, =waddch()= y =mvwaddch()=
 
    # =mvaddch()= is used to move the cursor to a given point, and then
    # print.  Thus, the calls:
-   = mvaddch () = se utiliza para mover el cursor a un punto dado, y luego
-   impresión. Por lo tanto, las llamadas:
+   =mvaddch()= se utiliza para mover el cursor a un punto dado, y
+   luego imprimir. Por tanto, las llamadas:
 
+   # #+BEGIN_SRC c
+   #   move(row,col);    /* moves the cursor to rowth row and colth column */
+   #   addch(ch);
+   # #+END_SRC
    #+BEGIN_SRC c
-     move(row,col);    /* moves the cursor to rowth row and colth column */
+     move(row,col);    /* mueve el cursor a la enesima fila y enesima columna */
      addch(ch);
    #+END_SRC
 
@@ -1238,34 +1244,34 @@
    # =waddch()= is similar to =addch()=, except that it adds a character
    # into the given window. (Note that =addch()= adds a character into
    # the window =stdscr=.)
-   waddch = () = es similar a addch = () =, excepto que se añade un carácter
-   en la ventana dada. (Tenga en cuenta que = addch () = añade un carácter en
-   la ventana=stdscr= = =.)
+   =waddch()= es similar a =addch()=, excepto que añade un carácter a
+   una ventana dada. (Tenga en cuenta que =addch()= añade un carácter
+   a la ventana =stdscr=.)
 
    # In a similar fashion =mvwaddch()= function is used to add a
    # character into the given window at the given coordinates.
-   De manera similar = mvwaddch () = función se utiliza para añadir un
-   carácter en la ventana dada en las coordenadas dadas.
+   De manera similar la función =mvwaddch()= se utiliza para añadir un
+   carácter a la ventana dada en las coordenadas dadas.
 
    # Now, we are familiar with the basic output function =addch()=. But,
    # if we want to print a string, it would be very annoying to print it
    # character by character. Fortunately, =ncurses= provides
    # =printf=-like or =puts=-like functions.
-   Ahora, estamos familiarizados con la salida de función = addch básica () =. Pero,
-   si queremos imprimir una cadena, que sería muy molesto para imprimirlo
-   carácter por carácter. Afortunadamente, = = ncurses provee
-   = = printf -como o puts = = funciones -como.
+   Ahora, estamos familiarizados con la función de salida basico
+   =addch()=. Pero, si queremos imprimir una cadena, sera muy molesto
+   imprimirla carácter a carácter. Afortunadamente, =ncurses= provee
+   funciones similares a =printf= y =puts=.
 
 # ** 6.3. printw() class of functions
-** 6.3. printw () clase de funciones
+** 6.3. Clase de funciones =printw()=
 
    # These functions are similar to =printf()= with the added capability
    # of printing at any position on the screen.
-   Estas funciones son similares a = printf () = con la capacidad añadida
-   de imprimir en cualquier posición en la pantalla.
+   Estas funciones son similares a =printf()= con la capacidad añadida
+   de imprimir en cualquier posición de la pantalla.
 
 # *** 6.3.1. printw() and mvprintw
-*** 6.3.1. printw () y mvprintw
+*** 6.3.1. =printw()= y =mvprintw=
 
     # These two functions work much like =printf()=. =mvprintw()= can be
     # used to move the cursor to a position and then print. If you want
@@ -1273,50 +1279,50 @@
     # use =move()= first and then use =printw()= though I see no point
     # why one should avoid using =mvprintw()=, you have the flexibility
     # to manipulate.
-    Estas dos funciones funcionan muy parecido = printf () =. = mvprintw () = puede ser
-    utilizado para mover el cursor a una posición y luego imprimir. si tu quieres
-    para mover el cursor y luego imprimir utilizando = printw () = función,
-    utilizar = move () = primero y luego usar = printw () = aunque veo ningún punto
-    por qué hay que evitar el uso de mvprintw = () =, usted tiene la flexibilidad
-    manipular.
+    Estas dos funciones operan similar a =printf()=. =mvprintw()= se
+    utiliza para mover el cursor a una posición y luego imprimir. Si
+    quiere puede mover el cursor y luego imprimir utilizando la
+    función =printw()=, primero utilice =move()= y luego =printw()=
+    aunque no veo ningún punto para evitar el uso de =mvprintw()=, la
+    flexibilidad de manejo es tuya.
 
 # *** 6.3.2. wprintw() and mvwprintw
-*** 6.3.2. wprintw () y mvwprintw
+*** 6.3.2. =wprintw()= y =mvwprintw=
 
     # These two functions are similar to above two except that they
     # print in the corresponding window given as argument.
-    Estas dos funciones son similares a por encima de dos, excepto que
-    imprimir en la ventana correspondiente dado como argumento.
+    Estas dos funciones son similares a las de dos de arriba, excepto
+    que imprimen en la correspondiente ventana dada como argumento.
 
 # *** 6.3.3. vwprintw()
-*** 6.3.3. vwprintw ()
+*** 6.3.3. =vwprintw()=
 
     # This function is similar to =vprintf()=. This can be used when
     # variable number of arguments are to be printed.
-    Esta función es similar a vprintf = () =. Esto se puede utilizar cuando
-    número variable de argumentos son a imprimir.
+    Esta función es similar a =vprintf()=. Se puede utilizar para
+    imprimir un número variable de argumentos.
 
 # *** 6.3.4. A Simple printw example
-*** 6.3.4. Un ejemplo simple printw
+*** 6.3.4. Un ejemplo sencillo de =printw=
 
     # *Example 3. A Simple printw example*
-    [[file:ncurses_programs/basics/][*Ejemplo 3. Un ejemplo printw simple*]]
+    [[file:ncurses_programs/basics/printw_example.c][*Ejemplo 3. Un ejemplo sencillo de printw*]]
 
     #+BEGIN_SRC c
-      #include <ncurses.h>           /* ncurses.h includes stdio.h */
+      #include <ncurses.h>              /* ncurses.h incluye stdio.h            */
       #include <string.h>
 
       int main()
       {
-        char mesg[]="Just a string";           /* message to be appeared on the screen  */
-        int row,col;                           /* to store the number of rows and       *
-                                                * the number of colums of the screen    */
-        initscr();                             /* start the curses mode */
-        getmaxyx(stdscr,row,col);              /* get the number of rows and columns    */
+        char mesg[]="Solo una cadena";  /* mensage que aparecera en pantalla     */
+        int row,col;                    /* para guardar el numero de filas y     *
+                                         * el numero de columnas de la pantalla  */
+        initscr();                      /* inicia el modo curses                 */
+        getmaxyx(stdscr,row,col);       /* obtiene el numero de filas y columnas */
         mvprintw(row/2,(col-strlen(mesg))/2,"%s",mesg);
-                                               /* print the message at the center of the screen */
-        mvprintw(row-2,0,"This screen has %d rows and %d columns\n",row,col);
-        printw("Try resizing your window(if possible) and then run this program again");
+                                        /* imprime el mensaje en el centro de la pantalla */
+        mvprintw(row-2,0,"Esta pantalla tiene %d filas y %d rolumnas\n",row,col);
+        printw("Prueba redimencionar la ventana(si es posible) y corre el programa nuevamente");
         refresh();
         getch();
         endwin();
@@ -1328,9 +1334,9 @@
     # Above program demonstrates how easy it is to use =printw=. You
     # just feed the coordinates and the message to be appeared on the
     # screen, then it does what you want.
-    Programa anterior demuestra lo fácil que es utilizar = = printw. usted
-    simplemente alimentar las coordenadas y el mensaje que se aparecido en el
-    pantalla, y luego hace lo que quiere.
+    El Programa anterior demuestra lo fácil que es utilizar =printw=.
+    Simplemente pase las coordenadas y el mensaje a mostrar en
+    pantalla, y luego haga lo que quiera.
 
     # The above program introduces us to a new function =getmaxyx()=, a
     # macro defined in =ncurses.h=. It gives the number of columns and
@@ -1338,15 +1344,15 @@
     # updating the variables given to it. Since =getmaxyx()= is not a
     # function we don't pass pointers to it, we just give two integer
     # variables.
-    El programa anterior nos introduce en una nueva función = getmaxyx () =, un
-    macro definida en ncurses.h = =. Se da el número de columnas y
-    el número de filas en una ventana dada. = getmaxyx () = Hace esto
-    la actualización de las variables dadas a ella. Desde getmaxyx = () = no es una
-    función no aprobamos punteros a ella, nos acaba de dar de dos enteros
-    variables.
+    El programa anterior introduce una nueva función =getmaxyx()=, una
+    macro definida en =ncurses.h=. Entrega el número de columnas y el
+    número de filas en una ventana dada. =getmaxyx()= hace esto
+    actulalizando las variables que le son dadas. Ya que =getmaxyx()=
+    no es una función no pase punteros en ella, solo entregue dos
+    variables entero.
 
 # ** 6.4. addstr() class of functions
-** 6.4. addstr () clase de funciones
+** 6.4. clase de funciones =addstr()=
 
    # =addstr()= is used to put a character string into a given
    # window. This function is similar to calling =addch()= once for each
@@ -1358,19 +1364,20 @@
    # addnstr(), which takes an integer parameter(say n)
    # additionally. This function puts at most n characters into the
    # screen. If n is negative, then the entire string will be added.
-   = addstr () = se utiliza para poner una cadena de caracteres en un determinado
-   ventana. Esta función es similar a llamar = addch () = una vez por cada
-   carácter de una cadena dada. Esto es cierto para todas las salidas
-   funciones. Hay otras funciones de esta familia como
-   = mvaddstr (), mvwaddstr () = y = waddstr () =, que obedecen a la nomenclatura
-   convención de curses. (por ejemplo mvaddstr () es similar a la respectiva
-   llamadas mueven () y luego addstr ().) Otra de las funciones de esta familia es
-   addnstr (), que toma un parámetro entero (digamos n)
-   además. Esta función pone en la mayoría de los n caracteres en el
-   pantalla. Si n es negativo, entonces se añadirá toda la cadena.
+   =addstr()= se utiliza para poner una cadena de caracteres en una
+   ventana determinada. Esta función es similar a llamar a =addch()=
+   una vez por cada carácter de una cadena dada. Esto es cierto para
+   todas las funciones de salida. Hay otras funciones de esta familia
+   como =mvaddstr()=, =mvwaddstr()= y =waddstr()=, que obedecen la
+   convención de nomenclatura de curses. (por ejemplo =mvaddstr()= es
+   similar a las respectivas llamadas =move()= y luego =addstr()=.)
+   Otra de las funciones de esta familia es =addnstr()=, que
+   adicionalmente toma un parámetro entero (llamado =n=). Esta función
+   pone almenos =n= caracteres en el pantalla. Si =n= es negativo,
+   entonces se añadirá toda la cadena.
 
 # ** 6.5. A word of caution
-** sesenta y cinco. Una palabra de precaución
+** 6.5. Una plabra de advertencia
 
    # All these functions take y co-ordinate first and then x in their
    # arguments. A common mistake by beginners is to pass x,y in that
@@ -1378,34 +1385,34 @@
    # co-ordinates, think of dividing the screen into windows and
    # manipulate each one separately.  Windows are explained in the
    # [[@WINDOWS][windows]] section.
-   Todas estas funciones toman coordenada Y primero y luego x en su
-   argumentos. Un error común de los principiantes es pasar x, y en ese
-   orden. Si usted está haciendo demasiadas manipulaciones (y, x)
-   coordenadas, piensan de dividir la pantalla en ventanas y
-   manipular cada uno por separado. De Windows se explican en el
-   [[@WINDOWS] [Windows]] sección.
+   Todas estas funciones toman en sus argumentos la coordenada =y=
+   primero y =x= despues. Un error común de los principiantes es pasar
+   =x=, =y= en ese orden. Si está haciendo demasiadas manipulaciones
+   de coordenadas (y, x), considere dividir la pantalla en ventanas y
+   manipular cada una por separado. Las ventanas se explican en la
+   sección [[@WINDOWS][Ventanas]].
 
 # * 7. Input functions
-* 7. Funciones entrada
+* 7. Funciones de entrada
 
   # Well, printing without taking input, is boring. Let's see functions
   # which allow us to get input from user. These functions also can be
   # divided into three categories.
-  Bueno, la impresión sin tener entrada, es aburrido. Vamos a ver las funciones
-  lo que nos permite tomar la entrada de usuario. Estas funciones también pueden ser
-  dividida en tres categorías.
+  Bueno, la impresión sin toma de entrada, es aburrida. Veamos las
+  funciones que nos permiten tomar la entrada de usuario. Estas
+  funciones también pueden ser divididas en tres categorías.
 
   # 1. getch() class: Get a character
-  1. getch () Clase: Obtener un personaje
+  1. Clase =getch()=: Obtener un caracter
 
   # 2. scanw() class: Get formatted input
-  Consigue una entrada con formato: 2. scanw () Clase
+  2. Clase =scanw()=: Obtener entrada con formato
 
   # 3. getstr() class: Get strings
-  3. getstr () Clase: Obtener cadenas
+  3. Clase =getstr()=: Obtener cadenas
 
 # ** 7.1. getch() class of functions
-** 7.1. getch () clase de funciones
+** 7.1. clase de funciones =getch()=
 
    # These functions read a single character from the terminal. But
    # there are several subtle facts to consider. For example if you
@@ -1419,41 +1426,42 @@
    # functions cbreak() and noecho() are typical examples of key
    # management. Functions of this genre are explained in the [[@KEYS][key
    # management section]].
-   Estas funciones leen un solo carácter de la terminal. Pero
-   hay varios hechos sutiles a considerar. Por ejemplo, si
-   no utilice el cbreak función (), curses no leerán sus comentarios
-   personajes de forma contigua, pero comenzarán leerlos sólo después de un nuevo
-   se encontraron con la línea o un EOF. Con el fin de evitar esto, el cbreak ()
-   función debe utilizarse para que los personajes están disponibles inmediatamente para
-   su programa. Otra función muy utilizado es noecho (). Como el nombre
-   sugiere, cuando esta función está activada (usa), los personajes que son
-   tecleado por el usuario no se mostrará en la pantalla. Los dos
-   funciones cbreak () y noecho () son ejemplos típicos de clave
-   gestión. Funciones de este género se explican en la [tecla [[@KEYS]
-   sección de gestión]].
+   Estas funciones leen un solo carácter de la terminal. Pero hay
+   varios hechos sutiles a considerar. Por ejemplo, si no utiliza la
+   función =cbreak()=, curses no leerán sus caracteres de entrada
+   forma continua, solo empezara a leerlos sólo después de encontrar
+   un caracter de nueva linea o un EOF. Con el fin de evitar esto,
+   debe utilizarse la funcion =cbreak()= para que los caracteres están
+   disponibles a su prograba inmediatamente. Otra función muy
+   utilizada es =noecho()=. Como el nombre sugiere, cuando esta
+   función es activada (usada), los caracteres pulsados por el usuario
+   no se mostrarán en la pantalla. Las dos funciones =cbreak()= y
+   =noecho()= son ejemplos típicos de gestión del teclado. Las
+   funciones de este género se explican en la sección [[@keys][gestion del
+   teclado]].
 
 # ** 7.2. scanw() class of functions
-** 7.2. scanw () clase de funciones
+** 7.2. clase de funciones =scanw()=
 
    # These functions are similar to =scanf()= with the added capability
    # of getting the input from any location on the screen.
-   Estas funciones son similares a = scanf () = con la capacidad añadida
+   Estas funciones son similares a =scanf()= con la capacidad añadida
    de conseguir la entrada desde cualquier lugar de la pantalla.
 
 # *** 7.2.1. scanw() and mvscanw
-*** 7.2.1. scanw () y mvscanw
+*** 7.2.1. =scanw()= y mvscanw
 
     # The usage of these functions is similar to that of =sscanf()=,
     # where the line to be scanned is provided by =wgetstr()=
     # function. That is, these functions call to =wgetstr()=
     # function(explained below) and uses the resulting line for a scan.
-    El uso de estas funciones es similar a la de sscanf = () =,
-    donde la línea que va a escanear es proporcionada por wgetstr = () =
-    función. Es decir, estas funciones llaman a wgetstr = () =
+    El uso de estas funciones es similar a la de sscanf()=,
+    donde la línea que va a escanear es proporcionada por wgetstr()=
+    función. Es decir, estas funciones llaman a wgetstr()=
     función (explicado más adelante) y utiliza la línea resultante de un análisis.
 
 # *** 7.2.2. wscanw() and mvwscanw()
-*** 7.2.2. wscanw () y mvwscanw ()
+*** 7.2.2. wscanw() y mvwscanw()
 
     # These are similar to above two functions except that they read
     # from a window, which is supplied as one of the arguments to these
@@ -1463,15 +1471,15 @@
     funciones.
 
 # *** 7.2.3. vwscanw()
-*** 7.2.3. vwscanw ()
+*** 7.2.3. vwscanw()
 
     # This function is similar to =vscanf()=. This can be used when a
     # variable number of arguments are to be scanned.
-    Esta función es similar a vscanf = () =. Esto puede ser utilizado cuando una
+    Esta función es similar a vscanf()=. Esto puede ser utilizado cuando una
     número variable de argumentos son que va a escanear.
 
 # ** 7.3. getstr() class of functions
-** 7.3. getstr () clase de funciones
+** 7.3. getstr() clase de funciones
 
    # These functions are used to get strings from the terminal. In
    # essence, this function performs the same task as would be achieved
@@ -1481,9 +1489,9 @@
    # user.
    Estas funciones se utilizan para obtener las cadenas de la terminal. En
    Esencialmente, esta función realiza la misma tarea que el que se lograría
-   por una serie de llamadas a = getch () = hasta que una nueva línea, retorno de carro,
+   por una serie de llamadas a getch() hasta que una nueva línea, retorno de carro,
    o se recibe de fin de archivo. La cadena resultante de caracteres son
-   apuntada por str = =, lo cual es un indicador de carácter proporcionada por el
+   apuntada por str=, lo cual es un indicador de carácter proporcionada por el
    usuario.
 
 # ** 7.4. Some examples
@@ -1524,7 +1532,7 @@
   # manner. The following program takes a C file as input and prints the
   # file with comments in bold. Scan through the code.
   Hemos visto un ejemplo de cómo atributos pueden ser utilizados para imprimir
-  personajes con algunos efectos especiales. Atributos, cuando se establecen
+  caracteres con algunos efectos especiales. Atributos, cuando se establecen
   con prudencia, pueden presentar la información de una forma fácil, comprensible
   manera. El siguiente programa toma un archivo C como entrada e imprime el
   presentar con comentarios en negrita. Escanear a través del código.
@@ -1597,18 +1605,18 @@
   No se preocupe por todos aquellos inicialización y otra basura.
   Concéntrese en el bucle while. Se lee cada carácter en el archivo
   y busca el patrón / *. Una vez que se ve el patrón, se
-  cambia el atributo BOLD con attron = () =. Cuando lleguemos a la
-  patrón * / usted se desconecta = attroff () =.
+  cambia el atributo BOLD con =attron()= =. Cuando lleguemos a la
+  patrón * / usted se desconecta =attroff()= =.
 
   # The above program also introduces us to two useful functions
-  # =getyx() = and =move()=. The first function gets the co-ordinates of
+  # =getyx()= and =move()=. The first function gets the co-ordinates of
   # the present cursor into the variables y, x. Since getyx() is a macro
   # we don't have to pass pointers to variables. The function =move()=
   # moves the cursor to the co-ordinates given to it.
   El programa anterior también nos presenta a dos funciones útiles
-  = getyx () = y = move () =. La primera función obtiene las coordenadas de
-  la presente cursor en las variables y, x. Desde getyx () es una macro
-  no tenemos que pasar punteros a variables. La función = move () =
+  getyx() y move()=. La primera función obtiene las coordenadas de
+  la presente cursor en las variables y, x. Desde getyx() es una macro
+  no tenemos que pasar punteros a variables. La función move()=
   mueve el cursor a las coordenadas dadas a él.
 
   # The above program is really a simple one which doesn't do much. On
@@ -1624,11 +1632,11 @@
 ** 8.1. Los detalles
 
    # Let's get into more details of attributes. The functions =attron(),
-   # attroff(), attrset() =, and their sister functions = attr_get()=
+   # attroff(), attrset()=, and their sister functions = attr_get()=
    # etc.. can be used to switch attributes on/off , get attributes and
    # produce a colorful display.
-   Vamos a entrar en más detalles de atributos. Las funciones = attron (),
-   attroff (), attrset () =, y su hermana funciones = attr_get () =
+   Vamos a entrar en más detalles de atributos. Las funciones =attron()=,
+   =attroff()=, =attrset()= =, y su hermana funciones attr_get()=
    etc .. se puede utilizar para cambiar los atributos de encendido / apagado, obtener atributos y
    producir un espectáculo lleno de color.
 
@@ -1666,7 +1674,7 @@
      El modo protegido A_PROTECT
      A_INVIS modo invisible o en blanco
      Juego de caracteres A_ALTCHARSET alternativo
-     A_CHARTEXT Bit-máscara para extraer un personaje
+     A_CHARTEXT Bit-máscara para extraer un caracter
      COLOR_PAIR (n) Color-par número n
 
 
@@ -1687,7 +1695,7 @@
    #+END_SRC
 
 # ** 8.2. attron() vs attrset()
-** 8.2. attron () vs attrset ()
+** 8.2. =attron()= vs =attrset()=
 
    # Then what is the difference between attron() and attrset()? attrset
    # sets the attributes of window whereas attron just switches on the
@@ -1702,22 +1710,22 @@
    # policy and stick to it. You can always use =standend()= which is
    # equivalent to =attrset(A_NORMAL)= which turns off all attributes
    # and brings you to normal mode.
-   Entonces ¿cuál es la diferencia entre attron () y attrset ()? attrset
+   Entonces ¿cuál es la diferencia entre =attron()= y =attrset()=? attrset
    establece los atributos de la ventana mientras que attron simplemente enciende la
-   atributo dado a la misma. Así attrset () anula totalmente lo que sea
+   atributo dado a la misma. Así =attrset()= anula totalmente lo que sea
    atributos de la ventana tenía anteriormente y establece a la nueva
-   atributo (s). Del mismo modo attroff () simplemente se apaga el
+   atributo (s). Del mismo modo =attroff()= simplemente se apaga el
    atributo (s) que se le da como argumento. Esto nos da la
    flexibilidad de la gestión de los atributos easily.But si se utilizan
    descuidadamente puede perder la pista de lo atributos tiene la ventana
    y distorsionar la pantalla. Esto es especialmente cierto mientras que la gestión
    menús con colores y resaltado. Así que decidir sobre una constante
-   política y atenerse a ella. Siempre se puede utilizar = standend () =, que es
-   equivalente a = attrset (A_NORMAL) = que apaga todos los atributos
+   política y atenerse a ella. Siempre se puede utilizar standend()=, que es
+   equivalente a attrset (A_NORMAL) que apaga todos los atributos
    y te lleva al modo normal.
 
 # ** 8.3. =attr_get()=
-** 8.3. attr_get = () =
+** 8.3. attr_get()=
 
    # The function =attr_get()= gets the current attributes and color
    # pair of the window. Though we might not use this as often as the
@@ -1726,7 +1734,7 @@
    # attribute each character is associated with. Then this function can
    # be used with either attrset or attron to produce the desired
    # effect.
-   La función = attr_get () = obtiene los atributos y colores actuales
+   La función attr_get() obtiene los atributos y colores actuales
    par de la ventana. Aunque tal vez no utilizar esto tan a menudo como el
    por encima de funciones, esto es útil en áreas de escaneo de la pantalla. Digamos que
    queríamos hacer alguna actualización compleja en la pantalla y no estamos seguros de lo que
@@ -1735,14 +1743,14 @@
    efecto.
 
 # ** 8.4. =attr_= functions
-** 8.4. = = attr_ funciones
+** 8.4. = attr_ funciones
 
    # There are series of functions like =attr_set()=, =attr_on=
    # etc.. These are similar to above functions except that they take
    # parameters of type =attr_t=.
-   Hay series de funciones como attr_set = () =, = attr_on =
+   Hay series de funciones como attr_set()=, attr_on =
    etc .. Estos son similares a las funciones anteriores, excepto que se tomen
-   parámetros de tipo = attr_t =.
+   parámetros de tipo attr_t =.
 
 # ** 8.5. wattr functions
 ** 8.5. funciones wattr
@@ -1755,16 +1763,16 @@
    operar en=stdscr=.
 
 # ** 8.6. chgat() functions
-** 8.6. chgat funciones ()
+** 8.6. chgat funciones()
 
    # The function chgat() is listed in the end of the man page
    # =curs_attr=. It actually is a useful one. This function can be used
    # to set attributes for a group of characters without moving. I mean
    # it !!! without moving the cursor :-) It changes the attributes of a
    # given number of characters starting at the current cursor location.
-   El chgat función () aparece en el final de la página del manual
-   = = curs_attr. En realidad, es una utilidad. Esta función se puede utilizar
-   para establecer los atributos de un grupo de personajes sin moverse. Quiero decir
+   El chgat función() aparece en el final de la página del manual
+   = curs_attr. En realidad, es una utilidad. Esta función se puede utilizar
+   para establecer los atributos de un grupo de caracteres sin moverse. Quiero decir
    ello !!! sin mover el cursor :-) Cambia los atributos de un
    determinado número de caracteres a partir de la ubicación actual del cursor.
 
@@ -1772,7 +1780,7 @@
    # line. If you want to change attributes of characters from current
    # position to end of line, just use this.
    Podemos dar -1 como cuenta el carácter de actualizar hasta finales de
-   línea. Si desea cambiar los atributos de los personajes de la corriente
+   línea. Si desea cambiar los atributos de los caracteres de la corriente
    posición hasta el final de la línea, sólo tiene que utilizar esto.
 
    #+BEGIN_SRC c
@@ -1783,7 +1791,7 @@
    # that are already on the screen. Move to the character from which
    # you want to change and change the attribute.
    Esta función es útil cuando se cambian los atributos de caracteres
-   que ya en la pantalla son. Mueve al personaje de la que
+   que ya en la pantalla son. Mueve al caracter de la que
    que desea cambiar y cambiar el atributo.
 
    # Other functions wchgat(), mvchgat(), wchgat() behave similarly
@@ -1792,15 +1800,15 @@
    # them. Actually chgat is a macro which is replaced by a wchgat()
    # with stdscr as the window. Most of the "w-less" functions are
    # macros.
-   Otras funciones wchgat (), mvchgat (), wchgat () se comportan de manera similar
+   Otras funciones wchgat(), mvchgat(), wchgat() se comportan de manera similar
    excepto que las funciones W operan en la ventana particular. los
    funciones mv primero mover el cursor a continuación, realice el trabajo dado a
-   ellos. En realidad chgat es una macro que se sustituye por un wchgat ()
+   ellos. En realidad chgat es una macro que se sustituye por un wchgat()
    con=stdscr= como la ventana. La mayor parte de las funciones de "w-menos" son
    macros.
 
    # *Example 6. Chgat() Usage example*
-   [[file:ncurses_programs/basics/][*Ejemplo 6. Chgat () Ejemplo de uso*]]
+   [[file:ncurses_programs/basics/][*Ejemplo 6. Chgat() Ejemplo de uso*]]
 
    #+BEGIN_SRC c
      #include <ncurses.h>
@@ -1874,16 +1882,16 @@
    # like wprintw() etc.. Finally the window can be destroyed with
    # delwin(). It will deallocate the memory associated with the window
    # structure.
-   Una ventana puede ser creado llamando a la función = newwin () =. Ello
+   Una ventana puede ser creado llamando a la función newwin()=. Ello
    no crea nada en la pantalla en realidad. Asigna
    memoria para una estructura para manipular la ventana y actualiza la
    estructura con los datos relativos a la ventana como su tamaño, BeginY,
    BeginX etc .. De ahí que en curses, una ventana es sólo una abstracción de un
    ventana imaginario, que puede ser manipulado independiente de los demás
-   partes de la pantalla. El newwin función () devuelve un puntero a
+   partes de la pantalla. El newwin función() devuelve un puntero a
    estructura de la ventana, que se puede pasar a funciones de la ventana relacionados
-   como wprintw () etc .. Finalmente la ventana puede ser destruido con
-   delwin (). Se desasignar la memoria asociada con la ventana
+   como wprintw() etc .. Finalmente la ventana puede ser destruido con
+   delwin(). Se desasignar la memoria asociada con la ventana
    estructura.
 
 # ** 9.2. Let there be a Window !!!
@@ -1894,7 +1902,7 @@
    # be used to draw a border around the window. Let's explore these
    # functions in more detail in this example.
    Lo divertido es que, si se crea una ventana y no podemos verlo. Entonces el
-   parte divertida comienza mostrando la ventana. La función = caja () = puede
+   parte divertida comienza mostrando la ventana. La función caja() puede
    ser utilizado para dibujar un borde alrededor de la ventana. Vamos a explorar estos
    funciones en más detalle en este ejemplo.
 
@@ -2007,10 +2015,10 @@
    # character and then calling =delwin()= to deallocate memory related
    # to it. Depending on the key the user presses, starty or startx is
    # changed and a new window is created.
-   El create_newwin = () = función crea una ventana con newwin = () = y
-   muestra un borde alrededor con la caja. La función = destroy_win () =
+   El create_newwin =() función crea una ventana con newwin() y
+   muestra un borde alrededor con la caja. La función destroy_win()=
    primero borra la ventana de la pantalla pintando una frontera con ''
-   personaje y luego llamando = delwin () = desasignar memoria relacionada
+   caracter y luego llamando delwin() desasignar memoria relacionada
    lo. Dependiendo de la clave del usuario presiona, starty o startx es
    cambió y se crea una nueva ventana.
 
@@ -2019,10 +2027,10 @@
    # know. Read the code :-)). wborder draws a border around the window
    # with the characters given to it as the 4 corner points and the 4
    # lines. To put it clearly, if you have called wborder as below:
-   En el destroy_win = =, como se puede ver, he usado WBORDER lugar de
+   En el destroy_win =, como se puede ver, he usado WBORDER lugar de
    encajonar. La razón está escrito en los comentarios (te lo perdiste. I
    saber. Lea el :-) código). WBORDER dibuja un borde alrededor de la ventana
-   con los personajes que le han sido como los 4 puntos de esquina y el 4
+   con los caracteres que le han sido como los 4 puntos de esquina y el 4
    líneas. Para decirlo claramente, si ha llamado WBORDER como a continuación:
 
    #+BEGIN_SRC c
@@ -2055,9 +2063,9 @@
    # switch-case is very common in any GUI based programs.
    También puede ver en los ejemplos anteriores, que he utilizado el
    Variables COLS, líneas que se inicializan a los tamaños de pantalla
-   después initscr (). Pueden ser útiles en la búsqueda de dimensiones de la pantalla
+   después initscr(). Pueden ser útiles en la búsqueda de dimensiones de la pantalla
    y encontrando el centro de coordenadas de la pantalla como anteriormente. los
-   función = getch () = como siempre consigue la llave del teclado y
+   función getch() como siempre consigue la llave del teclado y
    de acuerdo con la clave que hace el trabajo correspondiente. Este tipo de
    switch de los casos es muy común en todos los programas GUI basada.
 
@@ -2075,7 +2083,7 @@
    # similar effect. These two functions are simple. They create a
    # horizontal or vertical line of the specified length at the
    # specified position.
-   El siguiente programa utiliza = mvhline () = y = mvvline () = para lograr
+   El siguiente programa utiliza mvhline() y mvvline() para lograr
    efecto similar. Estas dos funciones son simples. Crean un
    línea horizontal o vertical de la longitud especificada en el
    posición especificada.
@@ -2270,10 +2278,10 @@
    # =has_colors()= function, which returns FALSE if the terminal does
    # not support color.
    Como se puede ver, para empezar a utilizar el color, primero debe llamar al
-   función = start_color () =. Después de eso, se puede utilizar el color
+   función = start_color()=. Después de eso, se puede utilizar el color
    capacidades de sus terminales utilizando las distintas funciones. Averiguar
    si un terminal tiene capacidades de color o no, puede utilizar
-   has_colors = () = función, que devuelve FALSE si el terminal hace
+   has_colors =()= función, que devuelve FALSE si el terminal hace
    no admite el color.
 
    # curses initializes all the colors supported by terminal when
@@ -2292,13 +2300,13 @@
    # the beginning. This makes it very easy to set attributes just by
    # accessing a pair which we already have defined as a constant.
    curses inicializa todos los colores admitidos por terminal cuando
-   = start_color () = se llama. Se puede acceder por el definir
+   = start_color()= se llama. Se puede acceder por el definir
    constantes como = Color_Black ¡= etc. ahora para realizar efectivamente usando
    colores, se tienen que definir pares. Colors siempre se utilizan en
-   pares. Eso significa que usted tiene que utilizar la función = init_pair () = a
+   pares. Eso significa que usted tiene que utilizar la función = init_pair()= a
    definir el primer plano y de fondo para el número de pares que
    dar. Después de que ese número par puede ser utilizado como un atributo normal de
-   con COLOR_PAIR = () = función. Esto puede parecer a ser incómodo en
+   con COLOR_PAIR =()= función. Esto puede parecer a ser incómodo en
    primero. Pero este elegante solución nos permite gestionar pares de colores
    muy facilmente. Para apreciarlo, usted tiene que mirar en la fuente
    código de "diálogo", una utilidad para la visualización de los cuadros de diálogo de la cáscara
@@ -2330,7 +2338,7 @@
    # for the colors defined by curses initially. Say you wanted to
    # lighten the intensity of red color by a minuscule. Then you can use
    # this function as
-   La función = init_color () = se puede utilizar para cambiar los valores RGB
+   La función = init_color()= se puede utilizar para cambiar los valores RGB
    para los colores definidos por curses inicialmente. Digamos que querías
    aligerar la intensidad del color rojo por un minúsculo. Entonces usted puede utilizar
    esta función como
@@ -2347,7 +2355,7 @@
    # content or not. The rgb content is scaled from 0 to 1000. Initially
    # RED color is defined with content 1000(r), 0(g), 0(b).
    Si el terminal no puede cambiar las definiciones de color, la función
-   vuelve ERR. La función = can_change_color () = se puede utilizar para encontrar
+   vuelve ERR. La función = can_change_color()= se puede utilizar para encontrar
    si el terminal tiene la capacidad de cambiar de color
    contenido o no. El contenido rgb se escala de 0 a 1000. Inicialmente
    Color rojo es definido con un contenido de 1,000 (r), 0 (g), 0 (b).
@@ -2358,7 +2366,7 @@
    # The functions =color_content()= and =pair_content()= can be used to
    # find the color content and foreground, background combination for
    # the pair.
-   Las funciones color_content = () = y = pair_content () = se puede utilizar para
+   Las funciones color_content =()= y = pair_content()= se puede utilizar para
    encontrar el contenido de color y el primer plano, combinación de fondo para
    el par.
 
@@ -2385,7 +2393,7 @@
    # keys, arrow keys etc. See the initialization section for details.
    Como se ha visto en casi todos los ejemplos anteriores, es muy
    fácil de obtener información clave del usuario. Una manera simple de conseguir clave
-   prensas es utilizar = getch () = función. El modo debe ser cbreak
+   prensas es utilizar = getch()= función. El modo debe ser cbreak
    habilitado para leer llaves cuando usted está interesado en la lectura individuales
    éxitos clave en lugar de líneas completas de texto (que por lo general terminan con
    un retorno de carro). teclado debe estar habilitado para obtener las funciones
@@ -2398,16 +2406,16 @@
    # presses F1, the integer returned is 265. This can be checked using
    # the macro =KEY_F()= defined in curses.h. This makes reading keys
    # portable and easy to manage.
-   = getch () = devuelve un entero correspondiente a la tecla pulsada. Si
-   es un personaje normal, el valor entero será equivalente a
-   el personaje. De lo contrario, devuelve un número que puede ser igualada
+   = getch()= devuelve un entero correspondiente a la tecla pulsada. Si
+   es un caracter normal, el valor entero será equivalente a
+   el caracter. De lo contrario, devuelve un número que puede ser igualada
    con las constantes definidas en curses.h = =. Por ejemplo, si el usuario
    prensas de F1, el entero devuelto es 265. Esto se puede comprobar con
-   la macro = KEY_F () = se define en curses.h. Esto hace claves de lectura
+   la macro = KEY_F()= se define en curses.h. Esto hace claves de lectura
    portátil y fácil de manejar.
 
    # For example, if you call getch() like this
-   Por ejemplo, si usted llama getch () como éste
+   Por ejemplo, si usted llama getch() como éste
 
    #+BEGIN_SRC c
      int ch;
@@ -2418,7 +2426,7 @@
    # specified a timeout) and when user presses a key, the corresponding
    # integer is returned. Then you can check the value returned with the
    # constants defined in curses.h to match against the keys you want.
-   getch () esperará a que el usuario presione una tecla, (a menos que
+   getch() esperará a que el usuario presione una tecla, (a menos que
    especifica un tiempo de espera) y cuando el usuario pulsa una tecla, el correspondiente
    se devuelve entero. A continuación, puede comprobar el valor devuelto con el
    constantes definidas en curses.h al partido contra las teclas que desee.
@@ -2551,7 +2559,7 @@
    # Before you do any thing else, the events you want to receive have
    # to be enabled with =mousemask()=.
    Antes de hacer cualquier otra cosa, los eventos que desea recibir tiene
-   habilitado con mousemask = () =.
+   habilitado con mousemask =()=.
 
    #+BEGIN_SRC c
      mousemask(  mmask_t newmask,    /* The events you want to listen to */
@@ -2606,9 +2614,9 @@
    # Once a class of mouse events have been enabled, getch() class of
    # functions return =KEY_MOUSE= every time some mouse event
    # happens. Then the mouse event can be retrieved with =getmouse()=.
-   Una vez que una clase de eventos de ratón se han habilitado, getch () de la clase
+   Una vez que una clase de eventos de ratón se han habilitado, getch() de la clase
    funciones devuelven = KEY_MOUSE = cada vez que un evento de ratón
-   sucede. A continuación, el evento de ratón puede ser recuperada con GetMouse = () =.
+   sucede. A continuación, el evento de ratón puede ser recuperada con GetMouse =()=.
 
    # The code approximately looks like this:
    El código es aproximadamente así:
@@ -2625,7 +2633,7 @@
 
    # getmouse() returns the event into the pointer given to it. It's a
    # structure which contains
-   GetMouse () devuelve el evento en el puntero que se le da. Es un
+   GetMouse() devuelve el evento en el puntero que se le da. Es un
    estructura que contiene
 
    #+BEGIN_SRC c
@@ -2780,7 +2788,7 @@
    # The functions =mouse_trafo()= and =wmouse_trafo()= can be used to
    # convert to mouse co-ordinates to screen relative co-ordinates. See
    # =curs_mouse(3X)= man page for details.
-   Las funciones mouse_trafo = () = y = wmouse_trafo () = se puede utilizar para
+   Las funciones mouse_trafo =()= y = wmouse_trafo()= se puede utilizar para
    convertirse al ratón coordenadas para seleccionar coordenadas relativas. Ver
    = curs_mouse (3X) = página de manual para más detalles.
 
@@ -2804,15 +2812,15 @@
   es especialmente importante en los juegos de escritura.
 
 # ** 13.1. getyx() functions
-** 13.1. getyx () funciones
+** 13.1. getyx() funciones
 
    # The function =getyx()= can be used to find out the present cursor
    # co-ordinates. It will fill the values of x and y co-ordinates in
    # the arguments given to it. Since getyx() is a macro you don't have
    # to pass the address of the variables. It can be called as
-   La función = getyx () = se puede utilizar para averiguar el cursor presente
+   La función = getyx()= se puede utilizar para averiguar el cursor presente
    coordenadas. Se llenará los valores de x e y coordenadas en
-   los argumentos dados a ella. Desde getyx () es una macro que no tiene
+   los argumentos dados a ella. Desde getyx() es una macro que no tiene
    al pasar la dirección de las variables. Se le puede llamar como
 
    #+BEGIN_SRC c
@@ -2829,19 +2837,19 @@
    # their first option co-ordinates etc. A simple solution to this
    # problem, is to create menus in sub windows and later find the
    # starting co-ordinates of the menus by using getparyx().
-   El getparyx función () obtiene los que comienzan coordenadas de la sub
+   El getparyx función() obtiene los que comienzan coordenadas de la sub
    ventana relativa a la ventana principal. Esto es algunas veces útil
    actualizar una ventana sub. En el diseño de cosas de lujo como la escritura
    múltiples menús, se hace difícil para almacenar las posiciones de menú,
    sus primera opción coordenadas etc. Una solución simple a este
    problema, es la creación de menús en ventanas secundarias y luego encontrar el
-   comenzando coordenadas de los menús utilizando getparyx ().
+   comenzando coordenadas de los menús utilizando getparyx().
 
    # The functions getbegyx() and getmaxyx() store current window's
    # beginning and maximum co-ordinates. These functions are useful in
    # the same way as above in managing the windows and sub windows
    # effectively.
-   El getbegyx funciones () y getmaxyx () guardar la ventana del actual
+   El getbegyx funciones() y getmaxyx() guardar la ventana del actual
    comenzando y coordina máximos. Estas funciones son útiles en
    de la misma manera que el anterior en el manejo de las ventanas y ventanas sub
    eficazmente.
@@ -2857,7 +2865,7 @@
    # effectively to maintain a fast moving game with changing scenarios.
    Al escribir juegos, algunas veces se hace necesario para almacenar el
    estado de la pantalla y restaurar de nuevo al mismo estado. los
-   función = scr_dump () = se puede utilizar para volcar los contenidos de la pantalla a un
+   función = scr_dump()= se puede utilizar para volcar los contenidos de la pantalla a un
    archivo dado como argumento. Más tarde se puede restaurar
    = = scr_restore función. Estas dos funciones simples se pueden utilizar
    efectiva para mantener un juego de movimiento rápido con el cambio de escenarios.
@@ -2868,9 +2876,9 @@
    # To store and restore windows, the functions =putwin()= and
    # =getwin()= can be used. =putwin()= puts the present window state
    # into a file, which can be later restored by =getwin()=.
-   Para guardar y restaurar ventanas, las funciones = putwin () = y
-   getwin = () = puede ser utilizado. = putwin () = pone el actual estado de la ventana
-   en un archivo, que puede ser posteriormente restaurado por getwin = () =.
+   Para guardar y restaurar ventanas, las funciones = putwin()= y
+   getwin =()= puede ser utilizado. = putwin()= pone el actual estado de la ventana
+   en un archivo, que puede ser posteriormente restaurado por getwin =()=.
 
    # The function =copywin()= can be used to copy a window completely
    # onto another window. It takes the source and destination windows as
@@ -2879,7 +2887,7 @@
    # parameter specifies whether to overwrite or just overlay the
    # contents on to the destination window. If this argument is true,
    # then the copying is non-destructive.
-   La función = copywin () = se puede utilizar para copiar una ventana por completo
+   La función = copywin()= se puede utilizar para copiar una ventana por completo
    en otra ventana. Toma las ventanas de origen y destino como
    parámetros y de acuerdo con el rectángulo especificado, copia el
    región rectangular desde la fuente hasta la ventana de destino. Es la última
@@ -2898,7 +2906,7 @@
   son útiles en varios casos. Vamos a ir de cabeza a algunos de ellos.
 
 # ** 14.1. =curs_set()=
-** 14.1. curs_set = () =
+** 14.1. curs_set =()=
 
    # This function can be used to make the cursor invisible. The
    # parameter to this function should be
@@ -2919,17 +2927,17 @@
    # save the tty modes with a call to =def_prog_mode()= and then call
    # =endwin()= to end the curses mode. This will leave you in the
    # original tty mode. To get back to curses once you are done, call
-   # =reset_prog_mode() =. This function returns the tty to the state
+   # =reset_prog_mode()=. This function returns the tty to the state
    # stored by =def_prog_mode()=. Then do refresh(), and you are back to
    # the curses mode. Here is an example showing the sequence of things
    # to be done.
    Algunas veces es posible que desee volver al modo de cocinado (línea normal
    modo de almacenamiento en búfer) temporalmente. En tal caso, primero tendrá que
-   guardar los modos tty con una llamada a = def_prog_mode () = y luego llamar
-   = endwin () = para finalizar el modo de curses. Esto te dejará en el
+   guardar los modos tty con una llamada a = def_prog_mode()= y luego llamar
+   = endwin()= para finalizar el modo de curses. Esto te dejará en el
    el modo tty originales. Para volver a las curses, una vez que haya terminado, llamada
-   reset_prog_mode = () =. Esta función devuelve el tty al estado
-   almacenada por def_prog_mode = () =. Entonces actualizar (), y que están de vuelta a
+   reset_prog_mode =()=. Esta función devuelve el tty al estado
+   almacenada por def_prog_mode =()=. Entonces actualizar(), y que están de vuelta a
    el modo de curses. He aquí un ejemplo que muestra la secuencia de las cosas
    para acabar.
 
@@ -2970,8 +2978,8 @@
    # some of the programs above. Here's an example showing all the
    # characters.
    Si alguna vez has programado en DOS, usted sabe sobre las ingenioso
-   personajes de juego de caracteres extendidos. Ellos son imprimibles sólo en
-   algunos terminales. Funciones ncurses como = caja () = utilizarlos
+   caracteres de juego de caracteres extendidos. Ellos son imprimibles sólo en
+   algunos terminales. Funciones ncurses como = caja()= utilizarlos
    caracteres. Todas estas variables comienzan con ACS alternativa significado
    conjunto de caracteres. Es posible que haya fijado en mí el uso de estos caracteres en
    algunos de los programas anteriores. He aquí un ejemplo que muestra toda la
@@ -3081,8 +3089,8 @@
   # their overlapping and update the screen properly. So why wait? Let's
   # take a close peek into panels.
   Si tiene muchas ventanas superpuestas, a continuación, los paneles de la libreria es el
-  camino a seguir. Es obvia la necesidad de hacer serie de wnoutrefresh (),
-  doupdate () y alivia la carga de hacerlo correctamente (abajo
+  camino a seguir. Es obvia la necesidad de hacer serie de wnoutrefresh(),
+  doupdate() y alivia la carga de hacerlo correctamente (abajo
   arriba). La libreria mantiene información sobre el orden de las ventanas,
   su superposición y actualizar la pantalla correctamente. Así que ¿por qué esperar? Echemos
   echar un vistazo de cerca a los paneles.
@@ -3106,7 +3114,7 @@
    paneles puede o no puede ser oscurecida de acuerdo con sus posiciones. Asi que
    La idea básica es crear una pila de paneles superpuestos y el uso
    paneles de libreria para visualizar correctamente. Hay una función
-   similar a refrescar () que, cuando se le llama, muestra paneles en el
+   similar a refrescar() que, cuando se le llama, muestra paneles en el
    Orden correcto. Las funciones se proporcionan para ocultar o mostrar los paneles, mover
    paneles, cambiar su tamaño, etc .. El problema de solapamiento es dirigido por
    la libreria de paneles durante todas las llamadas a estas funciones.
@@ -3115,20 +3123,20 @@
    El flujo general de un programa del panel es la siguiente:
 
    # 1. Create the windows (with newwin()) to be attached to the panels.
-   1. Crear las ventanas (con newwin ()) que debe atribuirse a los paneles.
+   1. Crear las ventanas (con newwin()) que debe atribuirse a los paneles.
 
    # 2. Create panels with the chosen visibility order. Stack them up
    #    according to the desired visibility. The function =new_panel()=
    #    is used to created panels.
    2. Cree paneles con el fin visibilidad elegido. Apilar hasta
-      de acuerdo con la visibilidad deseada. La función = new_panel () =
+      de acuerdo con la visibilidad deseada. La función = new_panel()=
       se utiliza para paneles creados.
 
    # 3. Call =update_panels()= to write the panels to the virtual screen
    #    in correct visibility order. Do a doupdate() to show it on the
    #    screen.
-   3. Llame = update_panels () = para escribir los paneles a la pantalla virtual
-      con el fin correcta visibilidad. Haga una doupdate () para mostrarlo en el
+   3. Llame = update_panels()= para escribir los paneles a la pantalla virtual
+      con el fin correcta visibilidad. Haga una doupdate() para mostrarlo en el
       pantalla.
 
    # 4. Mainpulate the panels with =show_panel()=, =hide_panel()=,
@@ -3137,16 +3145,16 @@
    #    to store custom data for a panel. Use the functions
    #    =set_panel_userptr()= and =panel_userptr()= to set and get the
    #    user pointer for a panel.
-   4. Mainpulate los paneles con show_panel = () =, = hide_panel () =,
-      = move_panel () = etc. Hacer uso de funciones auxiliares como
-      = panel_hidden () = y = panel_window () =. Hacer uso de puntero de usuario
+   4. Mainpulate los paneles con show_panel =()=, = hide_panel()=,
+      = move_panel()= etc. Hacer uso de funciones auxiliares como
+      = panel_hidden()= y = panel_window()=. Hacer uso de puntero de usuario
       para almacenar datos personalizados para un panel. Utilice las funciones
-      = set_panel_userptr () = y = panel_userptr () = para establecer y obtener el
+      = set_panel_userptr()= y = panel_userptr()= para establecer y obtener el
       puntero del usuario para un panel.
 
    # 5. When you are done with the panel use =del_panel()= to delete the
    #    panel.
-   5. Cuando haya terminado con el uso del panel = del_panel () = para borrar la
+   5. Cuando haya terminado con el uso del panel = del_panel()= para borrar la
       panel.
 
 
@@ -3225,10 +3233,10 @@
    # another, the stack of panels gets updated. To put them on screen
    # =update_panels()= and doupdate() are called.
    Como se puede ver, el programa anterior sigue un flujo simple como
-   explicado. Las ventanas se crean con newwin () y luego son
-   unido a paneles con new_panel = () =. A medida que nos concedemos un panel después
+   explicado. Las ventanas se crean con newwin() y luego son
+   unido a paneles con new_panel =()=. A medida que nos concedemos un panel después
    otra, la pila de paneles se actualiza. Para ponerlos en pantalla
-   = update_panels () = y doupdate () son llamados.
+   = update_panels()= y doupdate() son llamados.
 
 # ** 16.3. Panel Window Browsing
 ** 16.3. Panel de la ventana de navegación
@@ -3382,10 +3390,10 @@
    especificando un puntero del usuario, que puede apuntar a cualquier información
    desea almacenar. En este caso me guardé el puntero a la siguiente
    Panel en el ciclo. Puntero de usuario de un panel se puede ajustar con el
-   función = set_panel_userptr () =. Se puede acceder mediante el
-   función = panel_userptr () = que devolverá el puntero del usuario
+   función = set_panel_userptr()=. Se puede acceder mediante el
+   función = panel_userptr()= que devolverá el puntero del usuario
    el panel da como argumento. Después de encontrar el siguiente panel en el
-   ciclo Se llevó a la cima por la función = top_panel () =. Esta
+   ciclo Se llevó a la cima por la función = top_panel()=. Esta
    función trae el panel dado como argumento a la parte superior del panel
    apilar.
 
@@ -3396,9 +3404,9 @@
    # desired location. It does not change the position of the panel in
    # the stack.  Make sure that you use =move_panel()= instead mvwin()
    # on the window associated with the panel.
-   La función = move_panel () = se puede utilizar para mover un panel a la
+   La función = move_panel()= se puede utilizar para mover un panel a la
    Ubicación deseada. No cambia la posición del panel en
-   la pila. Asegúrese de que utiliza = move_panel () = lugar mvwin ()
+   la pila. Asegúrese de que utiliza = move_panel()= lugar mvwin()
    en la ventana asociada con el panel.
 
    # Resizing a panel is slightly complex. There is no straight forward
@@ -3412,9 +3420,9 @@
    función sólo para cambiar el tamaño de la ventana asociada con un panel. LA
    solución para cambiar el tamaño de un panel es crear una nueva ventana con la
    tamaños deseados, cambian la ventana asociada con el panel utilizando
-   replace_panel = () =. No te olvides de borrar la ventana de edad. los
+   replace_panel =()=. No te olvides de borrar la ventana de edad. los
    ventana asociada con un panel se puede encontrar mediante el uso de la función de
-   panel_window = () =.
+   panel_window =()=.
 
    # The following program shows these concepts, in supposedly simple
    # program. You can cycle through the window with <TAB> as usual. To
@@ -3693,7 +3701,7 @@
    Cuando el usuario presiona 'm' el modo de movimiento comienza. Esto es un poco
    más simple que el cambio de tamaño. Como las teclas de flecha se presionan el nuevo
    posición se actualiza y prensado de <ENTER> hace que el panel de estar
-   movido llamando a la función = move_panel () =.
+   movido llamando a la función = move_panel()=.
 
    # In this program the user data which is represented as =PANEL_DATA=,
    # plays very important role in finding the associated information
@@ -3714,11 +3722,11 @@
    # on the screen once you do =update_panels()= and doupdate(). It
    # doesn't destroy the PANEL structure associated with the hidden
    # panel. It can be shown again by using the =show_panel()= function.
-   Un panel se puede ocultar mediante el uso de la función = hide_panel () =. Esta
+   Un panel se puede ocultar mediante el uso de la función = hide_panel()=. Esta
    función meramente elimina forman la pila de paneles, por lo tanto ocultarlo
-   en la pantalla una vez que haces = update_panels () = y doupdate (). Ello
+   en la pantalla una vez que haces = update_panels()= y doupdate(). Ello
    no destruye la estructura de panel asociado con el escondido
-   panel. Se puede demostrar de nuevo utilizando los show_panel = () = función.
+   panel. Se puede demostrar de nuevo utilizando los show_panel =()= función.
 
    # The following program shows the hiding of panels. Press 'a' or 'b'
    # or 'c' to show or hide first, second and third windows
@@ -3731,7 +3739,7 @@
    o "c" para mostrar u ocultar primera, segunda y tercera ventanas
    respectivamente. Se utiliza un datos de usuario con una pequeña ocultar variable, que
    realiza un seguimiento de si la ventana está oculta o no. Por alguna razón
-   la función = panel_hidden () = que indica si un grupo especial está oculta
+   la función = panel_hidden()= que indica si un grupo especial está oculta
    o no, no está funcionando. Un informe de error también fue presentado por Michael
    Andres [[http://www.geocrawler.com/archives/3/344/1999/9/0/2643549/][here]]
 
@@ -3898,13 +3906,13 @@
    #+END_SRC
 
 # ** 16.7. =panel_above()= and =panel_below()= Functions
-** 16.7. = panel_above () = y = panel_below () = Funciones
+** 16.7. = panel_above()= y = panel_below()= Funciones
 
    # The functions =panel_above()= and =panel_below()= can be used to
    # find out the panel above and below a panel. If the argument to
    # these functions is NULL, then they return a pointer to bottom panel
    # and top panel respectively.
-   Las funciones panel_above = () = y = panel_below () = se puede utilizar para
+   Las funciones panel_above =()= y = panel_below()= se puede utilizar para
    averiguar el panel de arriba y por debajo de un panel. Si el argumento de
    estas funciones se NULL, devuelven un puntero al panel inferior
    y panel superior, respectivamente.
@@ -3947,7 +3955,7 @@
    # of any menu program.
    Para crear menús, primero debe crear objetos, y luego publicar el menú para
    la pantalla. Después de eso, todo el procesamiento de las respuestas de los usuarios es
-   hecho en una función elegante = menu_driver () = que es el caballo de trabajo
+   hecho en una función elegante = menu_driver()= que es el caballo de trabajo
    de cualquier programa de menú.
 
    # The general flow of control of a menu program looks like this.
@@ -3958,16 +3966,16 @@
 
    # 2. Create items using =new_item()=. You can specify a name and
    #    description for the items.
-   2. Cree elementos usando = NEW_ITEM () =. Puede especificar un nombre y
+   2. Cree elementos usando = NEW_ITEM()=. Puede especificar un nombre y
       descripción de los artículos.
 
    # 3. Create the menu with =new_menu()= by specifying the items to be
    #    attached with.
-   3. Crear el menú con new_menu = () = especificando los elementos para ser
+   3. Crear el menú con new_menu =()= especificando los elementos para ser
       adjunto con.
 
    # 4. Post the menu with =menu_post()= and refresh the screen.
-   4. Publicar el menú con menu_post = () = y refrescar la pantalla.
+   4. Publicar el menú con menu_post =()= y refrescar la pantalla.
 
    # 5. Process the user requests with a loop and do necessary updates
    #    to menu with =menu_driver=.
@@ -3975,13 +3983,13 @@
       al menú con menu_driver = =.
 
    # 6. Unpost the menu with =menu_unpost()=
-   6. Unpost el menú con menu_unpost = () =
+   6. Unpost el menú con menu_unpost =()=
 
    # 7. Free the memory allocated to menu by =free_menu()=
-   7. Liberar la memoria asignada al menú = free_menu () =
+   7. Liberar la memoria asignada al menú = free_menu()=
 
    # 8. Free the memory allocated to the items with =free_item()=
-   8. Liberar la memoria asignada a los elementos con free_item = () =
+   8. Liberar la memoria asignada a los elementos con free_item =()=
 
    # 9. End curses
    9. curses End
@@ -4087,13 +4095,13 @@
    # =KEY_MOUSE= special key associated with a mouse event.
    Este programa demuestra los conceptos básicos que intervienen en la creación de un
    menú con libreria menús. Primero creamos los elementos mediante
-   = NEW_ITEM () = y luego adjuntar a la carta con new_menu = () =
+   = NEW_ITEM()= y luego adjuntar a la carta con new_menu =()=
    función. Después de publicar el menú y la actualización de la pantalla, el
    bucle principal de procesamiento comienza. Se lee la entrada del usuario y toma
-   acción correspondiente. La función = menu_driver () = es el trabajo principal
+   acción correspondiente. La función = menu_driver()= es el trabajo principal
    caballo del sistema de menús. El segundo parámetro para esta función
    dice lo que hay que hacer con el menú. De acuerdo con el parámetro,
-   = menu_driver () = hace la tarea correspondiente. El valor puede ser
+   = menu_driver()= hace la tarea correspondiente. El valor puede ser
    ya sea una solicitud menú de navegación, un carácter ASCII, o una
    = = KEY_MOUSE llave especial asociada a un evento de ratón.
 
@@ -4161,7 +4169,7 @@
    Como se ha visto en el ejemplo anterior, = = menu_driver juega un
    papel importante en la actualización del menú. Es muy importante
    comprender las diversas opciones que se necesita y lo que hacen. Como se ha explicado
-   anteriormente, el segundo parámetro a = menu_driver () = puede ser una
+   anteriormente, el segundo parámetro a = menu_driver()= puede ser una
    solicitud de navegación, un carácter imprimible o una = KEY_MOUSE =
    llave. Vamos a diseccionar las diferentes solicitudes de navegación.
 
@@ -4174,7 +4182,7 @@
      # selection to left or right.
      Un menú se puede visualizar con varias columnas de más de un
      ítem. Esto se puede hacer mediante el uso de la
-     = menu_format () = función. Cuando se muestra un menú de columnas múltiples
+     = menu_format()= función. Cuando se muestra un menú de columnas múltiples
      estas peticiones provocan el conductor menú para mover el actual
      selección a la izquierda oa la derecha.
 
@@ -4217,7 +4225,7 @@
      Esta solicitud cuando se administra, se alterna la selección actual. Esta
      opción es para ser utilizado sólo en un menú de múltiples valioso. Así que para utilizar este
      Solicitar la opción = O_ONEVALUE = debe estar apagado. Esta opción puede ser
-     hecho o desactivar con set_menu_opts = () =.
+     hecho o desactivar con set_menu_opts =()=.
 
    # - /Pattern Requests/
    Solicitudes / Patrón / -
@@ -4436,10 +4444,10 @@
    # displayed to the left of the selected item with =set_menu_mark()=.
    En este ejemplo se crea un menú con un título, frontera, una línea de lujo
    separando título y los artículos. Como se puede ver, con el fin de adjuntar
-   una ventana a un menú la función set_menu_win = () = tiene que ser
+   una ventana a un menú la función set_menu_win =()= tiene que ser
    utilizado. A continuación adjuntamos la ventana secundaria también. Esto muestra los elementos
    en la ventana secundaria. También puede establecer la cadena de marca que consigue
-   se muestra a la izquierda del elemento seleccionado con set_menu_mark = () =.
+   se muestra a la izquierda del elemento seleccionado con set_menu_mark =()=.
 
 # ** 17.5. Scrolling Menus
 ** 17.5. Desplazamiento Menús
@@ -4602,13 +4610,13 @@
    opciones ha sido aumentado a diez, que es más grande que nuestro sub
    tamaño de la ventana que puede albergar 6 artículos. Este mensaje tiene que ser
    transmitido explícitamente al sistema de menús con la función
-   set_menu_format = () =. Aquí especificamos el número de filas y
+   set_menu_format =()=. Aquí especificamos el número de filas y
    columnas que queremos que se muestren para una sola página. Podemos especificar
    cualquier número de temas que se muestra, en las variables de filas, si es
    menor que la altura de la ventana sub. Si la tecla presionada por el
    usuario es un PÁG o AV PÁG, el menú se desplaza una página debido a la
    las solicitudes (= REQ_SCR_DPAGE = y = REQ_SCR_UPAGE =) dado a
-   menu_driver = () =.
+   menu_driver =()=.
 
 # ** 17.6. Multi Columnar Menus
 ** 17.6. Multi columnas Menús
@@ -4620,7 +4628,7 @@
    # the cols variable. To make things simpler, the following example
    # doesn't show descriptions for the items.
    En el ejemplo anterior has visto cómo utilizar la función
-   set_menu_format = () =. No mencioné lo que la variable cols (tercero
+   set_menu_format =()=. No mencioné lo que la variable cols (tercero
    parámetro) hace. Bueno, si su ventana secundaria es lo suficientemente amplia, se puede
    optar por mostrar más de un artículo por fila. Esto se puede especificar en
    la variable cols. Para simplificar las cosas, el siguiente ejemplo
@@ -4736,11 +4744,11 @@
    # =menu_opts_on()= and =menu_opts()= which can be used to manipulate
    # menu options. The following menu options can be specified.
 
-   Ver la llamada a la función = set_menu_format () =. Especifica el
+   Ver la llamada a la función = set_menu_format()=. Especifica el
    número de columnas a ser 3, mostrando de este modo 3 artículos por fila. Tenemos
    También apagado las descripciones que muestran con la función
-   menu_opts_off = () =. Hay par de funciones = set_menu_opts () =,
-   menu_opts_on = () = y = menu_opts () = que se pueden utilizar para manipular
+   menu_opts_off =()=. Hay par de funciones = set_menu_opts()=,
+   menu_opts_on =()= y = menu_opts()= que se pueden utilizar para manipular
    opciones de menú. Las siguientes opciones de menú se pueden especificar.
 
    #+BEGIN_EXAMPLE
@@ -4789,10 +4797,10 @@
    # of some of those above constants.  The function =menu_opts()= can
    # be used to find out a menu's present options.
    Todas las opciones están de forma predeterminada. Puede cambiar los atributos específicos
-   o desactivar con menu_opts_on = () = y = menu_opts_off () =
-   funciones. También puede utilizar = set_menu_opts () = para especificar directamente
+   o desactivar con menu_opts_on =()= y = menu_opts_off()=
+   funciones. También puede utilizar = set_menu_opts()= para especificar directamente
    las opciones. El argumento para esta función debe ser un valor de O ed
-   de algunas de esas constantes anteriores. La función = menu_opts () = lata
+   de algunas de esas constantes anteriores. La función = menu_opts()= lata
    ser utilizado para determinar las opciones actuales de un menú.
 
 # ** 17.7. Multi Valued Menus
@@ -4919,12 +4927,12 @@
    # description associated with an item using =item_description()=.
    Ahora, cuando el usuario presiona <Enter> se muestran los objetos que actualmente
    seleccionado. En primer lugar nos encontramos con los elementos asociados con el menú
-   Uso de la función = menu_items () =. A continuación, recorrer los elementos
+   Uso de la función = menu_items()=. A continuación, recorrer los elementos
    para saber si el elemento se selecciona o no. La función
-   = item_value () = devuelve TRUE si se ha seleccionado un elemento. La función
-   = ITEM_COUNT () = devuelve el número de elementos en el menú. El objeto
-   nombre se puede encontrar con item_name = () =. También puede encontrar el
-   Descripción asociado con un elemento utilizando = item_description () =.
+   = item_value()= devuelve TRUE si se ha seleccionado un elemento. La función
+   = ITEM_COUNT()= devuelve el número de elementos en el menú. El objeto
+   nombre se puede encontrar con item_name =()=. También puede encontrar el
+   Descripción asociado con un elemento utilizando = item_description()=.
 
 # ** 17.8. Menu Options
 ** 17.8. Opciones de menú
@@ -4939,7 +4947,7 @@
    Bueno, a estas alturas ya debe estar picando por alguna diferencia en su
    menú, con un montón de funcionalidad. Lo sé. ¿Quieres Colores !!!. usted
    querer crear menús agradables similares a las que el modo de texto [[http://www.jersey.net/~debinjoe/games/][dos juegos]]. los
-   funciones set_menu_fore = () = y = set_menu_back () = puede ser usado para
+   funciones set_menu_fore =()= y = set_menu_back()= puede ser usado para
    cambiar el atributo del elemento seleccionado y el tema no seleccionada. los
    nombres son engañosos. No cambian primer plano de menú o
    fondo que habría sido inútil.
@@ -4951,11 +4959,11 @@
    # =item_opts_off()= and after that that item is not selectable. It's
    # like a grayed item in those fancy windows menus.  Let's put these
    # concepts in practice with this example
-   La función = set_menu_grey () = se puede utilizar para ajustar la pantalla
+   La función = set_menu_grey()= se puede utilizar para ajustar la pantalla
    atributo para los elementos no seleccionables en el menú. Esto nos lleva
    a la opción interesante para un artículo el único
    = = O_SELECTABLE. Podemos apagarlo por la función
-   = item_opts_off () = y después de que ese elemento no se puede seleccionar. Sus
+   = item_opts_off()= y después de que ese elemento no se puede seleccionar. Sus
    como un elemento atenuados los menús de las ventanas de lujo. Vamos a poner estos
    conceptos en la práctica con este ejemplo
 
@@ -5192,13 +5200,13 @@
    # etc.. After the user enters values in the fields and validation
    # done, form can be unposted and memory allocated can be freed.
    Formas se crean en la misma manera como menús. Primero los campos
-   relacionada con la forma se crean con new_field = () =. Puede configurar
+   relacionada con la forma se crean con new_field =()=. Puede configurar
    Opciones para los campos, de manera que se pueden mostrar con cierta
    atributos de lujo, validados antes de que el campo pierde el foco
    etc .. A continuación, los campos están unidos para formar. Después de esto, el formulario
    puede ser publicado para mostrar y está listo para recibir entradas. En el
-   líneas similares a = menu_driver () =, la forma se manipula con
-   form_driver = () =. Podemos enviar solicitudes a = form_driver = mover
+   líneas similares a = menu_driver()=, la forma se manipula con
+   form_driver =()=. Podemos enviar solicitudes a = form_driver = mover
    enfoque a un cierto campo, mover el cursor al final del campo
    etc .. Después de que el usuario introduce los valores en los campos y validación
    hecho, la forma puede ser sin contabilizar y memoria asignada puede ser liberado.
@@ -5211,16 +5219,16 @@
 
    # 2. Create fields using =new_field()=. You can specify the height and
    #    width of the field, and its position on the form.
-   2. Cree campos utilizando = new_field () =. Puede especificar la altura y
+   2. Cree campos utilizando = new_field()=. Puede especificar la altura y
       ancho del campo, y su posición en el formulario.
 
    # 3. Create the forms with =new_form()= by specifying the fields to
    #    be attached with.
-   3. Crear los formularios con new_form = () = especificando los campos de
+   3. Crear los formularios con new_form =()= especificando los campos de
       se adjunta con.
 
    # 4. Post the form with =form_post()= and refresh the screen.
-   4. Publicar el formulario con form_post = () = y refrescar la pantalla.
+   4. Publicar el formulario con form_post =()= y refrescar la pantalla.
 
    # 5. Process the user requests with a loop and do necessary updates
    #    to form with =form_driver=.
@@ -5228,13 +5236,13 @@
       para formar con form_driver = =.
 
    # 6. Unpost the menu with =form_unpost()=
-   6. Unpost el menú con form_unpost = () =
+   6. Unpost el menú con form_unpost =()=
 
    # 7. Free the memory allocated to menu by =free_form()=
-   7. Liberar la memoria asignada al menú = free_form () =
+   7. Liberar la memoria asignada al menú = free_form()=
 
    # 8. Free the memory allocated to the items with =free_field()=
-   8. Liberar la memoria asignada a los elementos con free_field = () =
+   8. Liberar la memoria asignada a los elementos con free_field =()=
 
    # 9. End curses
    9. curses End
@@ -5350,14 +5358,14 @@
    # some additional buffers. These can be used for any purpose you
    # like.
    El ejemplo de arriba es bastante sencillo. Crea dos campos
-   con new_field = () =. = new_field () = toma altura, anchura, starty,
+   con new_field =()=. = new_field()= toma altura, anchura, starty,
    startx, número de filas fuera de la pantalla y el número de trabajo adicional
    tampones. El quinto argumento número de filas fuera de la pantalla especifica cómo
    gran parte del campo para mostrar. Si es cero, todo el campo es
    siempre aparece otro modo la forma será desplazable cuando la
    Los accesos de usuario no está representada partes del campo. La libreria de formularios
    asigna un búfer por campo para almacenar los datos que el usuario entra. Usando
-   el último parámetro a = new_field () = podemos especificarlo para asignar
+   el último parámetro a = new_field()= podemos especificarlo para asignar
    algunos amortiguadores adicionales. Estos pueden ser usados ​​para cualquier propósito que
    como.
 
@@ -5367,8 +5375,8 @@
    # on, focus will move to the next field in the form once the active
    # field is filled up completely.
    Después de crear los campos, de nuevo atributo de tierra de ambos es
-   ajustado a un guión con set_field_back = () =. La opción AUTOSKIP
-   se desactiva usando = field_opts_off () =. Si esta opción está activada
+   ajustado a un guión con set_field_back =()=. La opción AUTOSKIP
+   se desactiva usando = field_opts_off()=. Si esta opción está activada
    en, el foco se desplazará al siguiente campo en el formulario una vez que el activo
    campo se llenó por completo.
 
@@ -5379,7 +5387,7 @@
    Después de colocar los campos del formulario, se registró. Aquí, en, el usuario
    las entradas se procesan en el bucle while, haciendo que corresponde
    solicitudes a form_driver = =. Los detalles de todas las solicitudes a la
-   = form_driver () = se explican más adelante.
+   = form_driver()= se explican más adelante.
 
 # ** 18.3. Playing with Fields
 ** 18.3. El jugar con los campos
@@ -5400,10 +5408,10 @@
     # buffers into the parameters given to it. It is a sort of inverse
     # of =new_field()=.
     Los parámetros que se han dado en el momento de la creación de un campo
-    puede ser recuperada con field_info = () =. Devuelve la altura, anchura,
+    puede ser recuperada con field_info =()=. Devuelve la altura, anchura,
     starty, startx, número de filas fuera de la pantalla, y el número de adicional
     buffers en los parámetros dados a ella. Es una especie de inversa
-    de = new_field () =.
+    de = new_field()=.
 
     #+BEGIN_SRC c
       int field_info(     FIELD *field,              /* field from which to fetch */
@@ -5425,7 +5433,7 @@
     # The location of the field can be moved to a different position
     # with =move_field()=.
     La ubicación del campo se puede mover a una posición diferente
-    con move_field = () =.
+    con move_field =()=.
 
     #+BEGIN_SRC c
       int move_field(    FIELD *field,              /* field to alter */
@@ -5438,7 +5446,7 @@
     # As usual, the changed position can be queried with
     # =field_infor()=.
     Como de costumbre, la posición cambiado se puede consultar con
-    field_infor = () =.
+    field_infor =()=.
 
 # *** 18.3.3. Field Justification
 *** 18.3.3. El campo Justificación
@@ -5446,7 +5454,7 @@
     # The justification to be done for the field can be fixed using the
     # function =set_field_just()=.
     La justificación que hacer para el campo se puede solucionar mediante el
-    función = set_field_just () =.
+    función = set_field_just()=.
 
     #+BEGIN_SRC c
       int set_field_just(FIELD *field,       /* field to alter              */
@@ -5479,13 +5487,13 @@
     # background attributes and pad character for the field. The
     # following list gives the usage of functions.
     Como se ha visto, en el ejemplo anterior, el atributo de visualización para el
-    campos se pueden establecer con set_field_fore = () = y
-    setfield_back = () =. Estas funciones establecen primer y segundo plano
+    campos se pueden establecer con set_field_fore =()= y
+    setfield_back =()=. Estas funciones establecen primer y segundo plano
     atributo de los campos. También puede especificar un carácter de relleno
     que se llenará en la porción vacante del campo. La almohadilla
-    carácter se establece con una llamada a = set_field_pad () =. Pad por defecto
-    valor es un espacio. Las funciones = field_fore () = = = field_back,
-    field_pad = () = puede ser utilizado para consultar el presente primer plano,
+    carácter se establece con una llamada a = set_field_pad()=. Pad por defecto
+    valor es un espacio. Las funciones = field_fore()= = = field_back,
+    field_pad =()= puede ser utilizado para consultar el presente primer plano,
     atribuye antecedentes y carácter de relleno para el campo. los
     siguiente lista da el uso de las funciones.
 
@@ -5534,13 +5542,13 @@
     # display colored fields? Here's an example clarifying color
     # attributes.
     Aunque funciones anteriores parecen bastante simple, el uso de colores con
-    = set_field_fore () = puede ser frustrante al principio. Dejame
+    = set_field_fore()= puede ser frustrante al principio. Dejame
     primero explicar acerca de los atributos de primer plano y de fondo de un
     campo. El atributo de primer plano está asociado con el
-    personaje. Eso significa que un carácter en el campo se imprime con el
-    Atributo que ha configurado con set_field_fore = () =. Fondo
+    caracter. Eso significa que un carácter en el campo se imprime con el
+    Atributo que ha configurado con set_field_fore =()=. Fondo
     atributo es el atributo utilizado para llenar el fondo del campo,
-    si algún personaje está allí o no. Entonces, ¿qué acerca de los colores? Desde
+    si algún caracter está allí o no. Entonces, ¿qué acerca de los colores? Desde
     colores siempre se definen en pares, ¿cuál es la manera correcta de
     mostrar los campos de colores? He aquí un ejemplo de color aclarar
     atributos.
@@ -5632,7 +5640,7 @@
     # simply doesn't allow defining individual color attributes.
     Juega con los pares de colores y tratar de entender el primer plano y
     atributos de fondo. En mis programas utilizando atributos de color, yo
-    por lo general establecer sólo el fondo con set_field_back = () =. curses
+    por lo general establecer sólo el fondo con set_field_back =()=. curses
     simplemente no permite definir los atributos de color individuales.
 
 # *** 18.3.5. Field Option Bits
@@ -5673,11 +5681,11 @@
     # selectively. Anytime you can query the attributes of a field with
     # =field_opts()=. The following is the list of available options. By
     # default, all options are on.
-    La función = set_field_opts () = se pueden utilizar para establecer directamente
+    La función = set_field_opts()= se pueden utilizar para establecer directamente
     atributos de un campo o se puede optar por cambiar algunos atributos
-    y se apaga con field_opts_on = () = y = field_opts_off () =
+    y se apaga con field_opts_on =()= y = field_opts_off()=
     selectivamente. En cualquier momento puede consultar los atributos de un campo con
-    field_opts = () =. La siguiente es la lista de opciones disponibles. Por
+    field_opts =()=. La siguiente es la lista de opciones disponibles. Por
     De forma predeterminada, todas las opciones están sobre.
 
 
@@ -5750,7 +5758,7 @@
     - = = O_BLANK :: campo Controles de supresión. Cuando esta opción está activada,
                       introducir un carácter en la primera posición en el campo
                       borra todo el campo (excepto para el
-                      simplemente a entrar en personaje).
+                      simplemente a entrar en caracter).
 
     # - =O_AUTOSKIP= :: Controls automatic skip to next field when this
     #                   one fills. Normally, when the forms user tries
@@ -5951,7 +5959,7 @@
     Es mejor para comprobar el estado del terreno de juego sólo después de que después de salir
     el campo, como búfer de datos puede que no se han actualizado todavía como el
     validación es todavía debido. Para garantizar que el estado de derecho es
-    regresado, llamada = field_status () = o bien (1) en la salida del campo
+    regresado, llamada = field_status()= o bien (1) en la salida del campo
     control de rutina de validación, (2) desde el campo de formulario o de
     inicialización o terminación de ganchos, o (3) enseguida después de una
     = = REQ_VALIDATION solicitud ha sido procesada por el conductor formas
@@ -6596,9 +6604,9 @@
    # As in the menu system, =form_driver()= plays a very important role
    # in forms system. All types of requests to forms system should be
    # funneled through =form_driver()=.
-   Al igual que en el sistema de menús, = form_driver () = juega un papel muy importante
+   Al igual que en el sistema de menús, = form_driver()= juega un papel muy importante
    en el sistema de formas. Todos los tipos de peticiones al sistema de formularios deben ser
-   canalizado a través = form_driver () =.
+   canalizado a través = form_driver()=.
 
    #+BEGIN_SRC c
      int form_driver(FORM *form,     /* form on which to operate     */
@@ -6615,7 +6623,7 @@
    Como se ha visto algunos de los ejemplos anteriores, usted tiene que estar en una
    bucle buscando la entrada del usuario y luego decidir si se trata de un campo
    de datos o una solicitud de formulario. Las solicitudes de formulario se pasan a
-   = form_driver () = para hacer el trabajo.
+   = form_driver()= para hacer el trabajo.
 
    # The requests roughly can be divided into following
    # categories. Different requests and their usage is explained below:
@@ -6636,7 +6644,7 @@
     visualización de una pantalla nueva forma. Una forma puede estar hecha de múltiples
     páginas. Si usted tiene una gran forma con gran cantidad de campos y lógica
     secciones, entonces usted puede dividir la forma en páginas. La función
-    = set_new_page () = para establecer una nueva página en el campo especificado.
+    = set_new_page()= para establecer una nueva página en el campo especificado.
 
     #+BEGIN_SRC c
       int set_new_page(FIELD *field,/* Field at which page break to be set or unset */
@@ -6724,8 +6732,8 @@
     = = REQ_PREV_FIELD del primer campo va a la última. El orden
     de los campos de éstos (y = REQ_FIRST_FIELD = y
     = = REQ_LAST_FIELD solicitudes) es simplemente el fin del campo
-    punteros en la forma array (establecidos por new_form = () = o
-    = set_form_field () =
+    punteros en la forma array (establecidos por new_form =()= o
+    = set_form_field()=
 
     # It is also possible to traverse the fields as if they had been
     # sorted in screen-position order, so the sequence goes
@@ -6812,7 +6820,7 @@
     # field look for the first or last non-pad character in their
     # ranges.
 
-    Cada palabra se separa de los personajes anteriores y siguientes por
+    Cada palabra se separa de los caracteres anteriores y siguientes por
     espacio en blanco. Los comandos para pasar a principio y final de la línea o
     mirada de campo para el primer o el último carácter no-pad en su
     rangos.
@@ -6852,10 +6860,10 @@
     - = REQ_SCR_BHPAGE = Scroll medio verticalmente hacia atrás una página.
 
     # -  =REQ_SCR_FCHAR= Scroll horizontally forward a character.
-    - = REQ_SCR_FCHAR = Scroll horizontal hacia adelante un personaje.
+    - = REQ_SCR_FCHAR = Scroll horizontal hacia adelante un caracter.
 
     # -  =REQ_SCR_BCHAR= Scroll horizontally backward a character.
-    - = REQ_SCR_BCHAR = Scroll horizontal hacia atrás un personaje.
+    - = REQ_SCR_BCHAR = Scroll horizontal hacia atrás un caracter.
 
     # -  =REQ_SCR_HFLINE= Scroll horizontally one field width forward.
     - = REQ_SCR_HFLINE = Scroll horizontal un campo ancho de adelante.
@@ -6984,7 +6992,7 @@
     # one and deletes the current line (you may think of this as
     # deleting a newline from the field buffer).
     El comportamiento normal de = REQ_DEL_PREV = es eliminar el anterior
-    personaje. Si el modo de inserción está activado, y el cursor se encuentra al principio de
+    caracter. Si el modo de inserción está activado, y el cursor se encuentra al principio de
     una línea, y el texto en esa línea van a caber en la anterior, se
     lugar anexa el contenido de la línea actual a la anterior
     Uno y borra la línea actual (se puede pensar en esto como
@@ -7045,7 +7053,7 @@
     Peticiones de formulario se representan como números enteros por encima del valor curses
     mayor que KEY_MAX = = y menor o igual a la constante
     = = MAX_COMMAND. Un valor dentro de este rango es ignorada por
-    form_driver = () =. Así esto puede ser utilizado para cualquier propósito por el
+    form_driver =()=. Así esto puede ser utilizado para cualquier propósito por el
     solicitud. Puede ser tratada como una acción específica de la aplicación
     y tomar las medidas correspondientes.
 
@@ -7237,10 +7245,10 @@
     # available for justifying string, embedding special drawing
     # characters etc.. Please refer to the man page =cdk_display(3X)=
     # for details. The man page explains the usage with nice examples.
-    dada como parámetro para newCDKLabel (), se imprime la línea con
+    dada como parámetro para newCDKLabel(), se imprime la línea con
     primer plano amarillo y fondo azul. Hay otras etiquetas
     disponible para justificar la secuencia, la incrustación especial de giro
-    personajes etc .. Por favor, consulte la página de manual = cdk_display (3X) =
+    caracteres etc .. Por favor, consulte la página de manual = cdk_display (3X) =
     para detalles. La página del manual explica el uso de ejemplos buenos.
 
 # *** 19.1.3. Conclusion

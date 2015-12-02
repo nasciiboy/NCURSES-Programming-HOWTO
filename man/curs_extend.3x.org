@@ -1,0 +1,51 @@
+#+TITLE: curs_extend 3x
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  =curses_version=, =use_extended_names= - miscellaneous =curses=
+  extensions
+
+* SYNOPSIS
+
+  #+BEGIN_SRC c
+    #include <curses.h>
+
+    const char * curses_version(void);
+    int use_extended_names(bool enable);
+  #+END_SRC
+
+* DESCRIPTION
+
+  These functions are extensions to the =curses= library which do not
+  fit easily into other categories.
+
+  Use =curses_version()= to get the version number, including patch
+  level of the library, e.g., *5.0.19991023*
+
+  The =use_extended_names()= function controls whether the calling
+  application is able to use user-defined or nonstandard names which
+  may be compiled into the terminfo description, i.e., via the
+  terminfo or termcap interfaces.  Normally these names are available
+  for use, since the essential decision is made by using the =-x=
+  option of =tic= to compile extended terminal definitions.  However
+  you can disable this feature to ensure compatibility with other
+  implementations of =curses=.
+
+* PORTABILITY
+
+  These routines are specific to ncurses.  They were not supported on
+  Version 7, BSD or System V implementations.  It is recommended that
+  any code depending on them be conditioned using NCURSES_VERSION.
+
+* SEE ALSO
+
+  [[file:curs_getch.3x.org][curs_getch(3x)]], [[file:curs_mouse.3x.org][curs_mouse(3x)]], [[file:curs_print.3x.org][curs_print(3x)]], [[file:curs_util.3x.org][curs_util(3x)]],
+  [[file:default_colors.3x.org][default_colors(3x)]], [[file:define_key.3x.org][define_key(3x)]], [[file:keybound.3x.org][keybound(3x)]], [[file:keyok.3x.org][keyok(3x)]],
+  [[file:resizeterm.3x.org][resizeterm(3x)]], [[file:wresize.3x.org][wresize(3x)]].
+
+* AUTHOR
+
+  Thomas Dickey.

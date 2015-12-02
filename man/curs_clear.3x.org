@@ -1,0 +1,85 @@
+#+TITLE: curs_clear 3x
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  =erase=, =werase=, =clear=, =wclear=, =clrtobot=, =wclrtobot=,
+  =clrtoeol=, =wclrtoeol= - clear all or part of a =curses= window
+
+* SYNOPSIS
+
+  #+BEGIN_SRC c
+    include <curses.h>
+
+    int erase(void);
+    int werase(WINDOW *win);
+    int clear(void);
+    int wclear(WINDOW *win);
+    int clrtobot(void);
+    int wclrtobot(WINDOW *win);
+    int clrtoeol(void);
+    int wclrtoeol(WINDOW *win);
+  #+END_SRC
+
+* DESCRIPTION
+
+  The =erase= and =werase= routines copy blanks to every position in
+  the window, clearing the screen.
+
+  The =clear= and =wclear= routines are like =erase= and =werase=, but
+  they also call =clearok=, so that the screen is cleared completely
+  on the next call to =wrefresh= for that window and repainted from
+  scratch.
+
+  The =clrtobot= and =wclrtobot= routines erase from the cursor to the
+  end of screen.  That is, they erase all lines below the cursor in
+  the window.  Also, the current line to the right of the cursor,
+  inclusive, is erased.
+
+  The =clrtoeol= and =wclrtoeol= routines erase the current line to
+  the right of the cursor, inclusive, to the end of the current line.
+
+  Blanks created by erasure have the current background rendition (as
+  set by =wbkgdset=) merged into them.
+
+* RETURN VALUE
+
+  All routines return the integer =OK= on success and =ERR= on
+  failure.  The SVr4.0 manual says "or a non-negative integer if
+  =immedok= is set", but this appears to be an error.
+
+  X/Open defines no error conditions.  In this implementation,
+  functions using a window pointer parameter return an error if it is
+  null.
+
+* NOTES
+
+  Note that =erase=, =werase=, =clear=, =wclear=, =clrtobot=, and
+  =clrtoeol= may be macros.
+
+* PORTABILITY
+
+  These functions are described in the XSI Curses standard, Issue 4.
+  The standard specifies that they return =ERR= on failure, but
+  specifies no error conditions.
+
+  Some historic =curses= implementations had, as an undocumented
+  feature, the ability to do the equivalent of =clearok(..., 1)= by
+  saying =touchwin(stdscr)= or =clear(stdscr)=.  This will not work
+  under ncurses.
+
+  This implementation, and others such as Solaris, sets the current
+  position to 0,0 after erasing via =werase()= and =wclear()=.  That
+  fact is not documented in other implementations, and may not be true
+  of implementations which were not derived from SVr4 source.
+
+  Not obvious from the description, most implementations clear the
+  screen after =wclear= even for a subwindow or derived window.  If
+  you do not want to clear the screen during the next =wrefresh=, use
+  =werase= instead.
+
+* SEE ALSO
+
+  [[file:ncurses.3x.org][curses(3x)]], [[file:curs_outopts.3x.org][curs_outopts(3x)]], [[file:curs_refresh.3x.org][curs_refresh(3x)]], [[file:curs_variables.3x.org][curs_variables(3x)]]
