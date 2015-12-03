@@ -1,0 +1,71 @@
+#+TITLE: curs_insstr 3x
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  =insstr=, =insnstr=, =winsstr=, =winsnstr=, =mvinsstr=, =mvinsnstr=,
+  =mvwinsstr=, =mvwinsnstr= - insert string before cursor in a
+  =curses= window
+
+* SYNOPSIS
+
+  #+BEGIN_SRC c
+    #include <curses.h>
+    int insstr(const char *str);
+    int insnstr(const char *str, int n);
+    int winsstr(WINDOW *win, const char *str);
+    int winsnstr(WINDOW *win, const char *str, int n);
+    int mvinsstr(int y, int x, const char *str);
+    int mvinsnstr(int y, int x, const char *str, int n);
+    int mvwinsstr(WINDOW *win, int y, int x, const char *str);
+    int mvwinsnstr(WINDOW *win, int y, int x, const char *str,
+    int n);
+  #+END_SRC
+
+* DESCRIPTION
+
+  These routines insert a character string (as many characters as will
+  fit on the line) before the character under the cursor.  All
+  characters to the right of the cursor are shifted right with the
+  possibility of the rightmost characters on the line being lost.  The
+  cursor position does not change (after moving to =y=, =x=, if
+  specified).  The functions with /n/ as the last argument insert a
+  leading substring of at most /n/ characters.  If n<=0, then the
+  entire string is inserted.
+
+  Special characters are handled as in =addch=.
+
+* RETURN VALUE
+
+  All routines that return an integer return =ERR= upon failure and
+  =OK= (SVr4 specifies only "an integer value other than =ERR=") upon
+  successful completion, unless otherwise noted in the preceding
+  routine descriptions.
+
+  X/Open defines no error conditions.  In this implementation, if the
+  window parameter is null or the str parameter is null, an error is
+  returned.
+
+  Functions with a "mv" prefix first perform a cursor movement using
+  =wmove=, and return an error if the position is outside the window,
+  or if the window pointer is null.
+
+* NOTES
+
+  Note that all but winsnstr may be macros.
+
+* PORTABILITY
+
+  These functions are described in the XSI Curses standard, Issue 4,
+  which adds const qualifiers to the arguments.
+
+  The Single Unix Specification, Version 2 states that =insnstr= and
+  =winsnstr= perform wrapping.  This is probably an error, since it
+  makes this group of functions inconsistent.  Also, no implementation
+  of =curses= documents this inconsistency.
+
+* SEE ALSO
+
+  [[file:ncurses.3x.org][curses(3x)]], [[file:curs_util.3x.org][curs_util(3x)]], [[file:curs_clear.3x.org][curs_clear(3x)]], [[file:curs_inch.3x.org][curs_inch(3x)]].

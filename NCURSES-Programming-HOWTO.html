@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>NCURSES Programming HOWTO</title>
-<!-- 2015-11-29 dom 14:27 -->
+<!-- 2015-12-03 jue 17:28 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="ppadala" />
@@ -71,42 +71,42 @@
 <li><a href="#sec-6">5. A Word about Windows</a></li>
 <li><a href="#sec-7">6. Output functions</a>
 <ul>
-<li><a href="#sec-7-1">6.1. addch() class of functions</a></li>
-<li><a href="#sec-7-2">6.2. mvaddch(), waddch() and mvwaddch()</a></li>
-<li><a href="#sec-7-3">6.3. printw() class of functions</a>
+<li><a href="#sec-7-1">6.1. <code>addch()</code> class of functions</a></li>
+<li><a href="#sec-7-2">6.2. <code>mvaddch()</code>, <code>waddch()</code> and <code>mvwaddch()</code></a></li>
+<li><a href="#sec-7-3">6.3. <code>printw()</code> class of functions</a>
 <ul>
-<li><a href="#sec-7-3-1">6.3.1. printw() and mvprintw</a></li>
-<li><a href="#sec-7-3-2">6.3.2. wprintw() and mvwprintw</a></li>
-<li><a href="#sec-7-3-3">6.3.3. vwprintw()</a></li>
+<li><a href="#sec-7-3-1">6.3.1. <code>printw()</code> and <code>mvprintw</code></a></li>
+<li><a href="#sec-7-3-2">6.3.2. <code>wprintw()</code> and <code>mvwprintw</code></a></li>
+<li><a href="#sec-7-3-3">6.3.3. <code>vwprintw()</code></a></li>
 <li><a href="#sec-7-3-4">6.3.4. A Simple printw example</a></li>
 </ul>
 </li>
-<li><a href="#sec-7-4">6.4. addstr() class of functions</a></li>
+<li><a href="#sec-7-4">6.4. <code>addstr()</code> class of functions</a></li>
 <li><a href="#sec-7-5">6.5. A word of caution</a></li>
 </ul>
 </li>
 <li><a href="#sec-8">7. Input functions</a>
 <ul>
-<li><a href="#sec-8-1">7.1. getch() class of functions</a></li>
-<li><a href="#sec-8-2">7.2. scanw() class of functions</a>
+<li><a href="#sec-8-1">7.1. <code>getch()</code> class of functions</a></li>
+<li><a href="#sec-8-2">7.2. <code>scanw()</code> class of functions</a>
 <ul>
-<li><a href="#sec-8-2-1">7.2.1. scanw() and mvscanw</a></li>
-<li><a href="#sec-8-2-2">7.2.2. wscanw() and mvwscanw()</a></li>
-<li><a href="#sec-8-2-3">7.2.3. vwscanw()</a></li>
+<li><a href="#sec-8-2-1">7.2.1. <code>scanw()</code> and <code>mvscanw</code></a></li>
+<li><a href="#sec-8-2-2">7.2.2. <code>wscanw()</code> and <code>mvwscanw()</code></a></li>
+<li><a href="#sec-8-2-3">7.2.3. <code>vwscanw()</code></a></li>
 </ul>
 </li>
-<li><a href="#sec-8-3">7.3. getstr() class of functions</a></li>
+<li><a href="#sec-8-3">7.3. <code>getstr()</code> class of functions</a></li>
 <li><a href="#sec-8-4">7.4. Some examples</a></li>
 </ul>
 </li>
 <li><a href="#sec-9">8. Attributes                                                       </a>
 <ul>
 <li><a href="#sec-9-1">8.1. The details</a></li>
-<li><a href="#sec-9-2">8.2. attron() vs attrset()</a></li>
+<li><a href="#sec-9-2">8.2. <code>attron()</code> vs <code>attrset()</code></a></li>
 <li><a href="#sec-9-3">8.3. <code>attr_get()</code></a></li>
 <li><a href="#sec-9-4">8.4. <code>attr_</code> functions</a></li>
 <li><a href="#sec-9-5">8.5. wattr functions</a></li>
-<li><a href="#sec-9-6">8.6. chgat() functions</a></li>
+<li><a href="#sec-9-6">8.6. <code>chgat()</code> functions</a></li>
 </ul>
 </li>
 <li><a href="#sec-10">9. Windows                                                          </a>
@@ -1277,15 +1277,16 @@ on screen.
 </p>
 
 <ol class="org-ol">
-<li>addch() class: Print single character with attributes
+<li><code>addch()</code> class: Print single character with attributes
 </li>
 
-<li>printw() class: Print formatted output similar to printf()
+<li><code>printw()</code> class: Print formatted output similar to <code>printf()</code>
 </li>
 
-<li>addstr() class: Print strings
+<li><code>addstr()</code> class: Print strings
 </li>
 </ol>
+
 
 <p>
 These functions can be used interchangeably and it's a matter of
@@ -1294,7 +1295,7 @@ style as to which class is used. Let's see each one in detail.
 </div>
 
 <div id="outline-container-sec-7-1" class="outline-3">
-<h3 id="sec-7-1">6.1. addch() class of functions</h3>
+<h3 id="sec-7-1">6.1. <code>addch()</code> class of functions</h3>
 <div class="outline-text-3" id="text-7-1">
 <p>
 These functions put a single character into the current cursor
@@ -1315,7 +1316,8 @@ options:
 <li>By OR'ing a single character with the desired attribute
 macros. These attribute macros could be found in the header file
 <code>ncurses.h</code>. For example, you want to print a character ch(of
-type char) bold and underlined, you would call addch() as below.
+type char) bold and underlined, you would call <code>addch()</code> as
+below.
 
 <div class="org-src-container">
 
@@ -1324,11 +1326,11 @@ type char) bold and underlined, you would call addch() as below.
 </div>
 </li>
 
-<li>By using functions like <code>attrset(),attron(),attroff()</code>. These
-functions are explained in the <a href="#ATTRIB">Attributes</a> section.  Briefly, they
-manipulate the current attributes of the given window.  Once set,
-the character printed in the window are associated with the
-attributes until it is turned off.
+<li>By using functions like <code>attrset()</code>, <code>attron()</code>, <code>attroff()</code>.
+These functions are explained in the <a href="#ATTRIB">Attributes</a> section.
+Briefly, they manipulate the current attributes of the given
+window.  Once set, the character printed in the window are
+associated with the attributes until it is turned off.
 </li>
 </ul>
 
@@ -1344,7 +1346,7 @@ header file <code>ncurses.h</code>. Try looking for macros beginning with
 </div>
 
 <div id="outline-container-sec-7-2" class="outline-3">
-<h3 id="sec-7-2">6.2. mvaddch(), waddch() and mvwaddch()</h3>
+<h3 id="sec-7-2">6.2. <code>mvaddch()</code>, <code>waddch()</code> and <code>mvwaddch()</code></h3>
 <div class="outline-text-3" id="text-7-2">
 <p>
 <code>mvaddch()</code> is used to move the cursor to a given point, and then
@@ -1371,7 +1373,7 @@ can be replaced by
 <p>
 <code>waddch()</code> is similar to <code>addch()</code>, except that it adds a character
 into the given window. (Note that <code>addch()</code> adds a character into
-the window  <code>stdscr</code>.)
+the window <code>stdscr</code>.)
 </p>
 
 <p>
@@ -1389,7 +1391,7 @@ character by character. Fortunately, <code>ncurses</code> provides
 </div>
 
 <div id="outline-container-sec-7-3" class="outline-3">
-<h3 id="sec-7-3">6.3. printw() class of functions</h3>
+<h3 id="sec-7-3">6.3. <code>printw()</code> class of functions</h3>
 <div class="outline-text-3" id="text-7-3">
 <p>
 These functions are similar to <code>printf()</code> with the added capability
@@ -1398,7 +1400,7 @@ of printing at any position on the screen.
 </div>
 
 <div id="outline-container-sec-7-3-1" class="outline-4">
-<h4 id="sec-7-3-1">6.3.1. printw() and mvprintw</h4>
+<h4 id="sec-7-3-1">6.3.1. <code>printw()</code> and <code>mvprintw</code></h4>
 <div class="outline-text-4" id="text-7-3-1">
 <p>
 These two functions work much like <code>printf()</code>. <code>mvprintw()</code> can be
@@ -1412,7 +1414,7 @@ to manipulate.
 </div>
 
 <div id="outline-container-sec-7-3-2" class="outline-4">
-<h4 id="sec-7-3-2">6.3.2. wprintw() and mvwprintw</h4>
+<h4 id="sec-7-3-2">6.3.2. <code>wprintw()</code> and <code>mvwprintw</code></h4>
 <div class="outline-text-4" id="text-7-3-2">
 <p>
 These two functions are similar to above two except that they
@@ -1422,7 +1424,7 @@ print in the corresponding window given as argument.
 </div>
 
 <div id="outline-container-sec-7-3-3" class="outline-4">
-<h4 id="sec-7-3-3">6.3.3. vwprintw()</h4>
+<h4 id="sec-7-3-3">6.3.3. <code>vwprintw()</code></h4>
 <div class="outline-text-4" id="text-7-3-3">
 <p>
 This function is similar to <code>vprintf()</code>. This can be used when
@@ -1435,23 +1437,23 @@ variable number of arguments are to be printed.
 <h4 id="sec-7-3-4">6.3.4. A Simple printw example</h4>
 <div class="outline-text-4" id="text-7-3-4">
 <p>
-<a href="ncurses_programs/basics/"><b>Example 3. A Simple printw example</b></a>
+<a href="ncurses_programs/basics/printw_example.c"><b>Example 3. A Simple printw example</b></a>
 </p>
 
 <div class="org-src-container">
 
-<pre class="src src-c">#include &lt;ncurses.h&gt;           /* ncurses.h includes stdio.h */
+<pre class="src src-c">#include &lt;ncurses.h&gt;              /* ncurses.h includes stdio.h            */
 #include &lt;string.h&gt;
 
 int main()
 {
-  char mesg[]="Just a string";           /* message to be appeared on the screen  */
-  int row,col;                           /* to store the number of rows and       *
-                                          * the number of colums of the screen    */
-  initscr();                             /* start the curses mode */
-  getmaxyx(stdscr,row,col);              /* get the number of rows and columns    */
+  char mesg[]="Just a string";    /* message to be appeared on the screen  */
+  int row,col;                    /* to store the number of rows and       *
+                                   * the number of colums of the screen    */
+  initscr();                      /* start the curses mode                 */
+  getmaxyx(stdscr,row,col);       /* get the number of rows and columns    */
   mvprintw(row/2,(col-strlen(mesg))/2,"%s",mesg);
-                                         /* print the message at the center of the screen */
+                                  /* print the message at the center of the screen */
   mvprintw(row-2,0,"This screen has %d rows and %d columns\n",row,col);
   printw("Try resizing your window(if possible) and then run this program again");
   refresh();
@@ -1482,7 +1484,7 @@ variables.
 </div>
 
 <div id="outline-container-sec-7-4" class="outline-3">
-<h3 id="sec-7-4">6.4. addstr() class of functions</h3>
+<h3 id="sec-7-4">6.4. <code>addstr()</code> class of functions</h3>
 <div class="outline-text-3" id="text-7-4">
 <p>
 <code>addstr()</code> is used to put a character string into a given
@@ -1490,11 +1492,12 @@ window. This function is similar to calling <code>addch()</code> once for each
 character in a given string. This is true for all output
 functions. There are other functions from this family such as
 <code>mvaddstr(),mvwaddstr()</code> and <code>waddstr()</code>, which obey the naming
-convention of curses.(e.g. mvaddstr() is similar to the respective
-calls move() and then addstr().) Another function of this family is
-addnstr(), which takes an integer parameter(say n)
-additionally. This function puts at most n characters into the
-screen. If n is negative, then the entire string will be added.
+convention of curses.(e.g. <code>mvaddstr()</code> is similar to the
+respective calls <code>move()</code> and then <code>addstr()</code>.) Another function of
+this family is <code>addnstr()</code>, which takes an integer parameter(say
+<code>n</code>) additionally. This function puts at most <code>n</code> characters into
+the screen. If <code>n</code> is negative, then the entire string will be
+added.
 </p>
 </div>
 </div>
@@ -1503,9 +1506,9 @@ screen. If n is negative, then the entire string will be added.
 <h3 id="sec-7-5">6.5. A word of caution</h3>
 <div class="outline-text-3" id="text-7-5">
 <p>
-All these functions take y co-ordinate first and then x in their
-arguments. A common mistake by beginners is to pass x,y in that
-order.  If you are doing too many manipulations of (y,x)
+All these functions take <code>y</code> co-ordinate first and then <code>x</code> in
+their arguments. A common mistake by beginners is to pass <code>x</code>, <code>y</code>
+in that order.  If you are doing too many manipulations of (y,x)
 co-ordinates, think of dividing the screen into windows and
 manipulate each one separately.  Windows are explained in the
 <a href="#WINDOWS">windows</a> section.
@@ -1524,39 +1527,39 @@ divided into three categories.
 </p>
 
 <ol class="org-ol">
-<li>getch() class: Get a character
+<li><code>getch()</code> class: Get a character
 </li>
 
-<li>scanw() class: Get formatted input
+<li><code>scanw()</code> class: Get formatted input
 </li>
 
-<li>getstr() class: Get strings
+<li><code>getstr()</code> class: Get strings
 </li>
 </ol>
 </div>
 
 <div id="outline-container-sec-8-1" class="outline-3">
-<h3 id="sec-8-1">7.1. getch() class of functions</h3>
+<h3 id="sec-8-1">7.1. <code>getch()</code> class of functions</h3>
 <div class="outline-text-3" id="text-8-1">
 <p>
 These functions read a single character from the terminal. But
 there are several subtle facts to consider. For example if you
-don't use the function cbreak(), curses will not read your input
+don't use the function <code>cbreak()</code>, curses will not read your input
 characters contiguously but will begin read them only after a new
-line or an EOF is encountered. In order to avoid this, the cbreak()
-function must used so that characters are immediately available to
-your program. Another widely used function is noecho(). As the name
-suggests, when this function is set (used), the characters that are
-keyed in by the user will not show up on the screen. The two
-functions cbreak() and noecho() are typical examples of key
-management. Functions of this genre are explained in the <a href="#KEYS">key
-management section</a>.
+line or an EOF is encountered. In order to avoid this, the
+<code>cbreak()</code> function must used so that characters are immediately
+available to your program. Another widely used function is
+<code>noecho()</code>. As the name suggests, when this function is set (used),
+the characters that are keyed in by the user will not show up on
+the screen. The two functions <code>cbreak()</code> and <code>noecho()</code> are typical
+examples of key management. Functions of this genre are explained
+in the <a href="#KEYS">key management section</a>.
 </p>
 </div>
 </div>
 
 <div id="outline-container-sec-8-2" class="outline-3">
-<h3 id="sec-8-2">7.2. scanw() class of functions</h3>
+<h3 id="sec-8-2">7.2. <code>scanw()</code> class of functions</h3>
 <div class="outline-text-3" id="text-8-2">
 <p>
 These functions are similar to <code>scanf()</code> with the added capability
@@ -1565,7 +1568,7 @@ of getting the input from any location on the screen.
 </div>
 
 <div id="outline-container-sec-8-2-1" class="outline-4">
-<h4 id="sec-8-2-1">7.2.1. scanw() and mvscanw</h4>
+<h4 id="sec-8-2-1">7.2.1. <code>scanw()</code> and <code>mvscanw</code></h4>
 <div class="outline-text-4" id="text-8-2-1">
 <p>
 The usage of these functions is similar to that of <code>sscanf()</code>,
@@ -1577,7 +1580,7 @@ function(explained below) and uses the resulting line for a scan.
 </div>
 
 <div id="outline-container-sec-8-2-2" class="outline-4">
-<h4 id="sec-8-2-2">7.2.2. wscanw() and mvwscanw()</h4>
+<h4 id="sec-8-2-2">7.2.2. <code>wscanw()</code> and <code>mvwscanw()</code></h4>
 <div class="outline-text-4" id="text-8-2-2">
 <p>
 These are similar to above two functions except that they read
@@ -1588,7 +1591,7 @@ functions.
 </div>
 
 <div id="outline-container-sec-8-2-3" class="outline-4">
-<h4 id="sec-8-2-3">7.2.3. vwscanw()</h4>
+<h4 id="sec-8-2-3">7.2.3. <code>vwscanw()</code></h4>
 <div class="outline-text-4" id="text-8-2-3">
 <p>
 This function is similar to <code>vscanf()</code>. This can be used when a
@@ -1599,7 +1602,7 @@ variable number of arguments are to be scanned.
 </div>
 
 <div id="outline-container-sec-8-3" class="outline-3">
-<h3 id="sec-8-3">7.3. getstr() class of functions</h3>
+<h3 id="sec-8-3">7.3. <code>getstr()</code> class of functions</h3>
 <div class="outline-text-3" id="text-8-3">
 <p>
 These functions are used to get strings from the terminal. In
@@ -1616,7 +1619,7 @@ user.
 <h3 id="sec-8-4">7.4. Some examples</h3>
 <div class="outline-text-3" id="text-8-4">
 <p>
-<a href="ncurses_programs/basics/"><b>Example 4. A Simple scanw example</b></a>
+<a href="ncurses_programs/basics/scanw_example.c"><b>Example 4. A Simple scanw example</b></a>
 </p>
 
 <div class="org-src-container">
@@ -1659,7 +1662,7 @@ file with comments in bold. Scan through the code.
 </p>
 
 <p>
-<a href="ncurses_programs/basics/"><b>Example 5. A Simple Attributes example</b></a>
+<a href="ncurses_programs/basics/simple_attr.c"><b>Example 5. A Simple Attributes example</b></a>
 </p>
 
 <div class="org-src-container">
@@ -1695,13 +1698,13 @@ int main(int argc, char *argv[])
         {
           printw("&lt;-Press Any Key-&gt;");     /* tell the user to press a key         */
           getch();
-          clear();                         /* clear the screen */
+          clear();                         /* clear the screen                     */
           move(0, 0);                      /* start at the beginning of the screen */
         }
       if(prev == '/' &amp;&amp; ch == '*')         /* If it is / and * then only
                                             * switch bold on                       */
         {
-          attron(A_BOLD);                  /* cut bold on */
+          attron(A_BOLD);                  /* cut bold on                          */
           getyx(stdscr, y, x);             /* get the current curser position      */
           move(y, x - 1);                  /* back up one space */
           printw("%c%c", '/', ch);         /* The actual printing is done here     */
@@ -1714,6 +1717,10 @@ int main(int argc, char *argv[])
                                             * and then /                           */
       prev = ch;
     }
+
+  printw("&lt;-Press Any Key-&gt;");
+  getch();
+
   endwin();                                /* End curses mode                      */
   fclose(fp);
   return 0;
@@ -1724,17 +1731,17 @@ int main(int argc, char *argv[])
 <p>
 Don't worry about all those initialization and other crap.
 Concentrate on the while loop. It reads each character in the file
-and searches for the pattern /*. Once it spots the pattern, it
-switches the BOLD attribute on with = attron()= . When we get the
-pattern */ it is switched off by = attroff()= .
+and searches for the pattern <code>/*</code>. Once it spots the pattern, it
+switches the BOLD attribute on with <code>attron()</code> . When we get the
+pattern <code>*/</code> it is switched off by <code>attroff()</code> .
 </p>
 
 <p>
 The above program also introduces us to two useful functions
-<code>getyx() = and =move()</code>. The first function gets the co-ordinates of
-the present cursor into the variables y, x. Since getyx() is a macro
-we don't have to pass pointers to variables. The function <code>move()</code>
-moves the cursor to the co-ordinates given to it.
+<code>getyx()</code> and <code>move()</code>. The first function gets the co-ordinates of
+the present cursor into the variables <code>y</code>, <code>x</code>. Since <code>getyx()</code> is a
+macro we don't have to pass pointers to variables. The function
+<code>move()</code> moves the cursor to the co-ordinates given to it.
 </p>
 
 <p>
@@ -1749,17 +1756,17 @@ extend it to other languages as well.
 <h3 id="sec-9-1">8.1. The details</h3>
 <div class="outline-text-3" id="text-9-1">
 <p>
-Let's get into more details of attributes. The functions <code>attron(),
-   attroff(), attrset() =, and their sister functions = attr_get()</code>
-etc.. can be used to switch attributes on/off , get attributes and
-produce a colorful display.
+Let's get into more details of attributes. The functions
+<code>attron()</code>, <code>attroff()</code>, <code>attrset()</code>, and their sister functions
+<code>attr_get()</code> etc.. can be used to switch attributes on/off , get
+attributes and produce a colorful display.
 </p>
 
 <p>
-The functions attron and attroff take a bit-mask of attributes and
-switch them on or off, respectively. The following video
-attributes, which are defined in &lt;curses.h&gt; can be passed to these
-functions.
+The functions <code>attron</code> and <code>attroff</code> take a bit-mask of attributes
+and switch them on or off, respectively. The following video
+attributes, which are defined in <code>&lt;curses.h&gt;</code> can be passed to
+these functions.
 </p>
 
 <pre class="example">
@@ -1797,15 +1804,15 @@ can use
 </div>
 
 <div id="outline-container-sec-9-2" class="outline-3">
-<h3 id="sec-9-2">8.2. attron() vs attrset()</h3>
+<h3 id="sec-9-2">8.2. <code>attron()</code> vs <code>attrset()</code></h3>
 <div class="outline-text-3" id="text-9-2">
 <p>
-Then what is the difference between attron() and attrset()? attrset
-sets the attributes of window whereas attron just switches on the
-attribute given to it. So attrset() fully overrides whatever
-attributes the window previously had and sets it to the new
-attribute(s). Similarly attroff() just switches off the
-attribute(s) given to it as an argument. This gives us the
+Then what is the difference between <code>attron()</code> and <code>attrset()</code>?
+attrset sets the attributes of window whereas attron just switches
+on the attribute given to it. So <code>attrset()</code> fully overrides
+whatever attributes the window previously had and sets it to the
+new <code>attribute(s)</code>. Similarly <code>attroff()</code> just switches off the
+<code>attribute(s)</code> given to it as an argument. This gives us the
 flexibility of managing attributes easily.But if you use them
 carelessly you may loose track of what attributes the window has
 and garble the display. This is especially true while managing
@@ -1855,10 +1862,10 @@ operate on <code>stdscr</code>.
 </div>
 
 <div id="outline-container-sec-9-6" class="outline-3">
-<h3 id="sec-9-6">8.6. chgat() functions</h3>
+<h3 id="sec-9-6">8.6. <code>chgat()</code> functions</h3>
 <div class="outline-text-3" id="text-9-6">
 <p>
-The function chgat() is listed in the end of the man page
+The function <code>chgat()</code> is listed in the end of the man page
 <code>curs_attr</code>. It actually is a useful one. This function can be used
 to set attributes for a group of characters without moving. I mean
 it !!! without moving the cursor :-) It changes the attributes of a
@@ -3000,8 +3007,8 @@ buffering mode) temporarily. In such a case you will first need to
 save the tty modes with a call to <code>def_prog_mode()</code> and then call
 <code>endwin()</code> to end the curses mode. This will leave you in the
 original tty mode. To get back to curses once you are done, call
-<code>reset_prog_mode() =. This function returns the tty to the state
-   stored by =def_prog_mode()</code>. Then do refresh(), and you are back to
+<code>reset_prog_mode()</code>. This function returns the tty to the state
+stored by <code>def_prog_mode()</code>. Then do refresh(), and you are back to
 the curses mode. Here is an example showing the sequence of things
 to be done.
 </p>

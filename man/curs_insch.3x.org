@@ -1,0 +1,57 @@
+#+TITLE: curs_insch 3x
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  =insch=, =winsch=, =mvinsch=, =mvwinsch= - insert a character before
+  cursor in a =curses= window
+
+* SYNOPSIS
+
+  #+BEGIN_SRC c
+    #include <curses.h>
+
+    int insch(chtype ch);
+    int winsch(WINDOW *win, chtype ch);
+    int mvinsch(int y, int x, chtype ch);
+    int mvwinsch(WINDOW *win, int y, int x, chtype ch);
+  #+END_SRC
+
+* DESCRIPTION
+
+  These routines insert the character =ch= before the character under
+  the cursor.  All characters to the right of the cursor are moved one
+  space to the right, with the possibility of the rightmost character
+  on the line being lost.  The insertion operation does not change the
+  cursor position.
+
+* RETURN VALUE
+
+  All routines that return an integer return =ERR= upon failure and
+  =OK= (SVr4 specifies only "an integer value other than =ERR=") upon
+  successful completion, unless otherwise noted in the preceding
+  routine descriptions.
+
+  Functions with a "mv" prefix first perform a cursor movement using
+  =wmove=, and return an error if the position is outside the window,
+  or if the window pointer is null.
+
+* NOTES
+
+  These routines do not necessarily imply use of a hardware insert
+  character feature.
+
+  Note that =insch=, =mvinsch=, and =mvwinsch= may be macros.
+
+* PORTABILITY
+
+  These functions are described in the XSI Curses standard, Issue 4.
+
+* SEE ALSO
+
+  [[file:ncurses.3x.org][curses(3x)]].
+
+  Comparable functions in the wide-character (ncursesw) library are
+  described in [[file:curs_ins_wch.3x.org][curs_ins_wch(3x)]].

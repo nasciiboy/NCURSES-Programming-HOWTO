@@ -1,0 +1,49 @@
+#+TITLE: curs_in_wch 3x
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  =in_wch=, =mvin_wch=, =mvwin_wch=, =win_wch= - extract a complex
+  character and rendition from a window
+
+* SYNOPSIS
+
+  #+BEGIN_SRC c
+    #include <curses.h>
+
+    int in_wch(cchar_t *wcval);
+    int mvin_wch(int y, int x, cchar_t *wcval);
+    int mvwin_wch(WINDOW *win, int y, int x, cchar_t *wcval);
+    int win_wch(WINDOW *win, cchar_t *wcval);
+  #+END_SRC
+
+* DESCRIPTION
+
+  These functions extract the complex character and rendition from the
+  current position in the named window into the =cchar_t= object
+  referenced by /wcval/.
+
+* RETURN VALUE
+
+  No errors are defined in the XSI Curses standard.  This
+  implementation checks for null pointers, returns =ERR= in that case.
+  Also, the /mv/ routines check for error moving the cursor, returning
+  =ERR= in that case.  Otherwise they return =OK=
+
+  Functions with a "mv" prefix first perform a cursor movement using
+  =wmove=, and return an error if the position is outside the window,
+  or if the window pointer is null.
+
+* NOTES
+
+  Note that all of these routines may be macros.
+
+* PORTABILITY
+
+  These functions are described in the XSI Curses standard, Issue 4.
+
+* SEE ALSO
+
+  [[file:ncurses.3x.org][curses(3x)]], [[file:curs_inch.3x.org][curs_inch(3x)]].

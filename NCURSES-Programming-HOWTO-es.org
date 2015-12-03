@@ -1449,37 +1449,37 @@
    de conseguir la entrada desde cualquier lugar de la pantalla.
 
 # *** 7.2.1. scanw() and mvscanw
-*** 7.2.1. =scanw()= y mvscanw
+*** 7.2.1. =scanw()= y =mvscanw=
 
     # The usage of these functions is similar to that of =sscanf()=,
     # where the line to be scanned is provided by =wgetstr()=
     # function. That is, these functions call to =wgetstr()=
     # function(explained below) and uses the resulting line for a scan.
-    El uso de estas funciones es similar a la de sscanf()=,
-    donde la línea que va a escanear es proporcionada por wgetstr()=
-    función. Es decir, estas funciones llaman a wgetstr()=
-    función (explicado más adelante) y utiliza la línea resultante de un análisis.
+    El uso de estas funciones es similar al de =sscanf()=, donde la
+    línea a escanear es proporcionada por la funcien =wgetstr()=. Es
+    decir, estas funciones llaman a la funcion =wgetstr()= (explicada
+    más adelante) y utilizan la línea resultante de un escaneo.
 
 # *** 7.2.2. wscanw() and mvwscanw()
-*** 7.2.2. wscanw() y mvwscanw()
+*** 7.2.2. =wscanw()= y =mvwscanw()=
 
     # These are similar to above two functions except that they read
     # from a window, which is supplied as one of the arguments to these
     # functions.
-    Estos son similares a anteriores dos funciones excepto que leen
-    desde una ventana, que se suministra como uno de los argumentos a estos
-    funciones.
+    Estas son similares a las dos funciones anteriores excepto que
+    leen desde una ventana, que se suministra como uno de los
+    argumentos a estas funciones.
 
 # *** 7.2.3. vwscanw()
-*** 7.2.3. vwscanw()
+*** 7.2.3. =vwscanw()=
 
     # This function is similar to =vscanf()=. This can be used when a
     # variable number of arguments are to be scanned.
-    Esta función es similar a vscanf()=. Esto puede ser utilizado cuando una
-    número variable de argumentos son que va a escanear.
+    Esta función es similar a =vscanf()=. Se puede utilizar cuando se
+    va a escanear una número variable de argumentos.
 
 # ** 7.3. getstr() class of functions
-** 7.3. getstr() clase de funciones
+** 7.3. Clase de funciones =getstr()=
 
    # These functions are used to get strings from the terminal. In
    # essence, this function performs the same task as would be achieved
@@ -1487,35 +1487,35 @@
    # or end-of-file is received. The resulting string of characters are
    # pointed to by =str=, which is a character pointer provided by the
    # user.
-   Estas funciones se utilizan para obtener las cadenas de la terminal. En
-   Esencialmente, esta función realiza la misma tarea que el que se lograría
-   por una serie de llamadas a getch() hasta que una nueva línea, retorno de carro,
-   o se recibe de fin de archivo. La cadena resultante de caracteres son
-   apuntada por str=, lo cual es un indicador de carácter proporcionada por el
-   usuario.
+   Estas funciones se utilizan para obtener cadenas desde la terminal.
+   Esencialmente, esta función realiza la misma tarea que la que se
+   lograría con una serie de llamadas a =getch()= hasta recibir nueva
+   línea, retorno de carro, o fin de archivo. La cadena de caracteres
+   resultante es apuntada por =str=, El cual es un puntero a carácter
+   proporcionado por el usuario.
 
 # ** 7.4. Some examples
 ** 7.4. Algunos ejemplos
 
    # *Example 4. A Simple scanw example*
-   [[file:ncurses_programs/basics/][*Ejemplo 4. Un ejemplo scanw simple*]]
+   [[file:ncurses_programs/basics/scanw_example.c][*Ejemplo 4. Un ejemplo sencillo de scanw*]]
 
    #+BEGIN_SRC c
-     #include <ncurses.h>                     /* ncurses.h includes stdio.h           */
+     #include <ncurses.h>                   /* ncurses.h incluye stdio.h             */
      #include <string.h>
 
      int main()
      {
-       char mesg[]="Enter a string: ";        /* message to be appeared on the screen */
+       char mesg[]="Ingrese una cadena: ";  /* mensaje a mostrar en pantalla         */
        char str[80];
-       int row,col;                           /* to store the number of rows and      *
-                                               * the number of colums of the screen   */
-       initscr();                             /* start the curses mode                */
-       getmaxyx(stdscr,row,col);              /* get the number of rows and columns   */
+       int row,col;                         /* para almacenar el numera de filas y   *
+                                             * el numero de columnas de pantalla     */
+       initscr();                           /* inicia el modo curses                 */
+       getmaxyx(stdscr,row,col);            /* obtiene el numero de filas y columnas */
        mvprintw(row/2,(col-strlen(mesg))/2,"%s",mesg);
-                                     /* print the message at the center of the screen */
+                                      /* imprime el mensaje al centro de la pantalla */
        getstr(str);
-       mvprintw(LINES - 2, 0, "You Entered: %s", str);
+       mvprintw(LINES - 2, 0, "Ha ingresado: %s", str);
        getch();
        endwin();
 
@@ -1524,21 +1524,22 @@
    #+END_SRC
 
 # * 8. Attributes                                                       <<@ATTRIB>>
-* 8. Atributos << # ATTRIB >>
+* 8. Atributos                                                        <<@ATTRIB>>
 
   # We have seen an example of how attributes can be used to print
   # characters with some special effects. Attributes, when set
   # prudently, can present information in an easy, understandable
   # manner. The following program takes a C file as input and prints the
   # file with comments in bold. Scan through the code.
-  Hemos visto un ejemplo de cómo atributos pueden ser utilizados para imprimir
-  caracteres con algunos efectos especiales. Atributos, cuando se establecen
-  con prudencia, pueden presentar la información de una forma fácil, comprensible
-  manera. El siguiente programa toma un archivo C como entrada e imprime el
-  presentar con comentarios en negrita. Escanear a través del código.
+  Hemos visto un ejemplo de cómo se pueden utilizar atributos para
+  imprimir caracteres con algunos efectos especiales. Cuando los
+  atributos se establecen con prudencia, pueden presentar información
+  de manera sencilla y comprensible. El siguiente programa toma un
+  archivo C como entrada e imprime el archivo con comentarios en
+  negrita. Escanea a través del código.
 
   # *Example 5. A Simple Attributes example*
-  [[file:ncurses_programs/basics/][*Ejemplo 5. Un simple ejemplo de atributos*]]
+  [[file:ncurses_programs/basics/simple_attr.c][*Ejemplo 5. Un ejemplo sencillo de atributos*]]
 
   #+BEGIN_SRC c
     /* pager functionality by Joseph Spainhour" <spainhou@bellsouth.net> */
@@ -1563,35 +1564,39 @@
           perror("Cannot open input file");
           exit(1);
         }
-      initscr();                               /* Start curses mode                    */
-      getmaxyx(stdscr, row, col);              /* find the boundaries of the screeen   */
-      while((ch = fgetc(fp)) != EOF)           /* read the file till we reach the end  */
+      initscr();                               /* inicia el modo curses                */
+      getmaxyx(stdscr, row, col);              /* obtiene los limites de pantalla      */
+      while((ch = fgetc(fp)) != EOF)           /* lee el archivo hasta alcanzar el fin */
         {
-          getyx(stdscr, y, x);                 /* get the current curser position      */
-          if(y == (row - 1))                   /* are we are at the end of the screen  */
+          getyx(stdscr, y, x);                 /* obtiene posicion actual del cursor   */
+          if(y == (row - 1))                   /* estamos al final de la pantalla      */
             {
-              printw("<-Press Any Key->");     /* tell the user to press a key         */
+              printw("<-Press Any Key->");     /* pide una pulsacion al usuario        */
               getch();
-              clear();                         /* clear the screen */
-              move(0, 0);                      /* start at the beginning of the screen */
+              clear();                         /* limpia la pantalla                   */
+              move(0, 0);                      /* comienza al inicio de la pantalla    */
             }
-          if(prev == '/' && ch == '*')         /* If it is / and * then only
-                                                * switch bold on                       */
+          if(prev == '/' && ch == '*')         /* sololamente cuando es / y *
+                                                * cambia a negrita                     */
             {
-              attron(A_BOLD);                  /* cut bold on */
-              getyx(stdscr, y, x);             /* get the current curser position      */
-              move(y, x - 1);                  /* back up one space */
-              printw("%c%c", '/', ch);         /* The actual printing is done here     */
+              attron(A_BOLD);                  /* activa negrita                       */
+              getyx(stdscr, y, x);             /* obtiene posicion actual del cursor   */
+              move(y, x - 1);                  /* retrocede un espacio                 */
+              printw("%c%c", '/', ch);         /* La impresion real sucede aqui       */
             }
           else
             printw("%c", ch);
           refresh();
           if(prev == '*' && ch == '/')
-            attroff(A_BOLD);                   /* Switch it off once we got *
-                                                * and then /                           */
+            attroff(A_BOLD);                   /* apagar una vez se ha alcanzado *
+                                                * y luego /                            */
           prev = ch;
         }
-      endwin();                                /* End curses mode                      */
+
+      printw("<-Press Any Key->");
+      getch();
+
+      endwin();                                /* Fin del modo curses                  */
       fclose(fp);
       return 0;
     }
@@ -1602,31 +1607,31 @@
   # and searches for the pattern /*. Once it spots the pattern, it
   # switches the BOLD attribute on with = attron()= . When we get the
   # pattern */ it is switched off by = attroff()= .
-  No se preocupe por todos aquellos inicialización y otra basura.
-  Concéntrese en el bucle while. Se lee cada carácter en el archivo
-  y busca el patrón / *. Una vez que se ve el patrón, se
-  cambia el atributo BOLD con =attron()= =. Cuando lleguemos a la
-  patrón * / usted se desconecta =attroff()= =.
+  No se inquiete con toda esa inicialización y otras mierdas.
+  Concéntrese en el bucle while. Se lee cada carácter en el archivo y
+  se busca el patrón =/*=. Una vez visto el patrón, cambia el atributo
+  a BOLD con =attron()=. Cuando se obtiene el patrón =*/= se desactiva
+  mediante =attroff()=.
 
   # The above program also introduces us to two useful functions
   # =getyx()= and =move()=. The first function gets the co-ordinates of
   # the present cursor into the variables y, x. Since getyx() is a macro
   # we don't have to pass pointers to variables. The function =move()=
   # moves the cursor to the co-ordinates given to it.
-  El programa anterior también nos presenta a dos funciones útiles
-  getyx() y move()=. La primera función obtiene las coordenadas de
-  la presente cursor en las variables y, x. Desde getyx() es una macro
-  no tenemos que pasar punteros a variables. La función move()=
-  mueve el cursor a las coordenadas dadas a él.
+  El programa anterior también nos presenta dos funciones útiles
+  =getyx()= y =move()=. La primera función obtiene las coordenadas
+  actuales del cursor en las variables =y=, =x=. Ya que =getyx()= es
+  una macro no tenemos que pasar punteros a variables. La función
+  =move()= mueve el cursor a las coordenadas que le son dadas.
 
   # The above program is really a simple one which doesn't do much. On
   # these lines one could write a more useful program which reads a C
   # file, parses it and prints it in different colors. One could even
   # extend it to other languages as well.
-  El programa anterior es realmente muy simple que no hace mucho. En
-  estas líneas se podría escribir un programa más útil que lee un C
-  archivo, lo analiza y se imprime en diferentes colores. Uno podría incluso
-  extenderlo a otros idiomas también.
+  El programa anterior es realmente muy simple ya que no hace mucho.
+  Con estas líneas se podría escribir un programa más útil que lea un
+  archivo C, lo analice e imprima en diferentes colores. Podría
+  incluso extenderlo a otros lenguajes.
 
 # ** 8.1. The details
 ** 8.1. Los detalles
@@ -1635,19 +1640,19 @@
    # attroff(), attrset()=, and their sister functions = attr_get()=
    # etc.. can be used to switch attributes on/off , get attributes and
    # produce a colorful display.
-   Vamos a entrar en más detalles de atributos. Las funciones =attron()=,
-   =attroff()=, =attrset()= =, y su hermana funciones attr_get()=
-   etc .. se puede utilizar para cambiar los atributos de encendido / apagado, obtener atributos y
-   producir un espectáculo lleno de color.
+   Entremos en más detalles sobre los atributos. Las funciones
+   =attron()=, =attroff()=, =attrset()=, y sus funciones hermanas
+   =attr_get()= etc... se utilizan para encender/apagar atributos,
+   obtener atributos y dar una presetracion colorida.
 
    # The functions attron and attroff take a bit-mask of attributes and
    # switch them on or off, respectively. The following video
    # attributes, which are defined in <curses.h> can be passed to these
    # functions.
-   Las funciones attron y attroff toman una máscara de bits de atributos y
-   encenderlos o apagado, respectivamente. El siguiente video
-   atributos, que se definen en <curses.h> se pueden pasar a estos
-   funciones.
+   Las funciones =attron= y =attroff= toman una máscara de bits de
+   atributos para encenderlos o apagarlos, respectivamente. Los
+   siguientes atributos de video, definidos en =<curses.h>= pueden ser
+   pasados a estas funciones.
 
    # #+BEGIN_EXAMPLE
    #   A_NORMAL        Normal display (no highlight)
@@ -1664,31 +1669,31 @@
    #   COLOR_PAIR(n)   Color-pair number n
    # #+END_EXAMPLE
 
-     A_NORMAL Visualización normal (sin resaltar)
-     A_STANDOUT mejor modo de la terminal de relieve.
-     A_UNDERLINE Subrayado
-     Vídeo A_REVERSE inversa
-     A_BLINK Intermitente
-     A_DIM mitad brillante
-     A_BOLD brillante extra o negrita
-     El modo protegido A_PROTECT
-     A_INVIS modo invisible o en blanco
-     Juego de caracteres A_ALTCHARSET alternativo
-     A_CHARTEXT Bit-máscara para extraer un caracter
-     COLOR_PAIR (n) Color-par número n
+   - =A_NORMAL=        :: Visualizacion normal (sin resaltar)
+   - =A_STANDOUT=      :: Mejor modo del terminal para resaltado
+   - =A_UNDERLINE=     :: Subrayado
+   - =A_REVERSE=       :: Video inverso
+   - =A_BLINK=         :: Intermitente
+   - =A_DIM=           :: Mitad de brillo
+   - =A_BOLD=          :: Brillo extra o negrita
+   - =A_PROTECT=       :: Modo protegido
+   - =A_INVIS=         :: En modo Invisible o en blanco
+   - =A_ALTCHARSET=    :: Juego de caracteres alternativo
+   - =A_CHARTEXT=      :: Mascara de bits para extraer el caracter
+   - =COLOR_PAIR(n)=   :: Par de color numero /n/
 
 
    # The last one is the most colorful one :-) Colors are explained in
    # the [[@color][next sections]].
-   El último es el más colorido de un :-) Los colores se explican en
-   los [[] [#color siguientes secciones]].
+   El último es el más colorido :-) Los colores se explican en las
+   [[@color][secciones siguentes]].
 
    # We can OR(|) any number of above attributes to get a combined
    # effect. If you wanted reverse video with blinking characters you
    # can use
-   Podemos OR (|) cualquier número de atributos por encima de conseguir un combinado
-   efecto. Si querías vídeo inverso con caracteres parpadeantes que
-   poder usar
+   Con OR(|) podemos poner cualquier número de los atributos
+   anteriores para obtener un efecto combinado. Si querías vídeo
+   inverso con caracteres parpadeantes puedes usar
 
    #+BEGIN_SRC c
      attron(A_REVERSE | A_BLINK);
@@ -2317,7 +2322,7 @@
 
    # The following colors are defined in =curses.h=. You can use these
    # as parameters for various color functions.
-   Los siguientes colores están definidos en curses.h = =. Usted puede utilizar estas
+   Los siguientes colores están definidos en curses.h =. Usted puede utilizar estas
    como parámetros para las distintas funciones de color.
 
    #+BEGIN_EXAMPLE
@@ -2409,7 +2414,7 @@
    = getch()= devuelve un entero correspondiente a la tecla pulsada. Si
    es un caracter normal, el valor entero será equivalente a
    el caracter. De lo contrario, devuelve un número que puede ser igualada
-   con las constantes definidas en curses.h = =. Por ejemplo, si el usuario
+   con las constantes definidas en curses.h =. Por ejemplo, si el usuario
    prensas de F1, el entero devuelto es 265. Esto se puede comprobar con
    la macro = KEY_F()= se define en curses.h. Esto hace claves de lectura
    portátil y fácil de manejar.
@@ -2647,7 +2652,7 @@
 
    # The =bstate= is the main variable we are interested in. It tells
    # the button state of the mouse.
-   El bState = = es la variable principal que nos interesa. Narra
+   El bState = es la variable principal que nos interesa. Narra
    el estado del botón del ratón.
 
    # Then with a code snippet like the following, we can find out what
@@ -2867,7 +2872,7 @@
    estado de la pantalla y restaurar de nuevo al mismo estado. los
    función = scr_dump()= se puede utilizar para volcar los contenidos de la pantalla a un
    archivo dado como argumento. Más tarde se puede restaurar
-   = = scr_restore función. Estas dos funciones simples se pueden utilizar
+   = scr_restore función. Estas dos funciones simples se pueden utilizar
    efectiva para mantener un juego de movimiento rápido con el cambio de escenarios.
 
 # ** 13.3. Window Dumping
@@ -2968,7 +2973,7 @@
    #+END_SRC
 
 # ** 14.3. =ACS_= variables
-** 14.3. = = ACS_ las variables
+** 14.3. = ACS_ las variables
 
    # If you have ever programmed in DOS, you know about those nifty
    # characters in extended character set. They are printable only on
@@ -3174,7 +3179,7 @@
    # added along with =-lncurses= in that order.
    Para utilizar las funciones de libreria paneles, usted tiene que incluir panel.h y
    vincular el programa con paneles libreria la bandera = -lpanel = debe ser
-   añadido junto con = = -lncurses en ese orden.
+   añadido junto con = -lncurses en ese orden.
 
    #+BEGIN_EXAMPLE
         #include <panel.h>
@@ -3708,9 +3713,9 @@
    # with a panel.  As written in the comments, the =PANEL_DATA= stores
    # the panel sizes, label, label color and a pointer to the next panel
    # in the cycle.
-   En este programa los datos de usuario que se representa como PANEL_DATA = =,
+   En este programa los datos de usuario que se representa como PANEL_DATA =,
    juega papel muy importante en la búsqueda de la información asociada
-   con un panel. Como está escrito en los comentarios, los PANEL_DATA = = tiendas
+   con un panel. Como está escrito en los comentarios, los PANEL_DATA = tiendas
    el tamaño del panel, la etiqueta, color de la etiqueta y un puntero al siguiente panel
    en el ciclo.
 
@@ -3980,7 +3985,7 @@
    # 5. Process the user requests with a loop and do necessary updates
    #    to menu with =menu_driver=.
    5. Proceso de las peticiones de los usuarios con un lazo y hacer las actualizaciones necesarias
-      al menú con menu_driver = =.
+      al menú con menu_driver =.
 
    # 6. Unpost the menu with =menu_unpost()=
    6. Unpost el menú con menu_unpost =()=
@@ -4009,7 +4014,7 @@
    # added along with =-lncurses= in that order.
    Para utilizar las funciones de libreria de menú, usted tiene que incluir menu.h y
    vincular el programa con la libreria menú de la bandera = -lmenu = debe ser
-   añadido junto con = = -lncurses en ese orden.
+   añadido junto con = -lncurses en ese orden.
 
    #+BEGIN_EXAMPLE
      #include <menu.h>
@@ -4103,10 +4108,10 @@
    dice lo que hay que hacer con el menú. De acuerdo con el parámetro,
    = menu_driver()= hace la tarea correspondiente. El valor puede ser
    ya sea una solicitud menú de navegación, un carácter ASCII, o una
-   = = KEY_MOUSE llave especial asociada a un evento de ratón.
+   = KEY_MOUSE llave especial asociada a un evento de ratón.
 
    # The =menu_driver= accepts following navigational requests.
-   El menu_driver = = acepta siguientes solicitudes de navegación.
+   El menu_driver = acepta siguientes solicitudes de navegación.
 
    #+BEGIN_EXAMPLE
      REQ_LEFT_ITEM       Move left to an item.
@@ -4154,7 +4159,7 @@
    No se dejen confundir por el número de opciones. Vamos a verlos
    lentamente una tras otra. Las opciones de interés en este ejemplo
    son = REQ_UP_ITEM = y = REQ_DOWN_ITEM =. Estas dos opciones cuando
-   pasó a = = menu_driver, conductor menú actualiza el elemento actual de
+   pasó a = menu_driver, conductor menú actualiza el elemento actual de
    un elemento hacia arriba o hacia abajo, respectivamente.
 
 # ** 17.3. Menu Driver: The work horse of the menu system
@@ -4166,7 +4171,7 @@
    # above, the second parameter to =menu_driver()= can be either a
    # navigational request, a printable character or a =KEY_MOUSE=
    # key. Let's dissect the different navigational requests.
-   Como se ha visto en el ejemplo anterior, = = menu_driver juega un
+   Como se ha visto en el ejemplo anterior, = menu_driver juega un
    papel importante en la actualización del menú. Es muy importante
    comprender las diversas opciones que se necesita y lo que hacen. Como se ha explicado
    anteriormente, el segundo parámetro a = menu_driver()= puede ser una
@@ -4192,7 +4197,7 @@
      # options when given, makes the =menu_driver= to move the current
      # selection to an item up or down.
      Estas dos opciones que se han visto en el ejemplo anterior. Estas
-     opciones cuando se dan, hacen que el menu_driver = = para mover la corriente
+     opciones cuando se dan, hacen que el menu_driver = para mover la corriente
      la selección de un elemento hacia arriba o hacia abajo.
 
    - =REQ_SCR_*= options
@@ -4203,11 +4208,11 @@
      # then the menu is scrollable. These requests can be given to the
      # =menu_driver= to do the scrolling either one line up, down or one
      # page down or up respectively.
-     Las cuatro opciones = REQ_SCR_ULINE = = = REQ_SCR_DLINE,
-     = REQ_SCR_DPAGE = = = REQ_SCR_UPAGE están relacionados con el desplazamiento. Me caigo
+     Las cuatro opciones = REQ_SCR_ULINE = = REQ_SCR_DLINE,
+     = REQ_SCR_DPAGE = = REQ_SCR_UPAGE están relacionados con el desplazamiento. Me caigo
      los elementos en el menú no se pueden visualizar en la ventana de submenú,
      a continuación, el menú es desplazable. Estas solicitudes se pueden dar a la
-     = = menu_driver para hacer el desplazamiento, ya sea una línea hacia arriba, hacia abajo o uno
+     = menu_driver para hacer el desplazamiento, ya sea una línea hacia arriba, hacia abajo o uno
      página hacia abajo o hacia arriba respectivamente.
 
    - =REQ_FIRST_ITEM=, =REQ_LAST_ITEM=, =REQ_NEXT_ITEM= and
@@ -4250,7 +4255,7 @@
      el buffer de patrones. La solicitud = REQ_BACK_PATTERN = borra el
      carácter anterior en el buffer de patrones. En caso de que el patrón
      partidos de más de un artículo a continuación los elementos coincidentes puede ciclar
-     a través = REQ_NEXT_MATCH = y = = REQ_PREV_MATCH que mover el
+     a través = REQ_NEXT_MATCH = y = REQ_PREV_MATCH que mover el
      la selección actual para los próximos partidos y los anteriores, respectivamente.
 
    # - /Mouse Requests/
@@ -4259,7 +4264,7 @@
      # In case of =KEY_MOUSE= requests, according to the mouse position
      # an action is taken accordingly. The action to be taken is
      # explained in the man page as,
-     En caso de = = KEY_MOUSE solicitudes, de acuerdo con la posición del ratón
+     En caso de = KEY_MOUSE solicitudes, de acuerdo con la posición del ratón
      una acción se toma en consecuencia. La acción a tomar es
      se explica en la página del manual como,
 
@@ -4811,9 +4816,9 @@
    # can select more than one item. This brings us to the request
    # =REQ_TOGGLE_ITEM=. Let's see it in action.
    Tal vez se pregunte lo que si apaga la opción
-   = = O_ONEVALUE. A continuación, el menú se convierte en multi-valorada. Eso significa que usted
+   = O_ONEVALUE. A continuación, el menú se convierte en multi-valorada. Eso significa que usted
    puede seleccionar más de un elemento. Esto nos lleva a la solicitud
-   = = REQ_TOGGLE_ITEM. Vamos a ver en acción.
+   = REQ_TOGGLE_ITEM. Vamos a ver en acción.
 
    # *Example 22. Multi Valued Menus example*
    [[file:ncurses_programs/basics/][*Ejemplo 22. Multi ejemplo Menús Valorado*]]
@@ -4911,11 +4916,11 @@
    # case when space is pressed =REQ_TOGGLE_ITEM= request is sent to
    # =menu_driver= to achieve the result.
    ¡Menos mal, un montón de nuevas funciones. Vamos a tomar una tras otra.
-   En primer lugar, la REQ_TOGGLE_ITEM = =. En un menú de varios valores, el usuario
+   En primer lugar, la REQ_TOGGLE_ITEM =. En un menú de varios valores, el usuario
    se debe permitir para seleccionar o anular seleccionar más de un elemento. los
    Solicitar = REQ_TOGGLE_ITEM = Alterna la selección actual. En esto
    caso cuando se pulsa el espacio = REQ_TOGGLE_ITEM = solicitud se envía al
-   = = menu_driver para lograr el resultado.
+   = menu_driver para lograr el resultado.
 
    # Now when the user presses <ENTER> we show the items he presently
    # selected. First we find out the items associated with the menu
@@ -4962,7 +4967,7 @@
    La función = set_menu_grey()= se puede utilizar para ajustar la pantalla
    atributo para los elementos no seleccionables en el menú. Esto nos lleva
    a la opción interesante para un artículo el único
-   = = O_SELECTABLE. Podemos apagarlo por la función
+   = O_SELECTABLE. Podemos apagarlo por la función
    = item_opts_off()= y después de que ese elemento no se puede seleccionar. Sus
    como un elemento atenuados los menús de las ventanas de lujo. Vamos a poner estos
    conceptos en la práctica con este ejemplo
@@ -5233,7 +5238,7 @@
    # 5. Process the user requests with a loop and do necessary updates
    #    to form with =form_driver=.
    5. Proceso de las peticiones de los usuarios con un lazo y hacer las actualizaciones necesarias
-      para formar con form_driver = =.
+      para formar con form_driver =.
 
    # 6. Unpost the menu with =form_unpost()=
    6. Unpost el menú con form_unpost =()=
@@ -5264,7 +5269,7 @@
    # added along with =-lncurses= in that order.
    Para utilizar formas funciones de la libreria, que tiene que incluir form.h y
    vincular el programa con formas libreria de la bandera = -lform = debe ser
-   añadido junto con = = -lncurses en ese orden.
+   añadido junto con = -lncurses en ese orden.
 
    #+BEGIN_EXAMPLE
      #include <form.h>
@@ -5386,7 +5391,7 @@
    # =form_driver()= are explained later.
    Después de colocar los campos del formulario, se registró. Aquí, en, el usuario
    las entradas se procesan en el bucle while, haciendo que corresponde
-   solicitudes a form_driver = =. Los detalles de todas las solicitudes a la
+   solicitudes a form_driver =. Los detalles de todas las solicitudes a la
    = form_driver()= se explican más adelante.
 
 # ** 18.3. Playing with Fields
@@ -5470,7 +5475,7 @@
     # functions are =NO_JUSTIFICATION=, =JUSTIFY_RIGHT=, =JUSTIFY_LEFT=,
     # or =JUSTIFY_CENTER=.
     El modo de justificación apreciando aceptado y devuelto por estos
-    funciones son NO_JUSTIFICATION = =, = JUSTIFY_RIGHT =, = = JUSTIFY_LEFT,
+    funciones son NO_JUSTIFICATION =, = JUSTIFY_RIGHT =, = JUSTIFY_LEFT,
     o = JUSTIFY_CENTER =.
 
 # *** 18.3.4. Field Display Attributes
@@ -5492,7 +5497,7 @@
     atributo de los campos. También puede especificar un carácter de relleno
     que se llenará en la porción vacante del campo. La almohadilla
     carácter se establece con una llamada a = set_field_pad()=. Pad por defecto
-    valor es un espacio. Las funciones = field_fore()= = = field_back,
+    valor es un espacio. Las funciones = field_fore()= = field_back,
     field_pad =()= puede ser utilizado para consultar el presente primer plano,
     atribuye antecedentes y carácter de relleno para el campo. los
     siguiente lista da el uso de las funciones.
@@ -5694,7 +5699,7 @@
     #                   hide or pop up fields depending on the value of
     #                   parent fields.
 
-    - = = O_VISIBLE :: Controla si el campo es visible en el
+    - = O_VISIBLE :: Controla si el campo es visible en el
                       pantalla. Puede ser utilizado durante el procesamiento formulario para
                       ocultar o pop-up campos en función del valor de
                       campos de padres.
@@ -5704,7 +5709,7 @@
     #                   navigation keys). Can be used to make labels or
     #                   derived fields with buffer values alterable by
     #                   the forms application, not the user.
-    - = = O_ACTIVE :: Controla si el campo está activo durante
+    - = O_ACTIVE :: Controla si el campo está activo durante
                       procesamiento de formularios (es decir, la visita de forma
                       teclas de navegación). Se puede utilizar para hacer etiquetas o
                       campos derivados con valores de amortiguamiento alterable por
@@ -5717,12 +5722,12 @@
     #                   visible field cursor will not move. You can turn
     #                   off the =O_PUBLIC= bit to define password
     #                   fields.
-    - = = O_PUBLIC :: Controla si se muestra los datos durante campo
+    - = O_PUBLIC :: Controla si se muestra los datos durante campo
                       entrada. Si esta opción está desactivada en un campo,
                       la libreria va a aceptar y editar datos en ese
                       campo, pero no se mostrará y la
                       cursor campo visible no se moverá. Usted puede dar vuelta
-                      fuera de la = = O_PUBLIC poco para definir la contraseña
+                      fuera de la = O_PUBLIC poco para definir la contraseña
                       campos.
 
     # - =O_EDIT=     :: Controls whether the field's data can be
@@ -5730,10 +5735,10 @@
     #                   requests except =REQ_PREV_CHOICE= and
     #                   =REQ_NEXT_CHOICE= will fail. Such read-only
     #                   fields may be useful for help messages.
-    - = = O_EDIT :: Controla si los datos del campo pueden ser
+    - = O_EDIT :: Controla si los datos del campo pueden ser
                       modificado. Cuando esta opción está desactivada, toda la edición
                       peticiones excepto = REQ_PREV_CHOICE = y
-                      = = REQ_NEXT_CHOICE fallará. De sólo lectura Tal
+                      = REQ_NEXT_CHOICE fallará. De sólo lectura Tal
                       campos pueden ser útiles para mensajes de ayuda.
 
     # - =O_WRAP=     :: Controls word-wrapping in multi-line
@@ -5743,7 +5748,7 @@
     #                   next line (assuming there is one). When this
     #                   option is off, the word will be split across the
     #                   line break.
-    - = = O_WRAP :: Controla palabra y embalaje en varias líneas
+    - = O_WRAP :: Controla palabra y embalaje en varias líneas
                       campos. Normalmente, cuando cualquier carácter de una
                       (separados en blanco-) palabra llega al final de la
                       línea actual, la palabra entera se envuelve a la
@@ -5755,7 +5760,7 @@
     #                   entering a character at the first field position
     #                   erases the entire field (except for the
     #                   just-entered character).
-    - = = O_BLANK :: campo Controles de supresión. Cuando esta opción está activada,
+    - = O_BLANK :: campo Controles de supresión. Cuando esta opción está activada,
                       introducir un carácter en la primera posición en el campo
                       borra todo el campo (excepto para el
                       simplemente a entrar en caracter).
@@ -5768,7 +5773,7 @@
     #                   at the end of the field. This option is ignored
     #                   in dynamic fields that have not reached their
     #                   size limit.
-    - = = O_AUTOSKIP :: Controla salto automático al siguiente campo cuando este
+    - = O_AUTOSKIP :: Controla salto automático al siguiente campo cuando este
                       uno llena. Normalmente, cuando los intentos formularios de usuario
                       para escribir más datos en un campo que se ajuste,
                       la ubicación de edición salta al siguiente campo. Cuando
@@ -5783,7 +5788,7 @@
     #                   validation check on exit. If this option is off
     #                   on a field, exit from it will invoke a
     #                   validation check.
-    - = = O_NULLOK :: Controla si la validación se aplica al blanco
+    - = O_NULLOK :: Controla si la validación se aplica al blanco
                       campos. Normalmente, no lo es; el usuario puede dejar
                       un campo en blanco sin invocar la costumbre
                       comprobación de validación en la salida. Si esta opción está desactivada
@@ -5796,10 +5801,10 @@
     #                   =O_PASSOK= may be useful if your field's
     #                   validation function may change during forms
     #                   processing.
-    - = = O_PASSOK :: Controla si la validación ocurre en cada
+    - = O_PASSOK :: Controla si la validación ocurre en cada
                       salida, o sólo después de que el campo es
                       modificado. Normalmente esto último es cierto. Ajuste
-                      = = O_PASSOK puede ser útil si su ámbito de
+                      = O_PASSOK puede ser útil si su ámbito de
                       función de validación puede cambiar durante formas
                       tratamiento.
 
@@ -5807,7 +5812,7 @@
     #                   initial dimensions. If you turn this off, the
     #                   field becomes dynamic and will stretch to fit
     #                   entered data.
-    - = = O_STATIC :: Controla si el campo se fija a su
+    - = O_STATIC :: Controla si el campo se fija a su
                       dimensiones iniciales. Si la desactivas, el
                       campo se convierte en dinámica y se estira para adaptarse
                       datos introducidos.
@@ -5962,7 +5967,7 @@
     regresado, llamada = field_status()= o bien (1) en la salida del campo
     control de rutina de validación, (2) desde el campo de formulario o de
     inicialización o terminación de ganchos, o (3) enseguida después de una
-    = = REQ_VALIDATION solicitud ha sido procesada por el conductor formas
+    = REQ_VALIDATION solicitud ha sido procesada por el conductor formas
 
 # *** 18.3.7. Field User Pointer
 *** 18.3.7. El campo puntero del usuario
@@ -6052,7 +6057,7 @@
     # created with height set to one will be defined to be a one line
     # field. A new field created with height greater than one will be
     # defined to be a multi line field.
-    Aunque field_info = = trabajo como de costumbre, es aconsejable utilizar este
+    Aunque field_info = trabajo como de costumbre, es aconsejable utilizar este
     función para obtener los atributos propios de una forma dinámica cultivable
     campo. Recordemos la rutina de libreria = new_field =; un campo nuevo
     creado con la altura establecida en uno se define para ser una sola línea
@@ -6064,7 +6069,7 @@
     # can increase if the user enters more data than the initial field
     # will hold. The number of columns displayed will remain fixed and
     # the additional data will scroll horizontally.
-    Un campo de una línea con O_STATIC = = apagado (dinámica cultivable
+    Un campo de una línea con O_STATIC = apagado (dinámica cultivable
     campo) contendrá una sola fila fijo, pero el número de columnas
     puede aumentar si el usuario introduce más datos que el campo inicial
     sostendrá. El número de columnas que se muestran permanecerá fijo y
@@ -6075,7 +6080,7 @@
     # number of rows can increase if the user enters more data than the
     # initial field will hold. The number of rows displayed will remain
     # fixed and the additional data will scroll vertically.
-    Un campo multilínea con O_STATIC = = apagado (dinámica
+    Un campo multilínea con O_STATIC = apagado (dinámica
     terreno cultivable) contendrá un número fijo de columnas, pero el
     número de filas puede aumentar si el usuario introduce más datos que el
     campo inicial se mantendrá. El número de filas que se muestra permanecerá
@@ -6098,9 +6103,9 @@
    #    option will work as normal if the field has grown to its maximum
    #    size.
    1. La opción de campo = O_AUTOSKIP = se ignorará si la opción
-      = = O_STATIC está apagado y no hay crecimiento máxima especificada para
+      = O_STATIC está apagado y no hay crecimiento máxima especificada para
       el campo. Actualmente, = O_AUTOSKIP = genera una automática
-      = = REQ_NEXT_FIELD solicitar controlador formulario cuando el usuario escribe en el
+      = REQ_NEXT_FIELD solicitar controlador formulario cuando el usuario escribe en el
       última posición de carácter de un campo. En un campo cultivable sin
       crecimiento máximo especificado, no hay último carácter
       posición. Si se especifica un crecimiento máximo, el = O_AUTOSKIP =
@@ -6116,10 +6121,10 @@
    #    unchanged.
    2. La justificación campo se ignora si la opción = O_STATIC =
       esta apagado. Actualmente, = set_field_just = se puede utilizar para
-      = JUSTIFY_LEFT =, = JUSTIFY_RIGHT = = = JUSTIFY_CENTER los contenidos
+      = JUSTIFY_LEFT =, = JUSTIFY_RIGHT = = JUSTIFY_CENTER los contenidos
       de un campo de una línea. Un cultivable un campo de línea será, por
       definición, crecer y desplazarse horizontalmente y puede contener más
-      datos que se pueden justificar. El regreso de field_just = = será
+      datos que se pueden justificar. El regreso de field_just = será
       sin alterar.
 
    # 3. The overloaded form driver request =REQ_NEW_LINE= will operate
@@ -6138,12 +6143,12 @@
       de la misma manera independientemente de la opción = O_NL_OVERLOAD = formulario si
       la opción de campo = O_STATIC = está apagado y no hay máximo
       crecimiento especificado para el campo. Actualmente, si la opción de forma
-      = = O_NL_OVERLOAD está encendido, = = REQ_NEW_LINE genera implícitamente una
-      = = REQ_NEXT_FIELD si llama desde la última línea de un campo. Si una
+      = O_NL_OVERLOAD está encendido, = REQ_NEW_LINE genera implícitamente una
+      = REQ_NEXT_FIELD si llama desde la última línea de un campo. Si una
       campo puede crecer sin límite, no hay última línea, por lo que
       = REQ_NEW_LINE = nunca generará implícitamente una
-      = = REQ_NEXT_FIELD. Si se especifica y un límite máximo de crecimiento
-      = = O_NL_OVERLOAD opción formulario está encendido, = REQ_NEW_LINE = sólo se
+      = REQ_NEXT_FIELD. Si se especifica y un límite máximo de crecimiento
+      = O_NL_OVERLOAD opción formulario está encendido, = REQ_NEW_LINE = sólo se
       generar implícitamente = REQ_NEXT_FIELD = si el campo ha crecido hasta
       su tamaño máximo y el usuario está en la última línea.
 
@@ -6165,7 +6170,7 @@
    #    current field.
    5. La llamada libreria = link_field = funcionará como de costumbre; será
       duplicar todos los atributos de campo y compartir buffers con el campo
-      está vinculado. Si el O_STATIC = = opción de campo es posteriormente
+      está vinculado. Si el O_STATIC = opción de campo es posteriormente
       cambiado por unos tampones de intercambio de campo, las reacciones del sistema a un
       intentar introducir más datos en el campo de la memoria intermedia de la voluntad
       Actualmente mantenga dependerá de la configuración de la opción en el
@@ -6177,7 +6182,7 @@
    #    above, to query the current size of the buffer.
    6. La llamada libreria = field_info = funcionará como de costumbre; la variable
       nRow contendrá el valor de la llamada original a
-      = = new_field. El usuario debe utilizar = = dynamic_field_info, descrito
+      = new_field. El usuario debe utilizar = dynamic_field_info, descrito
       anteriormente, para consultar el tamaño actual de la memoria intermedia.
 
 
@@ -6374,7 +6379,7 @@
    # - the application program changes the field value by calling
    #   =set_field_buffer=.
    - El programa de aplicación cambia el valor del campo llamando
-     = = set_field_buffer.
+     = set_field_buffer.
 
    # - linked field values are changed indirectly -- by changing the
    #   field to which they are linked
@@ -6444,7 +6449,7 @@
   # always fail. A minimum width of zero makes field completion
   # optional.
   El argumento de profundidad establece una anchura mínima de datos. Al igual que con
-  = = TYPE_ALPHA, por lo general usted querrá establecer esto a la anchura del campo;
+  = TYPE_ALPHA, por lo general usted querrá establecer esto a la anchura del campo;
   si es mayor que el ancho del campo, la comprobación de validación será
   siempre fallar. Una anchura mínima de cero hace que la terminación de campo
   opcional.
@@ -6501,7 +6506,7 @@
 
   # The =REQ_NEXT_CHOICE= and =REQ_PREV_CHOICE= input requests can be
   # particularly useful with these fields.
-  El REQ_NEXT_CHOICE = = = y peticiones REQ_PREV_CHOICE = entrada pueden ser
+  El REQ_NEXT_CHOICE = = y peticiones REQ_PREV_CHOICE = entrada pueden ser
   particularmente útil con estos campos.
 
 # * =TYPE_INTEGER=
@@ -6729,9 +6734,9 @@
     # =set_form_fields()=
     Estas peticiones tratan a la lista de los campos en una página como cíclico; ese
     es decir, = REQ_NEXT_FIELD = desde el último campo va a la primera, y
-    = = REQ_PREV_FIELD del primer campo va a la última. El orden
+    = REQ_PREV_FIELD del primer campo va a la última. El orden
     de los campos de éstos (y = REQ_FIRST_FIELD = y
-    = = REQ_LAST_FIELD solicitudes) es simplemente el fin del campo
+    = REQ_LAST_FIELD solicitudes) es simplemente el fin del campo
     punteros en la forma array (establecidos por new_form =()= o
     = set_form_field()=
 
@@ -6842,13 +6847,13 @@
     solicitar explícitamente el desplazamiento con las siguientes preguntas:
 
     # -  =REQ_SCR_FLINE= Scroll vertically forward a line.
-    - = = REQ_SCR_FLINE Desplácese verticalmente hacia adelante una línea.
+    - = REQ_SCR_FLINE Desplácese verticalmente hacia adelante una línea.
 
     # -  =REQ_SCR_BLINE= Scroll vertically backward a line.
     - = REQ_SCR_BLINE = Desplazarse verticalmente hacia atrás una línea.
 
     # -  =REQ_SCR_FPAGE= Scroll vertically forward a page.
-    - = = REQ_SCR_FPAGE Desplácese verticalmente hacia adelante una página.
+    - = REQ_SCR_FPAGE Desplácese verticalmente hacia adelante una página.
 
     # -  =REQ_SCR_BPAGE= Scroll vertically backward a page.
     - = REQ_SCR_BPAGE = Desplazarse verticalmente hacia atrás una página.
@@ -6912,7 +6917,7 @@
     - = REQ_OVL_MODE = modo de superposición Set.
 
     # - =REQ_NEW_LINE= New line request (see below for explanation).
-    - = = REQ_NEW_LINE Nueva solicitud de línea (ver más abajo para la explicación).
+    - = REQ_NEW_LINE Nueva solicitud de línea (ver más abajo para la explicación).
 
     # - =REQ_INS_CHAR= Insert space at character location.
     - = REQ_INS_CHAR = Insertar espacio en el lugar carácter.
@@ -6945,7 +6950,7 @@
     # complicated and partly controlled by a pair of forms options. The
     # special cases are triggered when the cursor is at the beginning of
     # a field, or on the last line of the field.
-    El comportamiento de los REQ_NEW_LINE = = y = REQ_DEL_PREV = solicitudes es
+    El comportamiento de los REQ_NEW_LINE = y = REQ_DEL_PREV = solicitudes es
     complicado y en parte controlado por un par de opciones de formularios. los
     casos especiales se activan cuando el cursor se encuentra al comienzo de
     un campo, o en la última línea del campo.
@@ -6959,7 +6964,7 @@
     # following the current and moving the cursor to the beginning of
     # that new line (you may think of this as inserting a newline in the
     # field buffer).
-    El comportamiento normal de = = REQ_NEW_LINE en modo de inserción es romper
+    El comportamiento normal de = REQ_NEW_LINE en modo de inserción es romper
     la línea actual en la posición del cursor de edición, la inserción de la
     parte de la línea actual después del cursor como una nueva línea
     siguiendo la corriente y moviendo el cursor al principio de
@@ -6979,7 +6984,7 @@
     # action is disabled.
     Sin embargo, = REQ_NEW_LINE = al comienzo de un campo, o en el
     última línea de un campo, en cambio hace un
-    = = REQ_NEXT_FIELD. = = O_NL_OVERLOAD opción está desactivada, este especial
+    = REQ_NEXT_FIELD. = O_NL_OVERLOAD opción está desactivada, este especial
     acción está deshabilitada.
 
     # Now, let us consider =REQ_DEL_PREV=:
@@ -7001,11 +7006,11 @@
     # However, =REQ_DEL_PREV= at the beginning of a field is instead
     # treated as a =REQ_PREV_FIELD=.
     Sin embargo, = REQ_DEL_PREV = al comienzo de un campo es lugar
-    tratado como un REQ_PREV_FIELD = =.
+    tratado como un REQ_PREV_FIELD =.
 
     # If the =O_BS_OVERLOAD= option is off, this special action is
     # disabled and the forms driver just returns =E_REQUEST_DENIED=.
-    Si el O_BS_OVERLOAD = = opción está desactivada, esta acción especial es
+    Si el O_BS_OVERLOAD = opción está desactivada, esta acción especial es
     personas con discapacidad y el conductor formas sólo devuelve = E_REQUEST_DENIED =.
 
 # *** 18.6.6. Order Requests
@@ -7051,8 +7056,8 @@
     # application. It can be treated as an application specific action
     # and take corresponding action.
     Peticiones de formulario se representan como números enteros por encima del valor curses
-    mayor que KEY_MAX = = y menor o igual a la constante
-    = = MAX_COMMAND. Un valor dentro de este rango es ignorada por
+    mayor que KEY_MAX = y menor o igual a la constante
+    =  MAX_COMMAND. Un valor dentro de este rango es ignorada por
     form_driver =()=. Así esto puede ser utilizado para cualquier propósito por el
     solicitud. Puede ser tratada como una acción específica de la aplicación
     y tomar las medidas correspondientes.
@@ -7351,7 +7356,7 @@
    # Some of my code examples are converted to perl by Anuradha
    # Ratnaweera and they are available in the =perl= directory.
    Algunos de mis ejemplos de código se convierten en perl por Anuradha
-   Ratnaweera y están disponibles en el perl = = directorio.
+   Ratnaweera y están disponibles en el perl = directorio.
 
    # For more information see man pages curses(3) , curses::Form(3) and
    # curses::Widgets(3). These pages are installed only when the above

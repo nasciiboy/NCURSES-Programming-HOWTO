@@ -1,0 +1,69 @@
+#+TITLE: curs_getyx 3x
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  =getyx=, =getparyx=, =getbegyx=, =getmaxyx= - get =curses= cursor
+  and window coordinates
+
+* SYNOPSIS
+
+  #+BEGIN_SRC c
+    #include <curses.h>
+
+    void getyx(WINDOW *win, int y, int x);
+    void getparyx(WINDOW *win, int y, int x);
+    void getbegyx(WINDOW *win, int y, int x);
+    void getmaxyx(WINDOW *win, int y, int x);
+  #+END_SRC
+
+* DESCRIPTION
+
+  The =getyx= macro places the current cursor position of the given
+  window in the two integer variables y and x.
+
+  If /win/ is a subwindow, the =getparyx= macro places the beginning
+  coordinates of the subwindow relative to the parent window into two
+  integer variables =y= and =x=.  Otherwise, =-1= is placed into y and
+  =x=.
+
+  Like =getyx=, the =getbegyx= and =getmaxyx= macros store the current
+  beginning coordinates and size of the specified window.
+
+* RETURN VALUE
+
+  The return values of these macros are undefined (i.e., they should
+  not be used as the right-hand side of assignment statements).
+
+* NOTES
+
+  All of these interfaces are macros.  A "=&=" is not necessary before
+  the variables =y= and =x=.
+
+* PORTABILITY
+
+  The =getyx=, =getparyx=, =getbegyx= and =getmaxyx= macros are
+  described in the XSI Curses standard, Issue 4.
+
+  This implementation also provides functions =getbegx=, =getbegy=,
+  =getcurx=, =getcury=, =getmaxx=, =getmaxy=, =getparx= and =getpary=
+  for compatibility with older versions of curses.
+
+  Although X/Open Curses does not address this, many implementations
+  provide members of the =WINDOW= structure containing values
+  corresponding to these macros.  For best portability, do not rely on
+  using the data in =WINDOW=, since some implementations make =WINDOW=
+  opaque (do not allow direct use of its members).
+
+  Besides the problem of opaque structures, the data stored in
+  like-named members may not have like-values in different
+  implementations.  For example, the =WINDOW._maxx= and =WINDOW._maxy=
+  values in =ncurses= have (at least since release 1.8.1) differed by
+  one from some other implementations.  The difference is hidden by
+  means of the macro =getmaxyx=.
+
+* SEE ALSO
+
+  [[file:ncurses.3x.org][curses(3x)]], [[file:curs_legacy.3x.org][curs_legacy(3x)]], [[file:curs_opaque.3x.org][curs_opaque(3x)]]

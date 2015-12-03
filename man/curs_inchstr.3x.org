@@ -1,0 +1,71 @@
+#+TITLE: curs_inchstr 3x
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  =inchstr=, =inchnstr=, =winchstr=, =winchnstr=, =mvinchstr=,
+  =mvinchnstr=, =mvwinchstr=, =mvwinchnstr= - get a string of
+  characters (and attributes) from a =curses= window
+
+* SYNOPSIS
+
+  #+BEGIN_SRC c
+    #include <curses.h>
+
+    int inchstr(chtype *chstr);
+    int inchnstr(chtype *chstr, int n);
+    int winchstr(WINDOW *win, chtype *chstr);
+    int winchnstr(WINDOW *win, chtype *chstr, int n);
+    int mvinchstr(int y, int x, chtype *chstr);
+    int mvinchnstr(int y, int x, chtype *chstr, int n);
+    int mvwinchstr(WINDOW *win, int y, int x, chtype *chstr);
+    int  mvwinchnstr(WINDOW *win, int y, int x, chtype *chstr,
+    int n);
+  #+END_SRC
+
+* DESCRIPTION
+
+  These routines return a =NULL=-terminated array of =chtype=
+  quantities, starting at the current cursor position in the named
+  window and ending at the right margin of the window.  The four
+  functions with /n/ as the last argument, return a leading substring
+  at most /n/ characters long (exclusive of the trailing (chtype)0).
+  Constants defined in =<curses.h>= can be used with the =&= (logical
+  AND) operator to extract the character or the attribute alone from
+  any position in the =chstr= [see [[file:curs_inch.3x.org][curs_inch(3x)]]].
+
+* RETURN VALUE
+
+  All routines return the integer =ERR= upon failure and an integer
+  value other than =ERR= upon successful completion (the number of
+  characters retrieved, exclusive of the trailing 0).
+
+  No error conditions are defined.  If the =chstr= parameter is null,
+  no data is returned, and the return value is zero.
+
+  Functions with a "mv" prefix first perform a cursor movement using
+  =wmove=, and return an error if the position is outside the window,
+  or if the window pointer is null.
+
+* NOTES
+
+  Note that all routines except =winchnstr= may be macros.  SVr4 does
+  not document whether the result string is zeroterminated; it does
+  not document whether a length limit argument includes any trailing
+  0; and it does not document the meaning of the return value.
+
+* PORTABILITY
+
+  These functions are described in the XSI Curses standard, Issue 4.
+  It is no more specific than the SVr4 documentation on the
+  trailing 0.  It does specify that the successful return of the
+  functions is =OK=.
+
+* SEE ALSO
+
+  [[file:ncurses.3x.org][curses(3x)]], [[file:curs_inch.3x.org][curs_inch(3x)]].
+
+  Comparable functions in the wide-character (ncursesw) library are
+  described in [[file:curs_in_wchstr.3x.org][curs_in_wchstr(3x)]].

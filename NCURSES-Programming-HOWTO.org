@@ -929,7 +929,7 @@
 
 ** 7.4. Some examples
 
-   [[file:ncurses_programs/basics/][*Example 4. A Simple scanw example*]]
+   [[file:ncurses_programs/basics/scanw_example.c][*Example 4. A Simple scanw example*]]
 
    #+BEGIN_SRC c
      #include <ncurses.h>                     /* ncurses.h includes stdio.h           */
@@ -962,7 +962,7 @@
   manner. The following program takes a C file as input and prints the
   file with comments in bold. Scan through the code.
 
-  [[file:ncurses_programs/basics/][*Example 5. A Simple Attributes example*]]
+  [[file:ncurses_programs/basics/simple_attr.c][*Example 5. A Simple Attributes example*]]
 
   #+BEGIN_SRC c
     /* pager functionality by Joseph Spainhour" <spainhou@bellsouth.net> */
@@ -996,13 +996,13 @@
             {
               printw("<-Press Any Key->");     /* tell the user to press a key         */
               getch();
-              clear();                         /* clear the screen */
+              clear();                         /* clear the screen                     */
               move(0, 0);                      /* start at the beginning of the screen */
             }
           if(prev == '/' && ch == '*')         /* If it is / and * then only
-                                                * switch bold on                       */
+                                                ,* switch bold on                       */
             {
-              attron(A_BOLD);                  /* cut bold on */
+              attron(A_BOLD);                  /* cut bold on                          */
               getyx(stdscr, y, x);             /* get the current curser position      */
               move(y, x - 1);                  /* back up one space */
               printw("%c%c", '/', ch);         /* The actual printing is done here     */
@@ -1012,9 +1012,13 @@
           refresh();
           if(prev == '*' && ch == '/')
             attroff(A_BOLD);                   /* Switch it off once we got *
-                                                * and then /                           */
+                                                ,* and then /                           */
           prev = ch;
         }
+
+      printw("<-Press Any Key->");
+      getch();
+
       endwin();                                /* End curses mode                      */
       fclose(fp);
       return 0;
@@ -1023,13 +1027,13 @@
 
   Don't worry about all those initialization and other crap.
   Concentrate on the while loop. It reads each character in the file
-  and searches for the pattern /*. Once it spots the pattern, it
+  and searches for the pattern =/*=. Once it spots the pattern, it
   switches the BOLD attribute on with =attron()= . When we get the
-  pattern */ it is switched off by =attroff()= .
+  pattern =*/= it is switched off by =attroff()= .
 
   The above program also introduces us to two useful functions
   =getyx()= and =move()=. The first function gets the co-ordinates of
-  the present cursor into the variables y, x. Since =getyx()= is a
+  the present cursor into the variables =y=, =x=. Since =getyx()= is a
   macro we don't have to pass pointers to variables. The function
   =move()= moves the cursor to the co-ordinates given to it.
 
@@ -1045,8 +1049,8 @@
    =attr_get()= etc.. can be used to switch attributes on/off , get
    attributes and produce a colorful display.
 
-   The functions attron and attroff take a bit-mask of attributes and
-   switch them on or off, respectively. The following video
+   The functions =attron= and =attroff= take a bit-mask of attributes
+   and switch them on or off, respectively. The following video
    attributes, which are defined in =<curses.h>= can be passed to
    these functions.
 

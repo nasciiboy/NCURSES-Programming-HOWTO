@@ -1,0 +1,68 @@
+#+TITLE: curs_ins_wstr 3x
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  =ins_wstr=, =ins_nwstr=, =wins_wstr=, =wins_nwstr=, =mvins_wstr=,
+  =mvins_nwstr=, =mvwins_wstr=, =mvwins_nwstr= - insert a
+  widecharacter string into a =curses= window
+
+* SYNOPSIS
+
+  #+BEGIN_SRC c
+    #include <curses.h>
+
+    int ins_wstr(const wchar_t *wstr);
+    int ins_nwstr(const wchar_t *wstr, int n);
+    int wins_wstr(WINDOW *win, const wchar_t *wstr);
+    int wins_nwstr(WINDOW *win, const wchar_t *wstr, int n);
+    int mvins_wstr(int y, int x, const wchar_t *wstr);
+    int mvins_nwstr(int y, int x, const wchar_t *wstr, int n);
+    int mvwins_wstr(WINDOW *win, int y, int x, const wchar_t *wstr);
+    int mvwins_nwstr(WINDOW *win, int y, int x, const wchar_t *wstr, int n);
+  #+END_SRC
+
+* DESCRIPTION
+
+  These routines insert a =wchar_t= character string (as many
+  characters as will fit on the line) before the character under the
+  cursor.  All characters to the right of the cursor are shifted
+  right, with the possibility of the rightmost characters on the line
+  being lost.  No wrapping is performed.  The cursor position does not
+  change (after moving to /y/, /x/, if specified).  The four routines
+  with n as the last argument insert a leading substring of at most
+  /n/ =wchar_t= characters.  If /n/ is less than 1, the entire string
+  is inserted.
+
+  If a character in /wstr/ is a tab, newline, carriage return or
+  backspace, the cursor is moved appropriately within the window.  A
+  newline also does a =clrtoeol= before moving.  Tabs are considered
+  to be at every eighth column.  If a character in /wstr/ is another
+  control character, it is drawn in the ^X notation.  Calling
+  =win_wch= after adding a control character (and moving to it, if
+  necessary) does not return the control character, but instead
+  returns a character in the =^=-representation of the control
+  character.
+
+* NOTES
+
+  Note that all but wins_nwstr may be macros.
+
+  If the first character in the string is a nonspacing character,
+  these functions will fail.  XSI does not define what will happen if
+  a nonspacing character follows a control character.
+
+* RETURN VALUE
+
+  Upon successful completion, these functions return =OK=.  Otherwise,
+  they return =ERR=.
+
+  Functions with a "mv" prefix first perform a cursor movement using
+  =wmove=, and return an error if the position is outside the window,
+  or if the window pointer is null.
+
+* SEE ALSO
+
+  [[file:ncurses.3x.org][curses(3x)]], [[file:curs_insstr.3x.org][curs_insstr(3x)]], [[file:curs_in_wch.3x.org][curs_in_wch(3x)]], [[file:curs_ins_wch.3x.org][curs_ins_wch(3x)]].
