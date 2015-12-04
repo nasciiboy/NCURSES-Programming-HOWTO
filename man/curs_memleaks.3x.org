@@ -1,0 +1,51 @@
+#+TITLE: curs_memleaks 3x
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  =_nc_freeall=, =_nc_free_and_exit= - =curses= memory-leak checking
+
+* SYNOPSIS
+
+  #+BEGIN_SRC c
+    #include <curses.h>
+
+    void _nc_freeall(void);
+    void _nc_free_and_exit(int);
+  #+END_SRC
+
+* DESCRIPTION
+
+  These functions are used to simplify analysis of memory leaks in the
+  ncurses library.  They are normally not available; they must be
+  configured into the library at build time using the
+  =--disable-leaks= option.  That compiles-in code that frees memory
+  that normally would not be freed.
+
+  Any implementation of curses must not free the memory associated
+  with a screen, since (even after calling =endwin=), it must be
+  available for use in the next call to =refresh=.  There are also
+  chunks of memory held for performance reasons.  That makes it hard
+  to analyze curses applications for memory leaks.  To work around
+  this, one can build a debugging version of the ncurses library which
+  frees those chunks which it can, and provides these functions to
+  free all of the memory allocated by the ncurses library.
+
+  The =_nc_free_and_exit= function is the preferred one since some of
+  the memory which is freed may be required for the application to
+  continue running.  Its parameter is the code to pass to the exit
+  routine.
+
+* RETURN VALUE
+
+  These functions do not return a value.
+
+* PORTABILITY
+
+  These functions are not part of the XSI interface.
+
+* SEE ALSO
+
+  [[file:ncurses.3x.org][curses(3x)]].

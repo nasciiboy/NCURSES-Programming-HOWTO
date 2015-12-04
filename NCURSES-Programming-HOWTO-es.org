@@ -1669,19 +1669,20 @@
    #   COLOR_PAIR(n)   Color-pair number n
    # #+END_EXAMPLE
 
-   - =A_NORMAL=        :: Visualizacion normal (sin resaltar)
-   - =A_STANDOUT=      :: Mejor modo del terminal para resaltado
-   - =A_UNDERLINE=     :: Subrayado
-   - =A_REVERSE=       :: Video inverso
-   - =A_BLINK=         :: Intermitente
-   - =A_DIM=           :: Mitad de brillo
-   - =A_BOLD=          :: Brillo extra o negrita
-   - =A_PROTECT=       :: Modo protegido
-   - =A_INVIS=         :: En modo Invisible o en blanco
-   - =A_ALTCHARSET=    :: Juego de caracteres alternativo
-   - =A_CHARTEXT=      :: Mascara de bits para extraer el caracter
-   - =COLOR_PAIR(n)=   :: Par de color numero /n/
-
+   #+BEGIN_EXAMPLE
+     A_NORMAL         Visualizacion normal (sin resaltar)
+     A_STANDOUT       Mejor modo del terminal para resaltado
+     A_UNDERLINE      Subrayado
+     A_REVERSE        Video inverso
+     A_BLINK          Intermitente
+     A_DIM            Mitad de brillo
+     A_BOLD           Brillo extra o negrita
+     A_PROTECT        Modo protegido
+     A_INVIS          En modo Invisible o en blanco
+     A_ALTCHARSET     Juego de caracteres alternativo
+     A_CHARTEXT       Mascara de bits para extraer el caracter
+     COLOR_PAIR(n)    Par de color numero /n/
+   #+END_EXAMPLE
 
    # The last one is the most colorful one :-) Colors are explained in
    # the [[@color][next sections]].
@@ -1715,22 +1716,23 @@
    # policy and stick to it. You can always use =standend()= which is
    # equivalent to =attrset(A_NORMAL)= which turns off all attributes
    # and brings you to normal mode.
-   Entonces ¿cuál es la diferencia entre =attron()= y =attrset()=? attrset
-   establece los atributos de la ventana mientras que attron simplemente enciende la
-   atributo dado a la misma. Así =attrset()= anula totalmente lo que sea
-   atributos de la ventana tenía anteriormente y establece a la nueva
-   atributo (s). Del mismo modo =attroff()= simplemente se apaga el
-   atributo (s) que se le da como argumento. Esto nos da la
-   flexibilidad de la gestión de los atributos easily.But si se utilizan
-   descuidadamente puede perder la pista de lo atributos tiene la ventana
-   y distorsionar la pantalla. Esto es especialmente cierto mientras que la gestión
-   menús con colores y resaltado. Así que decidir sobre una constante
-   política y atenerse a ella. Siempre se puede utilizar standend()=, que es
-   equivalente a attrset (A_NORMAL) que apaga todos los atributos
-   y te lleva al modo normal.
+   Entonces ¿cuál es la diferencia entre =attron()= y =attrset()=?
+   =attrset= establece los atributos de la ventana mientras que
+   =attron= simplemente enciende el atributo que le es dado. Así
+   =attrset()= anula totalmente los atributos que la ventana tenía
+   anteriormente y establece nuevos atributos. Del mismo modo
+   =attroff()= simplemente se apaga el atributo que se le da como
+   argumento. Esto nos da la flexibilidad de gestiónar los atributos
+   facilmente. Pero si se utilizan descuidadamente puede perder la
+   pista de que atributos tiene la ventana y distorsionar la
+   pantalla. Esto es especialmente cierto cuando maneja menús con
+   colores y resaltado. Así que determine una política constante y
+   adhierase a ella. Siempre puede utilizar =standend()= (que es
+   equivalente a =attrset(A_NORMAL)=) para apagar todos los atributos
+   y regresar al modo normal.
 
 # ** 8.3. =attr_get()=
-** 8.3. attr_get()=
+** 8.3. =attr_get()=
 
    # The function =attr_get()= gets the current attributes and color
    # pair of the window. Though we might not use this as often as the
@@ -1739,54 +1741,55 @@
    # attribute each character is associated with. Then this function can
    # be used with either attrset or attron to produce the desired
    # effect.
-   La función attr_get() obtiene los atributos y colores actuales
-   par de la ventana. Aunque tal vez no utilizar esto tan a menudo como el
-   por encima de funciones, esto es útil en áreas de escaneo de la pantalla. Digamos que
-   queríamos hacer alguna actualización compleja en la pantalla y no estamos seguros de lo que
-   atribuir cada carácter está asociado. Entonces esta función puede
-   ser utilizado ya sea con o attrset attron para producir el deseado
-   efecto.
+   La función =attr_get()= obtiene los atributos y colores actuales de
+   la ventana. Aunque tal vez la utilice tan a menudo como las
+   funciones anteriores, es útil para escanear áreas de la pantalla.
+   Digamos que queríamos realizar alguna actualización compleja en la
+   pantalla y no estamos seguros de cuales atributos estan asociados a
+   cada carácter. En ese caso puede utilizadar esta función en
+   conjunto con =attrset= o =attron= para producir el efecto deseado.
 
 # ** 8.4. =attr_= functions
-** 8.4. = attr_ funciones
+** 8.4. funciones =attr_=
 
    # There are series of functions like =attr_set()=, =attr_on=
    # etc.. These are similar to above functions except that they take
    # parameters of type =attr_t=.
-   Hay series de funciones como attr_set()=, attr_on =
-   etc .. Estos son similares a las funciones anteriores, excepto que se tomen
-   parámetros de tipo attr_t =.
+   Hay una serie de funciones como =attr_set()=, =attr_on=,
+   etc.. Estas son similares a las funciones anteriores, excepto que
+   toman parámetros de tipo =attr_t=.
 
 # ** 8.5. wattr functions
-** 8.5. funciones wattr
+** 8.5. funciones =wattr=
 
    # For each of the above functions we have a corresponding function
    # with 'w' which operates on a particular window. The above functions
    # operate on stdscr.
-   Para cada una de las funciones anteriores que tenemos una función correspondiente
-   con 'w', que opera en una ventana en particular. Las funciones anteriores
-   operar en=stdscr=.
+   Para cada una de las funciones anteriores tenemos una función
+   correspondiente con 'w', que opera en una ventana en
+   particular. Las funciones anteriores operar en =stdscr=.
 
 # ** 8.6. chgat() functions
-** 8.6. chgat funciones()
+** 8.6. funciones =chgat()=
 
    # The function chgat() is listed in the end of the man page
    # =curs_attr=. It actually is a useful one. This function can be used
    # to set attributes for a group of characters without moving. I mean
    # it !!! without moving the cursor :-) It changes the attributes of a
    # given number of characters starting at the current cursor location.
-   El chgat función() aparece en el final de la página del manual
-   = curs_attr. En realidad, es una utilidad. Esta función se puede utilizar
-   para establecer los atributos de un grupo de caracteres sin moverse. Quiero decir
-   ello !!! sin mover el cursor :-) Cambia los atributos de un
-   determinado número de caracteres a partir de la ubicación actual del cursor.
+   La función =chgat()= aparece al final de la página man =curs_attr=.
+   En realidad, es una utilidad. Puede utilizar esta función para
+   establecer los atributos de un grupo de caracteres sin moverse.
+   Con ello quiero decir !!! sin mover el cursor :-) Esto cambia los
+   atributos de un determinado número de caracteres a partir de la
+   ubicación actual del cursor.
 
    # We can give -1 as the character count to update till end of
    # line. If you want to change attributes of characters from current
    # position to end of line, just use this.
-   Podemos dar -1 como cuenta el carácter de actualizar hasta finales de
-   línea. Si desea cambiar los atributos de los caracteres de la corriente
-   posición hasta el final de la línea, sólo tiene que utilizar esto.
+   Pasando =-1= como numero de caracteres actualiza hasta el final de
+   línea. Si desea cambiar los atributos a los caracteres de la
+   posición actual hasta el fin de línea, sólo utilice:
 
    #+BEGIN_SRC c
      chgat(-1, A_REVERSE, 0, NULL);
@@ -1796,8 +1799,8 @@
    # that are already on the screen. Move to the character from which
    # you want to change and change the attribute.
    Esta función es útil cuando se cambian los atributos de caracteres
-   que ya en la pantalla son. Mueve al caracter de la que
-   que desea cambiar y cambiar el atributo.
+   que ya estan en pantalla. Valla al caracter desde el que desea
+   cambiar y modifique el atributo.
 
    # Other functions wchgat(), mvchgat(), wchgat() behave similarly
    # except that the w functions operate on the particular window. The
@@ -1805,39 +1808,38 @@
    # them. Actually chgat is a macro which is replaced by a wchgat()
    # with stdscr as the window. Most of the "w-less" functions are
    # macros.
-   Otras funciones wchgat(), mvchgat(), wchgat() se comportan de manera similar
-   excepto que las funciones W operan en la ventana particular. los
-   funciones mv primero mover el cursor a continuación, realice el trabajo dado a
-   ellos. En realidad chgat es una macro que se sustituye por un wchgat()
-   con=stdscr= como la ventana. La mayor parte de las funciones de "w-menos" son
-   macros.
+   Las otras funciones =wchgat()=, =mvchgat()=, =mvwchgat()= se
+   comportan de manera similar excepto que las funciones "w" operan en
+   un ventana concreta. Las funciones mv primero mueven el cursor y a
+   continuación realizan el trabajo dado. =chgat= en realidad es una
+   macro que se sustituye por =wchgat()= con =stdscr= como ventana. La
+   mayor parte de las funciones de sin "w" son macros.
 
    # *Example 6. Chgat() Usage example*
-   [[file:ncurses_programs/basics/][*Ejemplo 6. Chgat() Ejemplo de uso*]]
+   [[file:ncurses_programs/basics/with_chgat.c][*Ejemplo 6. Ejemplo de uso para chgat()*]]
 
    #+BEGIN_SRC c
      #include <ncurses.h>
 
      int main(int argc, char *argv[])
-     {   initscr();                      /* Start curses mode            */
-       start_color();                    /* Start color functionality    */
+     {   initscr();                      /* Inicia el modo curses            */
+       start_color();                    /* Inicia la funcionalidad de color */
 
        init_pair(1, COLOR_CYAN, COLOR_BLACK);
-       printw("A Big string which i didn't care to type fully ");
+       printw("Una gran cadena en la que no importa que escribir ");
        mvchgat(0, 0, -1, A_BLINK, 1, NULL);
        /*
-        * First two parameters specify the position at which to start
-        * Third parameter number of characters to update. -1 means till
-        * end of line
-        * Forth parameter is the normal attribute you wanted to give
-        * to the charcter
-        * Fifth is the color index. It is the index given during init_pair()
-        * use 0 if you didn't want color
-        * Sixth one is always NULL
+        * Los primeros dos parametros especifican la posicion para empezar
+        * El tercer parametro es el numero de caracteres a acutalizal, -1
+        * quiere decir hasta fin de linea
+        * El cuarto parametro es el attributo para el caracter
+        * El quinto parametro es el indice de color. Este idice se obtiene
+        * con init_pair() utilice 0 si no quiere ningun color
+        * El sexto es siempre NULL
         */
        refresh();
        getch();
-       endwin();                         /* End curses mode              */
+       endwin();                         /* Fin de modo curses               */
        return 0;
      }
    #+END_SRC
@@ -1845,10 +1847,11 @@
    # This example also introduces us to the color world of curses.
    # Colors will be explained in detail later. Use 0 for no color.
    Este ejemplo también nos introduce en el mundo de color de curses.
-   Los colores serán explicadas en detalle más adelante. Utilice 0 para ningún color.
+   Los colores serán explicadas en detalle más adelante. Utilice 0
+   para ningún color.
 
 # * 9. Windows                                                          <<@WINDOWS>>
-* 9. Ventanas << # VENTANAS >>
+* 9. Ventanas                                                         <<@WINDOWS>>
 
   # Windows form the most important concept in curses. You have seen the
   # standard window stdscr above where all the functions implicitly
@@ -1861,17 +1864,17 @@
   # better and easy-to-manage design in your programs. If you are
   # writing big, complex GUIs this is of pivotal importance before you
   # start doing anything.
-  Ventanas forman el concepto más importante en curses. Has visto el
-  ventana=stdscr= estándar por encima de donde están todas las funciones de forma implícita
-  operado en esta ventana. Ahora para hacer el diseño incluso una interfaz gráfica de usuario sencilla, que
-  tenga que recurrir a las ventanas. La principal razón es posible que desee utilizar
-  ventanas es manipular partes de la pantalla por separado, para una mejor
-  eficiencia, mediante la actualización sólo las ventanas que necesitan cambiar y
-  para un mejor diseño. Yo diría que la última razón es la más
-  importante en ir para las ventanas. Usted siempre debe luchar por un
-  mejor y más fácil de gestionar el diseño de sus programas. Si usted es
-  escribir grandes interfaces gráficas de usuario, complejos Esto es de importancia fundamental antes
-  empezar a hacer cualquier cosa.
+  Las ventanas forman el concepto más importante en curses. Has visto
+  la ventana estándar =stdscr= en la cual todas funciones anteriores
+  operan de forma implícita. Ahora para hacer el diseño incluso de una
+  GUI sencilla, recurriremos al uso de ventanas. La principal razón
+  para utilizar ventanas es para manipular partes de la pantalla por
+  separado, abtenietdo asi un mejor redimiento, actualizando sólo las
+  ventanas que necesitan cambiar y para un diseño mejor. Yo diría que
+  la última razón es la más importante para utilizar ventanas. Usted
+  siempre debe luchar por un diseño de sus programas mejor y más fácil
+  de gestionar. Si esta escribiendo grandes y complejas GUIs esto es
+  de fundamental importancia antes de empezar a hacer cualquier cosa.
 
 # ** 9.1. The basics
 ** 9.1. Lo basico

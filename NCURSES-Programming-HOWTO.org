@@ -1103,7 +1103,7 @@
    above functions, this is useful in scanning areas of screen. Say we
    wanted to do some complex update on screen and we are not sure what
    attribute each character is associated with. Then this function can
-   be used with either attrset or attron to produce the desired
+   be used with either =attrset= or =attron= to produce the desired
    effect.
 
 ** 8.4. =attr_= functions
@@ -1112,7 +1112,7 @@
    etc.. These are similar to above functions except that they take
    parameters of type =attr_t=.
 
-** 8.5. wattr functions
+** 8.5. =wattr= functions
 
    For each of the above functions we have a corresponding function
    with 'w' which operates on a particular window. The above functions
@@ -1126,7 +1126,7 @@
    it !!! without moving the cursor :-) It changes the attributes of a
    given number of characters starting at the current cursor location.
 
-   We can give -1 as the character count to update till end of
+   We can give =-1= as the character count to update till end of
    line. If you want to change attributes of characters from current
    position to end of line, just use this.
 
@@ -1138,14 +1138,14 @@
    that are already on the screen. Move to the character from which
    you want to change and change the attribute.
 
-   Other functions wchgat(), mvchgat(), wchgat() behave similarly
-   except that the w functions operate on the particular window. The
-   mv functions first move the cursor then perform the work given to
-   them. Actually chgat is a macro which is replaced by a wchgat()
-   with =stdscr= as the window. Most of the "w-less" functions are
-   macros.
+   Other functions =wchgat()=, =mvchgat()=, =mvwchgat()= behave
+   similarly except that the w functions operate on the particular
+   window. The mv functions first move the cursor then perform the
+   work given to them. Actually chgat is a macro which is replaced by
+   a =wchgat()= with =stdscr= as the window. Most of the "w-less"
+   functions are macros.
 
-   [[file:ncurses_programs/basics/][*Example 6. Chgat() Usage example*]]
+   [[file:ncurses_programs/basics/with_chgat.c][*Example 6. Chgat() Usage example*]]
 
    #+BEGIN_SRC c
      #include <ncurses.h>

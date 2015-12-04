@@ -1,0 +1,59 @@
+#+TITLE: curs_print 3x
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  =mcprint= - ship binary data to printer
+
+* SYNOPSIS
+
+  #+BEGIN_SRC c
+    #include <curses.h>
+
+    int mcprint(char *data, int len);
+  #+END_SRC
+
+* DESCRIPTION
+
+  This function uses the =mc5p= or =mc4= and =mc5= capabilities, if
+  they are present, to ship given data to a printer attached to the
+  terminal.
+
+  Note that the =mcprint= code has no way to do flow control with the
+  printer or to know how much buffering it has.  Your application is
+  responsible for keeping the rate of writes to the printer below its
+  continuous throughput rate (typically about half of its nominal cps
+  rating).  Dotmatrix printers and 6-page-per-minute lasers can
+  typically handle 80cps, so a good conservative rule of thumb is to
+  sleep for a second after shipping each 80-character line.
+
+* RETURN VALUE
+
+  The =mcprint= function returns =ERR= if the write operation aborted
+  for some reason.  In this case, =errno= will contain either an error
+  associated with =write(2)= or one of the following:
+
+  - =ENODEV= :: Capabilities for printer redirection do not exist.
+
+  - =ENOMEM= :: Couldn't allocate sufficient memory to buffer the
+                printer write.
+
+
+  When =mcprint= succeeds, it returns the number of characters
+  actually sent to the printer.
+
+* PORTABILITY
+
+  The =mcprint= call was designed for [[file:ncurses.3x.org][ncurses(3x)]], and is not found in
+  SVr4 curses, 4.4BSD curses, or any other previous version of curses.
+
+* BUGS
+
+  Padding in the =mc5p=, =mc4= and =mc5= capabilities will not be
+  interpreted.
+
+* SEE ALSO
+
+  [[file:ncurses.3x.org][curses(3x)]]

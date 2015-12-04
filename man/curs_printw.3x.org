@@ -1,0 +1,64 @@
+#+TITLE: curs_printw 3x
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  =printw=, =wprintw=, =mvprintw=, =mvwprintw=, =vwprintw=,
+  =vw_printw= - print formatted output in =curses= windows
+
+* SYNOPSIS
+
+  #+BEGIN_SRC c
+    #include <curses.h>
+
+    int printw(const char *fmt, ...);
+    int wprintw(WINDOW *win, const char *fmt, ...);
+    int mvprintw(int y, int x, const char *fmt, ...);
+    int mvwprintw(WINDOW *win, int y, int x, const char  *fmt, ...);
+    int  vwprintw(WINDOW  *win,  const char *fmt, va_list varglist);
+    int vw_printw(WINDOW *win, const char *fmt,  va_list  varglist);
+  #+END_SRC
+
+* DESCRIPTION
+
+  The =printw=, =wprintw=, =mvprintw= and =mvwprintw= routines are
+  analogous to printf [see [[man:printf][printf(3)]]].  In effect, the string that
+  would be output by =printf= is output instead as though =waddstr=
+  were used on the given window.
+
+  The =vwprintw= and =wv_printw= routines are analogous to =vprintf=
+  [see [[man:printf][printf(3)]]] and perform a =wprintw= using a variable argument
+  list.  The third argument is a =va_list=, a pointer to a list of
+  arguments, as defined in =<stdarg.h>=.
+
+* RETURN VALUE
+
+  Routines that return an integer return =ERR= upon failure and =OK=
+  (SVr4 only specifies "an integer value other than =ERR=") upon
+  successful completion.
+
+  X/Open defines no error conditions.  In this implementation, an
+  error may be returned if it cannot allocate enough memory for the
+  buffer used to format the results.  It will return an error if the
+  window pointer is null.
+
+  Functions with a "mv" prefix first perform a cursor movement using
+  =wmove=, and return an error if the position is outside the window,
+  or if the window pointer is null.
+
+* PORTABILITY
+
+  The XSI Curses standard, Issue 4 describes these functions.  The
+  function =vwprintw= is marked TO BE =WITHDRAWN=, and is to be
+  replaced by a function =vw_printw= using the =<stdarg.h>= interface.
+  The Single Unix Specification, Version 2 states that =vw_printw= is
+  preferred to =vwprintw= since the latter requires including
+  =<varargs.h>=, which cannot be used in the same file as
+  =<stdarg.h>=.  This implementation uses =<stdarg.h>= for both,
+  because that header is included in =<curses.h>=.
+
+* SEE ALSO
+
+  [[file:ncurses.3x.org][curses(3x)]], [[man:printf][printf(3)]], [[man:vprintf][vprintf(3)]]

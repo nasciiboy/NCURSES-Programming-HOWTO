@@ -1,0 +1,128 @@
+#+TITLE: curs_pad 3x
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  =newpad=, =subpad=, =prefresh=, =pnoutrefresh=, =pechochar=,
+  =pecho_wchar= - create and display =curses= pads
+
+* SYNOPSIS
+
+  #+BEGIN_SRC c
+    #include <curses.h>
+
+    WINDOW *newpad(int nlines, int ncols);
+    WINDOW *subpad(WINDOW *orig, int nlines, int ncols,
+          int begin_y, int begin_x);
+    int prefresh(WINDOW *pad, int pminrow, int pmincol,
+          int sminrow, int smincol, int smaxrow, int smaxcol);
+    int pnoutrefresh(WINDOW *pad, int pminrow, int pmincol,
+          int sminrow, int smincol, int smaxrow, int smaxcol);
+    int pechochar(WINDOW *pad, chtype ch);
+    int pecho_wchar(WINDOW *pad, const cchar_t *wch);
+  #+END_SRC
+
+* DESCRIPTION
+
+** =newpad=
+
+   The =newpad= routine creates and returns a pointer to a new pad
+   data structure with the given number of lines, /nlines/, and
+   columns, /ncols/.  A pad is like a window, except that it is not
+   restricted by the screen size, and is not necessarily associated
+   with a particular part of the screen.  Pads can be used when a
+   large window is needed, and only a part of the window will be on
+   the screen at one time.  Automatic refreshes of pads (e.g., from
+   scrolling or echoing of input) do not occur.  It is not legal to
+   call =wrefresh= with a pad as an argument; the routines =prefresh=
+   or =pnoutrefresh= should be called instead.  Note that these
+   routines require additional parameters to specify the part of the
+   pad to be displayed and the location on the screen to be used for
+   the display.
+
+** =subpad=
+
+   The =subpad= routine creates and returns a pointer to a subwindow
+   within a pad with the given number of lines, /nlines/, and columns,
+   /ncols/.  Unlike =subwin=, which uses screen coordinates, the
+   window is at position (=begin_x=, =begin_y=) on the pad.  The
+   window is made in the middle of the window orig, so that changes
+   made to one window affect both windows.  During the use of this
+   routine, it will often be necessary to call =touchwin= or
+   =touchline= on /orig/ before calling =prefresh=.
+
+** =prefresh=, =pnoutrefresh=
+
+   The =prefresh= and =pnoutrefresh= routines are analogous to
+   =wrefresh= and =wnoutrefresh= except that they relate to pads
+   instead of windows.  The additional parameters are needed to
+   indicate what part of the pad and screen are involved.  The pminrow
+   and pmincol parameters specify the upper lefthand corner of the
+   rectangle to be displayed in the pad.  The /sminrow/, /smincol/,
+   /smaxrow/, and /smaxcol/ parameters specify the edges of the
+   rectangle to be displayed on the screen.  The lower right-hand
+   corner of the rectangle to be displayed in the pad is calculated
+   from the screen coordinates, since the rectangles must be the same
+   size.  Both rectangles must be entirely contained within their
+   respective structures.  Negative values of /pminrow/, /pmincol/,
+   /sminrow/, or /smincol/ are treated as if they were zero.
+
+** =pechochar=
+
+   The =pechochar= routine is functionally equivalent to a call to
+   =addch= followed by a call to =refresh=, a call to =waddch=
+   followed by a call to =wrefresh=, or a call to =waddch= followed by
+   a call to =prefresh=.  The knowledge that only a single character
+   is being output is taken into consideration and, for non-control
+   characters, a considerable performance gain might be seen by using
+   these routines instead of their equivalents.  In the case of
+   =pechochar=, the last location of the pad on the screen is reused
+   for the arguments to =prefresh=.
+
+** =pecho_wchar=
+
+   The =pecho_wchar= function is the analogous wide-character form of
+   =pechochar=.  It outputs one character to a pad and immediately
+   refreshes the pad.  It does this by a call to =wadd_wch= followed
+   by a call to =prefresh=.
+
+* RETURN VALUE
+
+  Routines that return an integer return =ERR= upon failure and =OK=
+  (SVr4 only specifies "an integer value other than =ERR=") upon
+  successful completion.
+
+  Routines that return pointers return =NULL= on error, and set
+  =errno= to =ENOMEM=.
+
+  X/Open does not define any error conditions.  In this implementation
+
+  - =prefresh= and =pnoutrefresh= ::
+
+    return an error if the window pointer is null, or if the window is
+    not really a pad or if the area to refresh extends off-screen or
+    if the minimum coordinates are greater than the maximum.
+
+  - =pechochar= ::
+
+    returns an error if the window is not really a pad, and the
+    associated call to =wechochar= returns an error.
+
+  - pecho_wchar ::
+
+    returns an error if the window is not really a pad, and the
+    associated call to =wecho_wchar= returns an error.
+
+* NOTES
+
+  Note that =pechochar= may be a macro.
+
+* PORTABILITY
+
+  The XSI Curses standard, Issue 4 describes these functions.
+
+* SEE ALSO
+
+  [[file:ncurses.3x.org][curses(3x)]], [[file:curs_refresh.3x.org][curs_refresh(3x)]], [[file:curs_touch.3x.org][curs_touch(3x)]], [[file:curs_addch.3x.org][curs_addch(3x)]].

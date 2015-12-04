@@ -1,0 +1,226 @@
+#+TITLE: curs_sp_funcs 3x
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  =new_prescr= - =curses= screen-pointer extension
+
+* SYNOPSIS
+
+  #+BEGIN_SRC c
+    #include <curses.h>
+
+    int assume_default_colors_sp(SCREEN*, int, int);
+    int baudrate_sp(SCREEN*);
+    int beep_sp(SCREEN*);
+    bool can_change_color_sp(SCREEN*);
+    int cbreak_sp(SCREEN*);
+    int color_content_sp(SCREEN*, short, short*, short*, short*);
+    int curs_set_sp(SCREEN*, int);
+    int define_key_sp(SCREEN*, const char *, int);
+    int def_prog_mode_sp(SCREEN*);
+    int def_shell_mode_sp(SCREEN*);
+    int delay_output_sp(SCREEN*, int);
+    int doupdate_sp(SCREEN*);
+    int echo_sp(SCREEN*);
+    int endwin_sp(SCREEN*);
+    int erasechar_sp(SCREEN*);
+    int filter_sp(SCREEN*);
+    int flash_sp(SCREEN*);
+    int flushinp_sp(SCREEN*);
+    int get_escdelay_sp(SCREEN*);
+    int getmouse_sp(SCREEN*, MEVENT*);
+    WINDOW* getwin_sp(SCREEN*, FILE*);
+    int halfdelay_sp(SCREEN*);
+    bool has_colors_sp(SCREEN*);
+    bool has_ic_sp(SCREEN*);
+    bool has_il_sp(SCREEN*);
+    int has_key_sp(SCREEN*, int);
+    bool has_mouse_sp(SCREEN*);
+    int init_color_sp(SCREEN*, short, short, short, short);
+    int init_pair_sp(SCREEN*, short, short, short);
+    int intrflush_sp(SCREEN*, WINDOW*, bool);
+    bool isendwin_sp(SCREEN*);
+    bool is_term_resized_sp(SCREEN*, int, int);
+    char* keybound_sp(SCREEN*, int, int);
+    int key_defined_sp(SCREEN*, const char *);
+    NCURSES_CONST char * keyname_sp(SCREEN*, int);
+    int keyok_sp(SCREEN*, int, bool);
+    char killchar_sp(SCREEN*);
+    int mcprint_sp(SCREEN*, char *, int);
+    int mouseinterval_sp(SCREEN*, int);
+    mmask_t mousemask_sp(SCREEN*, mmask_t, mmask_t *);
+    int mvcur_sp(SCREEN*, int, int, int, int);
+    int napms_sp(SCREEN*, int);
+    WINDOW* newpad_sp(SCREEN*, int, int);
+    SCREEN* new_prescr(void);
+    SCREEN* newterm_sp(SCREEN*, NCURSES_CONST char *, FILE *, FILE *);
+    WINDOW* newwin_sp(SCREEN*, int, int, int, int);
+    int nl_sp(SCREEN*);
+    int nocbreak_sp(SCREEN*);
+    int noecho_sp(SCREEN*);
+    int nofilter_sp(SCREEN*);
+    int nonl_sp(SCREEN*);
+    void noqiflush_sp(SCREEN*);
+    int noraw_sp(SCREEN*);
+    int pair_content_sp(SCREEN*, short, short*, short*);
+    void qiflush_sp(SCREEN*);
+    int raw_sp(SCREEN*);
+    int reset_prog_mode_sp(SCREEN*);
+    int reset_shell_mode_sp(SCREEN*);
+    int resetty_sp(SCREEN*);
+    int resize_term_sp(SCREEN*, int, int);
+    int resizeterm_sp(SCREEN*, int, int);
+    int restartterm_sp(SCREEN*, NCURSES_CONST char*, int, int *);
+    int ripoffline_sp(SCREEN*, int, int (*)(WINDOW*, int));
+    int savetty_sp(SCREEN*);
+    int scr_init_sp(SCREEN*, const char *);
+    int scr_restore_sp(SCREEN*, const char *);
+    int scr_set_sp(SCREEN*, const char *);
+    TERMINAL* set_curterm_sp(SCREEN*, TERMINAL*);
+    int set_escdelay_sp(SCREEN*, int);
+    int set_tabsize_sp(SCREEN*, int);
+    int slk_attroff_sp(SCREEN*, const chtype);
+    int slk_attron_sp(SCREEN*, const chtype);
+    int slk_attr_set_sp(SCREEN*, const attr_t, short, void*);
+    int slk_attrset_sp(SCREEN*, const chtype);
+    int slk_attr_sp(SCREEN*);
+    int slk_clear_sp(SCREEN*);
+    int slk_color_sp(SCREEN*, short);
+    int slk_init_sp(SCREEN*, int);
+    int slk_label_sp(SCREEN*, int);
+    int slk_noutrefresh_sp(SCREEN*);
+    int slk_refresh_sp(SCREEN*);
+    int slk_restore_sp(SCREEN*);
+    int slk_set_sp(SCREEN*, int, const char *, int);
+    int slk_touch_sp(SCREEN*);
+    int start_color_sp(SCREEN*);
+    attr_t term_attrs_sp(SCREEN*);
+    chtype termattrs_sp(SCREEN*);
+    char* termname_sp(SCREEN*);
+    int typeahead_sp(SCREEN*, int);
+    NCURSES_CONST char* unctrl_sp(SCREEN*, chtype);
+    int ungetch_sp(SCREEN*, int);
+    int ungetmouse_sp(SCREEN*,MEVENT *);
+    int unget_wch_sp(SCREEN*, const wchar_t);
+    int use_default_colors_sp(SCREEN*);
+    void use_env_sp(SCREEN*, bool);
+    int use_legacy_coding_sp(SCREEN*, int);
+    int vid_attr_sp(SCREEN*, attr_t, short, void *);
+    int vidattr_sp(SCREEN*, chtype);
+    int vid_puts_sp(SCREEN*, attr_t, short, void *, NCURSES_SP_OUTC);
+    int vidputs_sp(SCREEN*, chtype, NCURSES_SP_OUTC);
+    wchar_t* wunctrl_sp(SCREEN*, cchar_t *);
+
+    #include <form.h>
+
+    int new_form_sp(SCREEN*, FIELD **);
+
+    #include <menu.h>
+
+    int new_menu_sp(SCREEN*, ITEM **);
+
+    #include <panel.h>
+
+    int ceiling_panel(SCREEN*);
+    PANEL* ground_panel(SCREEN*);
+    int update_panels_sp(SCREEN*);
+
+    #include <term.h>
+
+    int del_curterm_sp(SCREEN*, TERMINAL *);
+    int putp_sp(SCREEN*, const char *);
+    int tgetflag_sp(SCREEN*, char *, const char *);
+    int tgetent_sp(SCREEN*, char *, const char *);
+    int tgetnum_sp(SCREEN*, NCURSES_CONST char *);
+    char* tgetstr_sp(SCREEN*, NCURSES_CONST char *, char **);
+    int tigetflag_sp(SCREEN*, NCURSES_CONST char *);
+    int tigetnum_sp(SCREEN*, NCURSES_CONST char *);
+    char* tigetstr_sp(SCREEN*, NCURSES_CONST char *);
+    int tputs_sp(SCREEN*, const char *, int, NCURSES_SP_OUTC);
+  #+END_SRC
+
+* DESCRIPTION
+
+  This implementation can be configured to provide a set of functions
+  which improve the ability to manage multiple screens.  This feature
+  can be added to any of the configurations supported by ncurses; it
+  adds new entrypoints without changing the meaning of any of the
+  existing ones.
+
+* IMPROVED FUNCTIONS
+
+  Most of the functions are new versions of existing functions.  A
+  parameter is added at the front of the parameter list.  It is a
+  =SCREEN= pointer.
+
+  The existing functions all use the current screen, which is a static
+  variable.  The extended functions use the specified screen, thereby
+  reducing the number of variables which must be modified to update
+  multiple screens.
+
+* NEW FUNCTIONS
+
+  Here are the new functions:
+
+  - =ceiling_panel= ::
+
+    this returns a pointer to the topmost panel in the given screen.
+
+  - =ground_panel= ::
+
+    this returns a pointer to the lowest panel in the given screen.
+
+  - =new_prescr= ::
+
+    when creating a new screen, the library uses static variables
+    which have been preset, e.g., by [[file:curs_util.3x.org][curs_util(3x)]], [[file:curs_util.3x.org][curs_util(3x)]],
+    etc.  With the screen-pointer extension, there are situations
+    where it must create a current screen before the unextended
+    library does.  The =new_prescr= function is used internally to
+    handle these cases.  It is also provided as an entrypoint to allow
+    applications to customize the library initialization.
+
+* NOTES
+
+  This extension introduces some new names:
+
+  - =NCURSES_SP_FUNCS= ::
+
+    This is set to the library patch-level number.  In the unextended
+    library, this is zero (0), to make it useful for checking if the
+    extension is provided.
+
+  - =NCURSES_SP_NAME= ::
+
+    The new functions are named using the macro =NCURSES_SP_NAME=,
+    which hides the actual implementation.  Currently this adds a
+    "=_sp=" suffix to the name of the unextended function.  This
+    manual page indexes the extensions showing the full name.  However
+    the proper usage of these functions uses the macro, to provide for
+    the possibility of changing the naming convention for specific
+    library configurations.
+
+  - =NCURSES_SP_OUTC= ::
+
+    This is a new function-pointer type to use in the screen-pointer
+    functions where an =NCURSES_OUTC= is used in the unextended library.
+
+  - =NCURSES_OUTC= ::
+
+    This is a function-pointer type used for the cases where a
+    function passes characters to the output stream, e.g.,
+    [[file:curs_terminfo.3x.org][curs_terminfo(3x)]].
+
+* PORTABILITY
+
+  These routines are specific to ncurses.  They were not supported on
+  Version 7, BSD or System V implementations.  It is recommended that
+  any code depending on ncurses extensions be conditioned using
+  =NCURSES_SP_FUNCS=.
+
+* SEE ALSO
+
+  [[file:ncurses.3x.org][curses(3x)]], [[file:curs_opaque.3x.org][curs_opaque(3x)]], [[file:curs_threads.3x.org][curs_threads(3x)]].

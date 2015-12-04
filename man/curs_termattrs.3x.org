@@ -1,0 +1,112 @@
+#+TITLE: curs_termattrs 3x
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  =baudrate=, =erasechar=, =erasewchar=, =has_ic=, =has_il=,
+  =killchar=, =killwchar=, =longname=, =term_attrs=, =termattrs=,
+  =termname= - =curses= environment query routines
+
+* SYNOPSIS
+
+  #+BEGIN_SRC c
+    #include <curses.h>
+
+    int baudrate(void);
+    char erasechar(void);
+    int erasewchar(wchar_t *ch);
+    bool has_ic(void);
+    bool has_il(void);
+    char killchar(void);
+    int killwchar(wchar_t *ch);
+    char *longname(void);
+    attr_t term_attrs(void);
+    chtype termattrs(void);
+    char *termname(void);
+  #+END_SRC
+
+* DESCRIPTION
+** =baudrate=
+
+   The =baudrate= routine returns the output speed of the terminal.
+   The number returned is in bits per second, for example =9600=, and
+   is an integer.
+
+** =erasechar=, =erasewchar=
+
+   The =erasechar= routine returns the user's current erase character.
+
+   The =erasewchar= routine stores the current erase character in the
+   location referenced by /ch/.  If no erase character has been
+   defined, the routine fails and the location referenced by =ch= is
+   not changed.
+
+** =has_is=, =has_il=
+
+   The =has_ic= routine is true if the terminal has insert- and
+   delete- character capabilities.
+
+   The =has_il= routine is true if the terminal has insert- and
+   delete-line capabilities, or can simulate them using scrolling
+   regions.  This might be used to determine if it would be
+   appropriate to turn on physical scrolling using =scrollok=.
+
+** =killchar=, =killwchar=
+
+   The =killchar= routine returns the user's current line kill
+   character.
+
+   The =killwchar= routine stores the current line-kill character in
+   the location referenced by /ch/.  If no line-kill character has
+   been defined, the routine fails and the location referenced by =ch=
+   is not changed.
+
+** =longname=
+
+   The =longname= routine returns a pointer to a static area
+   containing a verbose description of the current terminal.  The
+   maximum length of a verbose description is 128 characters.  It is
+   defined only after the call to =initscr= or =newterm=.  The area is
+   overwritten by each call to =newterm= and is not restored by
+   =set_term=, so the value should be saved between calls to =newterm=
+   if =longname= is going to be used with multiple terminals.
+
+** =termattrs=, =term_attrs=
+
+   If a given terminal does not support a video attribute that an
+   application program is trying to use, =curses= may substitute a
+   different video attribute for it.  The =termattrs= and =term_attrs=
+   functions return a logical =OR= of all video attributes supported
+   by the terminal using =A_= and =WA_= constants respectively.  This
+   information is useful when a =curses= program needs complete
+   control over the appearance of the screen.
+
+** =termname=
+
+   The =termname= routine returns the terminal name used by
+   =setupterm=.
+
+* RETURN VALUE
+
+  =longname= and =termname= return =NULL= on error.
+
+  Routines that return an integer return =ERR= upon failure and =OK=
+  (SVr4 only specifies "an integer value other than =ERR=") upon
+  successful completion.
+
+* NOTES
+
+  Note that =termattrs= may be a macro.
+
+* PORTABILITY
+
+  The XSI Curses standard, Issue 4 describes these functions.  It
+  changes the return type of =termattrs= to the new type =attr_t=.
+  Most versions of =curses= truncate the result returned by =termname=
+  to 14 characters.
+
+* SEE ALSO
+
+  [[file:ncurses.3x.org][curses(3x)]], [[file:curs_initscr.3x.org][curs_initscr(3x)]], [[file:curs_outopts.3x.org][curs_outopts(3x)]]

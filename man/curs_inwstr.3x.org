@@ -1,0 +1,56 @@
+#+TITLE: curs_inwstr 3x
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  =inwstr=, =innwstr=, =winwstr=, =winnwstr=, =mvinwstr=, =mvinnwstr=,
+  =mvwinwstr=, =mvwinnwstr= - get a string of =wchar_t= characters
+  from a =curses= window
+
+* SYNOPSIS
+
+  #+BEGIN_SRC c
+    #include <curses.h>
+
+    int inwstr(wchar_t *str);
+    int innwstr(wchar_t *str, int n);
+    int winwstr(WINDOW *win, wchar_t *str);
+    int winnwstr(WINDOW *win, wchar_t *str, int n);
+    int mvinwstr(int y, int x, wchar_t *str);
+    int mvinnwstr(int y, int x, wchar_t *str, int n);
+    int mvwinwstr(WINDOW *win, int y, int x, wchar_t *str);
+    int mvwinnwstr(WINDOW *win, int y, int x, wchar_t *str, int n);
+  #+END_SRC
+
+* DESCRIPTION
+
+  These routines return a string of =wchar_t= characters in /wstr/,
+  extracted starting at the current cursor position in the named
+  window.  Attributes are stripped from the characters.  The four
+  functions with /n/ as the last argument return a leading substring
+  at most /n/ bytes long (exclusive of the trailing NUL).  Transfer
+  stops at the end of the current line, or when /n/ bytes have been
+  stored at the location referenced by /wstr/.
+
+  If the size /n/ is not large enough to store a complete character,
+  an error is generated.
+
+* NOTES
+
+  Note that all routines except winnwstr may be macros.
+
+* RETURN VALUE
+
+  All routines return =ERR= upon failure. Upon successful completion,
+  the *inwstr routines return =OK=, and the =*innwstr= routines return
+  the number of characters read into the string.
+
+  Functions with a "mv" prefix first perform a cursor movement using
+  =wmove=, and return an error if the position is outside the window,
+  or if the window pointer is null.
+
+* SEE ALSO
+
+  [[file:ncurses.3x.org][curses(3x)]], [[file:curs_instr.3x.org][curs_instr(3x)]], [[file:curs_in_wchstr.3x.org][curs_in_wchstr(3x)]]

@@ -1,0 +1,174 @@
+#+TITLE: curs_slk 3x
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  =slk_init=, =slk_set=, =slk_wset=, =slk_refresh=, =slk_noutrefresh=,
+  =slk_label=, =slk_clear=, =slk_restore=, =slk_touch=, =slk_attron=,
+  =slk_attrset=, =slk_attroff=, =slk_attr_on=, =slk_attr_set=,
+  =slk_attr_off=, =slk_attr=, =slk_color= - =curses= soft label
+  routines
+
+* SYNOPSIS
+
+  #+BEGIN_SRC c
+    #include <curses.h>
+
+    int slk_init(int fmt);
+    int slk_set(int labnum, const char *label, int fmt);
+    int slk_refresh(void);
+    int slk_noutrefresh(void);
+    char *slk_label(int labnum);
+    int slk_clear(void);
+    int slk_restore(void);
+    int slk_touch(void);
+    int slk_attron(const chtype attrs);
+    int slk_attroff(const chtype attrs);
+    int slk_attrset(const chtype attrs);
+    int slk_attr_on(attr_t attrs, void* opts);
+    int slk_attr_off(const attr_t attrs, void * opts);
+    int  slk_attr_set(const  attr_t  attrs,  short color_pair, void* opts);
+    attr_t slk_attr(void);
+    int slk_color(short color_pair);
+    int slk_wset(int labnum, const wchar_t *label, int fmt);
+  #+END_SRC
+
+* DESCRIPTION
+
+  The =slk*= functions manipulate the set of soft function-key labels
+  that exist on many terminals.  For those terminals that do not have
+  soft labels, =curses= takes over the bottom line of =stdscr=,
+  reducing the size of =stdscr= and the variable =LINES=.  =curses=
+  standardizes on eight labels of up to eight characters each.  In
+  addition to this, the ncurses implementation supports a mode where
+  it simulates 12 labels of up to five characters each.  This is
+  useful for today's PC-like enduser devices.  =ncurses= simulates
+  this mode by taking over up to two lines at the bottom of the
+  screen; it does not try to use any hardware support for this mode.
+
+  The =slk_init= routine must be called before =initscr= or =newterm=
+  is called.  If =initscr= eventually uses a line from =stdscr= to
+  emulate the soft labels, then /fmt/ determines how the labels are
+  arranged on the screen:
+
+  - 0 :: indicates a 3-2-3 arrangement of the labels.
+
+  - 1 :: indicates a 4-4 arrangement
+
+  - 2 :: indicates the PC-like 4-4-4 mode.
+
+  - 3 :: is again the PC-like 4-4-4 mode, but in addition an index
+         line is generated, helping the user to identify the key
+         numbers easily.
+
+
+  The =slk_set= routine (and the =slk_wset= routine for the
+  wide-character library) has three parameters:
+
+  - /labnum/ :: is the label number, from =1= to =8= (12 for /fmt/ in
+                =slk_init= is =2= or =3=);
+
+  - /label/  :: is be the string to put on the label, up to eight
+                (five for /fmt/ in =slk_init= is =2= or =3=)
+                characters in length.  A null string or a null pointer
+                sets up a blank label.
+
+  - /fmt/    :: is either =0=, =1=, or =2=, indicating whether the
+                label is to be left-justified, centered, or
+                right-justified, respectively, within the label.
+
+
+  The =slk_refresh= and =slk_noutrefresh= routines correspond to the
+  =wrefresh= and =wnoutrefresh= routines.
+
+  The =slk_label= routine returns the current label for label number
+  /labnum/, with leading and trailing blanks stripped.
+
+  The =slk_clear= routine clears the soft labels from the screen.
+
+  The =slk_restore= routine restores the soft labels to the screen
+  after a =slk_clear= has been performed.
+
+  The =slk_touch= routine forces all the soft labels to be output the
+  next time a =slk_noutrefresh= is performed.
+
+  The =slk_attron=, =slk_attrset=, =slk_attroff= and =slk_attr=
+  routines correspond to =attron=, =attrset=, =attroff= and
+  =attr_get=.  They have an effect only if soft labels are simulated
+  on the bottom line of the screen.  The default highlight for soft
+  keys is =A_STANDOUT= (as in System V =curses=, which does not
+  document this fact).
+
+  The =slk_color= routine corresponds to =color_set=.  It has an
+  effect only if soft labels are simulated on the bottom line of the
+  screen.
+
+* RETURN VALUE
+
+  These routines return =ERR= upon failure and =OK= (SVr4 specifies
+  only "an integer value other than =ERR=") upon successful
+  completion.
+
+  X/Open defines no error conditions.  In this implementation
+
+  - =slk_attr= ::
+
+    returns the attribute used for the soft keys.
+
+  - =slk_attroff=, =slk_attron=, =slk_clear=, =slk_noutrefresh=, =slk_refresh=, =slk_touch= ::
+
+    return an error if the terminal or the softkeys were not
+    initialized.
+
+  - =slk_attrset= ::
+
+    returns an error if the terminal or the softkeys were not
+    initialized.
+
+  - =slk_attr_set= ::
+
+    returns an error if the terminal or the softkeys were not
+    initialized, or the color pair is outside the range
+    0..COLOR_PAIRS-1, or opts is not null.
+
+  - =slk_color= ::
+
+    returns an error if the terminal or the softkeys were not
+    initialized, or the color pair is outside the range
+    0..COLOR_PAIRS-1.
+
+  - =slk_init= ::
+
+    returns an error if the format parameter is outside the range
+    0..3.
+
+  - =slk_label= ::
+
+    returns =NULL= on error.
+
+  - =slk_set= ::
+
+    returns an error if the terminal or the softkeys were not
+    initialized, or the /labnum/ parameter is outside the range of
+    label counts, or if the format parameter is outside the range
+    0..2, or if memory for the labels cannot be allocated.
+
+* NOTES
+
+  Most applications would use =slk_noutrefresh= because a =wrefresh=
+  is likely to follow soon.
+
+* PORTABILITY
+
+  The XSI Curses standard, Issue 4, describes these functions.  It
+  changes the argument type of the attribute-manipulation functions
+  =slk_attron=, =slk_attroff=, =slk_attrset= to be =attr_t=, and adds
+  const qualifiers.  The format codes =2= and =3= for =slk_init()= and
+  the function =slk_attr= are specific to ncurses.
+
+* SEE ALSO
+
+  [[file:ncurses.3x.org][curses(3x)]], [[file:curs_attr.3x.org][curs_attr(3x)]], [[file:curs_initscr.3x.org][curs_initscr(3x)]], [[file:curs_refresh.3x.org][curs_refresh(3x)]],
+  [[file:curs_variables.3x.org][curs_variables(3x)]].

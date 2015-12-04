@@ -1,0 +1,62 @@
+#+TITLE: curs_in_wchstr 3x
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  =in_wchstr=, =in_wchnstr=, =win_wchstr=, =win_wchnstr=,
+  =mvin_wchstr=, =mvin_wchnstr=, =mvwin_wchstr=, =mvwin_wchnstr= - get
+  an array of complex characters and renditions from a =curses= window
+
+* SYNOPSIS
+
+  #+BEGIN_SRC c
+    #include <curses.h>
+
+    int in_wchstr(cchar_t *wchstr);
+    int in_wchnstr(cchar_t *wchstr, int n);
+    int win_wchstr(WINDOW *win, cchar_t *wchstr);
+    int win_wchnstr(WINDOW *win, cchar_t *wchstr, int n);
+    int mvin_wchstr(int y, int x, cchar_t *wchstr);
+    int mvin_wchnstr(int y, int x, cchar_t *wchstr, int n);
+    int mvwin_wchstr(WINDOW *win, int y, int x, cchar_t *wchstr);
+    int mvwin_wchnstr(WINDOW *win, int y, int x, cchar_t *wchstr, int n);
+  #+END_SRC
+
+* DESCRIPTION
+
+  These functions return an array of complex characters in /wchstr/,
+  starting at the current cursor position in the named window.
+  Attributes (rendition) are stored with the characters.
+
+  The =in_wchnstr=, =mvin_wchnstr=, =mvwin_wchnstr= and =win_wchnstr=
+  fill the array with at most /n/ =cchar_t= elements.
+
+* NOTES
+
+  Note that all routines except =win_wchnstr= may be macros.
+
+  Reading a line that overflows the array pointed to by /wchstr/ with
+  =in_wchstr=, =mvin_wchstr=, =mvwin_wchstr= or =win_wchstr= causes
+  undefined results.  Therefore, the use of =in_wchnstr=,
+  =mvin_wchnstr=, =mvwin_wchnstr=, or =win_wchnstr= is recommended.
+
+* RETURN VALUE
+
+  Upon successful completion, these functions return =OK=.  Otherwise,
+  they return =ERR=.
+
+  Functions with a "mv" prefix first perform a cursor movement using
+  =wmove=, and return an error if the position is outside the window,
+  or if the window pointer is null.
+
+* PORTABILITY
+
+  The XSI Curses defines no error conditions.  This implementation
+  checks for null pointers, returning =ERR= in that case.
+
+* SEE ALSO
+
+  Functions: [[file:ncurses.3x.org][curses(3x)]], [[file:curs_in_wch.3x.org][curs_in_wch(3x)]], [[file:curs_instr.3x.org][curs_instr(3x)]],
+  [[file:curs_inwstr.3x.org][curs_inwstr(3x)]] [[file:curs_inchstr.3x.org][curs_inchstr(3x)]]

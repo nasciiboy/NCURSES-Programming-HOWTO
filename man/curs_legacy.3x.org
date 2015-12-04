@@ -1,0 +1,60 @@
+#+TITLE: curs_legacy 3x
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  =getattrs= - get =curses= cursor and window coordinates, attributes
+
+* SYNOPSIS
+
+  #+BEGIN_SRC c
+    #include =<curses.h>=
+
+    int getattrs(WINDOW *win);
+    int getbegx(WINDOW *win);
+    int getbegy(WINDOW *win);
+    int getcurx(WINDOW *win);
+    int getcury(WINDOW *win);
+    int getmaxx(WINDOW *win);
+    int getmaxy(WINDOW *win);
+    int getparx(WINDOW *win);
+    int getpary(WINDOW *win);
+  #+END_SRC
+
+* DESCRIPTION
+
+  The getbegy and =getbegx= functions return the same data as
+  =getbegyx=.
+
+  The =getcury= and =getcurx= functions return the same data as =getyx=.
+
+  The =getmaxy= and =getmaxx= functions return the same data as
+  =getmaxyx=.
+
+  The =getpary= and =getparx= functions return the same data as
+  =getparyx=.
+
+* RETURN VALUE
+
+  These functions return an integer, or =ERR= if the window parameter
+  is null.
+
+* NOTES
+
+  All of these interfaces are provided as macros and functions.  The
+  macros are suppressed (and only the functions provided) when
+  =NCURSES_OPAQUE= is defined.  The standard forms such as =getyx=
+  must be implemented as macros, and (in this implementation) are
+  defined in terms of the functions described here, to avoid reliance
+  on internal details of the =WINDOW= structure.
+
+* PORTABILITY
+
+  These functions were supported on Version 7, BSD or System V
+  implementations.
+
+* SEE ALSO
+
+  [[file:ncurses.3x.org][curses(3x)]], [[file:curs_getyx.3x.org][curs_getyx(3x)]], [[file:curs_opaque.3x.org][curs_opaque(3x)]]
