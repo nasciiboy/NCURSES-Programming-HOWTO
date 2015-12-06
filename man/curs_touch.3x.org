@@ -1,0 +1,82 @@
+#+TITLE: curs_touch 3x
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  =touchwin=, =touchline=, =untouchwin=, =wtouchln=, =is_linetouched=,
+  =is_wintouched= - =curses= refresh control routines
+
+* SYNOPSIS
+
+  #+BEGIN_SRC c
+    #include <curses.h>
+    int touchwin(WINDOW *win);
+    int touchline(WINDOW *win, int start, int count);
+    int untouchwin(WINDOW *win);
+    int wtouchln(WINDOW *win, int y, int n, int changed);
+    bool is_linetouched(WINDOW *win, int line);
+    bool is_wintouched(WINDOW *win);
+  #+END_SRC
+
+* DESCRIPTION
+
+  The =touchwin= and =touchline= routines throw away all optimization
+  information about which parts of the window have been touched, by
+  pretending that the entire window has been drawn on.  This is
+  sometimes necessary when using overlapping windows, since a change
+  to one window affects the other window, but the records of which
+  lines have been changed in the other window do not reflect the
+  change.  The routine =touchline= only pretends that /count/ lines
+  have been changed, beginning with line start.
+
+  The =untouchwin= routine marks all lines in the window as unchanged
+  since the last call to =wrefresh=.
+
+  The =wtouchln= routine makes /n/ lines in the window, starting at
+  line /y/, look as if they have (changed=1) or have not (changed=0)
+  been changed since the last call to =wrefresh=.
+
+  The =is_linetouched= and =is_wintouched= routines return =TRUE= if
+  the specified line/window was modified since the last call to
+  =wrefresh=; otherwise they return =FALSE=.  In addition,
+  =is_linetouched= returns =ERR= if /line/ is not valid for the given
+  window.
+
+* RETURN VALUE
+
+  All routines return the integer =ERR= upon failure and an integer
+  value other than =ERR= upon successful completion, unless otherwise
+  noted in the preceding routine descriptions.
+
+  X/Open does not define any error conditions.  In this implementation
+
+  - =is_linetouched= ::
+
+    returns an error if the window pointer is null, or if the line
+    number is outside the window.  Note that =ERR= is distinct from
+    =TRUE= and =FALSE=, which are the normal return values of this
+    function.
+
+  - =wtouchln= ::
+
+    returns an error if the window pointer is null, or if the line
+    number is outside the window.
+
+* PORTABILITY
+
+  The XSI Curses standard, Issue 4 describes these functions.
+
+  Some historic =curses= implementations had, as an undocumented
+  feature, the ability to do the equivalent of =clearok(..., 1)= by
+  saying =touchwin(stdscr)= or =clear(stdscr)=.  This will not work
+  under ncurses.
+
+* NOTES
+
+  Note that all routines except =wtouchln= may be macros.
+
+* SEE ALSO
+
+  [[file:ncurses.3x.org][curses(3x)]], [[file:curs_refresh.3x.org][curs_refresh(3x)]], [[file:curs_variables.3x.org][curs_variables(3x)]].

@@ -1,0 +1,128 @@
+#+TITLE: curs_trace 3x
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  =_tracef=, =_tracedump=, =_traceattr=, =_traceattr2=,
+  =_nc_tracebits=, =_tracecchar_t=, =_tracecchar_t2=, =_tracechar=,
+  =_tracechtype=, =_tracechtype2=, =_tracemouse=, =trace= - =curses=
+  debugging routines
+
+* SYNOPSIS
+
+  #+BEGIN_SRC c
+    #include <curses.h>
+
+    void _tracef(const char *format, ...);
+    void _tracedump(const char *label, WINDOW *win);
+    char *_traceattr(attr_t attr);
+    char *_traceattr2(int buffer, chtype ch);
+    char *_nc_tracebits(void);
+    char * _tracecchar_t(const cchar_t *string);
+    char * _tracecchar_t2(int buffer, const cchar_t *string);
+    char *_tracechar(int ch);
+    char *_tracechtype(chtype ch);
+    char *_tracechtype2(int buffer, chtype ch);
+    char *_tracemouse(const MEVENT *event);
+    void trace(const unsigned int param);
+  #+END_SRC
+
+* DESCRIPTION
+
+  The =trace= routines are used for debugging the =ncurses= libraries,
+  as well as applications which use the =ncurses= libraries.  These
+  functions are normally available only with the debugging library
+  e.g., =libncurses_g.a=, but may be compiled into any model (shared,
+  static, profile) by defining the symbol =TRACE=.  Additionally, some
+  functions are only available with the wide-character configuration
+  of the libraries.
+
+  The principal parts of this interface are
+
+  * =trace=, which selectively enables different tracing features, and
+
+  * =_tracef=, which writes formatted data to the trace file.
+
+
+  Calling =trace= with a nonzero parameter opens the file =trace= in
+  the current directory for output.  The parameter is formed by OR'ing
+  values from the list of =TRACE_xxx= definitions in =<curses.h>=.
+  These include:
+
+  - =TRACE_DISABLE=  :: turn off tracing.
+
+  - =TRACE_TIMES=    :: trace user and system times of updates.
+
+  - =TRACE_TPUTS=    :: trace =tputs= calls.
+
+  - =TRACE_UPDATE=   :: trace update actions, old & new screens.
+
+  - =TRACE_MOVE=     :: trace cursor movement and scrolling.
+
+  - =TRACE_CHARPUT=  :: trace all character outputs.
+
+  - =TRACE_ORDINARY= :: trace all update actions.  The old and new
+                        screen contents are written to the trace file
+                        for each refresh.
+
+  - =TRACE_CALLS=    :: trace all =curses= calls.  The parameters for
+                        each call are traced, as well as return values.
+
+  - =TRACE_VIRTPUT=  :: trace virtual character puts, i.e., calls to
+                        =addch=.
+
+  - =TRACE_IEVENT=   :: trace low-level input processing, including
+                        timeouts.
+
+  - =TRACE_BITS=     :: trace state of TTY control bits.
+
+  - =TRACE_ICALLS=   :: trace internal/nested calls.
+
+  - =TRACE_CCALLS=   :: trace per-character calls.
+
+  - =TRACE_DATABASE= :: trace read/write of =terminfo=/termcap data.
+
+  - =TRACE_ATTRS=    :: trace changes to video attributes and colors.
+
+  - =TRACE_MAXIMUM=  :: maximum trace level, enables all of the
+                        separate trace features.
+
+
+  Some tracing features are enabled whenever the =trace= parameter is
+  nonzero.  Some features overlap.  The specific names are used as a
+  guideline.
+
+  The other functions either return a pointer to a stringarea
+  (allocated by the corresponding function), or return no value (such
+  as =_tracedump=, which implements the screen dump for
+  =TRACE_UPDATE=).  The caller should not free these strings, since
+  the allocation is reused on successive calls.  To work around the
+  problem of a single string-area per function, some use a
+  buffer-number parameter, telling the library to allocate additional
+  string-areas.
+
+  These functions check the =NCURSES_TRACE= environment variable, to
+  set the tracing feature as if trace was called:
+
+  #+BEGIN_EXAMPLE
+    filter, initscr, new_prescr, newterm, nofilter, restartterm,
+    ripoffline, setupterm, slk_init, tgetent, use_env,
+    use_extended_names, use_tioctl
+  #+END_EXAMPLE
+
+* RETURN VALUE
+
+  Routines which return a value are designed to be used as parameters
+  to the =_tracef= routine.
+
+* PORTABILITY
+
+  These functions are not part of the XSI interface.  Some other
+  =curses= implementations are known to have similar, undocumented
+  features, but they are not compatible with ncurses.
+
+* SEE ALSO
+
+  [[file:ncurses.3x.org][curses(3x)]].

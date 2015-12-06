@@ -1,0 +1,188 @@
+#+TITLE: form 3x
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  =form= - =curses= extension for programming forms
+
+* SYNOPSIS
+
+  #+BEGIN_SRC c
+    #include <form.h>
+  #+END_SRC
+
+* DESCRIPTION
+
+  The =form= library provides terminal-independent facilities for
+  composing form screens on character-cell terminals.  The library
+  includes: field routines, which create and modify form fields; and
+  form routines, which group fields into forms, display forms on the
+  screen, and handle interaction with the user.
+
+  The =form= library uses the =curses= libraries.  To use the form
+  library, link with the options =-lform -lcurses=.
+
+  Your program should set up the locale, e.g.,
+
+  #+BEGIN_SRC c
+    setlocale(LC_ALL, "");
+  #+END_SRC
+
+  so that input/output processing will work.
+
+  A =curses= initialization routine such as =initscr= must be called
+  before using any of these functions.
+
+** Current Default Values for Field Attributes
+
+   The =form= library maintains a default value for field attributes.
+   You can get or set this default by calling the appropriate =set_=
+   or retrieval routine with a =NULL= field pointer.  Changing this
+   default with a =set_= function affects future field creations, but
+   does not change the rendering of fields already created.
+
+** Routine Name Index
+
+   The following table lists each =form= routine and the name of the
+   manual page on which it is described.
+
+   | ~curses~ Routine Name  | Manual Page Name          |
+   |------------------------+---------------------------|
+   | ~current_field~        | [[file:form_page.3x.org][form_page(3x)]]             |
+   | ~data_ahead~           | [[file:form_data.3x.org][form_data(3x)]]             |
+   | ~data_behind~          | [[file:form_data.3x.org][form_data(3x)]]             |
+   | ~dup_field~            | [[file:form_field_new.3x.org][form_field_new(3x)]]        |
+   | ~dynamic_field_info~   | [[file:form_field_info.3x.org][form_field_info(3x)]]       |
+   | ~field_arg~            | [[file:form_field_validation.3x.org][form_field_validation(3x)]] |
+   | ~field_back~           | [[file:form_field_attributes.3x.org][form_field_attributes(3x)]] |
+   | ~field_buffer~         | [[file:form_field_buffer.3x.org][form_field_buffer(3x)]]     |
+   | ~field_count~          | [[file:form_field.3x.org][form_field(3x)]]            |
+   | ~field_fore~           | [[file:form_field_attributes.3x.org][form_field_attributes(3x)]] |
+   | ~field_index~          | [[file:form_page.3x.org][form_page(3x)]]             |
+   | ~field_info~           | [[file:form_field_info.3x.org][form_field_info(3x)]]       |
+   | ~field_init~           | [[file:form_hook.3x.org][form_hook(3x)]]             |
+   | ~field_just~           | [[file:form_field_just.3x.org][form_field_just(3x)]]       |
+   | ~field_opts~           | [[file:form_field_opts.3x.org][form_field_opts(3x)]]       |
+   | ~field_opts_off~       | [[file:form_field_opts.3x.org][form_field_opts(3x)]]       |
+   | ~field_opts_on~        | [[file:form_field_opts.3x.org][form_field_opts(3x)]]       |
+   | ~field_pad~            | [[file:form_field_attributes.3x.org][form_field_attributes(3x)]] |
+   | ~field_status~         | [[file:form_field_buffer.3x.org][form_field_buffer(3x)]]]    |
+   | ~field_term~           | [[file:form_hook.3x.org][form_hook(3x)]]             |
+   | ~field_type~           | [[file:form_field_validation.3x.org][form_field_validation(3x)]] |
+   |                        |                           |
+   | ~field_userptr~        | [[file:form_field_userptr.3x.org][form_field_userptr(3x)]]    |
+   | ~form_driver~          | [[file:form_driver.3x.org][form_driver(3x)]]           |
+   | ~form_driver_w~        | [[file:form_driver.3x.org][form_driver(3x)]]*          |
+   | ~form_fields~          | [[file:form_field.3x.org][form_field(3x)]]            |
+   | ~form_init~            | [[file:form_hook.3x.org][form_hook(3x)]]             |
+   | ~form_opts~            | [[file:form_opts.3x.org][form_opts(3x)]]             |
+   | ~form_opts_off~        | [[file:form_opts.3x.org][form_opts(3x)]]             |
+   | ~form_opts_on~         | [[file:form_opts.3x.org][form_opts(3x)]]             |
+   | ~form_page~            | [[file:form_page.3x.org][form_page(3x)]]             |
+   | ~form_request_by_name~ | [[file:form_requestname.3x.org][form_requestname(3x)]]      |
+   | ~form_request_name~    | [[file:form_requestname.3x.org][form_requestname(3x)]]      |
+   | ~form_sub~             | [[file:form_win.3x.org][form_win(3x)]]              |
+   | ~form_term~            | [[file:form_hook.3x.org][form_hook(3x)]]             |
+   | ~form_userptr~         | [[file:form_userptr.3x.org][form_userptr(3x)]]          |
+   | ~form_win~             | [[file:form_win.3x.org][form_win(3x)]]              |
+   | ~free_field~           | [[file:form_field_new.3x.org][form_field_new(3x)]]        |
+   | ~free_fieldtype~       | [[file:form_fieldtype.3x.org][form_fieldtype(3x)]]        |
+   | ~free_form~            | [[file:form_new.3x.org][form_new(3x)]]              |
+   | ~link_field~           | [[file:form_field_new.3x.org][form_field_new(3x)]]        |
+   | ~link_fieldtype~       | [[file:form_fieldtype.3x.org][form_fieldtype(3x)]]        |
+   | ~move_field~           | [[file:form_field.3x.org][form_field(3x)]]            |
+   | ~new_field~            | [[file:form_field_new.3x.org][form_field_new(3x)]]        |
+   | ~new_fieldtype~        | [[file:form_fieldtype.3x.org][form_fieldtype(3x)]]        |
+   | ~new_form~             | [[file:form_new.3x.org][form_new(3x)]]              |
+   | ~new_page~             | [[file:form_new_page.3x.org][form_new_page(3x)]]         |
+   | ~pos_form_cursor~      | [[file:form_cursor.3x.org][form_cursor(3x)]]           |
+   | ~post_form~            | [[file:form_post.3x.org][form_post(3x)]]             |
+   | ~scale_form~           | [[file:form_win.3x.org][form_win(3x)]]              |
+   | ~set_current_field~    | [[file:form_page.3x.org][form_page(3x)]]             |
+   | ~set_field_back~       | [[file:form_field_attributes.3x.org][form_field_attributes(3x)]] |
+   | ~set_field_buffer~     | [[file:form_field_buffer.3x.org][form_field_buffer(3x)]]]    |
+   | ~set_field_fore~       | [[file:form_field_attributes.3x.org][form_field_attributes(3x)]] |
+   | ~set_field_init~       | [[file:form_hook.3x.org][form_hook(3x)]]             |
+   | ~set_field_just~       | [[file:form_field_just.3x.org][form_field_just(3x)]]       |
+   | ~set_field_opts~       | [[file:form_field_opts.3x.org][form_field_opts(3x)]]       |
+   | ~set_field_pad~        | [[file:form_field_attributes.3x.org][form_field_attributes(3x)]] |
+   | ~set_field_status~     | [[file:form_field_buffer.3x.org][form_field_buffer(3x)]]]    |
+   | ~set_field_term~       | [[file:form_hook.3x.org][form_hook(3x)]]             |
+   | ~set_field_type~       | [[file:form_field_validation.3x.org][form_field_validation(3x)]] |
+   | ~set_field_userptr~    | [[file:form_field_userptr.3x.org][form_field_userptr(3x)]]    |
+   | ~set_fieldtype_arg~    | [[file:form_fieldtype.3x.org][form_fieldtype(3x)]]        |
+   | ~set_fieldtype_choice~ | [[file:form_fieldtype.3x.org][form_fieldtype(3x)]]        |
+   | ~set_form_fields~      | [[file:form_field.3x.org][form_field(3x)]]            |
+   | ~set_form_init~        | [[file:form_hook.3x.org][form_hook(3x)]]             |
+   | ~set_form_opts~        | [[file:form_field_opts.3x.org][form_field_opts(3x)]]       |
+   | ~set_form_page~        | [[file:form_page.3x.org][form_page(3x)]]             |
+   | ~set_form_sub~         | [[file:form_win.3x.org][form_win(3x)]]              |
+   | ~set_form_term~        | [[file:form_hook.3x.org][form_hook(3x)]]             |
+   | ~set_form_userptr~     | [[file:form_userptr.3x.org][form_userptr(3x)]]          |
+   | ~set_form_win~         | [[file:form_win.3x.org][form_win(3x)]]              |
+   | ~set_max_field~        | [[file:form_field_buffer.3x.org][form_field_buffer(3x)]]]    |
+   | ~set_new_page~         | [[file:form_new_page.3x.org][form_new_page(3x)]]         |
+   | ~unpost_form~          | [[file:form_post.3x.org][form_post(3x)]]             |
+
+* RETURN VALUE
+
+  Routines that return pointers return =NULL= on error, and set
+  =errno= to the corresponding error-code returned by functions
+  returning an integer.  Routines that return an integer return one of
+  the following error codes:
+
+  * =E_OK= :: The routine succeeded.
+
+  * =E_BAD_ARGUMENT=    :: Routine detected an incorrect or
+                           out-of-range argument.
+
+  * =E_BAD_STATE=       :: Routine was called from an initialization
+                           or termination function.
+
+  * =E_CONNECTED=       :: The field is already connected to a form.
+
+  * =E_INVALID_FIELD=   :: Contents of a field are not valid.
+
+  * =E_NOT_CONNECTED=   :: No fields are connected to the form.
+
+  * =E_NOT_POSTED=      :: The form has not been posted.
+
+  * =E_NO_ROOM=         :: Form is too large for its window.
+
+  * =E_POSTED=          :: The form is already posted.
+
+  * =E_REQUEST_DENIED=  :: The form driver could not process the
+                           request.
+
+  * =E_SYSTEM_ERROR=    :: System error occurred (see =errno=).
+
+  * =E_UNKNOWN_COMMAND= :: The form driver code saw an unknown request
+                           code.
+
+* NOTES
+
+  The header file =<form.h>= automatically includes the header files
+  =<curses.h>= and =<eti.h>=.
+
+  In your library list, libform.a should be before libncurses.a; that
+  is, you want to say `-lform -lncurses', not the other way around
+  (which would give you a link error using most linkers).
+
+* PORTABILITY
+
+  These routines emulate the System V forms library.  They were not
+  supported on Version 7 or BSD versions.
+
+* AUTHORS
+
+  Juergen Pfeifer.  Manual pages and adaptation for ncurses by Eric
+  S. Raymond.
+
+* SEE ALSO
+
+  [[file:ncurses.3x.org][curses(3x)]] and related pages whose names begin "form_" for detailed
+  descriptions of the entry points.
+
+  This describes =ncurses= version 6.0 (patch 20151024).

@@ -1,0 +1,43 @@
+#+TITLE: form_data 3x
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  =form_data= - test for off-screen data in given forms
+
+* SYNOPSIS
+
+  #+BEGIN_SRC c
+    #include <form.h>
+    bool data_ahead(const FORM *form);
+    bool data_behind(const FORM *form);
+  #+END_SRC
+
+* DESCRIPTION
+
+  The function =data_ahead= tests whether there is off-screen data
+  ahead in the given form.  It returns =TRUE= (1) or =FALSE= (0).
+
+  The function =data_behind= tests whether there is off-screen data
+  behind in the given form.  It returns =TRUE= (1) or =FALSE= (0).
+
+* SEE ALSO
+
+  [[file:ncurses.3x.org][curses(3x)]], [[file:form.3x.org][form(3x)]].
+
+* NOTES
+
+  The header file =<form.h>= automatically includes the header file
+  =<curses.h>=.
+
+* PORTABILITY
+
+  These routines emulate the System V forms library.  They were not
+  supported on Version 7 or BSD versions.
+
+* AUTHORS
+
+  Juergen Pfeifer.  Manual pages and adaptation for new curses by Eric
+  S. Raymond.

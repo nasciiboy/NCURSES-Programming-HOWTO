@@ -1,0 +1,68 @@
+#+TITLE: form_field_attributes 3x
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  =form_field_attributes= - color and attribute control for form
+  fields
+
+* SYNOPSIS
+
+  #+BEGIN_SRC c
+    #include <form.h>
+    int set_field_fore(FIELD *field, chtype attr);
+    chtype field_fore(const FIELD *field);
+    int set_field_back(FIELD *field, chtype attr);
+    chtype field_back(const FIELD *field);
+    int set_field_pad(FIELD *field, int pad);
+    int field_pad(const FIELD *field);
+  #+END_SRC
+
+* DESCRIPTION
+
+  The function =set_field_fore= sets the foreground attribute of
+  /field/. This is the highlight used to display the field contents.
+  The function =field_fore= returns the foreground attribute.  The
+  default is =A_STANDOUT=.
+
+  The function =set_field_back= sets the background attribute of
+  form. This is the highlight used to display the extent fields in the
+  form.  The function =field_back= returns the background attribute.
+  The default is =A_NORMAL=.
+
+  The function =set_field_pad= sets the character used to fill the
+  field.  The function =field_pad= returns the given form's pad
+  character.  The default is a blank.
+
+* RETURN VALUE
+
+  These routines return one of the following:
+
+  * =E_OK=           :: The routine succeeded.
+
+  * =E_BAD_ARGUMENT= :: Routine detected an incorrect or out-of-range
+                        argument.
+
+  * =E_SYSTEM_ERROR= :: System error occurred (see =errno=).
+
+* SEE ALSO
+
+  [[file:ncurses.3x.org][curses(3x)]] and related pages whose names begin "form_" for detailed
+  descriptions of the entry points.
+
+* NOTES
+
+  The header file =<form.h>= automatically includes the header file
+  =<curses.h>=.
+
+* PORTABILITY
+
+  These routines emulate the System V forms library.  They were not
+  supported on Version 7 or BSD versions.
+
+* AUTHORS
+
+  Juergen Pfeifer.  Manual pages and adaptation for new curses by Eric
+  S. Raymond.

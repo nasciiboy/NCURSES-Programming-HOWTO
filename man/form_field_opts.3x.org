@@ -1,0 +1,117 @@
+#+TITLE: form_field_opts 3x
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  =form_field_opts= - set and get field options
+
+* SYNOPSIS
+
+  #+BEGIN_SRC c
+    #include <form.h>
+    int set_field_opts(FIELD *field, Field_Options opts);
+    int field_opts_on(FIELD *field, Field_Options opts);
+    int field_opts_off(FIELD *field, Field_Options opts);
+    Field_Options field_opts(const FIELD *field);
+  #+END_SRC
+
+* DESCRIPTION
+
+  The function =set_field_opts= sets all the given field's option bits
+  (field option bits may be logically-OR'ed together).
+
+  The function =field_opts_on= turns on the given option bits, and
+  leaves others alone.
+
+  The function =field_opts_off= turns off the given option bits, and
+  leaves others alone.
+
+  The function =field_opts= returns the field's current option bits.
+
+  The following standard options are defined (all are on by default):
+
+  * =O_ACTIVE= ::
+
+    The field is visited during processing.  If this option is off,
+    the field will not be reachable by navigation keys.  Please notice
+    that an invisible field appears to be inactive also.
+
+  * =O_AUTOSKIP= ::
+
+    Skip to the next field when this one fills.
+
+  * =O_BLANK= ::
+
+    The field is cleared whenever a character is entered at the first
+    position.
+
+  * =O_EDIT= ::
+
+    The field can be edited.
+
+  * =O_NULLOK= ::
+
+    Allow a blank field.
+
+  * =O_PASSOK= ::
+
+    Validate field only if modified by user.
+
+  * =O_PUBLIC= ::
+
+    The field contents are displayed as data is entered.
+
+  * =O_STATIC= ::
+
+    Field buffers are fixed to field's original size.  Turn this
+    option off to create a dynamic field.
+
+  * =O_VISIBLE= ::
+
+    The field is displayed.  If this option is off, display of the
+    field is suppressed.
+
+  * =O_WRAP= ::
+
+    Words that do not fit on a line are wrapped to the next line.
+    Words are blank-separated.
+
+  One extension option is defined (extensions are off by default):
+
+  * =O_DYNAMIC_JUSTIFY= ::
+
+    Permit dynamic fields to be justified, like static fields.
+
+* RETURN VALUE
+
+  Except for field_opts, each routine returns one of the following:
+
+  * =E_OK=           :: The routine succeeded.
+
+  * =E_BAD_ARGUMENT= :: Routine detected an incorrect or out-of-range
+                        argument.
+
+  * =E_CURRENT=      :: The field is the current field.
+
+  * =E_SYSTEM_ERROR= :: System error occurred (see =errno=).
+
+* SEE ALSO
+
+  [[file:ncurses.3x.org][curses(3x)]], [[file:form.3x.org][form(3x)]].  [[file:form_field_just.3x.org][form_field_just(3x)]].
+
+* NOTES
+
+  The header file =<form.h>= automatically includes the header file
+  =<curses.h>=.
+
+* PORTABILITY
+
+  These routines emulate the System V forms library.  They were not
+  supported on Version 7 or BSD versions.
+
+* AUTHORS
+
+  Juergen Pfeifer.  Manual pages and adaptation for new curses by Eric
+  S. Raymond.

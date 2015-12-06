@@ -1,0 +1,48 @@
+#+TITLE: define_key 3x
+#+AUTHOR: Thomas Dickey
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  =define_key= - define a keycode
+
+* SYNOPSIS
+
+  #+BEGIN_SRC c
+    #include <curses.h>
+
+    int define_key(const char *definition, int keycode);
+  #+END_SRC
+
+* DESCRIPTION
+
+  This is an extension to the curses library.  It permits an
+  application to define keycodes with their corresponding control
+  strings, so that the ncurses library will interpret them just as it
+  would the predefined codes in the terminfo database.
+
+  If the given string is null, any existing definition for the keycode
+  is removed.  Similarly, if the given keycode is negative or zero,
+  any existing string for the given definition is removed.
+
+* RETURN VALUE
+
+  The keycode must be greater than zero, and the string nonnull,
+  otherwise =ERR= is returned.  =ERR= may also be returned if there is
+  insufficient memory to allocate the data to store the definition.
+  If no error is detected, =OK= is returned.
+
+* PORTABILITY
+
+  These routines are specific to ncurses.  They were not supported on
+  Version 7, BSD or System V implementations.  It is recommended that
+  any code depending on them be conditioned using =NCURSES_VERSION=.
+
+* SEE ALSO
+
+  [[file:keyok.3x.org][keyok(3x)]], [[file:key_defined.3x.org][key_defined(3x)]].
+
+* AUTHOR
+
+  Thomas Dickey.
