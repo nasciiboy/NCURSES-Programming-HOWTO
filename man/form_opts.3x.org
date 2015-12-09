@@ -1,0 +1,70 @@
+#+TITLE: form_opts 3x
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  =form_opts= - set and get form options
+
+* SYNOPSIS
+
+  #+BEGIN_SRC c
+    #include <form.h>
+    int set_form_opts(FORM *form, Field_Options opts);
+    int form_opts_on(FORM *form, Field_Options opts);
+    int form_opts_off(FORM *form, Field_Options opts);
+    Field_Options form_opts(const FORM *form);
+  #+END_SRC
+
+* DESCRIPTION
+
+  The function =set_form_opts= sets all the given form's option bits
+  (form option bits may be logically-OR'ed together).
+
+  The function =form_opts_on= turns on the given option bits, and
+  leaves others alone.
+
+  The function =form_opts_off= turns off the given option bits, and
+  leaves others alone.
+
+  The function =form_opts= returns the form's current option bits.
+
+  The following options are defined (all are on by default):
+
+  - =O_NL_OVERLOAD= ::
+
+    Overload the =REQ_NEW_LINE= forms driver request so that calling
+    it at the end of a field goes to the next field.
+
+  - =O_BS_OVERLOAD= ::
+
+    Overload the =REQ_DEL_PREV= forms driver request so that calling
+    it at the beginning of a field goes to the previous field.
+
+* RETURN VALUE
+
+  Except for =form_opts=, each routine returns one of the following:
+
+  - =E_OK=           :: The routine succeeded.
+
+  - =E_SYSTEM_ERROR= :: System error occurred (see =errno=).
+
+* SEE ALSO
+
+  [[file:ncurses.3x.org][curses(3x)]], [[file:form.3x.org][form(3x)]].
+
+* NOTES
+
+  The header file =<form.h>= automatically includes the header file
+  =<curses.h>=.
+
+* PORTABILITY
+
+  These routines emulate the System V forms library.  They were not
+  supported on Version 7 or BSD versions.
+
+* AUTHORS
+
+  Juergen Pfeifer.  Manual pages and adaptation for new curses by Eric
+  S. Raymond.

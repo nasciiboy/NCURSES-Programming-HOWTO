@@ -1,0 +1,45 @@
+#+TITLE: keybound 3x
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  =keybound= - return definition of keycode
+
+* SYNOPSIS
+
+  #+BEGIN_SRC c
+    #include <curses.h>
+
+    char * keybound(int keycode, int count);
+  #+END_SRC
+
+* DESCRIPTION
+
+  This is an extension to the =curses= library.  It permits an
+  application to determine the string which is defined in the
+  =terminfo= for specific keycodes.
+
+* RETURN VALUE
+
+  The /keycode/ parameter must be greater than zero, else =NULL= is
+  returned.  If it does not correspond to a defined key, then =NULL=
+  is returned.  The count parameter is used to allow the application
+  to iterate through multiple definitions, counting from zero.  When
+  successful, the function returns a string which must be freed by the
+  caller.
+
+* PORTABILITY
+
+  These routines are specific to ncurses.  They were not supported on
+  Version 7, BSD or System V implementations.  It is recommended that
+  any code depending on them be conditioned using =NCURSES_VERSION=.
+
+* SEE ALSO
+
+  [[file:define_key.3x.org][define_key(3x)]], [[file:keyok.3x.org][keyok(3x)]].
+
+* AUTHOR
+
+  Thomas Dickey.

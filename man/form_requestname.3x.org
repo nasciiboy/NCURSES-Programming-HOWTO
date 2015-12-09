@@ -1,0 +1,51 @@
+#+TITLE: form_requestname 3x
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  =form_requestname= - handle printable form request names
+
+* SYNOPSIS
+
+  #+BEGIN_SRC c
+    #include <form.h>
+    const char *form_request_name(int request);
+    int form_request_by_name(const char *name);
+  #+END_SRC
+
+* DESCRIPTION
+
+  The function =form_request_name= returns the printable name of a
+  form request code.  The function =form_request_by_name= searches in
+  the name-table for a request with the given name and returns its
+  request code. Otherwise =E_NO_MATCH= is returned.
+
+* RETURN VALUE
+
+  =form_request_name= returns =NULL= on error and sets =errno= to
+  =E_BAD_ARGUMENT=.
+
+  =form_request_by_name= returns =E_NO_MATCH= on error.  It does not
+  set =errno=.
+
+* SEE ALSO
+
+  [[file:ncurses.3x.org][curses(3x)]], [[file:form.3x.org][form(3x)]].
+
+* NOTES
+
+  The header file =<form.h>= automatically includes the header file
+  =<curses.h>=.
+
+* PORTABILITY
+
+  These routines are specific to ncurses.  They were not supported on
+  Version 7, BSD or System V implementations.  It is recommended that
+  any code depending on them be conditioned using =NCURSES_VERSION=.
+
+* AUTHORS
+
+  Juergen Pfeifer.  Manual pages and adaptation for new curses by Eric
+  S. Raymond.

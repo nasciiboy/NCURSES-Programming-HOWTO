@@ -1,0 +1,54 @@
+#+TITLE: infotocap 1m
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  =infotocap= - convert a =terminfo= description into a termcap
+  description
+
+* SYNOPSIS
+
+  #+BEGIN_EXAMPLE
+    infotocap [-vn width] [-V] [-1] [-w width] file . . .
+  #+END_EXAMPLE
+
+* DESCRIPTION
+
+  =infotocap= looks in each given text file for =terminfo=
+  descriptions.  For each =terminfo= description found, an equivalent
+  =termcap= description is written to standard output.  Terminfo =use=
+  capabilities are translated directly to termcap =tc= capabilities.
+
+  * =-v= :: print out tracing information on standard error as the
+            program runs.
+
+  * =-V= :: print out the version of the program in use on standard
+            error and exit.
+
+  * =-1= :: cause the fields to print out one to a line.  Otherwise,
+            the fields will be printed several to a line to a maximum
+            width of 60 characters.
+
+  * =-w= :: change the output to width characters.
+
+* FILES
+
+  /usr/share/terminfo Compiled terminal description database.
+
+* NOTES
+
+  This utility is actually a link to tic, running in =-C= mode.  You
+  can use other tic options such as =-f= and =-x=.
+
+* SEE ALSO
+
+  [[file:ncurses.3x.org][curses(3x)]], [[file:tic.1m.org][tic(1m)]], [[file:infocmp.1m.org][infocmp(1m)]], [[file:terminfo.5.org][terminfo(5)]]
+
+  This describes =ncurses= version 6.0 (patch 20151024).
+
+* AUTHOR
+
+  Eric S. Raymond <esr@snark.thyrsus.com> and Thomas E. Dickey
+  <dickey@invisible-island.net>

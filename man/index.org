@@ -1,0 +1,44 @@
+#+TITLE: NCURSES – Manual Pages
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* Programs:
+
+  * [[file:captoinfo.1m.org][captoinfo – convert a termcap description into a terminfo
+    description]]
+
+  * [[file:clear.1.org][clear – clear the terminal screen]]
+
+  * [[file:infocmp.1m.org][infocmp – compare or print out terminfo descriptions]]
+
+  * [[file:infotocap.1m.org][infotocap – convert a terminfo description into a termcap
+    description]]
+
+  * [[file:tabs.1.org][tabs – set tabs on a terminal]]
+
+  * [[file:tic.1m.org][tic – the terminfo entry-description compiler]]
+
+  * [[file:toe.1m.org][toe – table of (terminfo) entries]]
+
+  * [[file:tput.1.org][tput – initialize a terminal or query terminfo database]]
+
+  * [[file:tset.1.org][tset – terminal initialization]]
+
+* Libraries:
+
+  * [[file:ncurses.3x.org][ncurses – CRT screen handling and optimization package]]
+
+  * [[file:panel.3x.org][panel – panel stack extension for curses]]
+
+  * [[file:form.3x.org][form – curses extension for programming forms]]
+
+  * [[file:menu.3x.org][menu – curses extension for programming menus]]
+
+* File formats:
+
+  * [[file:terminfo.5.org][terminfo – terminal capability data base]]
+
+  * [[file:term.5.org][term – format of compiled term file.]]
+
+  * [[file:term.7.org][term – conventions for naming terminal types]]
