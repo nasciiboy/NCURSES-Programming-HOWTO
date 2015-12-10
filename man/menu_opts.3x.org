@@ -1,0 +1,77 @@
+#+TITLE: menu_opts 3x
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  =menu_opts= - set and get menu options
+
+* SYNOPSIS
+
+  #+BEGIN_SRC c
+    #include <menu.h>
+    int set_menu_opts(MENU *menu, Menu_Options opts);
+    int menu_opts_on(MENU *menu, Menu_Options opts);
+    int menu_opts_off(MENU *menu, Menu_Options opts);
+    Menu_Options menu_opts(const MENU *menu);
+  #+END_SRC
+
+* DESCRIPTION
+
+  The function =set_menu_opts= sets all the given menu's option bits
+  (menu option bits may be logically-OR'ed together).
+
+  The function =menu_opts_on= turns on the given option bits, and
+  leaves others alone.
+
+  The function =menu_opts_off= turns off the given option bits, and
+  leaves others alone.
+
+  The function =menu_opts= returns the menu's current option bits.
+
+  The following options are defined (all are on by default):
+
+  - =O_ONEVALUE=   :: Only one item can be selected for this menu.
+
+  - =O_SHOWDESC=   :: Display the item descriptions when the menu is
+                      posted.
+
+  - =O_ROWMAJOR=   :: Display the menu in row-major order.
+
+  - =O_IGNORECASE= :: Ignore the case when pattern-matching.
+
+  - =O_SHOWMATCH=  :: Move the cursor to within the item name while
+                      pattern-matching.
+
+  - =O_NONCYCLIC=  :: Don't wrap around next-item and previous-item,
+                      requests to the other end of the menu.
+
+* RETURN VALUE
+
+  Except for =menu_opts=, each routine returns one of the following:
+
+  - =E_OK=           :: The routine succeeded.
+
+  - =E_SYSTEM_ERROR= :: System error occurred (see =errno=).
+
+  - =E_POSTED=       :: The menu is already posted.
+
+* SEE ALSO
+
+  [[file:ncurses.3x.org][curses(3x)]], [[file:menu.3x.org][menu(3x)]].
+
+* NOTES
+
+  The header file =<menu.h>= automatically includes the header file
+  =<curses.h>=.
+
+* PORTABILITY
+
+  These routines emulate the System V menu library.  They were not
+  supported on Version 7 or BSD versions.
+
+* AUTHORS
+
+  Juergen Pfeifer.  Manual pages and adaptation for new curses by Eric
+  S. Raymond.

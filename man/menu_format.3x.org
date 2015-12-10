@@ -1,0 +1,66 @@
+#+TITLE: menu_format 3x
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  =menu_format= - set and get menu sizes
+
+* SYNOPSIS
+
+  #+BEGIN_SRC c
+    #include <menu.h>
+    int set_menu_format(MENU *menu, int rows, int cols);
+    void menu_format(const MENU *menu, int *rows, int *cols);
+  #+END_SRC
+
+* DESCRIPTION
+
+  The function =set_menu_format= sets the maximum display size of the
+  given menu.  If this size is too small to display all menu items,
+  the menu will be made scrollable. If this size is larger than the
+  menus subwindow and the subwindow is too small to display all menu
+  items, =post_menu()= will fail.
+
+  The default format is 16 rows, 1 column.  Calling =set_menu_format=
+  with a null menu pointer will change this default.  A zero row or
+  column argument to =set_menu_format= is interpreted as a request not
+  to change the current value.
+
+  The function =menu_format= returns the maximum-size constraints for
+  the given menu into the storage addressed by =rows= and =cols=.
+
+* RETURN VALUE
+
+  These routines returns one of the following:
+
+  - =E_OK=            :: The routine succeeded.
+
+  - =E_SYSTEM_ERROR=  :: System error occurred (see =errno=).
+
+  - =E_BAD_ARGUMENT=  :: Routine detected an incorrect or out-of-range
+                         argument.
+
+  - =E_POSTED=        :: The menu is already posted.
+
+  - =E_NOT_CONNECTED= :: No items are connected to the menu.
+
+* SEE ALSO
+
+  [[file:ncurses.3x.org][curses(3x)]], [[file:menu.3x.org][menu(3x)]].
+
+* NOTES
+
+  The header file =<menu.h>= automatically includes the header file
+  =<curses.h>=.
+
+* PORTABILITY
+
+  These routines emulate the System V menu library.  They were not
+  supported on Version 7 or BSD versions.
+
+* AUTHORS
+
+  Juergen Pfeifer.  Manual pages and adaptation for new curses by Eric
+  S. Raymond.

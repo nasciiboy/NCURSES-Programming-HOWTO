@@ -1890,32 +1890,32 @@
    # like wprintw() etc.. Finally the window can be destroyed with
    # delwin(). It will deallocate the memory associated with the window
    # structure.
-   Una ventana puede ser creado llamando a la función newwin()=. Ello
-   no crea nada en la pantalla en realidad. Asigna
-   memoria para una estructura para manipular la ventana y actualiza la
-   estructura con los datos relativos a la ventana como su tamaño, BeginY,
-   BeginX etc .. De ahí que en curses, una ventana es sólo una abstracción de un
-   ventana imaginario, que puede ser manipulado independiente de los demás
-   partes de la pantalla. El newwin función() devuelve un puntero a
-   estructura de la ventana, que se puede pasar a funciones de la ventana relacionados
-   como wprintw() etc .. Finalmente la ventana puede ser destruido con
-   delwin(). Se desasignar la memoria asociada con la ventana
-   estructura.
+   Puede crear una ventana llamando a la función =newwin()=. Esto en
+   realidad no crea nada en la pantalla. Asigna memoria a una
+   estructura para manipular la ventana y actualiza la estructura con
+   los datos relativos a la ventana como su tamaño, inicioy, iniciox
+   etc.. De ahí que en curses, una ventana sea sólo una abstracción
+   imaginaria de una ventana, que se puede manipular independiente de
+   las demás partes de la pantalla. La funcion =newwin()= devuelve un
+   puntero a la estructura =WINDOW=, el cual puede pasar a funciones
+   relacionadas con ventanas como =wprintw()= etc.. Finalmente la
+   ventana puede ser destruida con =delwin()=. Esto libera la memoria
+   asociada con la estructura =WINDOW=.
 
 # ** 9.2. Let there be a Window !!!
-** 9.2. Que haya una ventana !!!
+** 9.2. Que haya una Ventana !!!
 
    # What fun is it, if a window is created and we can't see it. So the
    # fun part begins by displaying the window. The function =box()= can
    # be used to draw a border around the window. Let's explore these
    # functions in more detail in this example.
-   Lo divertido es que, si se crea una ventana y no podemos verlo. Entonces el
-   parte divertida comienza mostrando la ventana. La función caja() puede
-   ser utilizado para dibujar un borde alrededor de la ventana. Vamos a explorar estos
-   funciones en más detalle en este ejemplo.
+   Lo divertido es, crear una ventana y no poder verla. Comencemos
+   mostrando la ventana. La función =box()= sirve para dibujar un
+   borde alrededor de la ventana. Vamos a explorar esta y otras
+   funciones con más detalle en este ejemplo.
 
    # *Example 7. Window Border example*
-   [[file:ncurses_programs/basics/][*Ejemplo 7. Ventana de Fronteras*]]
+   [[file:ncurses_programs/basics/win_border.c][*Ejemplo 7. Borde en ventana*]]
 
    #+BEGIN_SRC c
      #include <ncurses.h>
@@ -1924,20 +1924,20 @@
      void destroy_win(WINDOW *local_win);
 
      int main(int argc, char *argv[])
-     {   WINDOW *my_win;
+     { WINDOW *my_win;
        int startx, starty, width, height;
        int ch;
 
-       initscr();                      /* Start curses mode                  */
-       cbreak();                       /* Line buffering disabled, Pass on
-                                        * everty thing to me                 */
-       keypad(stdscr, TRUE);           /* I need that nifty F1               */
+       initscr();                      /* Inicia el modo curses              */
+       cbreak();                       /* Desactivar el buffer de linea
+                                        ,* pasarme todo a mi                  */
+       keypad(stdscr, TRUE);           /* Para habilitar F1                  */
 
        height = 3;
        width = 10;
-       starty = (LINES - height) / 2;  /* Calculating for a center placement */
-       startx = (COLS - width) / 2;    /* of the window                      */
-       printw("Press F1 to exit");
+       starty = (LINES - height) / 2;  /* Calculo para colocar al centro     */
+       startx = (COLS - width) / 2;    /* de la ventana                      */
+       printw("Pulse F1 para salir");
        refresh();
        my_win = create_newwin(height, width, starty, startx);
 
@@ -1945,57 +1945,57 @@
          {   switch(ch)
              {   case KEY_LEFT:
                  destroy_win(my_win);
-                 my_win = create_newwin(height, width, starty,--startx);
+                 my_win = create_newwin(height, width, starty, --startx);
                  break;
              case KEY_RIGHT:
                destroy_win(my_win);
-               my_win = create_newwin(height, width, starty,++startx);
+               my_win = create_newwin(height, width, starty, ++startx);
                break;
              case KEY_UP:
                destroy_win(my_win);
-               my_win = create_newwin(height, width, --starty,startx);
+               my_win = create_newwin(height, width, --starty, startx);
                break;
              case KEY_DOWN:
                destroy_win(my_win);
-               my_win = create_newwin(height, width, ++starty,startx);
+               my_win = create_newwin(height, width, ++starty, startx);
                break;
              }
          }
 
-       endwin();                       /* End curses mode                    */
+       endwin();                       /* Fin del modo curses                */
        return 0;
      }
 
      WINDOW *create_newwin(int height, int width, int starty, int startx)
-     {   WINDOW *local_win;
+     { WINDOW *local_win;
 
        local_win = newwin(height, width, starty, startx);
-       box(local_win, 0 , 0);          /* 0, 0 gives default characters
-                                        * for the vertical and horizontal
-                                        * lines                              */
-       wrefresh(local_win);            /* Show that box                      */
+       box(local_win, 0, 0);           /* 0, 0 pone los caracteres por
+                                        ,* defecto para las lineas vertical
+                                        ,* y horizontal                       */
+       wrefresh(local_win);            /* Muestra la caja                    */
 
        return local_win;
      }
 
      void destroy_win(WINDOW *local_win)
      {
-       /* box(local_win, ' ', ' '); : This won't produce the desired
-        * result of erasing the window. It will leave it's four corners
-        * and so an ugly remnant of window.
-        */
-       wborder(local_win, ' ', ' ', ' ',' ',' ',' ',' ',' ');
-       /* The parameters taken are
-        * 1. win: the window on which to operate
-        * 2. ls: character to be used for the left side of the window
-        * 3. rs: character to be used for the right side of the window
-        * 4. ts: character to be used for the top side of the window
-        * 5. bs: character to be used for the bottom side of the window
-        * 6. tl: character to be used for the top left corner of the window
-        * 7. tr: character to be used for the top right corner of the window
-        * 8. bl: character to be used for the bottom left corner of the window
-        * 9. br: character to be used for the bottom right corner of the window
-        */
+       /* box(local_win, ' ', ' '); : Esto no produce el resultado deseado
+        ,* de borrar la ventana. Deja las cuatro esquinas como un feo residuo
+        ,* de la ventana.
+        ,*/
+       wborder(local_win, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ');
+       /* Los parametros tomados son
+        ,* 1. win: la ventana sobre la que operar
+        ,* 2. ls: caracter a utilizar para el lado izquierdo de la ventana
+        ,* 3. rs: caracter a utilizar para el lado derecho de la ventana
+        ,* 4. ts: caracter a utilizar para el lado superior de la ventana
+        ,* 5. bs: caracter a utilizar para el lado inferior de la ventana
+        ,* 6. tl: caracter a utilizar para la esquina superior isquierda de la ventana
+        ,* 7. tr: caracter a utilizar para la esquina superior derecha de la ventana
+        ,* 8. bl: caracter a utilizar para la esquina inferior izquierda de la ventana
+        ,* 9. br: caracter a utilizar para la esquina inferior derecha de la ventana
+        ,*/
        wrefresh(local_win);
        delwin(local_win);
      }
@@ -2010,12 +2010,14 @@
    # repeatedly creates and destroys windows as user press a key. Don't
    # go beyond the screen limits. Checking for those limits is left as
    # an exercise for the reader. Let's dissect it by line by line.
-   No grites. Sé que es un gran ejemplo. Pero tengo que explicar algunas
-   cosas importantes aquí :-). Este programa crea un rectangular
-   ventana que se puede mover con la izquierda, derecha, arriba, abajo las teclas de flecha. Ello
-   crea varias veces y destruye ventanas como usuario presione una tecla. No
-   ir más allá de los límites de la pantalla. Comprobación de esos límites se deja como
-   un ejercicio para el lector. Vamos a diseccionar por línea por línea.
+   No grites. Sé que es un ejemplo grande. Pero tengo que explicar
+   algunas cosas importantes aquí :-). Este programa crea una ventana
+   rectangular que se puede mover con las teclas de flecha izquierda,
+   derecha, arriba y abajo. Con la creacion y destruccion repetida de
+   ventanas cuando el usuario presiona una tecla. No valla más allá de
+   los límites de la pantalla. La comprobación de estos límites se
+   deja como un ejercicio para el lector. Vamos a diseccionar línea
+   por línea.
 
    # The =create_newwin()= function creates a window with =newwin()= and
    # displays a border around it with box. The function =destroy_win()=
@@ -2023,30 +2025,31 @@
    # character and then calling =delwin()= to deallocate memory related
    # to it. Depending on the key the user presses, starty or startx is
    # changed and a new window is created.
-   El create_newwin =() función crea una ventana con newwin() y
-   muestra un borde alrededor con la caja. La función destroy_win()=
-   primero borra la ventana de la pantalla pintando una frontera con ''
-   caracter y luego llamando delwin() desasignar memoria relacionada
-   lo. Dependiendo de la clave del usuario presiona, starty o startx es
-   cambió y se crea una nueva ventana.
+   El funcion =create_newwin()= crea una ventana con =newwin()= y
+   muestra un borde alrededor con =box()=. La función =destroy_win()=
+   primero borra la ventana de pantalla pintando un borde con el
+   caracter ' ' y luego llama a =delwin()= para liberar la memoria.
+   Dependiendo de la tecla que el usuario presiona, se cambia =starty=
+   o =startx= y se crea una nueva ventana.
 
    # In the =destroy_win=, as you can see, I used wborder instead of
    # box. The reason is written in the comments (You missed it. I
    # know. Read the code :-)). wborder draws a border around the window
    # with the characters given to it as the 4 corner points and the 4
    # lines. To put it clearly, if you have called wborder as below:
-   En el destroy_win =, como se puede ver, he usado WBORDER lugar de
-   encajonar. La razón está escrito en los comentarios (te lo perdiste. I
-   saber. Lea el :-) código). WBORDER dibuja un borde alrededor de la ventana
-   con los caracteres que le han sido como los 4 puntos de esquina y el 4
-   líneas. Para decirlo claramente, si ha llamado WBORDER como a continuación:
+   Como puede ver en =destroy_win=, he usado =wborder()= en lugar de
+   =box()=. La razón está escrita en los comentarios (Te lo
+   perdiste. Lo se. Lee el codigo :-)). =wborder()= dibuja un borde
+   alrededor de la ventana con los caracteres dados para las 4
+   esquinas y las 4 líneas. Para decirlo claramente, si llama a
+   =wborder()= como a continuación:
 
    #+BEGIN_SRC c
      wborder(win, '|', '|', '-', '-', '+', '+', '+', '+');
    #+END_SRC
 
    # it produces some thing like
-   produce algo como
+   se produce algo como
 
    #+BEGIN_EXAMPLE
      +------------+
@@ -2060,7 +2063,7 @@
    #+END_EXAMPLE
 
 # ** 9.4. The other stuff in the example
-** 9.4. La otra materia en el ejemplo
+** 9.4. Las otras cosas en el ejemplo
 
    # You can also see in the above examples, that I have used the
    # variables COLS, LINES which are initialized to the screen sizes
@@ -2069,35 +2072,37 @@
    # function =getch()= as usual gets the key from keyboard and
    # according to the key it does the corresponding work. This type of
    # switch-case is very common in any GUI based programs.
-   También puede ver en los ejemplos anteriores, que he utilizado el
-   Variables COLS, líneas que se inicializan a los tamaños de pantalla
-   después initscr(). Pueden ser útiles en la búsqueda de dimensiones de la pantalla
-   y encontrando el centro de coordenadas de la pantalla como anteriormente. los
-   función getch() como siempre consigue la llave del teclado y
-   de acuerdo con la clave que hace el trabajo correspondiente. Este tipo de
-   switch de los casos es muy común en todos los programas GUI basada.
+   También puede ver que en los ejemplos anteriores, he utilizado las
+   variables =COLS= y =LINES= que se inicializan con el tamaño de
+   pantalla después de llamar a =initscr()=. Pueden ser útiles para
+   obtener las dimensiones de la pantalla y para localizar las
+   cordenadas al centro de la pantalla. Como siempre la función
+   =getch()= obtiene informacion del teclado y de acuerdo a esta se
+   hace el trabajo correspondiente. Este tipo de switch-case es muy
+   común en todos los programas basados en GUI.
 
 # ** 9.5. Other Border functions
-** 9.5. Otras funciones de la frontera
+** 9.5. Otras funciones de Borde
 
    # Above program is grossly inefficient in that with each press of a
    # key, a window is destroyed and another is created. So let's write a
    # more efficient program which uses other border related functions.
-   Programa anterior es muy ineficiente en el que con cada pulsación de un
-   llave, una ventana es destruida y otra se crea. Así que vamos a escribir
-   programa más eficiente que utiliza otras funciones relacionadas con las fronteras.
+   El programa anterior es muy ineficiente ya que a cada pulsación, se
+   destruye una ventana y se crea otra. Así que vamos a escribir un
+   programa más eficiente que utiliza otras funciones relacionadas con
+   bordes.
 
    # The following program uses =mvhline()= and =mvvline()= to achieve
    # similar effect. These two functions are simple. They create a
    # horizontal or vertical line of the specified length at the
    # specified position.
-   El siguiente programa utiliza mvhline() y mvvline() para lograr
-   efecto similar. Estas dos funciones son simples. Crean un
-   línea horizontal o vertical de la longitud especificada en el
-   posición especificada.
+   El siguiente programa utiliza =mvhline()= y =mvvline()= para lograr
+   un efecto similar. Estas dos funciones son simples. Crean un línea
+   horizontal o vertical de la longitud especificada en la posición
+   especificada.
 
    # *Example 8. More border functions*
-   [[file:ncurses_programs/basics/][*Ejemplo 8. Más funciones fronterizas*]]
+   [[file:ncurses_programs/basics/other_border.c][*Ejemplo 8. Más funciones de borde*]]
 
    #+BEGIN_SRC c
      #include <ncurses.h>
@@ -2105,37 +2110,36 @@
      typedef struct _win_border_struct {
        chtype  ls, rs, ts, bs,
          tl, tr, bl, br;
-     }WIN_BORDER;
+     } WIN_BORDER;
 
      typedef struct _WIN_struct {
-
        int startx, starty;
        int height, width;
        WIN_BORDER border;
-     }WIN;
+     } WIN;
 
      void init_win_params(WIN *p_win);
      void print_win_params(WIN *p_win);
      void create_box(WIN *win, bool flag);
 
      int main(int argc, char *argv[])
-     {   WIN win;
+     { WIN win;
        int ch;
 
-       initscr();                      /* Start curses mode             */
-       start_color();                  /* Start the color functionality */
-       cbreak();                       /* Line buffering disabled, Pass on
-                                        * everty thing to me            */
-       keypad(stdscr, TRUE);           /* I need that nifty F1          */
+       initscr();                      /* Inicia el modo curses           */
+       start_color();                  /* Inicia la fucionalidad de color */
+       cbreak();                       /* Desactivar el buffer de linea,
+                                        ,* pasarme todo a mi               */
+       keypad(stdscr, TRUE);           /* Necesario para habilitar F1     */
        noecho();
        init_pair(1, COLOR_CYAN, COLOR_BLACK);
 
-       /* Initialize the window parameters */
+       /* Inicializa los parametros de ventana */
        init_win_params(&win);
        print_win_params(&win);
 
        attron(COLOR_PAIR(1));
-       printw("Press F1 to exit");
+       printw("Pulse F1 para salir");
        refresh();
        attroff(COLOR_PAIR(1));
 
@@ -2164,7 +2168,7 @@
                break;
              }
          }
-       endwin();                       /* End curses mode               */
+       endwin();                       /* Fin del modo curses             */
        return 0;
      }
      void init_win_params(WIN *p_win)
@@ -2193,7 +2197,7 @@
      #endif
      }
      void create_box(WIN *p_win, bool flag)
-     {   int i, j;
+     { int i, j;
        int x, y, w, h;
 
        x = p_win->startx;
@@ -2202,7 +2206,7 @@
        h = p_win->height;
 
        if(flag == TRUE)
-         {   mvaddch(y, x, p_win->border.tl);
+         { mvaddch(y, x, p_win->border.tl);
            mvaddch(y, x + w, p_win->border.tr);
            mvaddch(y + h, x, p_win->border.bl);
            mvaddch(y + h, x + w, p_win->border.br);
@@ -2223,8 +2227,8 @@
    #+END_SRC
 
 # * 10. Colors                                                          <<@color>>
+* 10. Colores                                                         <<@color>>
 # ** 10.1. The basics
-* 10. Colores << # color >>
 ** 10.1. Lo basico
 
    # Life seems dull with no colors. curses has a nice mechanism to

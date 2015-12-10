@@ -1,0 +1,65 @@
+#+TITLE: menu_spacing 3x
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  =menu_spacing= - Control spacing between menu items.
+
+* SYNOPSIS
+
+  #+BEGIN_SRC c
+    #include <menu.h>
+    int set_menu_spacing(MENU *menu,
+                         int spc_description,
+                         int spc_rows,
+                         int spc_columns);
+    int menu_spacing(const MENU *menu,
+                     int* spc_description,
+                     int* spc_rows,
+                     int* spc_columns);
+  #+END_SRC
+
+* DESCRIPTION
+
+  The function =set_menu_spacing= sets the spacing information for the
+  menu.  Its parameter =spc_description= controls the number of spaces
+  between an item name and an item description.  It must not be larger
+  than =TABSIZE=.  The menu system puts in the middle of this spacing
+  area the pad character.  The remaining parts are filled with spaces.
+  The =spc_rows= parameter controls the number of rows that are used
+  for an item.  It must not be larger than 3.  The menu system inserts
+  the blank lines between item rows, these lines will contain the pad
+  character in the appropriate positions.  The =spc_columns= parameter
+  controls the number of blanks between columns of items.  It must not
+  be larger than =TABSIZE=.  A value of 0 for all the spacing values
+  resets them to the default, which is 1 for all of them.  The
+  function =menu_spacing= passes back the spacing info for the menu.
+  If a pointer is =NULL=, this specific info is simply not returned.
+
+* RETURN VALUE
+
+  Both routines return =E_OK= on success.  set_menu_spacing may return
+  =E_POSTED= if the menu is posted, or =E_BAD_ARGUMENT= if one of the
+  spacing values is out of range.
+
+* SEE ALSO
+
+  [[file:ncurses.3x.org][curses(3x)]], [[file:curs_variables.3x.org][curs_variables(3x)]], [[file:menu.3x.org][menu(3x)]].
+
+* NOTES
+
+  The header file =<menu.h>= automatically includes the header file
+  =<curses.h>=.
+
+* PORTABILITY
+
+  These routines are specific to ncurses.  They were not supported on
+  Version 7, BSD or System V implementations.  It is recommended that
+  any code depending on them be conditioned using =NCURSES_VERSION=.
+
+* AUTHORS
+
+  Juergen Pfeifer.  Manual pages and adaptation for new curses by Eric
+  S. Raymond.

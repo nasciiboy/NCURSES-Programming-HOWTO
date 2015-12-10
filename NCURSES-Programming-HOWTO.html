@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>NCURSES Programming HOWTO</title>
-<!-- 2015-12-04 vie 17:55 -->
+<!-- 2015-12-10 jue 15:40 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="ppadala" />
@@ -1968,11 +1968,11 @@ memory for a structure to manipulate the window and updates the
 structure with data regarding the window like it's size, beginy,
 beginx etc.. Hence in curses, a window is just an abstraction of an
 imaginary window, which can be manipulated independent of other
-parts of screen. The function newwin() returns a pointer to
-structure WINDOW, which can be passed to window related functions
-like wprintw() etc.. Finally the window can be destroyed with
-delwin(). It will deallocate the memory associated with the window
-structure.
+parts of screen. The function <code>newwin()</code> returns a pointer to
+structure <code>WINDOW</code>, which can be passed to window related functions
+like <code>wprintw()</code> etc.. Finally the window can be destroyed with
+<code>delwin()</code>. It will deallocate the memory associated with the
+<code>WINDOW</code> structure.
 </p>
 </div>
 </div>
@@ -1988,7 +1988,7 @@ functions in more detail in this example.
 </p>
 
 <p>
-<a href="ncurses_programs/basics/"><b>Example 7. Window Border example</b></a>
+<a href="ncurses_programs/basics/win_border.c"><b>Example 7. Window Border example</b></a>
 </p>
 
 <div class="org-src-container">
@@ -1999,7 +1999,7 @@ WINDOW *create_newwin(int height, int width, int starty, int startx);
 void destroy_win(WINDOW *local_win);
 
 int main(int argc, char *argv[])
-{   WINDOW *my_win;
+{ WINDOW *my_win;
   int startx, starty, width, height;
   int ch;
 
@@ -2042,7 +2042,7 @@ int main(int argc, char *argv[])
 }
 
 WINDOW *create_newwin(int height, int width, int starty, int startx)
-{   WINDOW *local_win;
+{ WINDOW *local_win;
 
   local_win = newwin(height, width, starty, startx);
   box(local_win, 0 , 0);          /* 0, 0 gives default characters
@@ -2093,19 +2093,20 @@ an exercise for the reader. Let's dissect it by line by line.
 
 <p>
 The <code>create_newwin()</code> function creates a window with <code>newwin()</code> and
-displays a border around it with box. The function <code>destroy_win()</code>
-first erases the window from screen by painting a border with ' '
-character and then calling <code>delwin()</code> to deallocate memory related
-to it. Depending on the key the user presses, starty or startx is
-changed and a new window is created.
+displays a border around it with <code>box()</code>. The function
+<code>destroy_win()</code> first erases the window from screen by painting a
+border with ' ' character and then calling <code>delwin()</code> to deallocate
+memory related to it. Depending on the key the user presses,
+<code>starty</code> or <code>startx</code> is changed and a new window is created.
 </p>
 
 <p>
-In the <code>destroy_win</code>, as you can see, I used wborder instead of
+In the <code>destroy_win</code>, as you can see, I used <code>wborder</code> instead of
 box. The reason is written in the comments (You missed it. I
-know. Read the code :-)). wborder draws a border around the window
-with the characters given to it as the 4 corner points and the 4
-lines. To put it clearly, if you have called wborder as below:
+know. Read the code :-)). <code>wborder</code> draws a border around the
+window with the characters given to it as the 4 corner points and
+the 4 lines. To put it clearly, if you have called <code>wborder</code> as
+below:
 </p>
 
 <div class="org-src-container">
@@ -2136,8 +2137,8 @@ it produces some thing like
 <div class="outline-text-3" id="text-10-4">
 <p>
 You can also see in the above examples, that I have used the
-variables COLS, LINES which are initialized to the screen sizes
-after initscr().  They can be useful in finding screen dimensions
+variables <code>COLS</code>, <code>LINES</code> which are initialized to the screen sizes
+after <code>initscr()</code>.  They can be useful in finding screen dimensions
 and finding the center co-ordinate of the screen as above. The
 function <code>getch()</code> as usual gets the key from keyboard and
 according to the key it does the corresponding work. This type of
@@ -2163,7 +2164,7 @@ specified position.
 </p>
 
 <p>
-<a href="ncurses_programs/basics/"><b>Example 8. More border functions</b></a>
+<a href="ncurses_programs/basics/other_border.c"><b>Example 8. More border functions</b></a>
 </p>
 
 <div class="org-src-container">
@@ -2173,21 +2174,20 @@ specified position.
 typedef struct _win_border_struct {
   chtype  ls, rs, ts, bs,
     tl, tr, bl, br;
-}WIN_BORDER;
+} WIN_BORDER;
 
 typedef struct _WIN_struct {
-
   int startx, starty;
   int height, width;
   WIN_BORDER border;
-}WIN;
+} WIN;
 
 void init_win_params(WIN *p_win);
 void print_win_params(WIN *p_win);
 void create_box(WIN *win, bool flag);
 
 int main(int argc, char *argv[])
-{   WIN win;
+{ WIN win;
   int ch;
 
   initscr();                      /* Start curses mode             */
@@ -2261,7 +2261,7 @@ void print_win_params(WIN *p_win)
 #endif
 }
 void create_box(WIN *p_win, bool flag)
-{   int i, j;
+{ int i, j;
   int x, y, w, h;
 
   x = p_win-&gt;startx;
@@ -2270,7 +2270,7 @@ void create_box(WIN *p_win, bool flag)
   h = p_win-&gt;height;
 
   if(flag == TRUE)
-    {   mvaddch(y, x, p_win-&gt;border.tl);
+    { mvaddch(y, x, p_win-&gt;border.tl);
       mvaddch(y, x + w, p_win-&gt;border.tr);
       mvaddch(y + h, x, p_win-&gt;border.bl);
       mvaddch(y + h, x + w, p_win-&gt;border.br);

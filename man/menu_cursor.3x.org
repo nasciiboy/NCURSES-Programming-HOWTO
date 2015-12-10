@@ -1,0 +1,54 @@
+#+TITLE: menu_cursor 3x
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  =menu_cursor= - position a menu's cursor
+
+* SYNOPSIS
+
+  #+BEGIN_SRC c
+    #include <menu.h>
+    int pos_menu_cursor(const MENU *menu);
+  #+END_SRC
+
+* DESCRIPTION
+
+  The function =pos_menu_cursor= restores the cursor to the current
+  position associated with the menu's selected item.  This is useful
+  after =curses= routines have been called to do screen-painting in
+  response to a menu select.
+
+* RETURN VALUE
+
+  This routine returns one of the following:
+
+  - =E_OK=           :: The routine succeeded.
+
+  - =E_SYSTEM_ERROR= :: System error occurred (see =errno=).
+
+  - =E_BAD_ARGUMENT= :: Routine detected an incorrect or out-of-range
+                        argument.
+
+  - =E_NOT_POSTED=   :: The menu has not been posted.
+
+* SEE ALSO
+
+  [[file:ncurses.3x.org][curses(3x)]], [[file:menu.3x.org][menu(3x)]].
+
+* NOTES
+
+  The header file =<menu.h>= automatically includes the header file
+  =<curses.h>=.
+
+* PORTABILITY
+
+  These routines emulate the System V menu library.  They were not
+  supported on Version 7 or BSD versions.
+
+* AUTHORS
+
+  Juergen Pfeifer.  Manual pages and adaptation for new curses by Eric
+  S. Raymond.

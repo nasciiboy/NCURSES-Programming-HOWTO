@@ -1,0 +1,57 @@
+#+TITLE: mitem_value 3x
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  =mitem_value= - set and get menu item values
+
+* SYNOPSIS
+
+  #+BEGIN_SRC c
+    #include <menu.h>
+    int set_item_value(ITEM *item, bool value);
+    bool item_value(const ITEM *item);
+  #+END_SRC
+
+* DESCRIPTION
+
+  If you turn off the menu option =O_ONEVALUE= (e.g., with
+  =set_menu_opts= or =menu_opts_off=; see [[file:menu_opts.3x.org][menu_opts(3x)]]), the menu
+  becomes multi-valued; that is, more than one item may simultaneously
+  be selected.
+
+  In a multi_valued menu, you can used =set_item_value= to select the
+  given menu item (second argument =TRUE=) or deselect it (second
+  argument =FALSE=).
+
+* RETURN VALUE
+
+  The function =set_item_value= returns one of the following:
+
+  - =E_OK=             :: The routine succeeded.
+
+  - =E_SYSTEM_ERROR=   :: System error occurred (see =errno=).
+
+  - =E_REQUEST_DENIED= :: The menu driver could not process the
+                          request.
+
+* SEE ALSO
+
+  [[file:ncurses.3x.org][curses(3x)]], [[file:menu.3x.org][menu(3x)]].
+
+* NOTES
+
+  The header file =<menu.h>= automatically includes the header file
+  =<curses.h>=.
+
+* PORTABILITY
+
+  These routines emulate the System V menu library.  They were not
+  supported on Version 7 or BSD versions.
+
+* AUTHORS
+
+  Juergen Pfeifer.  Manual pages and adaptation for new curses by Eric
+  S. Raymond.

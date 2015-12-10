@@ -1,0 +1,53 @@
+#+TITLE: menu_requestname 3x
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  =menu_requestname= - handle printable menu request names
+
+* SYNOPSIS
+
+  #+BEGIN_SRC c
+    #include <menu.h>
+    const char *menu_request_name(int request);
+    int menu_request_by_name(const char *name);
+  #+END_SRC
+
+* DESCRIPTION
+
+  The function =menu_request_name= returns the printable name of a
+  menu request code.
+
+  The function =menu_request_by_name= searches in the name-table for a
+  request with the given name and returns its request code.  Otherwise
+  =E_NO_MATCH= is returned.
+
+* RETURN VALUE
+
+  =menu_request_name= returns =NULL= on error and sets =errno= to
+  =E_BAD_ARGUMENT=.
+
+  =menu_request_by_name= returns =E_NO_MATCH= on error.  It does not
+  set =errno=.
+
+* SEE ALSO
+
+  [[file:ncurses.3x.org][curses(3x)]], [[file:menu.3x.org][menu(3x)]].
+
+* NOTES
+
+  The header file =<menu.h>= automatically includes the header file
+  =<curses.h>=.
+
+* PORTABILITY
+
+  These routines are specific to ncurses.  They were not supported on
+  Version 7, BSD or System V implementations.  It is recommended that
+  any code depending on them be conditioned using =NCURSES_VERSION=.
+
+* AUTHORS
+
+  Juergen Pfeifer.  Manual pages and adaptation for new curses by Eric
+  S. Raymond.

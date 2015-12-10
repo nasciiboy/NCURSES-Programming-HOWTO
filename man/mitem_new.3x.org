@@ -1,0 +1,68 @@
+#+TITLE: mitem_new 3x
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  =mitem_new= - create and destroy menu items
+
+* SYNOPSIS
+
+  #+BEGIN_SRC c
+    #include <menu.h>
+    ITEM *new_item(const char *name, const char *description);
+    int free_item(ITEM *item);
+  #+END_SRC
+
+* DESCRIPTION
+
+  The function =new_item= allocates a new item and initializes it from
+  the =name= and =description= pointers.  Please notice that the item
+  stores only the pointers to the name and description. Those pointers
+  must be valid during the lifetime of the item. So you should be very
+  careful with names or descriptions allocated on the stack of some
+  routines.  The function =free_item= de-allocates an item. Please
+  notice that it is the responsibility of the application to release
+  the memory for the name or the description of the item.
+
+* RETURN VALUE
+
+  The function =new_item= returns =NULL= on error.  It sets =errno=
+  according to the function's failure:
+
+  - =E_BAD_ARGUMENT= :: Routine detected an incorrect or out-of-range
+                        argument.
+
+  - =E_SYSTEM_ERROR= :: System error occurred, e.g., malloc failure.
+
+
+  The function =free_item= returns one of the following:
+
+  - =E_OK=           :: The routine succeeded.
+
+  - =E_BAD_ARGUMENT= :: Routine detected an incorrect or out-of-range
+                        argument.
+
+  - =E_CONNECTED=    :: Item is connected to a menu.
+
+  - =E_SYSTEM_ERROR= :: System error occurred (see =errno=).
+
+* SEE ALSO
+
+  [[file:ncurses.3x.org][curses(3x)]], [[file:menu.3x.org][menu(3x)]].
+
+* NOTES
+
+  The header file =<menu.h>= automatically includes the header file
+  =<curses.h>=.
+
+* PORTABILITY
+
+  These routines emulate the System V menu library.  They were not
+  supported on Version 7 or BSD versions.
+
+* AUTHORS
+
+  Juergen Pfeifer.  Manual pages and adaptation for new curses by Eric
+  S. Raymond.

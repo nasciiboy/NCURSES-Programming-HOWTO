@@ -1,0 +1,70 @@
+#+TITLE: menu_post 3x
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  =menu_post= - write or erase menus from associated subwindows
+
+* SYNOPSIS
+
+  #+BEGIN_SRC c
+    #include <menu.h>
+    int post_menu(MENU *menu);
+    int unpost_menu(MENU *menu);
+  #+END_SRC
+
+* DESCRIPTION
+
+  The function =post_menu= displays a menu to its associated
+  subwindow.  To trigger physical display of the subwindow, use
+  =refresh= or some equivalent =curses= routine (the implicit
+  =doupdate= triggered by an =curses= input request will
+  do). post_menu resets the selection status of all items.
+
+  The function =unpost_menu= erases menu from its associated
+  subwindow.
+
+* RETURN VALUE
+
+  These routines return one of the following:
+
+  - =E_OK=            :: The routine succeeded.
+
+  - =E_SYSTEM_ERROR=  :: System error occurred (see =errno=).
+
+  - =E_BAD_ARGUMENT=  :: Routine detected an incorrect or out-of-range
+                         argument.
+
+  - =E_POSTED=        :: The menu has already been posted.
+
+  - =E_BAD_STATE=     :: Routine was called from an initialization or
+                         termination function.
+
+  - =E_NO_ROOM=       :: Menu is too large for its window. You should
+                         consider to use =set_menu_format()= to solve
+                         the problem.
+
+  - =E_NOT_POSTED=    :: The menu has not been posted.
+
+  - =E_NOT_CONNECTED= :: No items are connected to the menu.
+
+* SEE ALSO
+
+  [[file:ncurses.3x.org][curses(3x)]], [[file:menu.3x.org][menu(3x)]].
+
+* NOTES
+
+  The header file =<menu.h>= automatically includes the header file
+  =<curses.h>=.
+
+* PORTABILITY
+
+  These routines emulate the System V menu library.  They were not
+  supported on Version 7 or BSD versions.
+
+* AUTHORS
+
+  Juergen Pfeifer.  Manual pages and adaptation for new curses by Eric
+  S. Raymond.

@@ -1,0 +1,47 @@
+#+TITLE: mitem_name 3x
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  =mitem_name= - get menu item name and description fields
+
+* SYNOPSIS
+
+  #+BEGIN_SRC c
+    #include <menu.h>
+    const char *item_name(const ITEM *item);
+    const char *item_description(const ITEM *item);
+  #+END_SRC
+
+* DESCRIPTION
+
+  The function =item_name= returns the name part of the given item.
+
+  The function =item_description= returns the description part of the
+  given item.
+
+* RETURN VALUE
+
+  These routines return a pointer (which may be =NULL=).  They do not
+  set =errno=.
+
+* SEE ALSO
+
+  [[file:ncurses.3x.org][curses(3x)]], [[file:menu.3x.org][menu(3x)]].
+
+* NOTES
+
+  The header file =<menu.h>= automatically includes the header file
+  =<curses.h>=.
+
+* PORTABILITY
+
+  These routines emulate the System V menu library.  They were not
+  supported on Version 7 or BSD versions.
+
+* AUTHORS
+
+  Juergen Pfeifer.  Manual pages and adaptation for new curses by Eric
+  S. Raymond.

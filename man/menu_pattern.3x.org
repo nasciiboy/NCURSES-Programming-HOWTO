@@ -1,0 +1,74 @@
+#+TITLE: menu_pattern 3x
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  =menu_pattern= - get and set a menu's pattern buffer
+
+* SYNOPSIS
+
+  #+BEGIN_SRC c
+    #include <menu.h>
+    int set_menu_pattern(MENU *menu, const char *pattern);
+    char *menu_pattern(const MENU *menu);
+  #+END_SRC
+
+* DESCRIPTION
+
+  Every menu has an associated pattern match buffer.  As input events
+  that are printable characters come in, they are appended to this
+  match buffer and tested for a match, as described in
+  [[file:menu_driver.3x.org][menu_driver(3x)]].
+
+  The function =set_menu_pattern= sets the pattern buffer for the
+  given menu and tries to find the first matching item.  If it
+  succeeds, that item becomes current; if not, the current item does
+  not change.
+
+  The function =menu_pattern= returns the pattern buffer of the given
+  /menu/.
+
+* RETURN VALUE
+
+  The function =menu_pattern= returns a pointer, which is =NULL= if
+  the menu parameter is =NULL=.  Otherwise, it is a pointer to a
+  string which is empty if no pattern has been set.  It does not set
+  =errno=.
+
+  The function =set_menu_pattern= may return the following error
+  codes:
+
+  - =E_OK=            :: The routine succeeded.
+
+  - =E_BAD_ARGUMENT=  :: Routine detected an incorrect or out-of-range
+       argument.
+
+  - =E_BAD_STATE=     :: Routine was called from an initialization or
+                         termination function.
+
+  - =E_NOT_CONNECTED= :: No items are connected to menu.
+
+  - =E_NO_MATCH=      :: Character failed to match.
+
+  - =E_SYSTEM_ERROR=  :: System error occurred (see =errno=).
+
+* SEE ALSO
+
+  [[file:ncurses.3x.org][curses(3x)]], [[file:menu.3x.org][menu(3x)]].
+
+* NOTES
+
+  The header file =<menu.h>= automatically includes the header file
+  =<curses.h>=.
+
+* PORTABILITY
+
+  These routines emulate the System V menu library.  They were not
+  supported on Version 7 or BSD versions.
+
+* AUTHORS
+
+  Juergen Pfeifer.  Manual pages and adaptation for new curses by Eric
+  S. Raymond.

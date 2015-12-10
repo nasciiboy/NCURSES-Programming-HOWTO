@@ -1,0 +1,76 @@
+#+TITLE: menu_hook 3x
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  =menu_hook= - set hooks for automatic invocation by applications
+
+* SYNOPSIS
+
+  #+BEGIN_SRC c
+    #include <menu.h>
+    int set_item_init(MENU *menu, Menu_Hook func);
+    Menu_Hook item_init(const MENU *menu);
+    int set_item_term(MENU *menu, Menu_Hook func);
+    Menu_Hook item_term(const MENU *menu);
+    int set_menu_init(MENU *menu, Menu_Hook func);
+    Menu_Hook menu_init(const MENU *menu);
+    int set_menu_term(MENU *menu, Menu_Hook func);
+    Menu_Hook menu_term(const MENU *menu);
+  #+END_SRC
+
+* DESCRIPTION
+
+  These functions make it possible to set hook functions to be called
+  at various points in the automatic processing of input event codes
+  by =menu_driver=.
+
+  The function =set_item_init= sets a hook to be called at menu-post
+  time and each time the selected item changes (after the change).
+  =item_init= returns the current item init hook, if any (=NULL= if
+  there is no such hook).
+
+  The function =set_item_term= sets a hook to be called at menu-unpost
+  time and each time the selected item changes (before the change).
+  =item_term= returns the current item term hook, if any (=NULL= if
+  there is no such hook).
+
+  The function =set_menu_init= sets a hook to be called at menu-post
+  time and just after the top row on the menu changes once it is
+  posted.  =menu_init= returns the current menu init hook, if any
+  (=NULL= if there is no such hook).
+
+  The function =set_menu_term= sets a hook to be called at menu-unpost
+  time and just before the top row on the menu changes once it is
+  posted.  =menu_term= returns the current menu term hook, if any
+  (=NULL= if there is no such hook).
+
+* RETURN VALUE
+
+  Routines that return pointers return =NULL= on error.  Other
+  routines return one of the following:
+
+  - =E_OK=           :: The routine succeeded.
+
+  - =E_SYSTEM_ERROR= :: System error occurred (see =errno=).
+
+* SEE ALSO
+
+  [[file:ncurses.3x.org][curses(3x)]], [[file:menu.3x.org][menu(3x)]].
+
+* NOTES
+
+  The header file =<menu.h>= automatically includes the header file
+  =<curses.h>=.
+
+* PORTABILITY
+
+  These routines emulate the System V menu library.  They were not
+  supported on Version 7 or BSD versions.
+
+* AUTHORS
+
+  Juergen Pfeifer.  Manual pages and adaptation for new curses by Eric
+  S. Raymond.

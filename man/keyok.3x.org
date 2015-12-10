@@ -1,0 +1,44 @@
+#+TITLE: keyok 3x
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  =keyok= - enable or disable a keycode
+
+* SYNOPSIS
+
+  #+BEGIN_SRC c
+    #include <curses.h>
+
+    int keyok(int keycode, bool enable);
+  #+END_SRC
+
+* DESCRIPTION
+
+  This is an extension to the =curses= library.  It permits an
+  application to disable specific keycodes, rather than use the
+  =keypad= function to disable all keycodes.  Keys that have been
+  disabled can be re-enabled.
+
+* RETURN VALUE
+
+  The keycode must be greater than zero, else =ERR= is returned.  If
+  it does not correspond to a defined key, then =ERR= is returned.  If
+  the /enable/ parameter is true, then the key must have been
+  disabled, and vice versa.  Otherwise, the function returns =OK=.
+
+* PORTABILITY
+
+  These routines are specific to ncurses.  They were not supported on
+  Version 7, BSD or System V implementations.  It is recommended that
+  any code depending on them be conditioned using =NCURSES_VERSION=.
+
+* SEE ALSO
+
+  [[file:define_key.3x.org][define_key(3x)]].
+
+* AUTHOR
+
+  Thomas Dickey.

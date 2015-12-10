@@ -1,0 +1,51 @@
+#+TITLE: menu_userptr 3x
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  =menu_userptr= - associate application data with a menu item
+
+* SYNOPSIS
+
+  #+BEGIN_SRC c
+    #include <menu.h>
+    int set_menu_userptr(MENU *menu, void *userptr);
+    void *menu_userptr(const MENU *menu);
+  #+END_SRC
+
+* DESCRIPTION
+
+  Every menu and every menu item has a field that can be used to hold
+  application-specific data (that is, the menudriver code leaves it
+  alone).  These functions get and set the menu user pointer field.
+
+* RETURN VALUE
+
+  =menu_userptr= returns a pointer (which may be =NULL=).  It does not
+  set =errno=.
+
+  =set_menu_userptr= returns =E_OK= (success).
+
+* SEE ALSO
+
+  [[file:ncurses.3x.org][curses(3x)]], [[file:menu.3x.org][menu(3x)]].
+
+* NOTES
+
+  The header file =<menu.h>= automatically includes the header file
+  =<curses.h>=.
+
+* PORTABILITY
+
+  These routines emulate the System V menu library.  They were not
+  supported on Version 7 or BSD versions.
+
+  The user pointer is a void pointer.  We chose not to leave it as a
+  char pointer for SVr4 compatibility.
+
+* AUTHORS
+
+  Juergen Pfeifer.  Manual pages and adaptation for new curses by Eric
+  S. Raymond.

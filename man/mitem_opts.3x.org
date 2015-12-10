@@ -1,0 +1,62 @@
+#+TITLE: mitem_opts 3x
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  =mitem_opts= - set and get menu item options
+
+* SYNOPSIS
+
+  #+BEGIN_SRC c
+    #include <menu.h>
+    int set_item_opts(ITEM *item, Item_Options opts);
+    int item_opts_on(ITEM *item, Item_Options opts);
+    int item_opts_off(ITEM *item, Item_Options opts);
+    Item_Options item_opts(const ITEM *item);
+  #+END_SRC
+
+* DESCRIPTION
+
+  The function =set_item_opts= sets all the given item's option bits
+  (menu option bits may be logically-OR'ed together).
+
+  The function =item_opts_on= turns on the given option bits, and
+  leaves others alone.
+
+  The function =item_opts_off= turns off the given option bits, and
+  leaves others alone.
+
+  The function =item_opts= returns the item's current option bits.
+
+  There is only one defined option bit mask, =O_SELECTABLE=.  When
+  this is on, the item may be selected during menu processing.  This
+  option defaults to on.
+
+* RETURN VALUE
+
+  Except for =item_opts=, each routine returns one of the following:
+
+  - =E_OK=           :: The routine succeeded.
+
+  - =E_SYSTEM_ERROR= :: System error occurred (see =errno=).
+
+* SEE ALSO
+
+  [[file:ncurses.3x.org][curses(3x)]], [[file:menu.3x.org][menu(3x)]].
+
+* NOTES
+
+  The header file =<menu.h>= automatically includes the header file
+  =<curses.h>=.
+
+* PORTABILITY
+
+  These routines emulate the System V menu library.  They were not
+  supported on Version 7 or BSD versions.
+
+* AUTHORS
+
+  Juergen Pfeifer.  Manual pages and adaptation for new curses by Eric
+  S. Raymond.

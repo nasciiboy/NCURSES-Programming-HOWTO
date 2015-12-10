@@ -1,0 +1,75 @@
+#+TITLE: menu_attributes 3x
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  =menu_attributes= - color and attribute control for menus
+
+* SYNOPSIS
+
+  #+BEGIN_SRC c
+    #include <menu.h>
+    int set_menu_fore(MENU *menu, chtype attr);
+    chtype menu_fore(const MENU *menu);
+    int set_menu_back(MENU *menu, chtype attr);
+    chtype menu_back(const MENU *menu);
+    int set_menu_grey(MENU *menu, chtype attr);
+    chtype menu_grey(const MENU *menu);
+    int set_menu_pad(MENU *menu, int pad);
+    int menu_pad(const MENU *menu);
+  #+END_SRC
+
+* DESCRIPTION
+
+  The function =set_menu_fore= sets the foreground attribute of
+  menu. This is the highlight used for selected menu items.
+  =menu_fore= returns the foreground attribute.  The default is
+  =A_REVERSE=.
+
+  The function =set_menu_back= sets the background attribute of menu.
+  This is the highlight used for selectable (but not currently
+  selected) menu items.  The function =menu_back= returns the
+  background attribute.  The default is =A_NORMAL=.
+
+  The function =set_menu_grey= sets the grey attribute of menu.  This
+  is the highlight used for un-selectable menu items in menus that
+  permit more than one selection.  The function =menu_grey= returns
+  the grey attribute.  The default is =A_UNDERLINE=.
+
+  The function =set_menu_pad= sets the character used to fill the
+  space between the name and description parts of a menu item.
+  =menu_pad= returns the given menu's pad character.  The default is a
+  blank.
+
+* RETURN VALUE
+
+  These routines return one of the following:
+
+  - =E_OK=           :: The routine succeeded.
+
+  - =E_SYSTEM_ERROR= :: System error occurred (see =errno=).
+
+  - =E_BAD_ARGUMENT= :: Routine detected an incorrect or out-of-range
+                        argument.
+
+* SEE ALSO
+
+  [[file:ncurses.3x.org][curses(3x)]] and related pages whose names begin "menu_" for detailed
+  descriptions of the entry points.
+
+* NOTES
+
+  The header file =<menu.h>= automatically includes the header file
+  =<curses.h>=.
+
+* PORTABILITY
+
+  These routines emulate the System V menu library.  They were not
+  supported on Version 7 or BSD versions.
+
+* AUTHORS
+
+  Juergen Pfeifer.  Manual pages and adaptation for new curses by Eric
+  S. Raymond.

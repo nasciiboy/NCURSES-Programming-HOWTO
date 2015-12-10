@@ -1,0 +1,62 @@
+#+TITLE: legacy_coding 3x
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  =use_legacy_coding= - use terminal's default colors
+
+* SYNOPSIS
+
+  #+BEGIN_SRC c
+    #include <curses.h>
+
+    int use_legacy_coding(int level);
+  #+END_SRC
+
+* DESCRIPTION
+
+  The =use_legacy_coding()= function is an extension to the curses
+  library.  It allows the caller to change the result of =unctrl=, and
+  suppress related checks within the library that would normally cause
+  nonprinting characters to be rendered in visible form.  This affects
+  only 8-bit characters.
+
+  The level parameter controls the result:
+
+  - 0 ::
+
+    the library functions normally, rendering nonprinting characters
+    as described in =unctrl=.
+
+  - 1 ::
+
+    the library ignores =isprintf= for codes in the range 160-255.
+
+  - 2 ::
+
+    the library ignores =isprintf= for codes in the range 128-255.  It
+    also modifies the output of =unctrl=, showing codes in the range
+    128-159 as is.
+
+* RETURN VALUE
+
+  If the screen has not been initialized, or the level parameter is
+  out of range, the function returns =ERR=.  Otherwise, it returns the
+  previous level: =0=, =1= or =2=.
+
+* PORTABILITY
+
+  This routine is specific to ncurses.  It was not supported on
+  Version 7, BSD or System V implementations.  It is recommended that
+  any code depending on =ncurses= extensions be conditioned using
+  =NCURSES_VERSION=.
+
+* SEE ALSO
+
+  [[file:curs_util.3x.org][unctrl]]
+
+* AUTHOR
+
+  Thomas Dickey (to support lynx's font-switching feature).
