@@ -1,0 +1,55 @@
+#+TITLE: wresize 3x
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  =wresize= - resize a =curses= window
+
+* SYNOPSIS
+
+  #+BEGIN_SRC c
+    #include <curses.h>
+
+    int wresize(WINDOW *win, int lines, int columns);
+  #+END_SRC
+
+* DESCRIPTION
+
+  This is an extension to the curses library.  It reallocates storage
+  for an =ncurses= window to adjust its dimensions to the specified
+  values.  If either dimension is larger than the current values, the
+  window's data is filled with blanks that have the current background
+  rendition (as set by =wbkgdset=) merged into them.
+
+* RETURN VALUE
+
+  The function returns the integer =ERR= upon failure and =OK= on
+  success.  It will fail if either of the dimensions less than or
+  equal to zero, or if an error occurs while (re)allocating memory for
+  the window.
+
+* NOTES
+
+  The only restriction placed on the dimensions is that they be
+  greater than zero.  The dimensions are not compared to =curses=
+  screen dimensions to simplify the logic of =resizeterm=.  The caller
+  must ensure that the window's dimensions fit within the actual
+  screen dimensions.
+
+* PORTABILITY
+
+  It is not possible to resize windows with SVr4 curses.
+
+  This extension of ncurses was introduced in mid-1995.  It was
+  adopted in NetBSD curses (2001) and PDCurses (2003).
+
+* SEE ALSO
+
+  [[file:resizeterm.3x.org][resizeterm(3x)]].
+
+* AUTHOR
+
+  Thomas Dickey (from an equivalent function written in 1988 for BSD
+  =curses=).

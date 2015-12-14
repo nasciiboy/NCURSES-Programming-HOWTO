@@ -1,0 +1,82 @@
+#+TITLE: toe 1m
+#+AUTHOR:
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* NAME
+
+  =toe= - table of (terminfo) entries
+
+* SYNOPSIS
+
+  =toe= [-v[n]] [-ahsuUV] file...
+
+* DESCRIPTION
+
+  With no options, =toe= lists all available terminal types by primary
+  name with descriptions.  File arguments specify the directories to
+  be scanned; if no such arguments are given, your default terminfo
+  directory is scanned.  If you also specify the =-h= option, a
+  directory header will be issued as each directory is entered.
+
+  There are other options intended for use by terminfo file
+  maintainers:
+
+  * =-a= ::
+
+    report on all of the terminal databases which =ncurses= would
+    search, rather than only the first one that it finds.
+
+    If the =-s= is also given, =toe= adds a column to the report,
+    showing (like =conflict(1)=) which entries which belong to a given
+    terminal database.  An "*" marks entries which differ, and "+"
+    marks equivalent entries.
+
+    Without the =-s= option, =toe= does not attempt to merge
+    duplicates in its report
+
+  * =-s= ::
+
+    sort the output by the entry names.
+
+  * =-u= /file/ ::
+
+    says to write a report to the standard output, listing
+    dependencies in the given terminfo/termcap source file.  The
+    report condenses the 'use' relation: each line consists of the
+    primary name of a terminal that has use capabilities, followed by
+    a colon, followed by the whitespace-separated primary names of all
+    terminals which occur in those use capabilities, followed by a
+    newline
+
+  * =-U= /file/ ::
+
+    says to write a report to the standard output, listing reverse
+    dependencies in the given terminfo/termcap source file.  The
+    report reverses the 'use' relation: each line consists of the
+    primary name of a terminal that occurs in use capabilities,
+    followed by a colon, followed by the whitespaceseparated primary
+    names of all terminals which depend on it, followed by a newline.
+
+  * =-vn= ::
+
+    specifies that (verbose) output be written to standard error,
+    showing =toe='s progress.  The optional parameter /n/ is a number
+    from 1 to 10, interpreted as for [[file:tic.1m.org][tic(1m)]].
+
+  * =-V= ::
+
+    reports the version of ncurses which was used in this program, and
+    exits.
+
+* FILES
+
+  - =/usr/share/terminfo/?/*= :: Compiled terminal description
+                                 database.
+
+* SEE ALSO
+
+  [[file:tic.1m.org][tic(1m)]], [[file:infocmp.1m.org][infocmp(1m)]], [[file:captoinfo.1m.org][captoinfo(1m)]], [[file:infotocap.1m.org][infotocap(1m)]], [[file:ncurses.3x.org][curses(3x)]],
+  [[file:terminfo.5.org][terminfo(5)]].
+
+  This describes =ncurses= version 6.0 (patch 20151024).
