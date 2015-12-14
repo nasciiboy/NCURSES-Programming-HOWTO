@@ -1,4 +1,4 @@
-#+TITLE: terminfo 5 File
+#+TITLE: terminfo 5 File Formats
 #+AUTHOR:
 #+LANGUAGE: en
 #+STARTUP: showall
@@ -313,6 +313,7 @@
    These are the string capabilities:
 
    | Variable String             | Capname | TCap Code | Description                              |
+   |-----------------------------+---------+-----------+------------------------------------------|
    | ~acs_chars~                 | acsc    | ac        | graphics charset                         |
    |                             |         |           | pairs, based on vt100                    |
    |-----------------------------+---------+-----------+------------------------------------------|
