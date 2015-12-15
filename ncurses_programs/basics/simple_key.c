@@ -2,12 +2,12 @@
 #include <ncurses.h>
 
 #define WIDTH 30
-#define HEIGHT 10 
+#define HEIGHT 10
 
 int startx = 0;
 int starty = 0;
 
-char *choices[] = { 
+char *choices[] = {
 			"Choice 1",
 			"Choice 2",
 			"Choice 3",
@@ -29,7 +29,7 @@ int main()
 	cbreak();	/* Line buffering disabled. pass on everything */
 	startx = (80 - WIDTH) / 2;
 	starty = (24 - HEIGHT) / 2;
-		
+
 	menu_win = newwin(HEIGHT, WIDTH, starty, startx);
 	keypad(menu_win, TRUE);
 	mvprintw(0, 0, "Use arrow keys to go up and down, Press enter to select a choice");
@@ -47,7 +47,7 @@ int main()
 			case KEY_DOWN:
 				if(highlight == n_choices)
 					highlight = 1;
-				else 
+				else
 					++highlight;
 				break;
 			case 10:
@@ -61,9 +61,10 @@ int main()
 		print_menu(menu_win, highlight);
 		if(choice != 0)	/* User did a choice come out of the infinite loop */
 			break;
-	}	
+	}
 	mvprintw(23, 0, "You chose choice %d with choice string %s\n", choice, choices[choice - 1]);
 	clrtoeol();
+        getch();
 	refresh();
 	endwin();
 	return 0;
@@ -72,14 +73,14 @@ int main()
 
 void print_menu(WINDOW *menu_win, int highlight)
 {
-	int x, y, i;	
+	int x, y, i;
 
 	x = 2;
 	y = 2;
 	box(menu_win, 0, 0);
 	for(i = 0; i < n_choices; ++i)
 	{	if(highlight == i + 1) /* High light the present choice */
-		{	wattron(menu_win, A_REVERSE); 
+		{	wattron(menu_win, A_REVERSE);
 			mvwprintw(menu_win, y, x, "%s", choices[i]);
 			wattroff(menu_win, A_REVERSE);
 		}
@@ -89,4 +90,3 @@ void print_menu(WINDOW *menu_win, int highlight)
 	}
 	wrefresh(menu_win);
 }
-

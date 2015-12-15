@@ -23,7 +23,6 @@
   #+END_SRC
 
 * DESCRIPTION
-
 ** =initscr=
 
    =initscr= is normally the first =curses= routine to call when
@@ -190,7 +189,6 @@
     This uses the same handler as =SIGINT=, with the same limitations.
     It is not mentioned in X/Open Curses, but is more suitable for
     this purpose than =SIGQUIT= (which is used in debugging).
-
 
 *** =SIGTSTP=
 
