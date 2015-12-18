@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>NCURSES Programming HOWTO</title>
-<!-- 2015-12-14 lun 18:31 -->
+<!-- 2015-12-18 vie 17:34 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="ppadala" />
@@ -141,7 +141,7 @@
 </li>
 <li><a href="#sec-14">13. Screen Manipulation</a>
 <ul>
-<li><a href="#sec-14-1">13.1. getyx() functions</a></li>
+<li><a href="#sec-14-1">13.1. <code>getyx()</code> functions</a></li>
 <li><a href="#sec-14-2">13.2. Screen Dumping</a></li>
 <li><a href="#sec-14-3">13.3. Window Dumping</a></li>
 </ul>
@@ -2636,8 +2636,8 @@ to be enabled with <code>mousemask()</code>.
 
 <div class="org-src-container">
 
-<pre class="src src-c">mousemask(  mmask_t newmask,    /* The events you want to listen to */
-            mmask_t *oldmask)   /* The old events mask                */
+<pre class="src src-c">mousemask( mmask_t newmask,    /* The events you want to listen to */
+           mmask_t *oldmask ); /* The old events mask              */
 </pre>
 </div>
 
@@ -2711,7 +2711,7 @@ if(ch == KEY_MOUSE)
 </div>
 
 <p>
-getmouse() returns the event into the pointer given to it. It's a
+<code>getmouse()</code> returns the event into the pointer given to it. It's a
 structure which contains
 </p>
 
@@ -2755,14 +2755,15 @@ handling is removed.
 </p>
 
 <p>
-<a href="ncurses_programs/basics/"><b>Example 11. Access the menu with mouse !!!</b></a>
+<a href="ncurses_programs/basics/mouse_menu.c"><b>Example 11. Access the menu with mouse !!!</b></a>
 </p>
 
 <div class="org-src-container">
 
 <pre class="src src-c">#include &lt;ncurses.h&gt;
+#include &lt;string.h&gt;
 
-#define WIDTH 30
+#define WIDTH  30
 #define HEIGHT 10
 
 int startx = 0;
@@ -2781,7 +2782,7 @@ void print_menu(WINDOW *menu_win, int highlight);
 void report_choice(int mouse_x, int mouse_y, int *p_choice);
 
 int main()
-{   int c, choice = 0;
+{ int c, choice = 0;
   WINDOW *menu_win;
   MEVENT event;
 
@@ -2803,17 +2804,18 @@ int main()
   /* Print the menu for the first time */
   menu_win = newwin(HEIGHT, WIDTH, starty, startx);
   print_menu(menu_win, 1);
+  keypad( menu_win, TRUE );
   /* Get all the mouse events */
   mousemask(ALL_MOUSE_EVENTS, NULL);
 
   while(1)
-    {   c = wgetch(menu_win);
+    { c = wgetch(menu_win);
       switch(c)
         {   case KEY_MOUSE:
             if(getmouse(&amp;event) == OK)
-              {   /* When the user clicks left mouse button */
+              { /* When the user clicks left mouse button */
                 if(event.bstate &amp; BUTTON1_PRESSED)
-                  {   report_choice(event.x + 1, event.y + 1, &amp;choice);
+                  { report_choice(event.x, event.y, &amp;choice);
                     if(choice == -1) //Exit chosen
                       goto end;
                     mvprintw(22, 1, "Choice made is : %d String Chosen is \"%10s\"", choice, choices[choice - 1]);
@@ -2838,11 +2840,11 @@ void print_menu(WINDOW *menu_win, int highlight)
   y = 2;
   box(menu_win, 0, 0);
   for(i = 0; i &lt; n_choices; ++i)
-    {   if(highlight == i + 1)
-        {   wattron(menu_win, A_REVERSE);
-          mvwprintw(menu_win, y, x, "%s", choices[i]);
-          wattroff(menu_win, A_REVERSE);
-        }
+    { if(highlight == i + 1)
+      { wattron(menu_win, A_REVERSE);
+        mvwprintw(menu_win, y, x, "%s", choices[i]);
+        wattroff(menu_win, A_REVERSE);
+      }
       else
         mvwprintw(menu_win, y, x, "%s", choices[i]);
       ++y;
@@ -2852,15 +2854,15 @@ void print_menu(WINDOW *menu_win, int highlight)
 
 /* Report the choice according to mouse position */
 void report_choice(int mouse_x, int mouse_y, int *p_choice)
-{   int i,j, choice;
+{ int i,j, choice;
 
   i = startx + 2;
-  j = starty + 3;
+  j = starty + 2;
 
   for(choice = 0; choice &lt; n_choices; ++choice)
     if(mouse_y == j + choice &amp;&amp; mouse_x &gt;= i &amp;&amp; mouse_x &lt;= i + strlen(choices[choice]))
-      {   if(choice == n_choices - 1)
-          *p_choice = -1;
+      { if(choice == n_choices - 1)
+        *p_choice = -1;
         else
           *p_choice = choice + 1;
         break;
@@ -2877,7 +2879,7 @@ void report_choice(int mouse_x, int mouse_y, int *p_choice)
 <p>
 The functions <code>mouse_trafo()</code> and <code>wmouse_trafo()</code> can be used to
 convert to mouse co-ordinates to screen relative co-ordinates. See
-<code>curs_mouse(3X)</code> man page for details.
+<a href="man/curs_mouse.3x.html"><code>curs_mouse(3X)</code></a> man page for details.
 </p>
 
 <p>
@@ -2901,36 +2903,36 @@ is especially important in writing games.
 </div>
 
 <div id="outline-container-sec-14-1" class="outline-3">
-<h3 id="sec-14-1">13.1. getyx() functions</h3>
+<h3 id="sec-14-1">13.1. <code>getyx()</code> functions</h3>
 <div class="outline-text-3" id="text-14-1">
 <p>
 The function <code>getyx()</code> can be used to find out the present cursor
 co-ordinates. It will fill the values of x and y co-ordinates in
-the arguments given to it. Since getyx() is a macro you don't have
-to pass the address of the variables. It can be called as
+the arguments given to it. Since <code>getyx()</code> is a macro you don't
+have to pass the address of the variables. It can be called as
 </p>
 
 <div class="org-src-container">
 
 <pre class="src src-c">getyx(win, y, x);
-/* win: window pointer
+/*   win : window pointer
  *   y, x: y, x co-ordinates will be put into this variables
  */
 </pre>
 </div>
 
 <p>
-The function getparyx() gets the beginning co-ordinates of the sub
-window relative to the main window. This is some times useful to
-update a sub window. When designing fancy stuff like writing
+The function <code>getparyx()</code> gets the beginning co-ordinates of the
+sub window relative to the main window. This is some times useful
+to update a sub window. When designing fancy stuff like writing
 multiple menus, it becomes difficult to store the menu positions,
 their first option co-ordinates etc. A simple solution to this
 problem, is to create menus in sub windows and later find the
-starting co-ordinates of the menus by using getparyx().
+starting co-ordinates of the menus by using <code>getparyx()</code>.
 </p>
 
 <p>
-The functions getbegyx() and getmaxyx() store current window's
+The functions <code>getbegyx()</code> and <code>getmaxyx()</code> store current window's
 beginning and maximum co-ordinates. These functions are useful in
 the same way as above in managing the windows and sub windows
 effectively.

@@ -993,13 +993,13 @@
 
        printw("Pulse cualquier caracter para verlo remarcado\n");
        ch = getch();                   /* Si no ha llamado a raw() tenemos
-                                        ,* que pulsar enter antes que que
-                                        ,* que llegue al programa           */
+                                        * que pulsar enter antes que que
+                                        * que llegue al programa           */
        if(ch == KEY_F(1))              /* sin habilitar keypad esto no     */
          printw("F1 Key pressed");     /* llegara a nosotros               */
                                        /* Sin noecho() algunos feos
-                                        ,* caracteres de escape podrian ser
-                                        ,* impresos en pantalla             */
+                                        * caracteres de escape podrian ser
+                                        * impresos en pantalla             */
        else
          {   printw("La tecla pulsada es ");
              attron(A_BOLD);
@@ -1981,21 +1981,21 @@
      void destroy_win(WINDOW *local_win)
      {
        /* box(local_win, ' ', ' '); : Esto no produce el resultado deseado
-        ,* de borrar la ventana. Deja las cuatro esquinas como un feo residuo
-        ,* de la ventana.
-        ,*/
+        * de borrar la ventana. Deja las cuatro esquinas como un feo residuo
+        * de la ventana.
+        */
        wborder(local_win, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ');
        /* Los parametros tomados son
-        ,* 1. win: la ventana sobre la que operar
-        ,* 2. ls: caracter a utilizar para el lado izquierdo de la ventana
-        ,* 3. rs: caracter a utilizar para el lado derecho de la ventana
-        ,* 4. ts: caracter a utilizar para el lado superior de la ventana
-        ,* 5. bs: caracter a utilizar para el lado inferior de la ventana
-        ,* 6. tl: caracter a utilizar para la esquina superior isquierda de la ventana
-        ,* 7. tr: caracter a utilizar para la esquina superior derecha de la ventana
-        ,* 8. bl: caracter a utilizar para la esquina inferior izquierda de la ventana
-        ,* 9. br: caracter a utilizar para la esquina inferior derecha de la ventana
-        ,*/
+        * 1. win: la ventana sobre la que operar
+        * 2. ls: caracter a utilizar para el lado izquierdo de la ventana
+        * 3. rs: caracter a utilizar para el lado derecho de la ventana
+        * 4. ts: caracter a utilizar para el lado superior de la ventana
+        * 5. bs: caracter a utilizar para el lado inferior de la ventana
+        * 6. tl: caracter a utilizar para la esquina superior isquierda de la ventana
+        * 7. tr: caracter a utilizar para la esquina superior derecha de la ventana
+        * 8. bl: caracter a utilizar para la esquina inferior izquierda de la ventana
+        * 9. br: caracter a utilizar para la esquina inferior derecha de la ventana
+        */
        wrefresh(local_win);
        delwin(local_win);
      }
@@ -2577,106 +2577,110 @@
 
    # Before you do any thing else, the events you want to receive have
    # to be enabled with =mousemask()=.
-   Antes de hacer cualquier otra cosa, los eventos que desea recibir tiene
-   habilitado con mousemask =()=.
+   Antes de hacer cualquier otra cosa, los eventos que desea recibir
+   deben ser habilitados con =mousemask()=.
+
+   # #+BEGIN_SRC c
+   #   mousemask( mmask_t newmask,    /* The events you want to listen to */
+   #              mmask_t *oldmask ); /* The old events mask              */
+   # #+END_SRC
 
    #+BEGIN_SRC c
-     mousemask(  mmask_t newmask,    /* The events you want to listen to */
-                 mmask_t *oldmask)   /* The old events mask                */
+     mousemask( mmask_t newmask,    /* Los eventos que quiere escuchar  */
+                mmask_t *oldmask ); /* La anterior mascara de eventos   */
    #+END_SRC
 
    # The first parameter to above function is a bit mask of events you
    # would like to listen. By default, all the events are turned
    # off. The bit mask =ALL_MOUSE_EVENTS= can be used to get all the
    # events.
-   El primer parámetro a la función anterior es una máscara de bits de los acontecimientos que
-   le gustaría escuchar. Por defecto, todos los eventos están activados
-   apagado. La máscara de bit = ALL_MOUSE_EVENTS = se puede utilizar para obtener toda la
-   eventos.
+   El primer parámetro de la función anterior es una máscara de bits
+   de los eventos que le gustaría escuchar. Por defecto, todos los
+   eventos están apagados. La máscara de bits =ALL_MOUSE_EVENTS= se
+   puede utilizar para obtener todos los eventos.
 
    # The following are all the event masks:
-   Los siguientes son todas las máscaras de eventos:
+   Las siguientes son todas las máscaras de eventos:
 
-   #+BEGIN_EXAMPLE
-     Name            Description
-        ---------------------------------------------------------------------
-        BUTTON1_PRESSED          mouse button 1 down
-        BUTTON1_RELEASED         mouse button 1 up
-        BUTTON1_CLICKED          mouse button 1 clicked
-        BUTTON1_DOUBLE_CLICKED   mouse button 1 double clicked
-        BUTTON1_TRIPLE_CLICKED   mouse button 1 triple clicked
-        BUTTON2_PRESSED          mouse button 2 down
-        BUTTON2_RELEASED         mouse button 2 up
-        BUTTON2_CLICKED          mouse button 2 clicked
-        BUTTON2_DOUBLE_CLICKED   mouse button 2 double clicked
-        BUTTON2_TRIPLE_CLICKED   mouse button 2 triple clicked
-        BUTTON3_PRESSED          mouse button 3 down
-        BUTTON3_RELEASED         mouse button 3 up
-        BUTTON3_CLICKED          mouse button 3 clicked
-        BUTTON3_DOUBLE_CLICKED   mouse button 3 double clicked
-        BUTTON3_TRIPLE_CLICKED   mouse button 3 triple clicked
-        BUTTON4_PRESSED          mouse button 4 down
-        BUTTON4_RELEASED         mouse button 4 up
-        BUTTON4_CLICKED          mouse button 4 clicked
-        BUTTON4_DOUBLE_CLICKED   mouse button 4 double clicked
-        BUTTON4_TRIPLE_CLICKED   mouse button 4 triple clicked
-        BUTTON_SHIFT             shift was down during button state change
-        BUTTON_CTRL              control was down during button state change
-        BUTTON_ALT               alt was down during button state change
-        ALL_MOUSE_EVENTS         report all button state changes
-        REPORT_MOUSE_POSITION    report mouse movement
-   #+END_EXAMPLE
+   | Name                     | Description                                            |
+   |--------------------------+--------------------------------------------------------|
+   | ~BUTTON1_PRESSED~        | boton 1 del mouse abajo                                |
+   | ~BUTTON1_RELEASED~       | boton 1 del mouse arriba                               |
+   | ~BUTTON1_CLICKED~        | boton 1 del mouse clic                                 |
+   | ~BUTTON1_DOUBLE_CLICKED~ | boton 1 del mouse doble clic                           |
+   | ~BUTTON1_TRIPLE_CLICKED~ | boton 1 del mouse triple clic                          |
+   | ~BUTTON2_PRESSED~        | boton 2 del mouse abajo                                |
+   | ~BUTTON2_RELEASED~       | boton 2 del mouse arriba                               |
+   | ~BUTTON2_CLICKED~        | boton 2 del mouse clic                                 |
+   | ~BUTTON2_DOUBLE_CLICKED~ | boton 2 del mouse doble clic                           |
+   | ~BUTTON2_TRIPLE_CLICKED~ | boton 2 del mouse triple clic                          |
+   | ~BUTTON3_PRESSED~        | boton 3 del mouse abajo                                |
+   | ~BUTTON3_RELEASED~       | boton 3 del mouse arriba                               |
+   | ~BUTTON3_CLICKED~        | boton 3 del mouse clic                                 |
+   | ~BUTTON3_DOUBLE_CLICKED~ | boton 3 del mouse doble clic                           |
+   | ~BUTTON3_TRIPLE_CLICKED~ | boton 3 del mouse triple clic                          |
+   | ~BUTTON4_PRESSED~        | boton 4 del mouse abajo                                |
+   | ~BUTTON4_RELEASED~       | boton 4 del mouse up                                   |
+   | ~BUTTON4_CLICKED~        | boton 4 del mouse clic                                 |
+   | ~BUTTON4_DOUBLE_CLICKED~ | boton 4 del mouse doble clic                           |
+   | ~BUTTON4_TRIPLE_CLICKED~ | boton 4 del mouse triple clic                          |
+   | ~BUTTON_SHIFT~           | se pulso shift durante el cambio de estado del boton   |
+   | ~BUTTON_CTRL~            | se pulso control durante el cambio de estado del boton |
+   | ~BUTTON_ALT~             | se pulso alt durante el cambio de estado del boton     |
+   | ~ALL_MOUSE_EVENTS~       | informa todos los cambios de estados                   |
+   | ~REPORT_MOUSE_POSITION~  | informa movimiento del mouse                           |
 
 # ** 12.2. Getting the events
-** 12.2. Obtención de los acontecimientos
+** 12.2. Obtención de eventos
 
    # Once a class of mouse events have been enabled, getch() class of
    # functions return =KEY_MOUSE= every time some mouse event
    # happens. Then the mouse event can be retrieved with =getmouse()=.
-   Una vez que una clase de eventos de ratón se han habilitado, getch() de la clase
-   funciones devuelven = KEY_MOUSE = cada vez que un evento de ratón
-   sucede. A continuación, el evento de ratón puede ser recuperada con GetMouse =()=.
+   Una vez que una clase de eventos de ratón se ha habilitado, las
+   funciones de clase =getch()= devuelven =KEY_MOUSE= cada vez que
+   sucede un evento de ratón. En ese caso, el evento de ratón puede
+   ser recuperado con =getmouse()=.
 
    # The code approximately looks like this:
    El código es aproximadamente así:
 
-   # #+BEGIN_SRC c
-   #   MEVENT event;
-   #   ch = getch();
-   #   if(ch == KEY_MOUSE)
-   #     if(getmouse(&event) == OK)
-   #       .    /* Do some thing with the event */
-   #       .
-   #       .
-   # #+END_SRC
+   #+BEGIN_SRC c
+     MEVENT event;
+     ch = getch();
+     if(ch == KEY_MOUSE)
+       if(getmouse(&event) == OK)
+         .    /* Hacer algo con el evento */
+         .
+         .
+   #+END_SRC
 
    # getmouse() returns the event into the pointer given to it. It's a
    # structure which contains
-   GetMouse() devuelve el evento en el puntero que se le da. Es un
+   =getmouse()= devuelve el evento en el puntero que se le da. Es un
    estructura que contiene
 
    #+BEGIN_SRC c
      typedef struct
      {
-       short id;         /* ID to distinguish multiple devices */
-       int x, y, z;      /* event coordinates */
-       mmask_t bstate;   /* button state bits */
+       short id;         /* ID para distinguir multiples dispositivos */
+       int x, y, z;      /* coordenadas del evento   */
+       mmask_t bstate;   /* bits de estado del boton */
      }
    #+END_SRC
 
    # The =bstate= is the main variable we are interested in. It tells
    # the button state of the mouse.
-   El bState = es la variable principal que nos interesa. Narra
-   el estado del botón del ratón.
+   =bstate= es la variable que mayor nos interesa. Informa el estado
+   del botón del ratón.
 
    # Then with a code snippet like the following, we can find out what
    # happened.
-   Luego, con un fragmento de código como el siguiente, podemos averiguar qué
-   sucedido.
+   Luego, con un fragmento de código como el siguiente, podemos
+   averiguar lo sucedido.
 
    #+BEGIN_SRC c
      if(event.bstate & BUTTON1_PRESSED)
-       printw("Left Button Pressed");
+       printw("Boton izquierdo presionado");
    #+END_SRC
 
 # ** 12.3. Putting it all Together
@@ -2685,27 +2689,28 @@
    # That's pretty much interfacing with mouse. Let's create the same
    # menu and enable mouse interaction. To make things simpler, key
    # handling is removed.
-   Eso es más o menos la interfaz con ratón. Vamos a crear el mismo
-   menú y permitir la interacción del ratón. Para hacer las cosas más simples, clave
-   se elimina la manipulación.
+   Esta es más o menos la interfaz con el ratón. Vamos a crear el
+   mismo menú y permitir la interacción del ratón. Para hacer las
+   cosas más simples, se elimina el manejo del teclado.
 
    # *Example 11. Access the menu with mouse !!!*
-   [[file:ncurses_programs/basics/][*Ejemplo 11. Acceda al menú con el ratón !!!*]]
+   [[file:ncurses_programs/basics/mouse_menu.c][*Ejemplo 11. Acceder al menú con el ratón !!!*]]
 
    #+BEGIN_SRC c
      #include <ncurses.h>
+     #include <string.h>
 
-     #define WIDTH 30
+     #define WIDTH  30
      #define HEIGHT 10
 
      int startx = 0;
      int starty = 0;
 
-     char *choices[] = {     "Choice 1",
-                             "Choice 2",
-                             "Choice 3",
-                             "Choice 4",
-                             "Exit",
+     char *choices[] = {     "Opcion 1",
+                             "Opcion 2",
+                             "Opcion 3",
+                             "Opcion 4",
+                             "Salir",
      };
 
      int n_choices = sizeof(choices) / sizeof(char *);
@@ -2714,42 +2719,45 @@
      void report_choice(int mouse_x, int mouse_y, int *p_choice);
 
      int main()
-     {   int c, choice = 0;
+     { int c, choice = 0;
        WINDOW *menu_win;
        MEVENT event;
 
-       /* Initialize curses */
+       /* Inicializa curses */
        initscr();
        clear();
        noecho();
-       cbreak();   // Line buffering disabled. pass on everything
+       cbreak();   // Deshabilitar buffer de linea. Pasar todo
 
-       /* Try to put the window in the middle of screen */
+       /* Trata de poner la ventana al centro de la pantalla */
        startx = (80 -  WIDTH) / 2;
        starty = (24 - HEIGHT) / 2;
 
        attron(A_REVERSE);
-       mvprintw(23, 1, "Click on Exit to quit (Works best in a virtual console)");
+       mvprintw(23, 1, "Click en Salir para terminar (Funciona mejor en una consola virtual)");
        refresh();
        attroff(A_REVERSE);
 
-       /* Print the menu for the first time */
+       /* Imprime el menu por primera vez */
        menu_win = newwin(HEIGHT, WIDTH, starty, startx);
        print_menu(menu_win, 1);
-       /* Get all the mouse events */
+       /* necesitamos habilitar las teclas de "funcion",
+          KEY_MOUSE forma parte de ellas */
+       keypad( menu_win, TRUE );
+       /* Optener todos los eventos del raton */
        mousemask(ALL_MOUSE_EVENTS, NULL);
 
        while(1)
-         {   c = wgetch(menu_win);
+         { c = wgetch(menu_win);
            switch(c)
              {   case KEY_MOUSE:
                  if(getmouse(&event) == OK)
-                   {   /* When the user clicks left mouse button */
+                   { /* Cuando el usuario presiona el boton izquierdo del mouse */
                      if(event.bstate & BUTTON1_PRESSED)
-                       {   report_choice(event.x + 1, event.y + 1, &choice);
-                         if(choice == -1) //Exit chosen
+                       { report_choice(event.x + 1, event.y + 1, &choice);
+                         if(choice == -1) // Opcion de salida
                            goto end;
-                         mvprintw(22, 1, "Choice made is : %d String Chosen is \"%10s\"", choice, choices[choice - 1]);
+                         mvprintw(22, 1, "La opcion elegida : %d La cadena elegida es \"%10s\"", choice, choices[choice - 1]);
                          refresh();
                        }
                    }
@@ -2771,11 +2779,11 @@
        y = 2;
        box(menu_win, 0, 0);
        for(i = 0; i < n_choices; ++i)
-         {   if(highlight == i + 1)
-             {   wattron(menu_win, A_REVERSE);
-               mvwprintw(menu_win, y, x, "%s", choices[i]);
-               wattroff(menu_win, A_REVERSE);
-             }
+         { if(highlight == i + 1)
+           { wattron(menu_win, A_REVERSE);
+             mvwprintw(menu_win, y, x, "%s", choices[i]);
+             wattroff(menu_win, A_REVERSE);
+           }
            else
              mvwprintw(menu_win, y, x, "%s", choices[i]);
            ++y;
@@ -2783,19 +2791,20 @@
        wrefresh(menu_win);
      }
 
-     /* Report the choice according to mouse position */
+     /* Informa la opcion de acuerdo a la posicion del mouse */
      void report_choice(int mouse_x, int mouse_y, int *p_choice)
-     {   int i,j, choice;
+     { int i,j, choice;
 
        i = startx + 2;
-       j = starty + 3;
+       j = starty + 2;
 
        for(choice = 0; choice < n_choices; ++choice)
-         if(mouse_y == j + choice && mouse_x >= i && mouse_x <= i + strlen(choices[choice]))
-           {   if(choice == n_choices - 1)
-               ,*p_choice = -1;
+         if(mouse_y == j + choice && mouse_x >= i &&
+            mouse_x <= i + strlen(choices[choice]))
+           { if(choice == n_choices - 1)
+             *p_choice = -1;
              else
-               ,*p_choice = choice + 1;
+               *p_choice = choice + 1;
              break;
            }
      }
@@ -2807,45 +2816,49 @@
    # The functions =mouse_trafo()= and =wmouse_trafo()= can be used to
    # convert to mouse co-ordinates to screen relative co-ordinates. See
    # =curs_mouse(3X)= man page for details.
-   Las funciones mouse_trafo =()= y = wmouse_trafo()= se puede utilizar para
-   convertirse al ratón coordenadas para seleccionar coordenadas relativas. Ver
-   = curs_mouse (3X) = página de manual para más detalles.
+   Puede utilizar las funciones =mouse_trafo()= y =wmouse_trafo()=
+   para convertir las cordenadas del ratón en coordenadas relativas a
+   la pantalla. Vea la pagina de manual [[file:man/curs_mouse.3x.org][=curs_mouse(3X)=]] para más
+   detalles.
 
    # The mouseinterval function sets the maximum time (in thousands of a
    # second) that can elapse between press and release events in order
    # for them to be recognized as a click. This function returns the
    # previous interval value. The default is one fifth of a second.
-   La función mouseinterval establece el tiempo máximo (en miles de
-   segundos) que puede transcurrir entre la prensa y la liberación de los acontecimientos con el fin
-   para que puedan ser reconocidos como un clic. Esta función devuelve el
-   valor del intervalo anterior. El valor predeterminado es una quinta parte de un segundo.
+   La función mouseinterval establece el tiempo máximo (en milesimas
+   de segundo) que puede transcurrir entre eventos de presion y
+   liberación para que puedan ser reconocidos como un clic. Esta
+   función devuelve el valor del intervalo anterior. El valor
+   predeterminado es una quinta parte de un segundo.
 
 # * 13. Screen Manipulation
-* 13. Manipulación Pantalla
+* 13. Manipulación de Pantalla
 
   # In this section, we will look into some functions, which allow us to
   # manage the screen efficiently and to write some fancy programs. This
   # is especially important in writing games.
-  En esta sección, vamos a ver en algunas funciones, que nos permiten
-  manejar la pantalla de manera eficiente y escribir algunos programas de fantasía. Esta
-  es especialmente importante en los juegos de escritura.
+  En esta sección, veremos algunas funciones, que nos permiten manejar
+  la pantalla de manera eficiente para escribir algunos programas
+  fantasticos. Esto es especialmente importante en la escritura de
+  juegos.
 
 # ** 13.1. getyx() functions
-** 13.1. getyx() funciones
+** 13.1. funciones =getyx()=
 
    # The function =getyx()= can be used to find out the present cursor
    # co-ordinates. It will fill the values of x and y co-ordinates in
    # the arguments given to it. Since getyx() is a macro you don't have
    # to pass the address of the variables. It can be called as
-   La función = getyx()= se puede utilizar para averiguar el cursor presente
-   coordenadas. Se llenará los valores de x e y coordenadas en
-   los argumentos dados a ella. Desde getyx() es una macro que no tiene
-   al pasar la dirección de las variables. Se le puede llamar como
+   La función =getyx()= se utiliza para descubrir las coordenadas
+   actuales del cursor. Se colocaran las coordenadas de los valores
+   =x= e =y= en los argumentos dados. Ya que =getyx()= es una macro no
+   tiene que pasar la dirección de las variables. Se le puede llamar
+   como
 
    #+BEGIN_SRC c
      getyx(win, y, x);
-     /* win: window pointer
-      *   y, x: y, x co-ordinates will be put into this variables
+     /* win : puentero a ventana
+      * y, x: se colocaran las coordenadas y, x en estas variables
       */
    #+END_SRC
 
@@ -2856,25 +2869,26 @@
    # their first option co-ordinates etc. A simple solution to this
    # problem, is to create menus in sub windows and later find the
    # starting co-ordinates of the menus by using getparyx().
-   El getparyx función() obtiene los que comienzan coordenadas de la sub
-   ventana relativa a la ventana principal. Esto es algunas veces útil
-   actualizar una ventana sub. En el diseño de cosas de lujo como la escritura
-   múltiples menús, se hace difícil para almacenar las posiciones de menú,
-   sus primera opción coordenadas etc. Una solución simple a este
-   problema, es la creación de menús en ventanas secundarias y luego encontrar el
-   comenzando coordenadas de los menús utilizando getparyx().
+   La función =getparyx()= obtiene las coordenadas iniciales de la sub
+   ventana con respecto a la ventana principal. Esto algunas veces es
+   útil para actualizar una sub ventana. Cuando se diseñan cosas
+   asombrosas como menús múltiples, debido a la dificultad de
+   almacenar las posiciones del menú, las coordenadas de la opcion
+   principal etc. Una solución simple a este problema, es la creación
+   de menús en ventanas secundarias y luego localizar las coordenadas
+   iniciales de los menús utilizando =getparyx()=.
 
    # The functions getbegyx() and getmaxyx() store current window's
    # beginning and maximum co-ordinates. These functions are useful in
    # the same way as above in managing the windows and sub windows
    # effectively.
-   El getbegyx funciones() y getmaxyx() guardar la ventana del actual
-   comenzando y coordina máximos. Estas funciones son útiles en
-   de la misma manera que el anterior en el manejo de las ventanas y ventanas sub
-   eficazmente.
+   Las funciones =getbegyx()= y =getmaxyx()= almacenan el inicio y las
+   coordenadas maximas de la ventana actual. Estas funciones son
+   útiles de la misma manera que la anterior en el manejo eficaz de
+   ventanas y sub ventanas.
 
 # ** 13.2. Screen Dumping
-** 13.2. Pantalla Dumping
+** 13.2. Volcado de Pantalla
 
    # While writing games, some times it becomes necessary to store the
    # state of the screen and restore it back to the same state. The
@@ -2882,22 +2896,23 @@
    # file given as an argument. Later it can be restored by
    # =scr_restore= function. These two simple functions can be used
    # effectively to maintain a fast moving game with changing scenarios.
-   Al escribir juegos, algunas veces se hace necesario para almacenar el
-   estado de la pantalla y restaurar de nuevo al mismo estado. los
-   función = scr_dump()= se puede utilizar para volcar los contenidos de la pantalla a un
-   archivo dado como argumento. Más tarde se puede restaurar
-   = scr_restore función. Estas dos funciones simples se pueden utilizar
-   efectiva para mantener un juego de movimiento rápido con el cambio de escenarios.
+   Cuando se escriben juegos, en ocaciones es necesario almacenar el
+   estado de la pantalla y restaurarlo de nuevo al mismo estado. Puede
+   utilizar la función =scr_dump()= para volcar los contenidos de la
+   pantalla al archivo dado como argumento. Más tarde se puede
+   restaurare con la función =scr_restore=. Con estas dos simples
+   funciones pueden mantener el manejo eficiente en un juego de
+   movimiento rapido con cambios de escenarios.
 
 # ** 13.3. Window Dumping
-** 13.3. Ventana Dumping
+** 13.3. Volcado de Ventana
 
    # To store and restore windows, the functions =putwin()= and
    # =getwin()= can be used. =putwin()= puts the present window state
    # into a file, which can be later restored by =getwin()=.
-   Para guardar y restaurar ventanas, las funciones = putwin()= y
-   getwin =()= puede ser utilizado. = putwin()= pone el actual estado de la ventana
-   en un archivo, que puede ser posteriormente restaurado por getwin =()=.
+   Para guardar y restaurar ventanas, las funciones =putwin()= y
+   getwin()= puede ser utilizado. =putwin()= pone el actual estado de la ventana
+   en un archivo, que puede ser posteriormente restaurado por getwin()=.
 
    # The function =copywin()= can be used to copy a window completely
    # onto another window. It takes the source and destination windows as
@@ -2906,7 +2921,7 @@
    # parameter specifies whether to overwrite or just overlay the
    # contents on to the destination window. If this argument is true,
    # then the copying is non-destructive.
-   La función = copywin()= se puede utilizar para copiar una ventana por completo
+   La función =copywin()= se puede utilizar para copiar una ventana por completo
    en otra ventana. Toma las ventanas de origen y destino como
    parámetros y de acuerdo con el rectángulo especificado, copia el
    región rectangular desde la fuente hasta la ventana de destino. Es la última
@@ -2925,7 +2940,7 @@
   son útiles en varios casos. Vamos a ir de cabeza a algunos de ellos.
 
 # ** 14.1. =curs_set()=
-** 14.1. curs_set =()=
+** 14.1. curs_set()=
 
    # This function can be used to make the cursor invisible. The
    # parameter to this function should be
@@ -2952,11 +2967,11 @@
    # to be done.
    Algunas veces es posible que desee volver al modo de cocinado (línea normal
    modo de almacenamiento en búfer) temporalmente. En tal caso, primero tendrá que
-   guardar los modos tty con una llamada a = def_prog_mode()= y luego llamar
-   = endwin()= para finalizar el modo de curses. Esto te dejará en el
+   guardar los modos tty con una llamada a =def_prog_mode()= y luego llamar
+   =endwin()= para finalizar el modo de curses. Esto te dejará en el
    el modo tty originales. Para volver a las curses, una vez que haya terminado, llamada
-   reset_prog_mode =()=. Esta función devuelve el tty al estado
-   almacenada por def_prog_mode =()=. Entonces actualizar(), y que están de vuelta a
+   reset_prog_mode()=. Esta función devuelve el tty al estado
+   almacenada por def_prog_mode()=. Entonces actualizar(), y que están de vuelta a
    el modo de curses. He aquí un ejemplo que muestra la secuencia de las cosas
    para acabar.
 
@@ -2987,7 +3002,7 @@
    #+END_SRC
 
 # ** 14.3. =ACS_= variables
-** 14.3. = ACS_ las variables
+** 14.3. =ACS_ las variables
 
    # If you have ever programmed in DOS, you know about those nifty
    # characters in extended character set. They are printable only on
@@ -2998,7 +3013,7 @@
    # characters.
    Si alguna vez has programado en DOS, usted sabe sobre las ingenioso
    caracteres de juego de caracteres extendidos. Ellos son imprimibles sólo en
-   algunos terminales. Funciones ncurses como = caja()= utilizarlos
+   algunos terminales. Funciones ncurses como =caja()= utilizarlos
    caracteres. Todas estas variables comienzan con ACS alternativa significado
    conjunto de caracteres. Es posible que haya fijado en mí el uso de estos caracteres en
    algunos de los programas anteriores. He aquí un ejemplo que muestra toda la
@@ -3148,13 +3163,13 @@
    #    according to the desired visibility. The function =new_panel()=
    #    is used to created panels.
    2. Cree paneles con el fin visibilidad elegido. Apilar hasta
-      de acuerdo con la visibilidad deseada. La función = new_panel()=
+      de acuerdo con la visibilidad deseada. La función =new_panel()=
       se utiliza para paneles creados.
 
    # 3. Call =update_panels()= to write the panels to the virtual screen
    #    in correct visibility order. Do a doupdate() to show it on the
    #    screen.
-   3. Llame = update_panels()= para escribir los paneles a la pantalla virtual
+   3. Llame =update_panels()= para escribir los paneles a la pantalla virtual
       con el fin correcta visibilidad. Haga una doupdate() para mostrarlo en el
       pantalla.
 
@@ -3164,16 +3179,16 @@
    #    to store custom data for a panel. Use the functions
    #    =set_panel_userptr()= and =panel_userptr()= to set and get the
    #    user pointer for a panel.
-   4. Mainpulate los paneles con show_panel =()=, = hide_panel()=,
-      = move_panel()= etc. Hacer uso de funciones auxiliares como
-      = panel_hidden()= y = panel_window()=. Hacer uso de puntero de usuario
+   4. Mainpulate los paneles con show_panel()=, =hide_panel()=,
+      =move_panel()= etc. Hacer uso de funciones auxiliares como
+      =panel_hidden()= y =panel_window()=. Hacer uso de puntero de usuario
       para almacenar datos personalizados para un panel. Utilice las funciones
-      = set_panel_userptr()= y = panel_userptr()= para establecer y obtener el
+      =set_panel_userptr()= y =panel_userptr()= para establecer y obtener el
       puntero del usuario para un panel.
 
    # 5. When you are done with the panel use =del_panel()= to delete the
    #    panel.
-   5. Cuando haya terminado con el uso del panel = del_panel()= para borrar la
+   5. Cuando haya terminado con el uso del panel =del_panel()= para borrar la
       panel.
 
 
@@ -3192,8 +3207,8 @@
    # link the program with panels library the flag =-lpanel= should be
    # added along with =-lncurses= in that order.
    Para utilizar las funciones de libreria paneles, usted tiene que incluir panel.h y
-   vincular el programa con paneles libreria la bandera = -lpanel = debe ser
-   añadido junto con = -lncurses en ese orden.
+   vincular el programa con paneles libreria la bandera =-lpanel = debe ser
+   añadido junto con =-lncurses en ese orden.
 
    #+BEGIN_EXAMPLE
         #include <panel.h>
@@ -3224,9 +3239,9 @@
        my_wins[2] = newwin(lines, cols, y + 2, x + 10);
 
        /*
-        ,* Create borders around the windows so that you can see the effect
-        ,* of panels
-        ,*/
+        * Create borders around the windows so that you can see the effect
+        * of panels
+        */
        for(i = 0; i < 3; ++i)
          box(my_wins[i], 0, 0);
 
@@ -3253,7 +3268,7 @@
    # =update_panels()= and doupdate() are called.
    Como se puede ver, el programa anterior sigue un flujo simple como
    explicado. Las ventanas se crean con newwin() y luego son
-   unido a paneles con new_panel =()=. A medida que nos concedemos un panel después
+   unido a paneles con new_panel()=. A medida que nos concedemos un panel después
    otra, la pila de paneles se actualiza. Para ponerlos en pantalla
    = update_panels()= y doupdate() son llamados.
 
@@ -3409,10 +3424,10 @@
    especificando un puntero del usuario, que puede apuntar a cualquier información
    desea almacenar. En este caso me guardé el puntero a la siguiente
    Panel en el ciclo. Puntero de usuario de un panel se puede ajustar con el
-   función = set_panel_userptr()=. Se puede acceder mediante el
-   función = panel_userptr()= que devolverá el puntero del usuario
+   función =set_panel_userptr()=. Se puede acceder mediante el
+   función =panel_userptr()= que devolverá el puntero del usuario
    el panel da como argumento. Después de encontrar el siguiente panel en el
-   ciclo Se llevó a la cima por la función = top_panel()=. Esta
+   ciclo Se llevó a la cima por la función =top_panel()=. Esta
    función trae el panel dado como argumento a la parte superior del panel
    apilar.
 
@@ -3423,9 +3438,9 @@
    # desired location. It does not change the position of the panel in
    # the stack.  Make sure that you use =move_panel()= instead mvwin()
    # on the window associated with the panel.
-   La función = move_panel()= se puede utilizar para mover un panel a la
+   La función =move_panel()= se puede utilizar para mover un panel a la
    Ubicación deseada. No cambia la posición del panel en
-   la pila. Asegúrese de que utiliza = move_panel()= lugar mvwin()
+   la pila. Asegúrese de que utiliza =move_panel()= lugar mvwin()
    en la ventana asociada con el panel.
 
    # Resizing a panel is slightly complex. There is no straight forward
@@ -3439,9 +3454,9 @@
    función sólo para cambiar el tamaño de la ventana asociada con un panel. LA
    solución para cambiar el tamaño de un panel es crear una nueva ventana con la
    tamaños deseados, cambian la ventana asociada con el panel utilizando
-   replace_panel =()=. No te olvides de borrar la ventana de edad. los
+   replace_panel()=. No te olvides de borrar la ventana de edad. los
    ventana asociada con un panel se puede encontrar mediante el uso de la función de
-   panel_window =()=.
+   panel_window()=.
 
    # The following program shows these concepts, in supposedly simple
    # program. You can cycle through the window with <TAB> as usual. To
@@ -3720,7 +3735,7 @@
    Cuando el usuario presiona 'm' el modo de movimiento comienza. Esto es un poco
    más simple que el cambio de tamaño. Como las teclas de flecha se presionan el nuevo
    posición se actualiza y prensado de <ENTER> hace que el panel de estar
-   movido llamando a la función = move_panel()=.
+   movido llamando a la función =move_panel()=.
 
    # In this program the user data which is represented as =PANEL_DATA=,
    # plays very important role in finding the associated information
@@ -3729,7 +3744,7 @@
    # in the cycle.
    En este programa los datos de usuario que se representa como PANEL_DATA =,
    juega papel muy importante en la búsqueda de la información asociada
-   con un panel. Como está escrito en los comentarios, los PANEL_DATA = tiendas
+   con un panel. Como está escrito en los comentarios, los PANEL_DATA =tiendas
    el tamaño del panel, la etiqueta, color de la etiqueta y un puntero al siguiente panel
    en el ciclo.
 
@@ -3741,11 +3756,11 @@
    # on the screen once you do =update_panels()= and doupdate(). It
    # doesn't destroy the PANEL structure associated with the hidden
    # panel. It can be shown again by using the =show_panel()= function.
-   Un panel se puede ocultar mediante el uso de la función = hide_panel()=. Esta
+   Un panel se puede ocultar mediante el uso de la función =hide_panel()=. Esta
    función meramente elimina forman la pila de paneles, por lo tanto ocultarlo
-   en la pantalla una vez que haces = update_panels()= y doupdate(). Ello
+   en la pantalla una vez que haces =update_panels()= y doupdate(). Ello
    no destruye la estructura de panel asociado con el escondido
-   panel. Se puede demostrar de nuevo utilizando los show_panel =()= función.
+   panel. Se puede demostrar de nuevo utilizando los show_panel()= función.
 
    # The following program shows the hiding of panels. Press 'a' or 'b'
    # or 'c' to show or hide first, second and third windows
@@ -3758,7 +3773,7 @@
    o "c" para mostrar u ocultar primera, segunda y tercera ventanas
    respectivamente. Se utiliza un datos de usuario con una pequeña ocultar variable, que
    realiza un seguimiento de si la ventana está oculta o no. Por alguna razón
-   la función = panel_hidden()= que indica si un grupo especial está oculta
+   la función =panel_hidden()= que indica si un grupo especial está oculta
    o no, no está funcionando. Un informe de error también fue presentado por Michael
    Andres [[http://www.geocrawler.com/archives/3/344/1999/9/0/2643549/][here]]
 
@@ -3925,13 +3940,13 @@
    #+END_SRC
 
 # ** 16.7. =panel_above()= and =panel_below()= Functions
-** 16.7. = panel_above()= y = panel_below()= Funciones
+** 16.7. =panel_above()= y =panel_below()= Funciones
 
    # The functions =panel_above()= and =panel_below()= can be used to
    # find out the panel above and below a panel. If the argument to
    # these functions is NULL, then they return a pointer to bottom panel
    # and top panel respectively.
-   Las funciones panel_above =()= y = panel_below()= se puede utilizar para
+   Las funciones panel_above()= y =panel_below()= se puede utilizar para
    averiguar el panel de arriba y por debajo de un panel. Si el argumento de
    estas funciones se NULL, devuelven un puntero al panel inferior
    y panel superior, respectivamente.
@@ -3974,7 +3989,7 @@
    # of any menu program.
    Para crear menús, primero debe crear objetos, y luego publicar el menú para
    la pantalla. Después de eso, todo el procesamiento de las respuestas de los usuarios es
-   hecho en una función elegante = menu_driver()= que es el caballo de trabajo
+   hecho en una función elegante =menu_driver()= que es el caballo de trabajo
    de cualquier programa de menú.
 
    # The general flow of control of a menu program looks like this.
@@ -3985,16 +4000,16 @@
 
    # 2. Create items using =new_item()=. You can specify a name and
    #    description for the items.
-   2. Cree elementos usando = NEW_ITEM()=. Puede especificar un nombre y
+   2. Cree elementos usando =NEW_ITEM()=. Puede especificar un nombre y
       descripción de los artículos.
 
    # 3. Create the menu with =new_menu()= by specifying the items to be
    #    attached with.
-   3. Crear el menú con new_menu =()= especificando los elementos para ser
+   3. Crear el menú con new_menu()= especificando los elementos para ser
       adjunto con.
 
    # 4. Post the menu with =menu_post()= and refresh the screen.
-   4. Publicar el menú con menu_post =()= y refrescar la pantalla.
+   4. Publicar el menú con menu_post()= y refrescar la pantalla.
 
    # 5. Process the user requests with a loop and do necessary updates
    #    to menu with =menu_driver=.
@@ -4002,13 +4017,13 @@
       al menú con menu_driver =.
 
    # 6. Unpost the menu with =menu_unpost()=
-   6. Unpost el menú con menu_unpost =()=
+   6. Unpost el menú con menu_unpost()=
 
    # 7. Free the memory allocated to menu by =free_menu()=
-   7. Liberar la memoria asignada al menú = free_menu()=
+   7. Liberar la memoria asignada al menú =free_menu()=
 
    # 8. Free the memory allocated to the items with =free_item()=
-   8. Liberar la memoria asignada a los elementos con free_item =()=
+   8. Liberar la memoria asignada a los elementos con free_item()=
 
    # 9. End curses
    9. curses End
@@ -4027,8 +4042,8 @@
    # link the program with menu library the flag =-lmenu= should be
    # added along with =-lncurses= in that order.
    Para utilizar las funciones de libreria de menú, usted tiene que incluir menu.h y
-   vincular el programa con la libreria menú de la bandera = -lmenu = debe ser
-   añadido junto con = -lncurses en ese orden.
+   vincular el programa con la libreria menú de la bandera =-lmenu = debe ser
+   añadido junto con =-lncurses en ese orden.
 
    #+BEGIN_EXAMPLE
      #include <menu.h>
@@ -4114,18 +4129,18 @@
    # =KEY_MOUSE= special key associated with a mouse event.
    Este programa demuestra los conceptos básicos que intervienen en la creación de un
    menú con libreria menús. Primero creamos los elementos mediante
-   = NEW_ITEM()= y luego adjuntar a la carta con new_menu =()=
+   =NEW_ITEM()= y luego adjuntar a la carta con new_menu()=
    función. Después de publicar el menú y la actualización de la pantalla, el
    bucle principal de procesamiento comienza. Se lee la entrada del usuario y toma
-   acción correspondiente. La función = menu_driver()= es el trabajo principal
+   acción correspondiente. La función =menu_driver()= es el trabajo principal
    caballo del sistema de menús. El segundo parámetro para esta función
    dice lo que hay que hacer con el menú. De acuerdo con el parámetro,
-   = menu_driver()= hace la tarea correspondiente. El valor puede ser
+   =menu_driver()= hace la tarea correspondiente. El valor puede ser
    ya sea una solicitud menú de navegación, un carácter ASCII, o una
-   = KEY_MOUSE llave especial asociada a un evento de ratón.
+   =KEY_MOUSE llave especial asociada a un evento de ratón.
 
    # The =menu_driver= accepts following navigational requests.
-   El menu_driver = acepta siguientes solicitudes de navegación.
+   El menu_driver= acepta siguientes solicitudes de navegación.
 
    #+BEGIN_EXAMPLE
      REQ_LEFT_ITEM       Move left to an item.
@@ -4244,7 +4259,7 @@
      Esta solicitud cuando se administra, se alterna la selección actual. Esta
      opción es para ser utilizado sólo en un menú de múltiples valioso. Así que para utilizar este
      Solicitar la opción = O_ONEVALUE = debe estar apagado. Esta opción puede ser
-     hecho o desactivar con set_menu_opts =()=.
+     hecho o desactivar con set_menu_opts()=.
 
    # - /Pattern Requests/
    Solicitudes / Patrón / -
@@ -4463,10 +4478,10 @@
    # displayed to the left of the selected item with =set_menu_mark()=.
    En este ejemplo se crea un menú con un título, frontera, una línea de lujo
    separando título y los artículos. Como se puede ver, con el fin de adjuntar
-   una ventana a un menú la función set_menu_win =()= tiene que ser
+   una ventana a un menú la función set_menu_win()= tiene que ser
    utilizado. A continuación adjuntamos la ventana secundaria también. Esto muestra los elementos
    en la ventana secundaria. También puede establecer la cadena de marca que consigue
-   se muestra a la izquierda del elemento seleccionado con set_menu_mark =()=.
+   se muestra a la izquierda del elemento seleccionado con set_menu_mark()=.
 
 # ** 17.5. Scrolling Menus
 ** 17.5. Desplazamiento Menús
@@ -4629,13 +4644,13 @@
    opciones ha sido aumentado a diez, que es más grande que nuestro sub
    tamaño de la ventana que puede albergar 6 artículos. Este mensaje tiene que ser
    transmitido explícitamente al sistema de menús con la función
-   set_menu_format =()=. Aquí especificamos el número de filas y
+   set_menu_format()=. Aquí especificamos el número de filas y
    columnas que queremos que se muestren para una sola página. Podemos especificar
    cualquier número de temas que se muestra, en las variables de filas, si es
    menor que la altura de la ventana sub. Si la tecla presionada por el
    usuario es un PÁG o AV PÁG, el menú se desplaza una página debido a la
    las solicitudes (= REQ_SCR_DPAGE = y = REQ_SCR_UPAGE =) dado a
-   menu_driver =()=.
+   menu_driver()=.
 
 # ** 17.6. Multi Columnar Menus
 ** 17.6. Multi columnas Menús
@@ -4647,7 +4662,7 @@
    # the cols variable. To make things simpler, the following example
    # doesn't show descriptions for the items.
    En el ejemplo anterior has visto cómo utilizar la función
-   set_menu_format =()=. No mencioné lo que la variable cols (tercero
+   set_menu_format()=. No mencioné lo que la variable cols (tercero
    parámetro) hace. Bueno, si su ventana secundaria es lo suficientemente amplia, se puede
    optar por mostrar más de un artículo por fila. Esto se puede especificar en
    la variable cols. Para simplificar las cosas, el siguiente ejemplo
@@ -4766,8 +4781,8 @@
    Ver la llamada a la función = set_menu_format()=. Especifica el
    número de columnas a ser 3, mostrando de este modo 3 artículos por fila. Tenemos
    También apagado las descripciones que muestran con la función
-   menu_opts_off =()=. Hay par de funciones = set_menu_opts()=,
-   menu_opts_on =()= y = menu_opts()= que se pueden utilizar para manipular
+   menu_opts_off()=. Hay par de funciones = set_menu_opts()=,
+   menu_opts_on()= y = menu_opts()= que se pueden utilizar para manipular
    opciones de menú. Las siguientes opciones de menú se pueden especificar.
 
    #+BEGIN_EXAMPLE
@@ -4816,7 +4831,7 @@
    # of some of those above constants.  The function =menu_opts()= can
    # be used to find out a menu's present options.
    Todas las opciones están de forma predeterminada. Puede cambiar los atributos específicos
-   o desactivar con menu_opts_on =()= y = menu_opts_off()=
+   o desactivar con menu_opts_on()= y = menu_opts_off()=
    funciones. También puede utilizar = set_menu_opts()= para especificar directamente
    las opciones. El argumento para esta función debe ser un valor de O ed
    de algunas de esas constantes anteriores. La función = menu_opts()= lata
@@ -4950,7 +4965,7 @@
    para saber si el elemento se selecciona o no. La función
    = item_value()= devuelve TRUE si se ha seleccionado un elemento. La función
    = ITEM_COUNT()= devuelve el número de elementos en el menú. El objeto
-   nombre se puede encontrar con item_name =()=. También puede encontrar el
+   nombre se puede encontrar con item_name()=. También puede encontrar el
    Descripción asociado con un elemento utilizando = item_description()=.
 
 # ** 17.8. Menu Options
@@ -4966,7 +4981,7 @@
    Bueno, a estas alturas ya debe estar picando por alguna diferencia en su
    menú, con un montón de funcionalidad. Lo sé. ¿Quieres Colores !!!. usted
    querer crear menús agradables similares a las que el modo de texto [[http://www.jersey.net/~debinjoe/games/][dos juegos]]. los
-   funciones set_menu_fore =()= y = set_menu_back()= puede ser usado para
+   funciones set_menu_fore()= y = set_menu_back()= puede ser usado para
    cambiar el atributo del elemento seleccionado y el tema no seleccionada. los
    nombres son engañosos. No cambian primer plano de menú o
    fondo que habría sido inútil.
@@ -5219,13 +5234,13 @@
    # etc.. After the user enters values in the fields and validation
    # done, form can be unposted and memory allocated can be freed.
    Formas se crean en la misma manera como menús. Primero los campos
-   relacionada con la forma se crean con new_field =()=. Puede configurar
+   relacionada con la forma se crean con new_field()=. Puede configurar
    Opciones para los campos, de manera que se pueden mostrar con cierta
    atributos de lujo, validados antes de que el campo pierde el foco
    etc .. A continuación, los campos están unidos para formar. Después de esto, el formulario
    puede ser publicado para mostrar y está listo para recibir entradas. En el
    líneas similares a = menu_driver()=, la forma se manipula con
-   form_driver =()=. Podemos enviar solicitudes a = form_driver = mover
+   form_driver()=. Podemos enviar solicitudes a = form_driver = mover
    enfoque a un cierto campo, mover el cursor al final del campo
    etc .. Después de que el usuario introduce los valores en los campos y validación
    hecho, la forma puede ser sin contabilizar y memoria asignada puede ser liberado.
@@ -5243,11 +5258,11 @@
 
    # 3. Create the forms with =new_form()= by specifying the fields to
    #    be attached with.
-   3. Crear los formularios con new_form =()= especificando los campos de
+   3. Crear los formularios con new_form()= especificando los campos de
       se adjunta con.
 
    # 4. Post the form with =form_post()= and refresh the screen.
-   4. Publicar el formulario con form_post =()= y refrescar la pantalla.
+   4. Publicar el formulario con form_post()= y refrescar la pantalla.
 
    # 5. Process the user requests with a loop and do necessary updates
    #    to form with =form_driver=.
@@ -5255,13 +5270,13 @@
       para formar con form_driver =.
 
    # 6. Unpost the menu with =form_unpost()=
-   6. Unpost el menú con form_unpost =()=
+   6. Unpost el menú con form_unpost()=
 
    # 7. Free the memory allocated to menu by =free_form()=
    7. Liberar la memoria asignada al menú = free_form()=
 
    # 8. Free the memory allocated to the items with =free_field()=
-   8. Liberar la memoria asignada a los elementos con free_field =()=
+   8. Liberar la memoria asignada a los elementos con free_field()=
 
    # 9. End curses
    9. curses End
@@ -5377,7 +5392,7 @@
    # some additional buffers. These can be used for any purpose you
    # like.
    El ejemplo de arriba es bastante sencillo. Crea dos campos
-   con new_field =()=. = new_field()= toma altura, anchura, starty,
+   con new_field()=. = new_field()= toma altura, anchura, starty,
    startx, número de filas fuera de la pantalla y el número de trabajo adicional
    tampones. El quinto argumento número de filas fuera de la pantalla especifica cómo
    gran parte del campo para mostrar. Si es cero, todo el campo es
@@ -5394,7 +5409,7 @@
    # on, focus will move to the next field in the form once the active
    # field is filled up completely.
    Después de crear los campos, de nuevo atributo de tierra de ambos es
-   ajustado a un guión con set_field_back =()=. La opción AUTOSKIP
+   ajustado a un guión con set_field_back()=. La opción AUTOSKIP
    se desactiva usando = field_opts_off()=. Si esta opción está activada
    en, el foco se desplazará al siguiente campo en el formulario una vez que el activo
    campo se llenó por completo.
@@ -5427,7 +5442,7 @@
     # buffers into the parameters given to it. It is a sort of inverse
     # of =new_field()=.
     Los parámetros que se han dado en el momento de la creación de un campo
-    puede ser recuperada con field_info =()=. Devuelve la altura, anchura,
+    puede ser recuperada con field_info()=. Devuelve la altura, anchura,
     starty, startx, número de filas fuera de la pantalla, y el número de adicional
     buffers en los parámetros dados a ella. Es una especie de inversa
     de = new_field()=.
@@ -5452,7 +5467,7 @@
     # The location of the field can be moved to a different position
     # with =move_field()=.
     La ubicación del campo se puede mover a una posición diferente
-    con move_field =()=.
+    con move_field()=.
 
     #+BEGIN_SRC c
       int move_field(    FIELD *field,              /* field to alter */
@@ -5465,7 +5480,7 @@
     # As usual, the changed position can be queried with
     # =field_infor()=.
     Como de costumbre, la posición cambiado se puede consultar con
-    field_infor =()=.
+    field_infor()=.
 
 # *** 18.3.3. Field Justification
 *** 18.3.3. El campo Justificación
@@ -5506,13 +5521,13 @@
     # background attributes and pad character for the field. The
     # following list gives the usage of functions.
     Como se ha visto, en el ejemplo anterior, el atributo de visualización para el
-    campos se pueden establecer con set_field_fore =()= y
-    setfield_back =()=. Estas funciones establecen primer y segundo plano
+    campos se pueden establecer con set_field_fore()= y
+    setfield_back()=. Estas funciones establecen primer y segundo plano
     atributo de los campos. También puede especificar un carácter de relleno
     que se llenará en la porción vacante del campo. La almohadilla
     carácter se establece con una llamada a = set_field_pad()=. Pad por defecto
     valor es un espacio. Las funciones = field_fore()= = field_back,
-    field_pad =()= puede ser utilizado para consultar el presente primer plano,
+    field_pad()= puede ser utilizado para consultar el presente primer plano,
     atribuye antecedentes y carácter de relleno para el campo. los
     siguiente lista da el uso de las funciones.
 
@@ -5565,7 +5580,7 @@
     primero explicar acerca de los atributos de primer plano y de fondo de un
     campo. El atributo de primer plano está asociado con el
     caracter. Eso significa que un carácter en el campo se imprime con el
-    Atributo que ha configurado con set_field_fore =()=. Fondo
+    Atributo que ha configurado con set_field_fore()=. Fondo
     atributo es el atributo utilizado para llenar el fondo del campo,
     si algún caracter está allí o no. Entonces, ¿qué acerca de los colores? Desde
     colores siempre se definen en pares, ¿cuál es la manera correcta de
@@ -5659,7 +5674,7 @@
     # simply doesn't allow defining individual color attributes.
     Juega con los pares de colores y tratar de entender el primer plano y
     atributos de fondo. En mis programas utilizando atributos de color, yo
-    por lo general establecer sólo el fondo con set_field_back =()=. curses
+    por lo general establecer sólo el fondo con set_field_back()=. curses
     simplemente no permite definir los atributos de color individuales.
 
 # *** 18.3.5. Field Option Bits
@@ -5702,9 +5717,9 @@
     # default, all options are on.
     La función = set_field_opts()= se pueden utilizar para establecer directamente
     atributos de un campo o se puede optar por cambiar algunos atributos
-    y se apaga con field_opts_on =()= y = field_opts_off()=
+    y se apaga con field_opts_on()= y = field_opts_off()=
     selectivamente. En cualquier momento puede consultar los atributos de un campo con
-    field_opts =()=. La siguiente es la lista de opciones disponibles. Por
+    field_opts()=. La siguiente es la lista de opciones disponibles. Por
     De forma predeterminada, todas las opciones están sobre.
 
 
@@ -6751,7 +6766,7 @@
     = REQ_PREV_FIELD del primer campo va a la última. El orden
     de los campos de éstos (y = REQ_FIRST_FIELD = y
     = REQ_LAST_FIELD solicitudes) es simplemente el fin del campo
-    punteros en la forma array (establecidos por new_form =()= o
+    punteros en la forma array (establecidos por new_form()= o
     = set_form_field()=
 
     # It is also possible to traverse the fields as if they had been
@@ -7072,7 +7087,7 @@
     Peticiones de formulario se representan como números enteros por encima del valor curses
     mayor que KEY_MAX = y menor o igual a la constante
     =  MAX_COMMAND. Un valor dentro de este rango es ignorada por
-    form_driver =()=. Así esto puede ser utilizado para cualquier propósito por el
+    form_driver()=. Así esto puede ser utilizado para cualquier propósito por el
     solicitud. Puede ser tratada como una acción específica de la aplicación
     y tomar las medidas correspondientes.
 

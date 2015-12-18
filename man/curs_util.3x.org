@@ -83,7 +83,7 @@
    because the filter routine modifies the in-memory copy of the
    terminal information.
 
-** use_env
+** =use_env=
 
    The =use_env= routine, if used, should be called before =initscr=
    or =newterm= are called (because those compute the screen size).
