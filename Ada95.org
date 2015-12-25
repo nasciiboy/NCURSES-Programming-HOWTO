@@ -1,0 +1,189 @@
+#+TITLE: Ada95 Binding for ncurses
+#+AUTHOR: Jürgen Pfeifer
+#+MAIL: bug-ncurses@gnu.org
+#+LANGUAGE: en
+#+STARTUP: showall
+
+
+* General Remarks
+
+  - This document describes Version 01.00 of the binding.
+
+  - The functionality is modeled to be compatible with the ncurses
+    package, a clone of the SVr4 curses model.
+
+    I did the development on an Intel box running the latest stable
+    release of [[http://www.linux.org][Linux]], ncurses and the most recent released [[http://www.gnat.com][GNU Ada
+    Translator]] gnat versions. For any older versions of ncurses and
+    gnat it is not guaranteed to work.
+
+  - You must have the m4 macroprocessor to build this package.  If you
+    don't have this program, you can get the FSF version [[ftp://ftp.gnu.org/pub/gnu/][here]].
+
+  - Ada programs are supposed to be readable. One of my favorite
+    methods to make code readable is to use expressive names for the
+    identifiers. You can find a list of a mapping of the cryptic
+    curses names to the Ada names in this [[file:ada/table.html][table]].
+
+  - This is not a typical one-to-one interface mapping. It is close to
+    one-to-one on the functional level. Each (n)curses function has
+    it's counterpart with a more or less similar formal parameter list
+    in the binding. It is not one-to-one with respect to the
+    datatypes. I tried to make records out of the flat chtype and
+    similar structures, so you don't have to do bit operations to mark
+    an attributed character as bold. Just make the boolean member
+    *bold* of the record true.  The binding also hides the structures
+    like WINDOW, PANEL, MENU, FORM etc. ! It's a pure functional API.
+
+  - I try to do as much error checking as possible and feasible in the
+    binding. I will raise an Ada exception when something went wrong
+    in the low-level curses. This has the effect that - at least first
+    time in my life - (n)curses programs have now a very rigid error
+    checking, but - thanks to Ada - you don't have to code the
+    orgiastic error checking style of C.
+
+  - Support for wide characters is currently not in the binding, as it
+    is not really in ncurses at this point in time.
+
+* Limitations
+
+  - I provide no SCREEN datatype and functions to set a new screen. If
+    you need this (mostly for debugging I guess), write a small C
+    routine doing all this and import it into your Ada program.
+
+  - I provide no functions to switch on/off curses tracing
+    options. Same suggestion as above.
+
+  - Although Ada95 is an OO Language, this binding doesn't provide an
+    OO abstraction of the (n)curses functionality. As mentioned above
+    it's a thin binding for the (n)curses functions. But without any
+    doubt it would be nice to build on top of this an OO abstraction
+    of (n)curses functionality.
+
+    The only exception is the method how fieldtypes are represented in
+    this Binding. We provide an abstract tagged type Field_Type from
+    which the various fieldtypes are derived.
+
+  - I currently do not support the link_fieldtype functionality of the
+    forms subsystem.
+
+  - The =*_IO= packages are currently output only.
+
+* Hierarchy of packages
+
+  - [[file:ada/terminal_interface__ads.htm][=Terminal_Interface=]]
+
+    - [[file:ada/terminal_interface-curses__ads.htm][Curses]]
+
+      - [[file:ada/terminal_interface-curses-mouse__ads.htm][Mouse]]
+
+      - [[file:ada/terminal_interface-curses-panels__ads.htm][Panels]]
+
+        - [[file:ada/terminal_interface-curses-panels-user_data__ads.htm][=User_Data=]]
+
+    - [[file:ada/terminal_interface-curses-menus__ads.htm][Menus]]
+
+      - [[file:ada/terminal_interface-curses-menus-menu_user_data__ads.htm][=Menu_User_Data=]]
+
+      - [[file:ada/terminal_interface-curses-menus-item_user_data__ads.htm][=Item_User_Data=]]
+
+    - [[file:ada/terminal_interface-curses-forms__ads.htm][Forms]]
+
+      - [[file:ada/terminal_interface-curses-forms-form_user_data__ads.htm][=Form_User_Data=]]
+
+      - [[file:ada/terminal_interface-curses-forms-field_user_data__ads.htm][=Field_User_Data=]]
+
+      - [[file:ada/terminal_interface-curses-forms-field_types__ads.htm][=Field_Types=]]
+
+      - [[file:ada/terminal_interface-curses-forms-field_types-alpha__ads.htm][Alpha]]
+
+      - [[file:ada/terminal_interface-curses-forms-field_types-alphanumeric__ads.htm][AlphaNumeric]]
+
+      - [[file:ada/terminal_interface-curses-forms-field_types-intfield__ads.htm][IntField]]
+
+      - [[file:ada/terminal_interface-curses-forms-field_types-numeric__ads.htm][Numeric]]
+
+      - [[file:ada/terminal_interface-curses-forms-field_types-regexp__ads.htm][RegExp]]
+
+      - [[file:ada/terminal_interface-curses-forms-field_types-ipv4_address__ads.htm][=IPV4_Address=]]
+
+      - [[file:ada/terminal_interface-curses-forms-field_types-enumeration__ads.htm][Enumeration]]
+
+        - [[file:ada/terminal_interface-curses-forms-field_types-enumeration-ada__ads.htm][Ada]]
+
+      - [[file:ada/terminal_interface-curses-forms-field_types-user__ads.htm][User]]
+
+        - [[file:ada/terminal_interface-curses-forms-field_types-user-choice__ads.htm][Choice]]
+
+    - [[file:ada/terminal_interface-curses-text_io__ads.htm][=Text_IO=]]
+
+      - [[file:ada/terminal_interface-curses-text_io-integer_io__ads.htm][=Integer_IO=]]
+
+      - [[file:ada/terminal_interface-curses-text_io-float_io__ads.htm][=Float_IO=]]
+
+      - [[file:ada/terminal_interface-curses-text_io-fixed_io__ads.htm][=Fixed_IO=]]
+
+      - [[file:ada/terminal_interface-curses-text_io-decimal_io__ads.htm][=Decimal_IO=]]
+
+      - [[file:ada/terminal_interface-curses-text_io-modular_io__ads.htm][=Modular_IO=]]
+
+      - [[file:ada/terminal_interface-curses-text_io-enumeration_io__ads.htm][=Enumeration_IO=]]
+
+      - [[file:ada/terminal_interface-curses-text_io-complex_io__ads.htm][=Complex_IO=]]
+
+
+  If you want to navigate through the html pages of the package specs,
+  click [[file:ada/index.htm][here]].
+
+* Implementation Details
+** Behind the abstraction
+
+   All the new types like =Window=, =Panel=, =Menu=, =Form= etc. are
+   just opaque representations of the pointers to the corresponding
+   low level (n)curses structures like =WINDOW *=, =PANEL *=, =MENU *=
+   or =FORM *=. So you can safely pass them to C routines that expect
+   a pointer to one of those structures.
+
+** Extended ripoffline() usage
+
+   The official documentation of (n)curses says, that the line
+   parameter determines only whether or not exactly *one* line is
+   stolen from the top or bottom of the screen. So essentially only
+   the sign of the parameter is evaluated. ncurses has internally
+   implemented it in a way, that uses the line parameter also to
+   control the amount of lines to steal. This mechanism is used in the
+   =Rip_Off_Lines= routine of the binding.
+
+** How user defined field types work
+
+   TBD
+
+** Enumeration fields handling
+
+   The (n)curses documentation says, that the String arrays to be
+   passed to an =TYPE_ENUM= fieldtype must not be automatic variables.
+   This is not true in this binding, because it is internally arranged
+   to safely copy these values.
+
+** Using other Ada compilers
+
+   This should basically not be a problem.
+
+** Port to other curses implementations
+
+   Basically it should not be too hard to make all this run on a
+   regular SVr4 implementation of curses. The problems are probably
+   these:
+
+   - ncurses has some additional features which are presented in this
+     binding. You have two choices to deal with this:
+
+     - Emulate the feature in this binding
+
+     - Raise an exception for non implemented features
+
+     Most likely you will follow a mixed approach. Some features are
+     easy to simulate, others will be hard if not impossible.
+
+
+   I'm quite sure I forgot something.

@@ -1,0 +1,15 @@
+#+TITLE: Welcome to ncurses
+#+MAIL: bug-ncurses@gnu.org
+#+LANGUAGE: en
+#+STARTUP: showall
+
+
+From this index page you have access to these further documents
+
+- The [[file:announce.org][Announcement]] of the current version of ncurses.
+- An [[file:ncurses-intro.org][Introduction]] into (n)curses programming.
+- A [[file:hackguide.org][hackers guide]] to ncurses.
+- A description of the [[file:Ada95.org][Ada95 binding]], by Jürgen Pfeifer.
+- A [[file:NCURSES-Programming-HOWTO.org][A short tutorial]], by Pradeep Padala.
+
+We also have ORG versions of all the ncurses [[file:man][manpages]].

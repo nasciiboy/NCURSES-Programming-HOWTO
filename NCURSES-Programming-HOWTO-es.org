@@ -2910,9 +2910,10 @@
    # To store and restore windows, the functions =putwin()= and
    # =getwin()= can be used. =putwin()= puts the present window state
    # into a file, which can be later restored by =getwin()=.
-   Para guardar y restaurar ventanas, las funciones =putwin()= y
-   getwin()= puede ser utilizado. =putwin()= pone el actual estado de la ventana
-   en un archivo, que puede ser posteriormente restaurado por getwin()=.
+   Puede utilizar las funciones =putwin()= y =getwin()=, para guardar
+   y restaurar ventanas. =putwin()= coloca el estado actual de la
+   ventana en un archivo, que puede ser restaurado posteriormente por
+   =getwin()=.
 
    # The function =copywin()= can be used to copy a window completely
    # onto another window. It takes the source and destination windows as
@@ -2921,42 +2922,48 @@
    # parameter specifies whether to overwrite or just overlay the
    # contents on to the destination window. If this argument is true,
    # then the copying is non-destructive.
-   La función =copywin()= se puede utilizar para copiar una ventana por completo
-   en otra ventana. Toma las ventanas de origen y destino como
-   parámetros y de acuerdo con el rectángulo especificado, copia el
-   región rectangular desde la fuente hasta la ventana de destino. Es la última
-   parámetro especifica si desea sobrescribir o simplemente superponer el
-   contenidos en la ventana de destino. Si este argumento es cierto,
-   entonces la copia no es destructivo.
+   Puede utilizar la función =copywin()= para copiar por completo una
+   ventana en otra ventana. Toma las ventanas de origen y destino como
+   parámetros y de acuerdo con el rectángulo especificado, copia la
+   región rectangular desde la ventana origen hasta la ventana
+   destino. El último parámetro especifica si desea sobrescribir o
+   simplemente superponer el contenido en la ventana destino. Si este
+   argumento es cierto, entonces la copia es no destructiva.
 
 # * 14. Miscellaneous features
 * 14. Características diversas
 
-  # Now you know enough features to write a good curses program, with
+  # Now you know enough features to write a good curses program, ¤with
   # all bells and whistles. There are some miscellaneous functions which
   # are useful in various cases. Let's go headlong into some of those.
-  Ahora ya sabes características suficientes para escribir un buen programa de curses, con
-  todas las campanas y silbatos. Hay algunas funciones auxiliares que
-  son útiles en varios casos. Vamos a ir de cabeza a algunos de ellos.
+  Ahora ya conoces suficientes características para escribir un buen
+  programa curses. Aqui estan algunas funciones auxiliares útiles en
+  varios casos. Vamos a ir de cabeza a algunas de ellas.
 
 # ** 14.1. =curs_set()=
-** 14.1. curs_set()=
+** 14.1. =curs_set()=
 
    # This function can be used to make the cursor invisible. The
    # parameter to this function should be
-   Esta función se puede utilizar para hacer que el cursor invisible. los
-   parámetro para esta función debe ser
+   Puede utilizar esta función para hacer el cursor invisible. Los
+   parámetros aceptados por esta funcion son.
+
+   # #+BEGIN_EXAMPLE
+   #   0 : invisible  or
+   #   1 : normal     or
+   #   2 : very visible.
+   # #+END_EXAMPLE
 
    #+BEGIN_EXAMPLE
-     0 : invisible  or
-     1 : normal     or
-     2 : very visible.
+     0 : invisible
+     1 : normal
+     2 : muy visible.
    #+END_EXAMPLE
 
 # ** 14.2. Temporarily Leaving curses mode
-** 14.2. Temporalmente Dejando modo curses
+** 14.2. Dejar Temporalmente el modo curses
 
-   # Some times you may want to get back to cooked mode (normal line
+   # Some times you may want to get back to ¤cooked mode (normal line
    # buffering mode) temporarily. In such a case you will first need to
    # save the tty modes with a call to =def_prog_mode()= and then call
    # =endwin()= to end the curses mode. This will leave you in the
@@ -2965,44 +2972,47 @@
    # stored by =def_prog_mode()=. Then do refresh(), and you are back to
    # the curses mode. Here is an example showing the sequence of things
    # to be done.
-   Algunas veces es posible que desee volver al modo de cocinado (línea normal
-   modo de almacenamiento en búfer) temporalmente. En tal caso, primero tendrá que
-   guardar los modos tty con una llamada a =def_prog_mode()= y luego llamar
-   =endwin()= para finalizar el modo de curses. Esto te dejará en el
-   el modo tty originales. Para volver a las curses, una vez que haya terminado, llamada
-   reset_prog_mode()=. Esta función devuelve el tty al estado
-   almacenada por def_prog_mode()=. Entonces actualizar(), y que están de vuelta a
-   el modo de curses. He aquí un ejemplo que muestra la secuencia de las cosas
-   para acabar.
+   En algunas ocaciones puede buscar volver temporalmente al cooked
+   mode(modo normal de linea de buffer). En tal caso, primero tendrás
+   que guardar los modos tty con una llamada a =def_prog_mode()= y
+   luego llamar a =endwin()= para finalizar el modo de curses. Esto te
+   dejará en el el modo tty original. Una vez que haya terminado,
+   llamara a =reset_prog_mode()= para volver al modo curses. Esta
+   función devuelve el tty al estado almacenada por =def_prog_mode()=.
+   Luego de un =refreth()=, estára de vuelta en el modo de curses.  He
+   aquí un ejemplo que muestra la secuencia de cosas por hacer.
 
    # *Example 12. Temporarily Leaving curses Mode*
-   [[file:ncurses_programs/basics/][*Ejemplo 12. Temporalmente Dejando Modo curses*]]
+   [[file:ncurses_programs/basics/temp_leave.c][*Ejemplo 12. Dejando Temporalmente el Modo curses*]]
 
    #+BEGIN_SRC c
      #include <ncurses.h>
+     #include <stdlib.h>
 
      int main()
      {
-       initscr();                      /* Start curses mode                   */
-       printw("Hello World !!!\n");    /* Print Hello World                   */
-       refresh();                      /* Print it on to the real screen      */
-       def_prog_mode();                /* Save the tty modes                  */
-       endwin();                       /* End curses mode temporarily         */
-       system("/bin/sh");              /* Do whatever you like in cooked mode */
-       reset_prog_mode();              /* Return to the previous tty mode     */
-                                       /* stored by def_prog_mode()           */
-       refresh();                      /* Do refresh() to restore the         */
-                                       /* Screen contents                     */
-       printw("Another String\n");     /* Back to curses use the full         */
-       refresh();                      /* capabilities of curses              */
-       endwin();                       /* End curses mode                     */
+       initscr();                      /* Iniciar el modo curses                 */
+       printw("Hola mundo !!!\n");     /* Imprime Hola mundo                     */
+       refresh();                      /* Imprimir en la pantalla real           */
+       getch();                        /* Esperar                                */
+       def_prog_mode();                /* Guardar los modos tty                  */
+       endwin();                       /* Finalizar curnes temporalmente         */
+       system("/bin/sh");              /* Realizar cualquier cosa en modo cooked */
+       reset_prog_mode();              /* Regresar al modo tty previo            */
+                                       /* almacenado por def_prog_mode()         */
+       refresh();                      /* refresh() restaura los contenidos      */
+                                       /* en pantalla                            */
+       printw("Otra Cadena\n");        /* De nuevo utilizar curses al maximo     */
+       refresh();                      /* de sus capacidades                     */
+       getch();                        /* Esperar                                */
+       endwin();                       /* Finalizar el modo curses               */
 
        return 0;
      }
    #+END_SRC
 
 # ** 14.3. =ACS_= variables
-** 14.3. =ACS_ las variables
+** 14.3. Variables =ACS_=
 
    # If you have ever programmed in DOS, you know about those nifty
    # characters in extended character set. They are printable only on
@@ -3011,16 +3021,17 @@
    # character set. You might have noticed me using these characters in
    # some of the programs above. Here's an example showing all the
    # characters.
-   Si alguna vez has programado en DOS, usted sabe sobre las ingenioso
-   caracteres de juego de caracteres extendidos. Ellos son imprimibles sólo en
-   algunos terminales. Funciones ncurses como =caja()= utilizarlos
-   caracteres. Todas estas variables comienzan con ACS alternativa significado
-   conjunto de caracteres. Es posible que haya fijado en mí el uso de estos caracteres en
-   algunos de los programas anteriores. He aquí un ejemplo que muestra toda la
+   Si alguna vez has programado en DOS, debes conocer acerca de este
+   ingenioso juego de caracteres extendidos. Estos son imprimibles
+   sólo en algunos terminales. Las funciones como =box()= utilizan
+   estos caracteres. Todas estas variables comienzan con *ACS*
+   significando el conjunto de caracteres alternativo. Es posible que
+   haya observado mi uso de estos caracteres en algunos de los
+   programas anteriores. El siguiente ejemplo que muestra todos los
    caracteres.
 
    # *Example 13. ACS Variables Example*
-   [[file:ncurses_programs/basics/][*Ejemplo 13. ACS Variables Ejemplo*]]
+   [[file:ncurses_programs/basics/acs_vars.c][*Ejemplo 13. Variables ACS*]]
 
    #+BEGIN_SRC c
      #include <ncurses.h>
@@ -3029,37 +3040,37 @@
      {
        initscr();
 
-       printw("Upper left corner           "); addch(ACS_ULCORNER); printw("\n");
-       printw("Lower left corner           "); addch(ACS_LLCORNER); printw("\n");
-       printw("Lower right corner          "); addch(ACS_LRCORNER); printw("\n");
-       printw("Tee pointing right          "); addch(ACS_LTEE); printw("\n");
-       printw("Tee pointing left           "); addch(ACS_RTEE); printw("\n");
-       printw("Tee pointing up             "); addch(ACS_BTEE); printw("\n");
-       printw("Tee pointing down           "); addch(ACS_TTEE); printw("\n");
-       printw("Horizontal line             "); addch(ACS_HLINE); printw("\n");
-       printw("Vertical line               "); addch(ACS_VLINE); printw("\n");
-       printw("Large Plus or cross over    "); addch(ACS_PLUS); printw("\n");
-       printw("Scan Line 1                 "); addch(ACS_S1); printw("\n");
-       printw("Scan Line 3                 "); addch(ACS_S3); printw("\n");
-       printw("Scan Line 7                 "); addch(ACS_S7); printw("\n");
-       printw("Scan Line 9                 "); addch(ACS_S9); printw("\n");
-       printw("Diamond                     "); addch(ACS_DIAMOND); printw("\n");
-       printw("Checker board (stipple)     "); addch(ACS_CKBOARD); printw("\n");
-       printw("Degree Symbol               "); addch(ACS_DEGREE); printw("\n");
-       printw("Plus/Minus Symbol           "); addch(ACS_PLMINUS); printw("\n");
-       printw("Bullet                      "); addch(ACS_BULLET); printw("\n");
-       printw("Arrow Pointing Left         "); addch(ACS_LARROW); printw("\n");
-       printw("Arrow Pointing Right        "); addch(ACS_RARROW); printw("\n");
-       printw("Arrow Pointing Down         "); addch(ACS_DARROW); printw("\n");
-       printw("Arrow Pointing Up           "); addch(ACS_UARROW); printw("\n");
-       printw("Board of squares            "); addch(ACS_BOARD); printw("\n");
-       printw("Lantern Symbol              "); addch(ACS_LANTERN); printw("\n");
-       printw("Solid Square Block          "); addch(ACS_BLOCK); printw("\n");
-       printw("Less/Equal sign             "); addch(ACS_LEQUAL); printw("\n");
-       printw("Greater/Equal sign          "); addch(ACS_GEQUAL); printw("\n");
-       printw("Pi                          "); addch(ACS_PI); printw("\n");
-       printw("Not equal                   "); addch(ACS_NEQUAL); printw("\n");
-       printw("UK pound sign               "); addch(ACS_STERLING); printw("\n");
+       printw("Upper left corner           "); addch(ACS_ULCORNER ); printw("\n");
+       printw("Lower left corner           "); addch(ACS_LLCORNER ); printw("\n");
+       printw("Lower right corner          "); addch(ACS_LRCORNER ); printw("\n");
+       printw("Tee pointing right          "); addch(ACS_LTEE     ); printw("\n");
+       printw("Tee pointing left           "); addch(ACS_RTEE     ); printw("\n");
+       printw("Tee pointing up             "); addch(ACS_BTEE     ); printw("\n");
+       printw("Tee pointing down           "); addch(ACS_TTEE     ); printw("\n");
+       printw("Horizontal line             "); addch(ACS_HLINE    ); printw("\n");
+       printw("Vertical line               "); addch(ACS_VLINE    ); printw("\n");
+       printw("Large Plus or cross over    "); addch(ACS_PLUS     ); printw("\n");
+       printw("Scan Line 1                 "); addch(ACS_S1       ); printw("\n");
+       printw("Scan Line 3                 "); addch(ACS_S3       ); printw("\n");
+       printw("Scan Line 7                 "); addch(ACS_S7       ); printw("\n");
+       printw("Scan Line 9                 "); addch(ACS_S9       ); printw("\n");
+       printw("Diamond                     "); addch(ACS_DIAMOND  ); printw("\n");
+       printw("Checker board (stipple)     "); addch(ACS_CKBOARD  ); printw("\n");
+       printw("Degree Symbol               "); addch(ACS_DEGREE   ); printw("\n");
+       printw("Plus/Minus Symbol           "); addch(ACS_PLMINUS  ); printw("\n");
+       printw("Bullet                      "); addch(ACS_BULLET   ); printw("\n");
+       printw("Arrow Pointing Left         "); addch(ACS_LARROW   ); printw("\n");
+       printw("Arrow Pointing Right        "); addch(ACS_RARROW   ); printw("\n");
+       printw("Arrow Pointing Down         "); addch(ACS_DARROW   ); printw("\n");
+       printw("Arrow Pointing Up           "); addch(ACS_UARROW   ); printw("\n");
+       printw("Board of squares            "); addch(ACS_BOARD    ); printw("\n");
+       printw("Lantern Symbol              "); addch(ACS_LANTERN  ); printw("\n");
+       printw("Solid Square Block          "); addch(ACS_BLOCK    ); printw("\n");
+       printw("Less/Equal sign             "); addch(ACS_LEQUAL   ); printw("\n");
+       printw("Greater/Equal sign          "); addch(ACS_GEQUAL   ); printw("\n");
+       printw("Pi                          "); addch(ACS_PI       ); printw("\n");
+       printw("Not equal                   "); addch(ACS_NEQUAL   ); printw("\n");
+       printw("UK pound sign               "); addch(ACS_STERLING ); printw("\n");
 
        refresh();
        getch();
@@ -3076,13 +3087,13 @@
   # which provide more functionality and a lot of features. The
   # following sections explain three standard libraries which are
   # usually distributed along with curses.
-  Además de la libreria de curses, hay pocas librerias en modo texto,
-  que proporcionan una mayor funcionalidad y un montón de características. los
-  siguientes secciones explican tres librerias estándar que son
-  normalmente distribuido junto con curses.
+  Además de la libreria curses, hay algunas librerias en modo texto,
+  que proporcionan una mayor funcionalidad y un montón de
+  características. Las siguientes secciones describen tres librerias
+  estándar que normalmente se distribullen junto a curses.
 
 # * 16. Panel Library
-* 16. Panel de la libreria
+* 16. Libreria Panel
 
   # Now that you are proficient in curses, you wanted to do some thing
   # big.  You created a lot of overlapping windows to give a
@@ -3090,30 +3101,33 @@
   # difficult to manage these. The multiple refreshes, updates plunge
   # you into a nightmare. The overlapping windows create blotches,
   # whenever you forget to refresh the windows in the proper order.
-  Ahora que son competentes en curses, que quería hacer algo
-  grande. Ha creado una gran cantidad de superposición de ventanas para dar una
-  profesional mirada de tipo ventanas. Por desgracia, pronto se hace
-  difícil de manejar estos. Las múltiples actualizaciones, actualizaciones hunden
-  que en una pesadilla. Las ventanas superpuestas crean manchas,
-  cada vez que usted se olvida de actualizar las ventanas en el orden correcto.
+  Ahora que eres competente en curses, buscaras hacer algo grande.
+  Como crear una gran cantidad de ventanas superpuestas para dar un
+  aspecto profesional tipo ventana. Por desgracia, esto se hace
+  dificil de manejar en poco tiempo. Las actualizaciones múltiples, te
+  sumergiran en una pesadilla. Las ventanas superpuestas generan
+  manchas, cada vez que olvida actualizar las ventanas en el orden
+  correcto.
 
   # Don't despair. There's an elegant solution provided in panels
   # library.  In the words of developers of ncurses
-  No se desespere. Hay una solución elegante proporcionada en paneles
-  libreria. En palabras de los desarrolladores de ncurses
+  No caiga en la desesperacion. Hay una solución elegante
+  proporcionada en la libreria Parel. En palabras de los
+  desarrolladores de ncurses
+
+  # #+BEGIN_ITALIC
+  #   When your interface design is such that windows may dive deeper
+  #   into the visibility stack or pop to the top at runtime, the
+  #   resulting ¤book-keeping can be tedious and difficult to get
+  #   right. Hence the panels library.
+  # #+END_ITALIC
 
   #+BEGIN_ITALIC
-    When your interface design is such that windows may dive deeper
-    into the visibility stack or pop to the top at runtime, the
-    resulting book-keeping can be tedious and difficult to get
-    right. Hence the panels library.
-  #+END_ITALIC
-
-  #+BEGIN_ITALIC
-    Cuando el diseño de su interfaz es tal que las ventanas pueden bucear más profundo
-    en la pila de la visibilidad o el pop a la cima en tiempo de ejecución, el
-    dando como resultado la contabilidad puede ser tedioso y difícil de conseguir
-    derecho. Por lo tanto la libreria de paneles.
+    Cuando el diseño de su interfaz es tal que las ventanas pueden
+    sumergirse más profundamente en la pila de visibilidad o saltar a
+    la cima en tiempo de ejecución, puede ser tedioso y difícil
+    mantener un resultado de forma correcta. Para eso esta la librería
+    panel.
   #+END_ITALIC
 
   # If you have lot of overlapping windows, then panels library is the
@@ -3122,12 +3136,13 @@
   # up). The library maintains information about the order of windows,
   # their overlapping and update the screen properly. So why wait? Let's
   # take a close peek into panels.
-  Si tiene muchas ventanas superpuestas, a continuación, los paneles de la libreria es el
-  camino a seguir. Es obvia la necesidad de hacer serie de wnoutrefresh(),
-  doupdate() y alivia la carga de hacerlo correctamente (abajo
-  arriba). La libreria mantiene información sobre el orden de las ventanas,
-  su superposición y actualizar la pantalla correctamente. Así que ¿por qué esperar? Echemos
-  echar un vistazo de cerca a los paneles.
+  Si tiene muchas ventanas superpuestas, la libreria panel es el
+  camino a seguir. Es obvia la necesidad de realizar una serie de
+  =wnoutrefresh()=, =doupdate()= y aliviar la carga de hacerlo
+  correctamente (abajo arriba). La libreria mantiene información sobre
+  el orden de las ventanas, su superposición y en consecuencia
+  actualiza la pantalla correctamente. Así que ¿por qué esperar?
+  Echemos un vistazo de cerca a los paneles.
 
 # ** 16.1. The Basics
 ** 16.1. Lo basico
@@ -3142,36 +3157,38 @@
    # correct order. Functions are provided to hide or show panels, move
    # panels, change its size etc.. The overlapping problem is managed by
    # the panels library during all the calls to these functions.
-   Objeto del panel es una ventana que se trata implícitamente como parte de una
-   cubierta incluyendo todos los otros objetos del panel. La cubierta se trata como una
-   acumula con el panel superior de ser completamente visible y el otro
-   paneles puede o no puede ser oscurecida de acuerdo con sus posiciones. Asi que
-   La idea básica es crear una pila de paneles superpuestos y el uso
-   paneles de libreria para visualizar correctamente. Hay una función
-   similar a refrescar() que, cuando se le llama, muestra paneles en el
-   Orden correcto. Las funciones se proporcionan para ocultar o mostrar los paneles, mover
-   paneles, cambiar su tamaño, etc .. El problema de solapamiento es dirigido por
-   la libreria de paneles durante todas las llamadas a estas funciones.
+   Un objeto panel es una ventana que se trata implícitamente como
+   parte de una baraja incluyendo a todos los otros objetos panel. La
+   baraja se trata como una pila con un panel superior que es
+   completamente visible y los otros paneles pueden o no ser
+   oscurecidos respecto a sus posiciones. Asi que La idea básica es
+   crear una pila de paneles superpuestos y utilizal la libreria panel
+   para desplegarlos correctamente. Hay una función similar a
+   =refresh()= que, cuando es llamada, despliega los paneles en el
+   orden correcto. Se proporcionan funciones para ocultar o mostrar
+   paneles, mover paneles, cambiar su tamaño, etc.. El problema de
+   superposicion es gestionado por la libreria panel durante todas las
+   llamadas a estas funciones.
 
    # The general flow of a panel program goes like this:
-   El flujo general de un programa del panel es la siguiente:
+   El flujo general de un programa panel es el siguiente:
 
    # 1. Create the windows (with newwin()) to be attached to the panels.
-   1. Crear las ventanas (con newwin()) que debe atribuirse a los paneles.
+   1. Crear las ventanas (con =newwin()=) que seran ligadas a paneles.
 
    # 2. Create panels with the chosen visibility order. Stack them up
    #    according to the desired visibility. The function =new_panel()=
    #    is used to created panels.
-   2. Cree paneles con el fin visibilidad elegido. Apilar hasta
-      de acuerdo con la visibilidad deseada. La función =new_panel()=
-      se utiliza para paneles creados.
+   2. Cree paneles con el ordend de visibilidad elegido. Apilarlos de
+      acuerdo con la visibilidad deseada. La función =new_panel()= se
+      utiliza para crear paneles.
 
    # 3. Call =update_panels()= to write the panels to the virtual screen
    #    in correct visibility order. Do a doupdate() to show it on the
    #    screen.
-   3. Llame =update_panels()= para escribir los paneles a la pantalla virtual
-      con el fin correcta visibilidad. Haga una doupdate() para mostrarlo en el
-      pantalla.
+   3. Llame a =update_panels()= para escribir los paneles en la
+      pantalla virtual en el orden correcto de visibilidad. llame a
+      =doupdate()= para mostrarlo en pantalla.
 
    # 4. Mainpulate the panels with =show_panel()=, =hide_panel()=,
    #    =move_panel()= etc. Make use of helper functions like
@@ -3179,29 +3196,30 @@
    #    to store custom data for a panel. Use the functions
    #    =set_panel_userptr()= and =panel_userptr()= to set and get the
    #    user pointer for a panel.
-   4. Mainpulate los paneles con show_panel()=, =hide_panel()=,
-      =move_panel()= etc. Hacer uso de funciones auxiliares como
-      =panel_hidden()= y =panel_window()=. Hacer uso de puntero de usuario
-      para almacenar datos personalizados para un panel. Utilice las funciones
-      =set_panel_userptr()= y =panel_userptr()= para establecer y obtener el
-      puntero del usuario para un panel.
+   4. Manipule los paneles con =show_panel()=, =hide_panel()=,
+      =move_panel()= etc. Haga uso de funciones auxiliares como
+      =panel_hidden()= y =panel_window()=. Haga uso del puntero de
+      usuario para almacenar datos personalizados para un
+      panel. Utilice las funciones =set_panel_userptr()= y
+      =panel_userptr()= para establecer y obtener el puntero de
+      usuario de un panel.
 
    # 5. When you are done with the panel use =del_panel()= to delete the
    #    panel.
-   5. Cuando haya terminado con el uso del panel =del_panel()= para borrar la
-      panel.
+   5. Cuando haya terminado de utilizar el panel llame a =del_panel()=
+      para eliminar el panel.
 
 
    # Let's make the concepts clear, with some programs. The following is
    # a simple program which creates 3 overlapping panels and shows them
    # on the screen.
 
-   Vamos a hacer los conceptos claros, con algunos programas. El siguiente es
-   un sencillo programa que crea 3 paneles superpuestos y les muestra
-   en la pantalla.
+   Hagamos los conceptos claros, con algunos programas. El siguiente
+   es un sencillo programa que crea 3 paneles superpuestos y les
+   muestra en la pantalla.
 
 # ** 16.2. Compiling With the Panels Library
-** 16.2. Compilación con la Librería Paneles
+** 16.2. Compilación con la Librería Panel
 
    # To use panels library functions, you have to include panel.h and to
    # link the program with panels library the flag =-lpanel= should be

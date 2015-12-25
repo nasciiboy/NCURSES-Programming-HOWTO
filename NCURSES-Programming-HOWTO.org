@@ -2048,20 +2048,22 @@
    =endwin()= to end the curses mode. This will leave you in the
    original tty mode. To get back to curses once you are done, call
    =reset_prog_mode()=. This function returns the tty to the state
-   stored by =def_prog_mode()=. Then do refresh(), and you are back to
-   the curses mode. Here is an example showing the sequence of things
-   to be done.
+   stored by =def_prog_mode()=. Then do =refresh()=, and you are back
+   to the curses mode. Here is an example showing the sequence of
+   things to be done.
 
-   [[file:ncurses_programs/basics/][*Example 12. Temporarily Leaving Curses Mode*]]
+   [[file:ncurses_programs/basics/temp_leave.c][*Example 12. Temporarily Leaving Curses Mode*]]
 
    #+BEGIN_SRC c
      #include <ncurses.h>
+     #include <stdlib.h>
 
      int main()
      {
        initscr();                      /* Start curses mode                   */
        printw("Hello World !!!\n");    /* Print Hello World                   */
        refresh();                      /* Print it on to the real screen      */
+       getch();                        /* Wait                                */
        def_prog_mode();                /* Save the tty modes                  */
        endwin();                       /* End curses mode temporarily         */
        system("/bin/sh");              /* Do whatever you like in cooked mode */
@@ -2071,6 +2073,7 @@
                                        /* Screen contents                     */
        printw("Another String\n");     /* Back to curses use the full         */
        refresh();                      /* capabilities of curses              */
+       getch();                        /* Wait                                */
        endwin();                       /* End curses mode                     */
 
        return 0;
@@ -2082,12 +2085,12 @@
    If you have ever programmed in DOS, you know about those nifty
    characters in extended character set. They are printable only on
    some terminals. NCURSES functions like =box()= use these
-   characters. All these variables start with ACS meaning alternative
-   character set. You might have noticed me using these characters in
-   some of the programs above. Here's an example showing all the
-   characters.
+   characters. All these variables start with *ACS* meaning
+   alternative character set. You might have noticed me using these
+   characters in some of the programs above. Here's an example showing
+   all the characters.
 
-   [[file:ncurses_programs/basics/][*Example 13. ACS Variables Example*]]
+   [[file:ncurses_programs/basics/acs_vars.c][*Example 13. ACS Variables Example*]]
 
    #+BEGIN_SRC c
      #include <ncurses.h>
@@ -2163,8 +2166,8 @@
   #+END_ITALIC
 
   If you have lot of overlapping windows, then panels library is the
-  way to go. It obviates the need of doing series of wnoutrefresh(),
-  doupdate() and relieves the burden of doing it correctly(bottom
+  way to go. It obviates the need of doing series of =wnoutrefresh()=,
+  =doupdate()= and relieves the burden of doing it correctly(bottom
   up). The library maintains information about the order of windows,
   their overlapping and update the screen properly. So why wait? Let's
   take a close peek into panels.
@@ -2177,24 +2180,25 @@
    panels may or may not be obscured according to their positions. So
    the basic idea is to create a stack of overlapping panels and use
    panels library to display them correctly. There is a function
-   similar to refresh() which, when called , displays panels in the
+   similar to =refresh()= which, when called , displays panels in the
    correct order. Functions are provided to hide or show panels, move
    panels, change its size etc.. The overlapping problem is managed by
    the panels library during all the calls to these functions.
 
    The general flow of a panel program goes like this:
 
-   1. Create the windows (with newwin()) to be attached to the panels.
+   1. Create the windows (with =newwin()=) to be attached to the
+      panels.
 
    2. Create panels with the chosen visibility order. Stack them up
       according to the desired visibility. The function =new_panel()=
       is used to created panels.
 
    3. Call =update_panels()= to write the panels to the virtual screen
-      in correct visibility order. Do a doupdate() to show it on the
+      in correct visibility order. Do a =doupdate()= to show it on the
       screen.
 
-   4. Mainpulate the panels with =show_panel()=, =hide_panel()=,
+   4. Manipulate the panels with =show_panel()=, =hide_panel()=,
       =move_panel()= etc. Make use of helper functions like
       =panel_hidden()= and =panel_window()=. Make use of user pointer
       to store custom data for a panel. Use the functions

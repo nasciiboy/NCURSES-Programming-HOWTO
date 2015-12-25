@@ -2,7 +2,9 @@
 #+AUTHOR: Eric S. Raymond <esr@snark.thyrsus.com>
 #+MAIL: esr@snark.thyrsus.com
 #+MAIL: bugs-ncurses@gnu.org
+#+LANGUAGE: en
 #+STARTUP: showall
+
 
 # This document is self-contained, *except* that there is one relative link to
 # the ncurses-intro.html document, expected to be in the same directory with
