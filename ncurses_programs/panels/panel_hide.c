@@ -1,4 +1,5 @@
 #include <panel.h>
+#include <string.h>
 
 typedef struct _PANEL_DATA {
 	int hide;	/* TRUE if panel is hidden */
@@ -32,7 +33,7 @@ int main()
 	init_pair(4, COLOR_CYAN, COLOR_BLACK);
 
 	init_wins(my_wins, 3);
-	
+
 	/* Attach a panel to each window */ 	/* Order is bottom up */
 	my_panels[0] = new_panel(my_wins[0]); 	/* Push 0, order: stdscr-0 */
 	my_panels[1] = new_panel(my_wins[1]); 	/* Push 1, order: stdscr-0-1 */
@@ -57,10 +58,10 @@ int main()
 
 	attroff(COLOR_PAIR(4));
 	doupdate();
-	
+
 	while((ch = getch()) != KEY_F(1))
 	{	switch(ch)
-		{	case 'a':			
+		{	case 'a':
 				temp = (PANEL_DATA *)panel_userptr(my_panels[0]);
 				if(temp->hide == FALSE)
 				{	hide_panel(my_panels[0]);
@@ -125,10 +126,10 @@ void win_show(WINDOW *win, char *label, int label_color)
 	getmaxyx(win, height, width);
 
 	box(win, 0, 0);
-	mvwaddch(win, 2, 0, ACS_LTEE); 
-	mvwhline(win, 2, 1, ACS_HLINE, width - 2); 
-	mvwaddch(win, 2, width - 1, ACS_RTEE); 
-	
+	mvwaddch(win, 2, 0, ACS_LTEE);
+	mvwhline(win, 2, 1, ACS_HLINE, width - 2);
+	mvwaddch(win, 2, width - 1, ACS_RTEE);
+
 	print_in_middle(win, 1, 0, width, label, COLOR_PAIR(label_color));
 }
 

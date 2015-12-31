@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>NCURSES Programming HOWTO</title>
-<!-- 2015-12-24 jue 18:35 -->
+<!-- 2015-12-31 jue 14:32 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="ppadala" />
@@ -3230,9 +3230,9 @@ on the screen.
 <h3 id="sec-17-2">16.2. Compiling With the Panels Library</h3>
 <div class="outline-text-3" id="text-17-2">
 <p>
-To use panels library functions, you have to include panel.h and to
-link the program with panels library the flag <code>-lpanel</code> should be
-added along with <code>-lncurses</code> in that order.
+To use panels library functions, you have to include <code>panel.h</code> and
+to link the program with panels library the flag <code>-lpanel</code> should
+be added along with <code>-lncurses</code> in that order.
 </p>
 
 <pre class="example">
@@ -3245,7 +3245,7 @@ compile and link: gcc &lt;program file&gt; -lpanel -lncurses
 </pre>
 
 <p>
-<a href="ncurses_programs/basics/"><b>Example 14. Panel basics</b></a>
+<a href="ncurses_programs/panels/panel_simple.c"><b>Example 14. Panel basics</b></a>
 </p>
 
 <div class="org-src-container">
@@ -3253,7 +3253,7 @@ compile and link: gcc &lt;program file&gt; -lpanel -lncurses
 <pre class="src src-c">#include &lt;panel.h&gt;
 
 int main()
-{   WINDOW *my_wins[3];
+{ WINDOW *my_wins[3];
   PANEL  *my_panels[3];
   int lines = 10, cols = 40, y = 2, x = 4, i;
 
@@ -3273,9 +3273,9 @@ int main()
   for(i = 0; i &lt; 3; ++i)
     box(my_wins[i], 0, 0);
 
-  /* Attach a panel to each window */     /* Order is bottom up */
-  my_panels[0] = new_panel(my_wins[0]);   /* Push 0, order: stdscr-0 */
-  my_panels[1] = new_panel(my_wins[1]);   /* Push 1, order: stdscr-0-1 */
+  /* Attach a panel to each window */     /* Order is bottom up          */
+  my_panels[0] = new_panel(my_wins[0]);   /* Push 0, order: stdscr-0     */
+  my_panels[1] = new_panel(my_wins[1]);   /* Push 1, order: stdscr-0-1   */
   my_panels[2] = new_panel(my_wins[2]);   /* Push 2, order: stdscr-0-1-2 */
 
   /* Update the stacking order. 2nd panel will be on top */
@@ -3292,10 +3292,10 @@ int main()
 
 <p>
 As you can see, above program follows a simple flow as
-explained. The windows are created with newwin() and then they are
-attached to panels with <code>new_panel()</code>. As we attach one panel after
-another, the stack of panels gets updated. To put them on screen
-<code>update_panels()</code> and doupdate() are called.
+explained. The windows are created with <code>newwin()</code> and then they
+are attached to panels with <code>new_panel()</code>. As we attach one panel
+after another, the stack of panels gets updated. To put them on
+screen <code>update_panels()</code> and <code>doupdate()</code> are called.
 </p>
 </div>
 </div>
@@ -3310,12 +3310,13 @@ code.
 </p>
 
 <p>
-<a href="ncurses_programs/basics/"><b>Example 15. Panel Window Browsing Example</b></a>
+<a href="ncurses_programs/panels/panel_browse.c"><b>Example 15. Panel Window Browsing Example</b></a>
 </p>
 
 <div class="org-src-container">
 
 <pre class="src src-c">#include &lt;panel.h&gt;
+#include &lt;string.h&gt;
 
 #define NLINES 10
 #define NCOLS 40
@@ -3325,7 +3326,7 @@ void win_show(WINDOW *win, char *label, int label_color);
 void print_in_middle(WINDOW *win, int starty, int startx, int width, char *string, chtype color);
 
 int main()
-{   WINDOW *my_wins[3];
+{ WINDOW *my_wins[3];
   PANEL  *my_panels[3];
   PANEL  *top;
   int ch;
@@ -3338,16 +3339,16 @@ int main()
   keypad(stdscr, TRUE);
 
   /* Initialize all the colors */
-  init_pair(1, COLOR_RED, COLOR_BLACK);
+  init_pair(1, COLOR_RED,   COLOR_BLACK);
   init_pair(2, COLOR_GREEN, COLOR_BLACK);
-  init_pair(3, COLOR_BLUE, COLOR_BLACK);
-  init_pair(4, COLOR_CYAN, COLOR_BLACK);
+  init_pair(3, COLOR_BLUE,  COLOR_BLACK);
+  init_pair(4, COLOR_CYAN,  COLOR_BLACK);
 
   init_wins(my_wins, 3);
 
-  /* Attach a panel to each window */     /* Order is bottom up */
-  my_panels[0] = new_panel(my_wins[0]);   /* Push 0, order: stdscr-0 */
-  my_panels[1] = new_panel(my_wins[1]);   /* Push 1, order: stdscr-0-1 */
+  /* Attach a panel to each window */     /* Order is bottom up          */
+  my_panels[0] = new_panel(my_wins[0]);   /* Push 0, order: stdscr-0     */
+  my_panels[1] = new_panel(my_wins[1]);   /* Push 1, order: stdscr-0-1   */
   my_panels[2] = new_panel(my_wins[2]);   /* Push 2, order: stdscr-0-1-2 */
 
   /* Set up the user pointers to the next panel */
@@ -3381,13 +3382,13 @@ int main()
 
 /* Put all the windows */
 void init_wins(WINDOW **wins, int n)
-{   int x, y, i;
+{ int x, y, i;
   char label[80];
 
   y = 2;
   x = 10;
   for(i = 0; i &lt; n; ++i)
-    {   wins[i] = newwin(NLINES, NCOLS, y, x);
+    { wins[i] = newwin(NLINES, NCOLS, y, x);
       sprintf(label, "Window Number %d", i + 1);
       win_show(wins[i], label, i + 1);
       y += 3;
@@ -3397,7 +3398,7 @@ void init_wins(WINDOW **wins, int n)
 
 /* Show the window with a border and a label */
 void win_show(WINDOW *win, char *label, int label_color)
-{   int startx, starty, height, width;
+{ int startx, starty, height, width;
 
   getbegyx(win, starty, startx);
   getmaxyx(win, height, width);
@@ -3411,7 +3412,7 @@ void win_show(WINDOW *win, char *label, int label_color)
 }
 
 void print_in_middle(WINDOW *win, int starty, int startx, int width, char *string, chtype color)
-{   int length, x, y;
+{ int length, x, y;
   float temp;
 
   if(win == NULL)
@@ -3462,7 +3463,7 @@ stack.
 <p>
 The function <code>move_panel()</code> can be used to move a panel to the
 desired location. It does not change the position of the panel in
-the stack.  Make sure that you use <code>move_panel()</code> instead mvwin()
+the stack.  Make sure that you use <code>move_panel()</code> instead <code>mvwin()</code>
 on the window associated with the panel.
 </p>
 
@@ -3486,19 +3487,21 @@ use of user data to get the required data to do the operations.
 </p>
 
 <p>
-<a href="ncurses_programs/basics/"><b>Example 16. Panel Moving and Resizing example</b></a>
+<a href="ncurses_programs/panels/panel_resize.c"><b>Example 16. Panel Moving and Resizing example</b></a>
 </p>
 
 <div class="org-src-container">
 
 <pre class="src src-c">#include &lt;panel.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
 
 typedef struct _PANEL_DATA {
   int x, y, w, h;
   char label[80];
   int label_color;
   PANEL *next;
-}PANEL_DATA;
+} PANEL_DATA;
 
 #define NLINES 10
 #define NCOLS 40
@@ -3509,7 +3512,7 @@ void print_in_middle(WINDOW *win, int starty, int startx, int width, char *strin
 void set_user_ptrs(PANEL **panels, int n);
 
 int main()
-{   WINDOW *my_wins[3];
+{ WINDOW *my_wins[3];
   PANEL  *my_panels[3];
   PANEL_DATA  *top;
   PANEL *stack_top;
@@ -3533,9 +3536,9 @@ int main()
 
   init_wins(my_wins, 3);
 
-  /* Attach a panel to each window */     /* Order is bottom up */
-  my_panels[0] = new_panel(my_wins[0]);   /* Push 0, order: stdscr-0 */
-  my_panels[1] = new_panel(my_wins[1]);   /* Push 1, order: stdscr-0-1 */
+  /* Attach a panel to each window */     /* Order is bottom up          */
+  my_panels[0] = new_panel(my_wins[0]);   /* Push 0, order: stdscr-0     */
+  my_panels[1] = new_panel(my_wins[1]);   /* Push 1, order: stdscr-0-1   */
   my_panels[2] = new_panel(my_wins[2]);   /* Push 2, order: stdscr-0-1-2 */
 
   set_user_ptrs(my_panels, 3);
@@ -3567,10 +3570,10 @@ int main()
             neww = top-&gt;w;
             newh = top-&gt;h;
             break;
-        case 'r':   /* Re-Size*/
+        case 'r':   /* Re-Size */
           size = TRUE;
           attron(COLOR_PAIR(4));
-          mvprintw(LINES - 4, 0, "Entered Resizing :Use Arrow Keys to resize and press &lt;ENTER&gt; to end resizing");
+          mvprintw(LINES - 4, 0, "Entered Resizing: Use Arrow Keys to resize and press &lt;ENTER&gt; to end resizing");
           refresh();
           attroff(COLOR_PAIR(4));
           break;
@@ -3583,7 +3586,7 @@ int main()
           break;
         case KEY_LEFT:
           if(size == TRUE)
-            {   --newx;
+            { --newx;
               ++neww;
             }
           if(move == TRUE)
@@ -3591,7 +3594,7 @@ int main()
           break;
         case KEY_RIGHT:
           if(size == TRUE)
-            {   ++newx;
+            { ++newx;
               --neww;
             }
           if(move == TRUE)
@@ -3599,7 +3602,7 @@ int main()
           break;
         case KEY_UP:
           if(size == TRUE)
-            {   --newy;
+            { --newy;
               ++newh;
             }
           if(move == TRUE)
@@ -3607,7 +3610,7 @@ int main()
           break;
         case KEY_DOWN:
           if(size == TRUE)
-            {   ++newy;
+            { ++newy;
               --newh;
             }
           if(move == TRUE)
@@ -3618,7 +3621,7 @@ int main()
           clrtoeol();
           refresh();
           if(size == TRUE)
-            {   old_win = panel_window(stack_top);
+            { old_win = panel_window(stack_top);
               temp_win = newwin(newh, neww, newy, newx);
               replace_panel(stack_top, temp_win);
               win_show(temp_win, top-&gt;label, top-&gt;label_color);
@@ -3626,7 +3629,7 @@ int main()
               size = FALSE;
             }
           if(move == TRUE)
-            {   move_panel(stack_top, newy, newx);
+            { move_panel(stack_top, newy, newx);
               move = FALSE;
             }
           break;
@@ -3646,13 +3649,13 @@ int main()
 
 /* Put all the windows */
 void init_wins(WINDOW **wins, int n)
-{   int x, y, i;
+{ int x, y, i;
   char label[80];
 
   y = 2;
   x = 10;
   for(i = 0; i &lt; n; ++i)
-    {   wins[i] = newwin(NLINES, NCOLS, y, x);
+    { wins[i] = newwin(NLINES, NCOLS, y, x);
       sprintf(label, "Window Number %d", i + 1);
       win_show(wins[i], label, i + 1);
       y += 3;
@@ -3662,7 +3665,7 @@ void init_wins(WINDOW **wins, int n)
 
 /* Set the PANEL_DATA structures for individual panels */
 void set_user_ptrs(PANEL **panels, int n)
-{   PANEL_DATA *ptrs;
+{ PANEL_DATA *ptrs;
   WINDOW *win;
   int x, y, w, h, i;
   char temp[80];
@@ -3670,7 +3673,7 @@ void set_user_ptrs(PANEL **panels, int n)
   ptrs = (PANEL_DATA *)calloc(n, sizeof(PANEL_DATA));
 
   for(i = 0;i &lt; n; ++i)
-    {   win = panel_window(panels[i]);
+    { win = panel_window(panels[i]);
       getbegyx(win, y, x);
       getmaxyx(win, h, w);
       ptrs[i].x = x;
@@ -3690,7 +3693,7 @@ void set_user_ptrs(PANEL **panels, int n)
 
 /* Show the window with a border and a label */
 void win_show(WINDOW *win, char *label, int label_color)
-{   int startx, starty, height, width;
+{ int startx, starty, height, width;
 
   getbegyx(win, starty, startx);
   getmaxyx(win, height, width);
@@ -3704,7 +3707,7 @@ void win_show(WINDOW *win, char *label, int label_color)
 }
 
 void print_in_middle(WINDOW *win, int starty, int startx, int width, char *string, chtype color)
-{   int length, x, y;
+{ int length, x, y;
   float temp;
 
   if(win == NULL)
@@ -3762,28 +3765,29 @@ in the cycle.
 <p>
 A Panel can be hidden by using the function <code>hide_panel()</code>. This
 function merely removes it form the stack of panels, thus hiding it
-on the screen once you do <code>update_panels()</code> and doupdate(). It
-doesn't destroy the PANEL structure associated with the hidden
+on the screen once you do <code>update_panels()</code> and <code>doupdate()</code>. It
+doesn't destroy the <code>PANEL</code> structure associated with the hidden
 panel. It can be shown again by using the <code>show_panel()</code> function.
 </p>
 
 <p>
 The following program shows the hiding of panels. Press 'a' or 'b'
 or 'c' to show or hide first, second and third windows
-respectively. It uses a user data with a small variable hide, which
-keeps track of whether the window is hidden or not. For some reason
-the function <code>panel_hidden()</code> which tells whether a panel is hidden
-or not is not working. A bug report was also presented by Michael
-Andres <a href="http://www.geocrawler.com/archives/3/344/1999/9/0/2643549/">here</a>
+respectively. It uses a user data with a small variable <code>hide</code>,
+which keeps track of whether the window is hidden or not. For some
+reason the function <code>panel_hidden()</code> which tells whether a panel is
+hidden or not is not working. A bug report was also presented by
+Michael Andres <a href="http://www.geocrawler.com/archives/3/344/1999/9/0/2643549/">here</a>
 </p>
 
 <p>
-<a href="ncurses_programs/basics/"><b>Example 17. Panel Hiding and Showing example</b></a>
+<a href="ncurses_programs/panels/panel_hide.c"><b>Example 17. Panel Hiding and Showing example</b></a>
 </p>
 
 <div class="org-src-container">
 
 <pre class="src src-c">#include &lt;panel.h&gt;
+#include &lt;string.h&gt;
 
 typedef struct _PANEL_DATA {
   int hide;   /* TRUE if panel is hidden */
@@ -3797,7 +3801,7 @@ void win_show(WINDOW *win, char *label, int label_color);
 void print_in_middle(WINDOW *win, int starty, int startx, int width, char *string, chtype color);
 
 int main()
-{   WINDOW *my_wins[3];
+{ WINDOW *my_wins[3];
   PANEL  *my_panels[3];
   PANEL_DATA panel_datas[3];
   PANEL_DATA *temp;
@@ -3818,9 +3822,9 @@ int main()
 
   init_wins(my_wins, 3);
 
-  /* Attach a panel to each window */     /* Order is bottom up */
-  my_panels[0] = new_panel(my_wins[0]);   /* Push 0, order: stdscr-0 */
-  my_panels[1] = new_panel(my_wins[1]);   /* Push 1, order: stdscr-0-1 */
+  /* Attach a panel to each window */     /* Order is bottom up          */
+  my_panels[0] = new_panel(my_wins[0]);   /* Push 0, order: stdscr-0     */
+  my_panels[1] = new_panel(my_wins[1]);   /* Push 1, order: stdscr-0-1   */
   my_panels[2] = new_panel(my_wins[2]);   /* Push 2, order: stdscr-0-1-2 */
 
   /* Initialize panel datas saying that nothing is hidden */
@@ -3848,29 +3852,29 @@ int main()
         {   case 'a':
             temp = (PANEL_DATA *)panel_userptr(my_panels[0]);
             if(temp-&gt;hide == FALSE)
-              {   hide_panel(my_panels[0]);
+              { hide_panel(my_panels[0]);
                 temp-&gt;hide = TRUE;
               }
             else
-              {   show_panel(my_panels[0]);
+              { show_panel(my_panels[0]);
                 temp-&gt;hide = FALSE;
               }
             break;
         case 'b':
           temp = (PANEL_DATA *)panel_userptr(my_panels[1]);
           if(temp-&gt;hide == FALSE)
-            {   hide_panel(my_panels[1]);
+            { hide_panel(my_panels[1]);
               temp-&gt;hide = TRUE;
             }
           else
-            {   show_panel(my_panels[1]);
+            { show_panel(my_panels[1]);
               temp-&gt;hide = FALSE;
             }
           break;
         case 'c':
           temp = (PANEL_DATA *)panel_userptr(my_panels[2]);
           if(temp-&gt;hide == FALSE)
-            {   hide_panel(my_panels[2]);
+            { hide_panel(my_panels[2]);
               temp-&gt;hide = TRUE;
             }
           else
@@ -3888,13 +3892,13 @@ int main()
 
 /* Put all the windows */
 void init_wins(WINDOW **wins, int n)
-{   int x, y, i;
+{ int x, y, i;
   char label[80];
 
   y = 2;
   x = 10;
   for(i = 0; i &lt; n; ++i)
-    {   wins[i] = newwin(NLINES, NCOLS, y, x);
+    { wins[i] = newwin(NLINES, NCOLS, y, x);
       sprintf(label, "Window Number %d", i + 1);
       win_show(wins[i], label, i + 1);
       y += 3;
@@ -3904,7 +3908,7 @@ void init_wins(WINDOW **wins, int n)
 
 /* Show the window with a border and a label */
 void win_show(WINDOW *win, char *label, int label_color)
-{   int startx, starty, height, width;
+{ int startx, starty, height, width;
 
   getbegyx(win, starty, startx);
   getmaxyx(win, height, width);
@@ -3918,7 +3922,7 @@ void win_show(WINDOW *win, char *label, int label_color)
 }
 
 void print_in_middle(WINDOW *win, int starty, int startx, int width, char *string, chtype color)
-{   int length, x, y;
+{ int length, x, y;
   float temp;
 
   if(win == NULL)
@@ -3950,8 +3954,8 @@ void print_in_middle(WINDOW *win, int starty, int startx, int width, char *strin
 <p>
 The functions <code>panel_above()</code> and <code>panel_below()</code> can be used to
 find out the panel above and below a panel. If the argument to
-these functions is NULL, then they return a pointer to bottom panel
-and top panel respectively.
+these functions is <code>NULL</code>, then they return a pointer to bottom
+panel and top panel respectively.
 </p>
 </div>
 </div>

@@ -3224,26 +3224,26 @@
    # To use panels library functions, you have to include panel.h and to
    # link the program with panels library the flag =-lpanel= should be
    # added along with =-lncurses= in that order.
-   Para utilizar las funciones de libreria paneles, usted tiene que incluir panel.h y
-   vincular el programa con paneles libreria la bandera =-lpanel = debe ser
-   añadido junto con =-lncurses en ese orden.
+   Para utilizar las funciones de la libreria panel, tiene que incluir
+   =panel.h= y vincular el programa a la dicha libreria con la bandera
+   =-lpanel= junto con =-lncurses= en ese orden.
 
    #+BEGIN_EXAMPLE
         #include <panel.h>
         .
         .
         .
-        compile and link: gcc <program file> -lpanel -lncurses
+        compilacion y enlace: gcc <fichero de programa> -lpanel -lncurses
    #+END_EXAMPLE
 
    # *Example 14. Panel basics*
-   [[file:ncurses_programs/basics/][*Ejemplo 14. fundamentos del panel*]]
+   [[file:ncurses_programs/panels/panel_simple.c][*Ejemplo 14. Panel conceptos basicos*]]
 
    #+BEGIN_SRC c
      #include <panel.h>
 
      int main()
-     {   WINDOW *my_wins[3];
+     { WINDOW *my_wins[3];
        PANEL  *my_panels[3];
        int lines = 10, cols = 40, y = 2, x = 4, i;
 
@@ -3251,27 +3251,27 @@
        cbreak();
        noecho();
 
-       /* Create windows for the panels */
+       /* Creacion de ventanas para los paneles */
        my_wins[0] = newwin(lines, cols, y, x);
        my_wins[1] = newwin(lines, cols, y + 1, x + 5);
        my_wins[2] = newwin(lines, cols, y + 2, x + 10);
 
        /*
-        * Create borders around the windows so that you can see the effect
-        * of panels
+        * Creacion de bordes alrededor de las ventanas para ver el efecto
+        * de los paneles
         */
        for(i = 0; i < 3; ++i)
          box(my_wins[i], 0, 0);
 
-       /* Attach a panel to each window */     /* Order is bottom up */
-       my_panels[0] = new_panel(my_wins[0]);   /* Push 0, order: stdscr-0 */
-       my_panels[1] = new_panel(my_wins[1]);   /* Push 1, order: stdscr-0-1 */
-       my_panels[2] = new_panel(my_wins[2]);   /* Push 2, order: stdscr-0-1-2 */
+       /* Unir un panel a cada ventana */      /* ordenar de abajo hacia arriba  */
+       my_panels[0] = new_panel(my_wins[0]);   /* agregar 0, orden: stdscr-0     */
+       my_panels[1] = new_panel(my_wins[1]);   /* agregar 1, orden: stdscr-0-1   */
+       my_panels[2] = new_panel(my_wins[2]);   /* agregar 2, orden: stdscr-0-1-2 */
 
-       /* Update the stacking order. 2nd panel will be on top */
+       /* Actualizar en orden de apilamiento. El 2nd panel estara en la cima     */
        update_panels();
 
-       /* Show it on the screen */
+       /* Mostrar en la pantalla */
        doupdate();
 
        getch();
@@ -3284,27 +3284,28 @@
    # attached to panels with =new_panel()=. As we attach one panel after
    # another, the stack of panels gets updated. To put them on screen
    # =update_panels()= and doupdate() are called.
-   Como se puede ver, el programa anterior sigue un flujo simple como
-   explicado. Las ventanas se crean con newwin() y luego son
-   unido a paneles con new_panel()=. A medida que nos concedemos un panel después
-   otra, la pila de paneles se actualiza. Para ponerlos en pantalla
-   = update_panels()= y doupdate() son llamados.
+   Como se puede ver, el programa anterior sigue un flujo simple. Las
+   ventanas se crean con =newwin()= y luego son unidas a paneles con
+   =new_panel()=. La pila de paneles se actualiza, a medida que
+   agregamos un panel después otro. Para mostrarlos en pantalla
+   llamamos a =update_panels()= y =doupdate()=.
 
 # ** 16.3. Panel Window Browsing
-** 16.3. Panel de la ventana de navegación
+** 16.3. Navegacion en Paneles de Ventana
 
    # A slightly complicated example is given below. This program creates
    # 3 windows which can be cycled through using tab. Have a look at the
    # code.
-   Un ejemplo un poco complicada es la siguiente. Este programa crea
-   3 ventanas que se pueden ciclar mediante el uso de la ficha. Echa un vistazo a la
-   código.
+   El siguiente es un ejemplo un poco complicado. Este programa crea 3
+   ventanas que se puede rotar ciclicamente mediante el uso de /tab/.
+   Echa un vistazo al código.
 
    # *Example 15. Panel Window Browsing Example*
-   [[file:ncurses_programs/basics/][*Ventana Ejemplo 15. Panel de Navegación Ejemplo*]]
+   [[file:ncurses_programs/panels/panel_browse.c][*Ejemplo 15. Navegacion en Paneles de Ventana*]]
 
    #+BEGIN_SRC c
      #include <panel.h>
+     #include <string.h>
 
      #define NLINES 10
      #define NCOLS 40
@@ -3314,42 +3315,42 @@
      void print_in_middle(WINDOW *win, int starty, int startx, int width, char *string, chtype color);
 
      int main()
-     {   WINDOW *my_wins[3];
+     { WINDOW *my_wins[3];
        PANEL  *my_panels[3];
        PANEL  *top;
        int ch;
 
-       /* Initialize curses */
+       /* Inicializa curses */
        initscr();
        start_color();
        cbreak();
        noecho();
        keypad(stdscr, TRUE);
 
-       /* Initialize all the colors */
-       init_pair(1, COLOR_RED, COLOR_BLACK);
+       /* Inicializa todos los colores */
+       init_pair(1, COLOR_RED,   COLOR_BLACK);
        init_pair(2, COLOR_GREEN, COLOR_BLACK);
-       init_pair(3, COLOR_BLUE, COLOR_BLACK);
-       init_pair(4, COLOR_CYAN, COLOR_BLACK);
+       init_pair(3, COLOR_BLUE,  COLOR_BLACK);
+       init_pair(4, COLOR_CYAN,  COLOR_BLACK);
 
        init_wins(my_wins, 3);
 
-       /* Attach a panel to each window */     /* Order is bottom up */
-       my_panels[0] = new_panel(my_wins[0]);   /* Push 0, order: stdscr-0 */
-       my_panels[1] = new_panel(my_wins[1]);   /* Push 1, order: stdscr-0-1 */
-       my_panels[2] = new_panel(my_wins[2]);   /* Push 2, order: stdscr-0-1-2 */
+       /* Unir un panel a cada ventana */      /* Ordenar de abajo hacia arriba  */
+       my_panels[0] = new_panel(my_wins[0]);   /* Agregar 0, orden: stdscr-0     */
+       my_panels[1] = new_panel(my_wins[1]);   /* Agregar 1, orden: stdscr-0-1   */
+       my_panels[2] = new_panel(my_wins[2]);   /* Agregar 2, orden: stdscr-0-1-2 */
 
-       /* Set up the user pointers to the next panel */
+       /* Crear el puntero de usuario al siguiente panel */
        set_panel_userptr(my_panels[0], my_panels[1]);
        set_panel_userptr(my_panels[1], my_panels[2]);
        set_panel_userptr(my_panels[2], my_panels[0]);
 
-       /* Update the stacking order. 2nd panel will be on top */
+       /* Actualizar el orden de apilamiento. El 2nd panel estara en la parte superior */
        update_panels();
 
-       /* Show it on the screen */
+       /* Mostrar en la pantalla */
        attron(COLOR_PAIR(4));
-       mvprintw(LINES - 2, 0, "Use tab to browse through the windows (F1 to Exit)");
+       mvprintw(LINES - 2, 0, "Utilice tab para navegar a traves de las ventanas (F1 para Salir)");
        attroff(COLOR_PAIR(4));
        doupdate();
 
@@ -3368,25 +3369,25 @@
        return 0;
      }
 
-     /* Put all the windows */
+     /* Coloca todas las ventanas */
      void init_wins(WINDOW **wins, int n)
-     {   int x, y, i;
+     { int x, y, i;
        char label[80];
 
        y = 2;
        x = 10;
        for(i = 0; i < n; ++i)
-         {   wins[i] = newwin(NLINES, NCOLS, y, x);
-           sprintf(label, "Window Number %d", i + 1);
+         { wins[i] = newwin(NLINES, NCOLS, y, x);
+           sprintf(label, "Ventana Numero %d", i + 1);
            win_show(wins[i], label, i + 1);
            y += 3;
            x += 7;
          }
      }
 
-     /* Show the window with a border and a label */
+     /* Muestra la ventana con un borde y una etiqueta */
      void win_show(WINDOW *win, char *label, int label_color)
-     {   int startx, starty, height, width;
+     { int startx, starty, height, width;
 
        getbegyx(win, starty, startx);
        getmaxyx(win, height, width);
@@ -3400,7 +3401,7 @@
      }
 
      void print_in_middle(WINDOW *win, int starty, int startx, int width, char *string, chtype color)
-     {   int length, x, y;
+     { int length, x, y;
        float temp;
 
        if(win == NULL)
@@ -3424,7 +3425,7 @@
    #+END_SRC
 
 # ** 16.4. Using User Pointers
-** 16.4. El uso de punteros de usuario
+** 16.4. Utilizando punteros de usuario
 
    # In the above example I used user pointers to find out the next
    # window in the cycle. We can attach custom information to the panel
@@ -3437,29 +3438,30 @@
    # cycle It's brought to the top by the function =top_panel()=. This
    # function brings the panel given as argument to the top of the panel
    # stack.
-   En el ejemplo anterior usé punteros de usuario para averiguar la siguiente
-   ventana en el ciclo. Podemos adjuntar información personalizada al panel
-   especificando un puntero del usuario, que puede apuntar a cualquier información
-   desea almacenar. En este caso me guardé el puntero a la siguiente
-   Panel en el ciclo. Puntero de usuario de un panel se puede ajustar con el
-   función =set_panel_userptr()=. Se puede acceder mediante el
-   función =panel_userptr()= que devolverá el puntero del usuario
-   el panel da como argumento. Después de encontrar el siguiente panel en el
-   ciclo Se llevó a la cima por la función =top_panel()=. Esta
-   función trae el panel dado como argumento a la parte superior del panel
-   apilar.
+   En el ejemplo anterior utilice punteros de usuario para obtener la
+   siguiente ventana en el ciclo. Podemos vincular información
+   personalizada al panel especificando un puntero de usuario, que
+   puede apuntar a cualquier información desea almacenar. En este caso
+   guardé el puntero al siguiente panel en el ciclo. El puntero de
+   usuario de un panel se puede establecer con la función
+   =set_panel_userptr()=. Se puede acceder a dicha informacion
+   mediante la función =panel_userptr()= que devolverá el puntero de
+   usuario de el panel dado como argumento. Después localizar el
+   siguiente panel en el ciclo se establece en la cima con la función
+   =top_panel()=. Esta función trae a el panel dado como argumento a
+   la parte superior de la pila de paneles.
 
 # ** 16.5. Moving and Resizing Panels
-** 16.5. Mover y redimensionar los paneles
+** 16.5. Mover y Redimensionar Paneles
 
    # The function =move_panel()= can be used to move a panel to the
    # desired location. It does not change the position of the panel in
    # the stack.  Make sure that you use =move_panel()= instead mvwin()
    # on the window associated with the panel.
-   La función =move_panel()= se puede utilizar para mover un panel a la
-   Ubicación deseada. No cambia la posición del panel en
-   la pila. Asegúrese de que utiliza =move_panel()= lugar mvwin()
-   en la ventana asociada con el panel.
+   Puede utilizar la función =move_panel()= para mover un panel a la
+   posicion deseada. Esto no cambia la posición del panel en la
+   pila. Asegúrese utilizar =move_panel()= en lugar de =mvwin()= en la
+   ventana asociada a el panel.
 
    # Resizing a panel is slightly complex. There is no straight forward
    # function just to resize the window associated with a panel. A
@@ -3468,13 +3470,13 @@
    # =replace_panel()=.  Don't forget to delete the old window. The
    # window associated with a panel can be found by using the function
    # =panel_window()=.
-   Cambiar el tamaño de un panel es ligeramente compleja. No hay recta hacia adelante
-   función sólo para cambiar el tamaño de la ventana asociada con un panel. LA
-   solución para cambiar el tamaño de un panel es crear una nueva ventana con la
-   tamaños deseados, cambian la ventana asociada con el panel utilizando
-   replace_panel()=. No te olvides de borrar la ventana de edad. los
-   ventana asociada con un panel se puede encontrar mediante el uso de la función de
-   panel_window()=.
+   Cambiar el tamaño de un panel es ligeramente complejo. No hay una
+   función directa para cambiar el tamaño de la ventana asociada a un
+   un panel. Una solución para cambiar el tamaño de un panel es crear
+   una nueva ventana con el tamaño deseado, cambie la ventana asociada
+   a el panel utilizando =replace_panel()=. No olvides borrar la
+   ventana anterior. Puede obtener la ventana asociada con un panel
+   mediante el uso de la función =panel_window()=.
 
    # The following program shows these concepts, in supposedly simple
    # program. You can cycle through the window with <TAB> as usual. To
@@ -3482,25 +3484,29 @@
    # moving. Then use arrow keys to resize or move it to the desired way
    # and press enter to end your resizing or moving. This example makes
    # use of user data to get the required data to do the operations.
-   El siguiente programa muestra estos conceptos, en supuestamente sencilla
-   programa. Puede desplazarse a través de la ventana con <TAB>, como de costumbre. A
-   cambiar el tamaño o mover el panel activo presione "r" para cambiar el tamaño de 'm' para
-   emocionante. A continuación, utilice las teclas de flecha para cambiar el tamaño o moverlo a la forma deseada
-   y pulse Intro para terminar el cambio de tamaño o en movimiento. En este ejemplo se hace
-   uso de los datos del usuario para obtener los datos necesarios para hacer las operaciones.
+   El siguiente programa muestra estos conceptos, en suposicion es un
+   programa sencillo. Como es costumbre, puede rotar entre ventanas
+   con <TAB>. Para cambiar el tamaño o mover el panel activo presione
+   "r" por "resize", 'm' para mover. A continuación, utilice las
+   teclas de flecha para cambiar el tamaño o mover a la forma deseada
+   y pulse enter para terminar el cambio. En ejemplo hace uso de los
+   datos del usuario para obtener los datos necesarios para hacer las
+   operaciones.
 
    # *Example 16. Panel Moving and Resizing example*
-   [[file:ncurses_programs/basics/][*Ejemplo 16 Panel. Traslado y ejemplo cambio de tamaño*]]
+   [[file:ncurses_programs/panels/panel_resize.c][*Ejemplo 16. Mover y Redimencionar un Panel*]]
 
    #+BEGIN_SRC c
      #include <panel.h>
+     #include <stdlib.h>
+     #include <string.h>
 
      typedef struct _PANEL_DATA {
        int x, y, w, h;
        char label[80];
        int label_color;
        PANEL *next;
-     }PANEL_DATA;
+     } PANEL_DATA;
 
      #define NLINES 10
      #define NCOLS 40
@@ -3511,7 +3517,7 @@
      void set_user_ptrs(PANEL **panels, int n);
 
      int main()
-     {   WINDOW *my_wins[3];
+     { WINDOW *my_wins[3];
        PANEL  *my_panels[3];
        PANEL_DATA  *top;
        PANEL *stack_top;
@@ -3520,14 +3526,14 @@
        int newx, newy, neww, newh;
        int size = FALSE, move = FALSE;
 
-       /* Initialize curses */
+       /* Inicializar curses */
        initscr();
        start_color();
        cbreak();
        noecho();
        keypad(stdscr, TRUE);
 
-       /* Initialize all the colors */
+       /* Inicializar todos los colores */
        init_pair(1, COLOR_RED, COLOR_BLACK);
        init_pair(2, COLOR_GREEN, COLOR_BLACK);
        init_pair(3, COLOR_BLUE, COLOR_BLACK);
@@ -3535,19 +3541,20 @@
 
        init_wins(my_wins, 3);
 
-       /* Attach a panel to each window */     /* Order is bottom up */
-       my_panels[0] = new_panel(my_wins[0]);   /* Push 0, order: stdscr-0 */
-       my_panels[1] = new_panel(my_wins[1]);   /* Push 1, order: stdscr-0-1 */
-       my_panels[2] = new_panel(my_wins[2]);   /* Push 2, order: stdscr-0-1-2 */
+       /* Unir un panel a cada ventana */      /* Ordenar de abajo hacia arriba  */
+       my_panels[0] = new_panel(my_wins[0]);   /* Agregar 0, orden: stdscr-0     */
+       my_panels[1] = new_panel(my_wins[1]);   /* Agregar 1, orden: stdscr-0-1   */
+       my_panels[2] = new_panel(my_wins[2]);   /* Agregar 2, orden: stdscr-0-1-2 */
 
        set_user_ptrs(my_panels, 3);
-       /* Update the stacking order. 2nd panel will be on top */
+
+       /* Actualizar el orden de apilamiento. El 2nd panel estara en la parte superior */
        update_panels();
 
-       /* Show it on the screen */
+       /* Mostrar en la pantalla */
        attron(COLOR_PAIR(4));
-       mvprintw(LINES - 3, 0, "Use 'm' for moving, 'r' for resizing");
-       mvprintw(LINES - 2, 0, "Use tab to browse through the windows (F1 to Exit)");
+       mvprintw(LINES - 3, 0, "Use 'm' para mover, 'r' para redimencionar");
+       mvprintw(LINES - 2, 0, "Use tab para navegar a traves de las ventanas (F1 para Salir)");
        attroff(COLOR_PAIR(4));
        doupdate();
 
@@ -3569,23 +3576,23 @@
                  neww = top->w;
                  newh = top->h;
                  break;
-             case 'r':   /* Re-Size*/
+             case 'r':   /* Redimencion */
                size = TRUE;
                attron(COLOR_PAIR(4));
-               mvprintw(LINES - 4, 0, "Entered Resizing :Use Arrow Keys to resize and press <ENTER> to end resizing");
+               mvprintw(LINES - 4, 0, "Ingrese dimencion: Use las teclas de flecha y pulse <ENTER> para redimencionar");
                refresh();
                attroff(COLOR_PAIR(4));
                break;
-             case 'm':   /* Move */
+             case 'm':   /* Movimiento  */
                attron(COLOR_PAIR(4));
-               mvprintw(LINES - 4, 0, "Entered Moving: Use Arrow Keys to Move and press <ENTER> to end moving");
+               mvprintw(LINES - 4, 0, "Ingrese movimiento: Use las teclas de flecha y pulse <ENTER> para mover");
                refresh();
                attroff(COLOR_PAIR(4));
                move = TRUE;
                break;
              case KEY_LEFT:
                if(size == TRUE)
-                 {   --newx;
+                 { --newx;
                    ++neww;
                  }
                if(move == TRUE)
@@ -3593,7 +3600,7 @@
                break;
              case KEY_RIGHT:
                if(size == TRUE)
-                 {   ++newx;
+                 { ++newx;
                    --neww;
                  }
                if(move == TRUE)
@@ -3601,7 +3608,7 @@
                break;
              case KEY_UP:
                if(size == TRUE)
-                 {   --newy;
+                 { --newy;
                    ++newh;
                  }
                if(move == TRUE)
@@ -3609,7 +3616,7 @@
                break;
              case KEY_DOWN:
                if(size == TRUE)
-                 {   ++newy;
+                 { ++newy;
                    --newh;
                  }
                if(move == TRUE)
@@ -3620,7 +3627,7 @@
                clrtoeol();
                refresh();
                if(size == TRUE)
-                 {   old_win = panel_window(stack_top);
+                 { old_win = panel_window(stack_top);
                    temp_win = newwin(newh, neww, newy, newx);
                    replace_panel(stack_top, temp_win);
                    win_show(temp_win, top->label, top->label_color);
@@ -3628,15 +3635,15 @@
                    size = FALSE;
                  }
                if(move == TRUE)
-                 {   move_panel(stack_top, newy, newx);
+                 { move_panel(stack_top, newy, newx);
                    move = FALSE;
                  }
                break;
 
              }
            attron(COLOR_PAIR(4));
-           mvprintw(LINES - 3, 0, "Use 'm' for moving, 'r' for resizing");
-           mvprintw(LINES - 2, 0, "Use tab to browse through the windows (F1 to Exit)");
+           mvprintw(LINES - 3, 0, "Use 'm' para mover, 'r' para redimencionar");
+           mvprintw(LINES - 2, 0, "Use tab para navegar a traves de las ventanas (F1 para Salir)");
            attroff(COLOR_PAIR(4));
            refresh();
            update_panels();
@@ -3646,25 +3653,25 @@
        return 0;
      }
 
-     /* Put all the windows */
+     /* Colocar todas las ventanas */
      void init_wins(WINDOW **wins, int n)
-     {   int x, y, i;
+     { int x, y, i;
        char label[80];
 
        y = 2;
        x = 10;
        for(i = 0; i < n; ++i)
-         {   wins[i] = newwin(NLINES, NCOLS, y, x);
-           sprintf(label, "Window Number %d", i + 1);
+         { wins[i] = newwin(NLINES, NCOLS, y, x);
+           sprintf(label, "Ventana Numero %d", i + 1);
            win_show(wins[i], label, i + 1);
            y += 3;
            x += 7;
          }
      }
 
-     /* Set the PANEL_DATA structures for individual panels */
+     /* Establece la estructura PANEL_DATA para paneneles individualmente */
      void set_user_ptrs(PANEL **panels, int n)
-     {   PANEL_DATA *ptrs;
+     { PANEL_DATA *ptrs;
        WINDOW *win;
        int x, y, w, h, i;
        char temp[80];
@@ -3672,14 +3679,14 @@
        ptrs = (PANEL_DATA *)calloc(n, sizeof(PANEL_DATA));
 
        for(i = 0;i < n; ++i)
-         {   win = panel_window(panels[i]);
+         { win = panel_window(panels[i]);
            getbegyx(win, y, x);
            getmaxyx(win, h, w);
            ptrs[i].x = x;
            ptrs[i].y = y;
            ptrs[i].w = w;
            ptrs[i].h = h;
-           sprintf(temp, "Window Number %d", i + 1);
+           sprintf(temp, "Ventana numero %d", i + 1);
            strcpy(ptrs[i].label, temp);
            ptrs[i].label_color = i + 1;
            if(i + 1 == n)
@@ -3690,9 +3697,9 @@
          }
      }
 
-     /* Show the window with a border and a label */
+     /* Muestra la ventana con un borde y una etiqueta */
      void win_show(WINDOW *win, char *label, int label_color)
-     {   int startx, starty, height, width;
+     { int startx, starty, height, width;
 
        getbegyx(win, starty, startx);
        getmaxyx(win, height, width);
@@ -3706,7 +3713,7 @@
      }
 
      void print_in_middle(WINDOW *win, int starty, int startx, int width, char *string, chtype color)
-     {   int length, x, y;
+     { int length, x, y;
        float temp;
 
        if(win == NULL)
@@ -3737,48 +3744,52 @@
    # explained. While in resizing mode the program doesn't show how the
    # window is getting resized. It's left as an exercise to the reader
    # to print a dotted border while it gets resized to a new position.
-   Concéntrese en el bucle principal rato. Una vez que se descubre el tipo de
-   tecla pulsada, toma las medidas adecuadas. Si se presiona 'r'
-   modo de cambio de tamaño se ha iniciado. Después de esto, los nuevos tamaños se actualizan a medida
-   el usuario presiona las teclas de flecha. Cuando el usuario pulsa <Enter>
-   presente selección termina y el panel se cambia el tamaño utilizando el concepto
-   explicado. En el modo de cambio de tamaño del programa no muestra cómo la
-   ventana se está redimensionada. Se deja como ejercicio para el lector
-   para imprimir un borde de puntos mientras se cambia el tamaño a una nueva posición.
+   Concéntrese en el bucle =while= principal. Una vez que se descubre
+   que tecla se ha pulsado, se toma la accion correspondiente. Si se
+   presiona 'r' se inicia el modo de tamaño. Después de esto, los
+   nuevos tamaños se actualizan a medida que el usuario presiona las
+   teclas de flecha. Cuando el usuario pulsa <ENTER> termina la
+   presente selección y el panel cambia de tamaño utilizando el
+   concepto explicado anteriormente. Dentro del modo de tamaño el
+   programa no muestra cómo se redimensiona la ventana. Se deja como
+   ejercicio para el lector imprimir un borde de puntos mientras se
+   cambia el tamaño a una nueva posición.
 
    # When the user presses 'm' the move mode starts. This is a bit
    # simpler than resizing. As the arrow keys are pressed the new
    # position is updated and pressing of <ENTER> causes the panel to be
    # moved by calling the function =move_panel()=.
-   Cuando el usuario presiona 'm' el modo de movimiento comienza. Esto es un poco
-   más simple que el cambio de tamaño. Como las teclas de flecha se presionan el nuevo
-   posición se actualiza y prensado de <ENTER> hace que el panel de estar
-   movido llamando a la función =move_panel()=.
+   Cuando el usuario presiona 'm' inicia el modo de movimiento. Esto
+   es un poco más simple que el cambio de tamaño. Cuando pulsa las
+   teclas de flecha se actualiza la nueva posición y al presionar
+   <ENTER> el panel es movido llamando a la función =move_panel()=.
 
    # In this program the user data which is represented as =PANEL_DATA=,
    # plays very important role in finding the associated information
    # with a panel.  As written in the comments, the =PANEL_DATA= stores
    # the panel sizes, label, label color and a pointer to the next panel
    # in the cycle.
-   En este programa los datos de usuario que se representa como PANEL_DATA =,
-   juega papel muy importante en la búsqueda de la información asociada
-   con un panel. Como está escrito en los comentarios, los PANEL_DATA =tiendas
-   el tamaño del panel, la etiqueta, color de la etiqueta y un puntero al siguiente panel
-   en el ciclo.
+   En este programa los datos de usuario representados como
+   =PANEL_DATA=, juega papel muy importante en la búsqueda de la
+   información asociada a un panel. Como está escrito en los
+   comentarios, =PANEL_DATA= almacena el tamaño del panel, la
+   etiqueta, color de la etiqueta y un puntero al siguiente panel en
+   el ciclo.
 
 # ** 16.6. Hiding and Showing Panels
-** 16.6. Ocultar y mostrar los paneles
+** 16.6. Ocultar y Mostrar Paneles
 
    # A Panel can be hidden by using the function =hide_panel()=. This
    # function merely removes it form the stack of panels, thus hiding it
    # on the screen once you do =update_panels()= and doupdate(). It
    # doesn't destroy the PANEL structure associated with the hidden
    # panel. It can be shown again by using the =show_panel()= function.
-   Un panel se puede ocultar mediante el uso de la función =hide_panel()=. Esta
-   función meramente elimina forman la pila de paneles, por lo tanto ocultarlo
-   en la pantalla una vez que haces =update_panels()= y doupdate(). Ello
-   no destruye la estructura de panel asociado con el escondido
-   panel. Se puede demostrar de nuevo utilizando los show_panel()= función.
+   Un panel se puede ocultar mediante el uso de la función
+   =hide_panel()=. Esta función simplemente lo quita de la pila de
+   paneles, de esta forma lo oculta en pantalla cuando llama a
+   =update_panels()= y =doupdate()=. Esto no destruye la estructura
+   =PANEL= asociada con el panel oculto. Puede mostrar nuevamente el
+   panel utilizando la funcion =show_panel()=.
 
    # The following program shows the hiding of panels. Press 'a' or 'b'
    # or 'c' to show or hide first, second and third windows
@@ -3787,22 +3798,23 @@
    # the function =panel_hidden()= which tells whether a panel is hidden
    # or not is not working. A bug report was also presented by Michael
    # Andres [[http://www.geocrawler.com/archives/3/344/1999/9/0/2643549/][here]]
-   El siguiente programa muestra el escondite de los paneles. Pulse "a" o "b"
-   o "c" para mostrar u ocultar primera, segunda y tercera ventanas
-   respectivamente. Se utiliza un datos de usuario con una pequeña ocultar variable, que
-   realiza un seguimiento de si la ventana está oculta o no. Por alguna razón
-   la función =panel_hidden()= que indica si un grupo especial está oculta
-   o no, no está funcionando. Un informe de error también fue presentado por Michael
-   Andres [[http://www.geocrawler.com/archives/3/344/1999/9/0/2643549/][here]]
+   El siguiente programa muestra como ocultar paneles. Pulse 'a' o 'b'
+   o 'c' para mostrar u ocultar la primera, segunda y tercera ventana
+   respectivamente. Se utilizan los datos de usuario con la pequeña
+   variable =hide=, que realiza un seguimiento de si la ventana está
+   oculta o no. Por alguna razón la función =panel_hidden()= que
+   indica si un panel está oculto o no, no está funcionando. Un
+   informe de error fue también presentado por Michael Andres [[http://www.geocrawler.com/archives/3/344/1999/9/0/2643549/][aqui]]
 
    # *Example 17. Panel Hiding and Showing example*
-   [[file:ncurses_programs/basics/][*Ejemplo Panel 17. Ocultar y mostrar ejemplo*]]
+   [[file:ncurses_programs/panels/panel_hide.c][*Ejemplo 17. Ocultar y Mostrar Paneles*]]
 
    #+BEGIN_SRC c
      #include <panel.h>
+     #include <string.h>
 
      typedef struct _PANEL_DATA {
-       int hide;   /* TRUE if panel is hidden */
+       int hide;   /* TRUE si el panel esta oculto */
      }PANEL_DATA;
 
      #define NLINES 10
@@ -3813,20 +3825,20 @@
      void print_in_middle(WINDOW *win, int starty, int startx, int width, char *string, chtype color);
 
      int main()
-     {   WINDOW *my_wins[3];
+     { WINDOW *my_wins[3];
        PANEL  *my_panels[3];
        PANEL_DATA panel_datas[3];
        PANEL_DATA *temp;
        int ch;
 
-       /* Initialize curses */
+       /* Inicializar curses */
        initscr();
        start_color();
        cbreak();
        noecho();
        keypad(stdscr, TRUE);
 
-       /* Initialize all the colors */
+       /* Inicializar todos los colores */
        init_pair(1, COLOR_RED, COLOR_BLACK);
        init_pair(2, COLOR_GREEN, COLOR_BLACK);
        init_pair(3, COLOR_BLUE, COLOR_BLACK);
@@ -3834,12 +3846,12 @@
 
        init_wins(my_wins, 3);
 
-       /* Attach a panel to each window */     /* Order is bottom up */
-       my_panels[0] = new_panel(my_wins[0]);   /* Push 0, order: stdscr-0 */
-       my_panels[1] = new_panel(my_wins[1]);   /* Push 1, order: stdscr-0-1 */
-       my_panels[2] = new_panel(my_wins[2]);   /* Push 2, order: stdscr-0-1-2 */
+       /* Unir un panel a cada ventana */      /* Ordenar de abajo hacia arriba  */
+       my_panels[0] = new_panel(my_wins[0]);   /* Agregar 0, orden: stdscr-0     */
+       my_panels[1] = new_panel(my_wins[1]);   /* Agregar 1, orden: stdscr-0-1   */
+       my_panels[2] = new_panel(my_wins[2]);   /* Agregar 2, orden: stdscr-0-1-2 */
 
-       /* Initialize panel datas saying that nothing is hidden */
+       /* Inicializa datos de panel diciendo que no hay nada oculto */
        panel_datas[0].hide = FALSE;
        panel_datas[1].hide = FALSE;
        panel_datas[2].hide = FALSE;
@@ -3848,13 +3860,13 @@
        set_panel_userptr(my_panels[1], &panel_datas[1]);
        set_panel_userptr(my_panels[2], &panel_datas[2]);
 
-       /* Update the stacking order. 2nd panel will be on top */
+       /* Actualizar el orden de apilamiento. El 2nd panel estara en la parte superior */
        update_panels();
 
-       /* Show it on the screen */
+       /* Mostrar en la pantalla */
        attron(COLOR_PAIR(4));
-       mvprintw(LINES - 3, 0, "Show or Hide a window with 'a'(first window)  'b'(Second Window)  'c'(Third Window)");
-       mvprintw(LINES - 2, 0, "F1 to Exit");
+       mvprintw(LINES - 3, 0, "Mostrar u ocultar una ventana con 'a'(primer ventana)  'b'(segunda ventana)  'c'(tercer ventana)");
+       mvprintw(LINES - 1, 0, "F1 para salir");
 
        attroff(COLOR_PAIR(4));
        doupdate();
@@ -3864,29 +3876,29 @@
              {   case 'a':
                  temp = (PANEL_DATA *)panel_userptr(my_panels[0]);
                  if(temp->hide == FALSE)
-                   {   hide_panel(my_panels[0]);
+                   { hide_panel(my_panels[0]);
                      temp->hide = TRUE;
                    }
                  else
-                   {   show_panel(my_panels[0]);
+                   { show_panel(my_panels[0]);
                      temp->hide = FALSE;
                    }
                  break;
              case 'b':
                temp = (PANEL_DATA *)panel_userptr(my_panels[1]);
                if(temp->hide == FALSE)
-                 {   hide_panel(my_panels[1]);
+                 { hide_panel(my_panels[1]);
                    temp->hide = TRUE;
                  }
                else
-                 {   show_panel(my_panels[1]);
+                 { show_panel(my_panels[1]);
                    temp->hide = FALSE;
                  }
                break;
              case 'c':
                temp = (PANEL_DATA *)panel_userptr(my_panels[2]);
                if(temp->hide == FALSE)
-                 {   hide_panel(my_panels[2]);
+                 { hide_panel(my_panels[2]);
                    temp->hide = TRUE;
                  }
                else
@@ -3902,25 +3914,25 @@
        return 0;
      }
 
-     /* Put all the windows */
+     /* Colocar todas las ventanas */
      void init_wins(WINDOW **wins, int n)
-     {   int x, y, i;
+     { int x, y, i;
        char label[80];
 
        y = 2;
        x = 10;
        for(i = 0; i < n; ++i)
-         {   wins[i] = newwin(NLINES, NCOLS, y, x);
-           sprintf(label, "Window Number %d", i + 1);
+         { wins[i] = newwin(NLINES, NCOLS, y, x);
+           sprintf(label, "Ventana Numero %d", i + 1);
            win_show(wins[i], label, i + 1);
            y += 3;
            x += 7;
          }
      }
 
-     /* Show the window with a border and a label */
+     /* Muestra la ventana con un borde y una etiqueta */
      void win_show(WINDOW *win, char *label, int label_color)
-     {   int startx, starty, height, width;
+     { int startx, starty, height, width;
 
        getbegyx(win, starty, startx);
        getmaxyx(win, height, width);
@@ -3934,7 +3946,7 @@
      }
 
      void print_in_middle(WINDOW *win, int starty, int startx, int width, char *string, chtype color)
-     {   int length, x, y;
+     { int length, x, y;
        float temp;
 
        if(win == NULL)
@@ -3958,19 +3970,19 @@
    #+END_SRC
 
 # ** 16.7. =panel_above()= and =panel_below()= Functions
-** 16.7. =panel_above()= y =panel_below()= Funciones
+** 16.7. Funciones =panel_above()= y =panel_below()=
 
    # The functions =panel_above()= and =panel_below()= can be used to
    # find out the panel above and below a panel. If the argument to
    # these functions is NULL, then they return a pointer to bottom panel
    # and top panel respectively.
-   Las funciones panel_above()= y =panel_below()= se puede utilizar para
-   averiguar el panel de arriba y por debajo de un panel. Si el argumento de
-   estas funciones se NULL, devuelven un puntero al panel inferior
-   y panel superior, respectivamente.
+   Puede utilizar las funciones =panel_above()= y =panel_below()= para
+   averiguar el panel superiar e inferiar a un panel. Si el argumento
+   de estas funciones es =NULL=, devuelven un puntero al panel
+   inferior y superior, respectivamente.
 
 # * 17. Menus Library
-* 17. Menús Libreria
+* 17. Libreria Menu
 
   # The menus library provides a nice extension to basic curses, through
   # which you can create menus. It provides a set of functions to create
