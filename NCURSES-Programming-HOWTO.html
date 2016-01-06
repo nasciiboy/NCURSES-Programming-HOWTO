@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>NCURSES Programming HOWTO</title>
-<!-- 2015-12-31 jue 14:32 -->
+<!-- 2016-01-06 mié 16:49 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="ppadala" />
@@ -4041,7 +4041,7 @@ current selection with up, down arrows.
 <h3 id="sec-18-2">17.2. Compiling With the Menu Library</h3>
 <div class="outline-text-3" id="text-18-2">
 <p>
-To use menu library functions, you have to include menu.h and to
+To use menu library functions, you have to include <code>menu.h</code> and to
 link the program with menu library the flag <code>-lmenu</code> should be
 added along with <code>-lncurses</code> in that order.
 </p>
@@ -4056,12 +4056,13 @@ compile and link: gcc &lt;program file&gt; -lmenu -lncurses
 </pre>
 
 <p>
-<a href="ncurses_programs/basics/"><b>Example 18. Menu Basics</b></a>
+<a href="ncurses_programs/menus/menu_simple.c"><b>Example 18. Menu Basics</b></a>
 </p>
 
 <div class="org-src-container">
 
-<pre class="src src-c">#include &lt;curses.h&gt;
+<pre class="src src-c">#include &lt;stdlib.h&gt;
+#include &lt;curses.h&gt;
 #include &lt;menu.h&gt;
 
 #define ARRAY_SIZE(a) (sizeof(a) / sizeof(a[0]))
@@ -4076,7 +4077,7 @@ char *choices[] = {
 };
 
 int main()
-{   ITEM **my_items;
+{ ITEM **my_items;
   int c;
   MENU *my_menu;
   int n_choices, i;
@@ -4184,10 +4185,10 @@ key. Let's dissect the different navigational requests.
 
 <p>
 A Menu can be displayed with multiple columns for more than one
-item.  This can be done by using the
-=menu<sub>format</sub>()=function. When a multi columnar menu is displayed
-these requests cause the menu driver to move the current
-selection to left or right.
+item.  This can be done by using the <code>menu_format()</code>
+function. When a multi columnar menu is displayed these requests
+cause the menu driver to move the current selection to left or
+right.
 </p>
 </li>
 
@@ -4257,19 +4258,19 @@ explained in the man page as,
 
 <blockquote>
 <p>
-If  the  second argument is the KEY<sub>MOUSE</sub> special key, the
+If the second argument is the <code>KEY_MOUSE</code> special key, the
 associated mouse event is translated into one of the above
-pre-defined  requests.   Currently only clicks in the user
-window (e.g. inside the menu display area or  the  decora­
-tion  window)  are handled. If you click above the display
-region of the menu, a REQ<sub>SCR</sub><sub>ULINE</sub> is generated,  if  you
-doubleclick  a  REQ<sub>SCR</sub><sub>UPAGE</sub>  is  generated  and  if  you
-tripleclick a REQ<sub>FIRST</sub><sub>ITEM</sub> is generated.  If  you  click
-below  the  display region of the menu, a REQ<sub>SCR</sub><sub>DLINE</sub> is
-generated, if you doubleclick a REQ<sub>SCR</sub><sub>DPAGE</sub> is generated
-and  if  you  tripleclick a REQ<sub>LAST</sub><sub>ITEM</sub> is generated. If
-you click at an item inside the display area of the  menu,
-the menu cursor is positioned to that item.
+pre-defined requests.  Currently only clicks in the user window
+(e.g. inside the menu display area or the decoration window)
+are handled. If you click above the display region of the menu,
+a <code>REQ_SCR_ULINE</code> is generated, if you doubleclick a
+<code>REQ_SCR_UPAGE</code> is generated and if you tripleclick a
+<code>REQ_FIRST_ITEM</code> is generated.  If you click below the display
+region of the menu, a <code>REQ_SCR_DLINE</code> is generated, if you
+doubleclick a <code>REQ_SCR_DPAGE</code> is generated and if you
+tripleclick a <code>REQ_LAST_ITEM</code> is generated. If you click at an
+item inside the display area of the menu, the menu cursor is
+positioned to that item.
 </p>
 </blockquote>
 </li>
@@ -4300,12 +4301,14 @@ a title.
 </p>
 
 <p>
-<a href="ncurses_programs/basics/"><b>Example 19. Menu Windows Usage example</b></a>
+<a href="ncurses_programs/menus/menu_win.c"><b>Example 19. Menu Windows Usage example</b></a>
 </p>
 
 <div class="org-src-container">
 
 <pre class="src src-c">#include &lt;menu.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
 
 #define ARRAY_SIZE(a) (sizeof(a) / sizeof(a[0]))
 #define CTRLD   4
@@ -4321,7 +4324,7 @@ char *choices[] = {
 void print_in_middle(WINDOW *win, int starty, int startx, int width, char *string, chtype color);
 
 int main()
-{   ITEM **my_items;
+{ ITEM **my_items;
   int c;
   MENU *my_menu;
   WINDOW *my_menu_win;
@@ -4368,17 +4371,17 @@ int main()
   post_menu(my_menu);
   wrefresh(my_menu_win);
 
-  while((c = wgetch(my_menu_win)) != KEY_F(1))
-    {       switch(c)
-        {   case KEY_DOWN:
-            menu_driver(my_menu, REQ_DOWN_ITEM);
-            break;
-        case KEY_UP:
-          menu_driver(my_menu, REQ_UP_ITEM);
-          break;
-        }
-      wrefresh(my_menu_win);
+  while((c = wgetch(my_menu_win)) != KEY_F(1)){
+    switch(c){
+    case KEY_DOWN:
+      menu_driver(my_menu, REQ_DOWN_ITEM);
+      break;
+    case KEY_UP:
+      menu_driver(my_menu, REQ_UP_ITEM);
+      break;
     }
+    wrefresh(my_menu_win);
+  }
 
   /* Unpost and free all the memory taken up */
   unpost_menu(my_menu);
@@ -4389,7 +4392,7 @@ int main()
 }
 
 void print_in_middle(WINDOW *win, int starty, int startx, int width, char *string, chtype color)
-{   int length, x, y;
+{ int length, x, y;
   float temp;
 
   if(win == NULL)
@@ -4437,13 +4440,15 @@ scrolling. Let's see how it can be done.
 </p>
 
 <p>
-<a href="ncurses_programs/basics/"><b>Example 20. Scrolling Menus example</b></a>
+<a href="ncurses_programs/menus/menu_scroll.c"><b>Example 20. Scrolling Menus example</b></a>
 </p>
 
 <div class="org-src-container">
 
 <pre class="src src-c">#include &lt;curses.h&gt;
 #include &lt;menu.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
 
 #define ARRAY_SIZE(a) (sizeof(a) / sizeof(a[0]))
 #define CTRLD   4
@@ -4462,10 +4467,11 @@ char *choices[] = {
   "Exit",
   (char *)NULL,
 };
+
 void print_in_middle(WINDOW *win, int starty, int startx, int width, char *string, chtype color);
 
-int main()
-{   ITEM **my_items;
+int main(){
+  ITEM **my_items;
   int c;
   MENU *my_menu;
   WINDOW *my_menu_win;
@@ -4518,23 +4524,23 @@ int main()
   attroff(COLOR_PAIR(2));
   refresh();
 
-  while((c = wgetch(my_menu_win)) != KEY_F(1))
-    {       switch(c)
-        {   case KEY_DOWN:
-            menu_driver(my_menu, REQ_DOWN_ITEM);
-            break;
-        case KEY_UP:
-          menu_driver(my_menu, REQ_UP_ITEM);
-          break;
-        case KEY_NPAGE:
-          menu_driver(my_menu, REQ_SCR_DPAGE);
-          break;
-        case KEY_PPAGE:
-          menu_driver(my_menu, REQ_SCR_UPAGE);
-          break;
-        }
-      wrefresh(my_menu_win);
+  while((c = wgetch(my_menu_win)) != KEY_F(1)){
+    switch(c){
+    case KEY_DOWN:
+      menu_driver(my_menu, REQ_DOWN_ITEM);
+      break;
+    case KEY_UP:
+      menu_driver(my_menu, REQ_UP_ITEM);
+      break;
+    case KEY_NPAGE:
+      menu_driver(my_menu, REQ_SCR_DPAGE);
+      break;
+    case KEY_PPAGE:
+      menu_driver(my_menu, REQ_SCR_UPAGE);
+      break;
     }
+    wrefresh(my_menu_win);
+  }
 
   /* Unpost and free all the memory taken up */
   unpost_menu(my_menu);
@@ -4544,8 +4550,8 @@ int main()
   endwin();
 }
 
-void print_in_middle(WINDOW *win, int starty, int startx, int width, char *string, chtype color)
-{   int length, x, y;
+void print_in_middle(WINDOW *win, int starty, int startx, int width, char *string, chtype color){
+  int length, x, y;
   float temp;
 
   if(win == NULL)
@@ -4590,21 +4596,22 @@ the requests (<code>REQ_SCR_DPAGE</code> and <code>REQ_SCR_UPAGE</code>) given t
 <div class="outline-text-3" id="text-18-6">
 <p>
 In the above example you have seen how to use the function
-<code>set_menu_format()</code>. I didn't mention what the cols variable (third
-parameter) does. Well, If your sub window is wide enough, you can
-opt to display more than one item per row. This can be specified in
-the cols variable. To make things simpler, the following example
-doesn't show descriptions for the items.
+<code>set_menu_format()</code>. I didn't mention what the <code>cols</code> variable
+(third parameter) does. Well, If your sub window is wide enough,
+you can opt to display more than one item per row. This can be
+specified in the <code>cols</code> variable. To make things simpler, the
+following example doesn't show descriptions for the items.
 </p>
 
 <p>
-<a href="ncurses_programs/basics/"><b>Example 21. Milt Columnar Menus Example</b></a>
+<a href="ncurses_programs/menus/menu_multi_column.c"><b>Example 21. Milt Columnar Menus Example</b></a>
 </p>
 
 <div class="org-src-container">
 
 <pre class="src src-c">#include &lt;curses.h&gt;
 #include &lt;menu.h&gt;
+#include &lt;stdlib.h&gt;
 
 #define ARRAY_SIZE(a) (sizeof(a) / sizeof(a[0]))
 #define CTRLD   4
@@ -4618,8 +4625,8 @@ char *choices[] = {
   (char *)NULL,
 };
 
-int main()
-{   ITEM **my_items;
+int main(){
+  ITEM **my_items;
   int c;
   MENU *my_menu;
   WINDOW *my_menu_win;
@@ -4669,29 +4676,29 @@ int main()
   post_menu(my_menu);
   wrefresh(my_menu_win);
 
-  while((c = wgetch(my_menu_win)) != KEY_F(1))
-    {       switch(c)
-        {   case KEY_DOWN:
-            menu_driver(my_menu, REQ_DOWN_ITEM);
-            break;
-        case KEY_UP:
-          menu_driver(my_menu, REQ_UP_ITEM);
-          break;
-        case KEY_LEFT:
-          menu_driver(my_menu, REQ_LEFT_ITEM);
-          break;
-        case KEY_RIGHT:
-          menu_driver(my_menu, REQ_RIGHT_ITEM);
-          break;
-        case KEY_NPAGE:
-          menu_driver(my_menu, REQ_SCR_DPAGE);
-          break;
-        case KEY_PPAGE:
-          menu_driver(my_menu, REQ_SCR_UPAGE);
-          break;
-        }
-      wrefresh(my_menu_win);
+  while((c = wgetch(my_menu_win)) != KEY_F(1)){
+    switch(c){
+    case KEY_DOWN:
+      menu_driver(my_menu, REQ_DOWN_ITEM);
+      break;
+    case KEY_UP:
+      menu_driver(my_menu, REQ_UP_ITEM);
+      break;
+    case KEY_LEFT:
+      menu_driver(my_menu, REQ_LEFT_ITEM);
+      break;
+    case KEY_RIGHT:
+      menu_driver(my_menu, REQ_RIGHT_ITEM);
+      break;
+    case KEY_NPAGE:
+      menu_driver(my_menu, REQ_SCR_DPAGE);
+      break;
+    case KEY_PPAGE:
+      menu_driver(my_menu, REQ_SCR_UPAGE);
+      break;
     }
+    wrefresh(my_menu_win);
+  }
 
   /* Unpost and free all the memory taken up */
   unpost_menu(my_menu);
@@ -4712,28 +4719,29 @@ also switched off the showing descriptions with the function
 menu options. The following menu options can be specified.
 </p>
 
-<pre class="example">
-O_ONEVALUE
-     Only one item can be selected for this menu.
+<dl class="org-dl">
+<dt> <code>O_ONEVALUE</code>   </dt><dd>Only one item can be selected for this menu.
+</dd>
 
-O_SHOWDESC
-     Display  the  item  descriptions  when  the  menu  is
-     posted.
+<dt> <code>O_SHOWDESC</code>   </dt><dd>Display the item descriptions when the menu is
+posted.
+</dd>
 
-O_ROWMAJOR
-     Display the menu in row-major order.
+<dt> <code>O_ROWMAJOR</code>   </dt><dd>Display the menu in row-major order.
+</dd>
 
-O_IGNORECASE
-     Ignore the case when pattern-matching.
+<dt> <code>O_IGNORECASE</code> </dt><dd>Ignore the case when pattern-matching.
+</dd>
 
-O_SHOWMATCH
-     Move the cursor to within the item  name  while  pat­
-     tern-matching.
+<dt> <code>O_SHOWMATCH</code>  </dt><dd>Move the cursor to within the item name while
+pattern-matching.
+</dd>
 
-O_NONCYCLIC
-     Don't   wrap   around  next-item  and  previous-item,
-     requests to the other end of the menu.
-</pre>
+<dt> <code>O_NONCYCLIC</code>  </dt><dd>Don't wrap around next-item and previous-item,
+requests to the other end of the menu.
+</dd>
+</dl>
+
 
 <p>
 All options are on by default. You can switch specific attributes
@@ -4757,13 +4765,15 @@ can select more than one item. This brings us to the request
 </p>
 
 <p>
-<a href="ncurses_programs/basics/"><b>Example 22. Multi Valued Menus example</b></a>
+<a href="ncurses_programs/menus/menu_toggle.c"><b>Example 22. Multi Valued Menus example</b></a>
 </p>
 
 <div class="org-src-container">
 
 <pre class="src src-c">#include &lt;curses.h&gt;
 #include &lt;menu.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
 
 #define ARRAY_SIZE(a) (sizeof(a) / sizeof(a[0]))
 #define CTRLD   4
@@ -4779,8 +4789,8 @@ char *choices[] = {
   "Exit",
 };
 
-int main()
-{   ITEM **my_items;
+int main(){
+  ITEM **my_items;
   int c;
   MENU *my_menu;
   int n_choices, i;
@@ -4809,36 +4819,36 @@ int main()
   post_menu(my_menu);
   refresh();
 
-  while((c = getch()) != KEY_F(1))
-    {       switch(c)
-        {   case KEY_DOWN:
-            menu_driver(my_menu, REQ_DOWN_ITEM);
-            break;
-        case KEY_UP:
-          menu_driver(my_menu, REQ_UP_ITEM);
-          break;
-        case ' ':
-          menu_driver(my_menu, REQ_TOGGLE_ITEM);
-          break;
-        case 10:    /* Enter */
-          {   char temp[200];
-            ITEM **items;
+  while((c = getch()) != KEY_F(1)){
+    switch(c){
+    case KEY_DOWN:
+      menu_driver(my_menu, REQ_DOWN_ITEM);
+      break;
+    case KEY_UP:
+      menu_driver(my_menu, REQ_UP_ITEM);
+      break;
+    case ' ':
+      menu_driver(my_menu, REQ_TOGGLE_ITEM);
+      break;
+    case 10:    /* Enter */
+      { char temp[200];
+        ITEM **items;
 
-            items = menu_items(my_menu);
-            temp[0] = '\0';
-            for(i = 0; i &lt; item_count(my_menu); ++i)
-              if(item_value(items[i]) == TRUE)
-                {   strcat(temp, item_name(items[i]));
-                  strcat(temp, " ");
-                }
-            move(20, 0);
-            clrtoeol();
-            mvprintw(20, 0, temp);
-            refresh();
+        items = menu_items(my_menu);
+        temp[0] = '\0';
+        for(i = 0; i &lt; item_count(my_menu); ++i)
+          if(item_value(items[i]) == TRUE){
+            strcat(temp, item_name(items[i]));
+            strcat(temp, " ");
           }
-          break;
-        }
+        move(20, 0);
+        clrtoeol();
+        mvprintw(20, 0, temp);
+        refresh();
+      }
+      break;
     }
+  }
 
   free_item(my_items[0]);
   free_item(my_items[1]);
@@ -4862,7 +4872,7 @@ Now when the user presses &lt;ENTER&gt; we show the items he presently
 selected. First we find out the items associated with the menu
 using the function <code>menu_items()</code>. Then we loop through the items
 to find out if the item is selected or not. The function
-<code>item_value()</code> returns TRUE if an item is selected. The function
+<code>item_value()</code> returns <code>TRUE</code> if an item is selected. The function
 <code>item_count()</code> returns the number of items in the menu. The item
 name can be found with <code>item_name()</code>. You can also find the
 description associated with an item using <code>item_description()</code>.
@@ -4887,19 +4897,20 @@ background which would have been useless.
 The function <code>set_menu_grey()</code> can be used to set the display
 attribute for the non-selectable items in the menu. This brings us
 to the interesting option for an item the one and only
-<code>O_SELECTABLE</code>. We can turn it off by the function
+<code>O_SELECTABLE</code>.  We can turn it off by the function
 <code>item_opts_off()</code> and after that that item is not selectable. It's
 like a grayed item in those fancy windows menus.  Let's put these
 concepts in practice with this example
 </p>
 
 <p>
-<a href="ncurses_programs/basics/"><b>Example 23. Menu Options example</b></a>
+<a href="ncurses_programs/menus/menu_attrib.c"><b>Example 23. Menu Options example</b></a>
 </p>
 
 <div class="org-src-container">
 
 <pre class="src src-c">#include &lt;menu.h&gt;
+#include &lt;stdlib.h&gt;
 
 #define ARRAY_SIZE(a) (sizeof(a) / sizeof(a[0]))
 #define CTRLD   4
@@ -4915,8 +4926,8 @@ char *choices[] = {
   "Exit",
 };
 
-int main()
-{   ITEM **my_items;
+int main(){
+  ITEM **my_items;
   int c;
   MENU *my_menu;
   int n_choices, i;
@@ -4955,23 +4966,24 @@ int main()
   post_menu(my_menu);
   refresh();
 
-  while((c = getch()) != KEY_F(1))
-    {       switch(c)
-        {   case KEY_DOWN:
-            menu_driver(my_menu, REQ_DOWN_ITEM);
-            break;
-        case KEY_UP:
-          menu_driver(my_menu, REQ_UP_ITEM);
-          break;
-        case 10: /* Enter */
-          move(20, 0);
-          clrtoeol();
-          mvprintw(20, 0, "Item selected is : %s",
-                   item_name(current_item(my_menu)));
-          pos_menu_cursor(my_menu);
-          break;
-        }
+  while((c = getch()) != KEY_F(1)){
+    switch(c){
+    case KEY_DOWN:
+      menu_driver(my_menu, REQ_DOWN_ITEM);
+      break;
+    case KEY_UP:
+      menu_driver(my_menu, REQ_UP_ITEM);
+      break;
+    case 10: /* Enter */
+      move(20, 0);
+      clrtoeol();
+      mvprintw(20, 0, "Item selected is : %s",
+               item_name(current_item(my_menu)));
+      pos_menu_cursor(my_menu);
+      break;
     }
+  }
+
   unpost_menu(my_menu);
   for(i = 0; i &lt; n_choices; ++i)
     free_item(my_items[i]);
@@ -4996,13 +5008,14 @@ chosen (It's selected and may be the user pressed &lt;ENTER&gt;);
 
 
 <p>
-<a href="ncurses_programs/basics/"><b>Example 24. Menu User Pointer Usage</b></a>
+<a href="ncurses_programs/menus/menu_userptr.c"><b>Example 24. Menu User Pointer Usage</b></a>
 </p>
 
 <div class="org-src-container">
 
 <pre class="src src-c">#include &lt;curses.h&gt;
 #include &lt;menu.h&gt;
+#include &lt;stdlib.h&gt;
 
 #define ARRAY_SIZE(a) (sizeof(a) / sizeof(a[0]))
 #define CTRLD   4
@@ -5017,10 +5030,11 @@ char *choices[] = {
   "Choice 7",
   "Exit",
 };
+
 void func(char *name);
 
-int main()
-{   ITEM **my_items;
+int main(){
+  ITEM **my_items;
   int c;
   MENU *my_menu;
   int n_choices, i;
@@ -5039,11 +5053,11 @@ int main()
   /* Initialize items */
   n_choices = ARRAY_SIZE(choices);
   my_items = (ITEM **)calloc(n_choices + 1, sizeof(ITEM *));
-  for(i = 0; i &lt; n_choices; ++i)
-    {       my_items[i] = new_item(choices[i], choices[i]);
-      /* Set the user pointer */
-      set_item_userptr(my_items[i], func);
-    }
+  for(i = 0; i &lt; n_choices; ++i){
+    my_items[i] = new_item(choices[i], choices[i]);
+    /* Set the user pointer */
+    set_item_userptr(my_items[i], func);
+  }
   my_items[n_choices] = (ITEM *)NULL;
 
   /* Create menu */
@@ -5055,27 +5069,28 @@ int main()
   post_menu(my_menu);
   refresh();
 
-  while((c = getch()) != KEY_F(1))
-    {       switch(c)
-        {   case KEY_DOWN:
-            menu_driver(my_menu, REQ_DOWN_ITEM);
-            break;
-        case KEY_UP:
-          menu_driver(my_menu, REQ_UP_ITEM);
-          break;
-        case 10: /* Enter */
-          {   ITEM *cur;
-            void (*p)(char *);
+  while((c = getch()) != KEY_F(1)){
+    switch(c){
+    case KEY_DOWN:
+      menu_driver(my_menu, REQ_DOWN_ITEM);
+      break;
+    case KEY_UP:
+      menu_driver(my_menu, REQ_UP_ITEM);
+      break;
+    case 10: /* Enter */
+      { ITEM *cur;
+        void (*p)(char *);
 
-            cur = current_item(my_menu);
-            p = item_userptr(cur);
-            p((char *)item_name(cur));
-            pos_menu_cursor(my_menu);
-            break;
-          }
-          break;
-        }
+        cur = current_item(my_menu);
+        p = item_userptr(cur);
+        p((char *)item_name(cur));
+        pos_menu_cursor(my_menu);
+        break;
+      }
+      break;
     }
+  }
+
   unpost_menu(my_menu);
   for(i = 0; i &lt; n_choices; ++i)
     free_item(my_items[i]);
@@ -5083,8 +5098,8 @@ int main()
   endwin();
 }
 
-void func(char *name)
-{   move(20, 0);
+void func(char *name){
+  move(20, 0);
   clrtoeol();
   mvprintw(20, 0, "Item selected is : %s", name);
 }
@@ -5180,7 +5195,7 @@ example. first.
 <h3 id="sec-19-2">18.2. Compiling With the Forms Library</h3>
 <div class="outline-text-3" id="text-19-2">
 <p>
-To use forms library functions, you have to include form.h and to
+To use forms library functions, you have to include <code>form.h</code> and to
 link the program with forms library the flag <code>-lform</code> should be
 added along with <code>-lncurses</code> in that order.
 </p>
@@ -5195,15 +5210,15 @@ compile and link: gcc &lt;program file&gt; -lform -lncurses
 </pre>
 
 <p>
-<a href="ncurses_programs/basics/"><b>Example 25. Forms Basics</b></a>
+<a href="ncurses_programs/forms/form_simple.c"><b>Example 25. Forms Basics</b></a>
 </p>
 
 <div class="org-src-container">
 
 <pre class="src src-c">#include &lt;form.h&gt;
 
-int main()
-{   FIELD *field[3];
+int main(){
+  FIELD *field[3];
   FORM  *my_form;
   int ch;
 
@@ -5235,27 +5250,27 @@ int main()
   refresh();
 
   /* Loop through to get user requests */
-  while((ch = getch()) != KEY_F(1))
-    {   switch(ch)
-        {   case KEY_DOWN:
-            /* Go to next field */
-            form_driver(my_form, REQ_NEXT_FIELD);
-            /* Go to the end of the present buffer */
-            /* Leaves nicely at the last character */
-            form_driver(my_form, REQ_END_LINE);
-            break;
-        case KEY_UP:
-          /* Go to previous field */
-          form_driver(my_form, REQ_PREV_FIELD);
-          form_driver(my_form, REQ_END_LINE);
-          break;
-        default:
-          /* If this is a normal character, it gets */
-          /* Printed                */
-          form_driver(my_form, ch);
-          break;
-        }
+  while((ch = getch()) != KEY_F(1)){
+    switch(ch){
+    case KEY_DOWN:
+      /* Go to next field */
+      form_driver(my_form, REQ_NEXT_FIELD);
+      /* Go to the end of the present buffer */
+      /* Leaves nicely at the last character */
+      form_driver(my_form, REQ_END_LINE);
+      break;
+    case KEY_UP:
+      /* Go to previous field */
+      form_driver(my_form, REQ_PREV_FIELD);
+      form_driver(my_form, REQ_END_LINE);
+      break;
+    default:
+      /* If this is a normal character, it gets */
+      /* Printed                */
+      form_driver(my_form, ch);
+      break;
     }
+  }
 
   /* Un post form and free the memory */
   unpost_form(my_form);
@@ -5285,7 +5300,7 @@ like.
 
 <p>
 After creating the fields, back ground attribute of both of them is
-set to an underscore with <code>set_field_back()</code>. The AUTOSKIP option
+set to an underscore with <code>set_field_back()</code>. The <code>AUTOSKIP</code> option
 is turned off using <code>field_opts_off()</code>. If this option is turned
 on, focus will move to the next field in the form once the active
 field is filled up completely.
@@ -6367,7 +6382,6 @@ categories. Different requests and their usage is explained below:
 </p>
 </div>
 
-
 <div id="outline-container-sec-25-1-1" class="outline-4">
 <h4 id="sec-25-1-1">18.6.1. Page Navigation Requests</h4>
 <div class="outline-text-4" id="text-25-1-1">
@@ -6811,7 +6825,6 @@ place to start for beginners. The CDK can be downloaded from
 README file to install it.
 </p>
 </div>
-
 
 <div id="outline-container-sec-26-1-1" class="outline-4">
 <h4 id="sec-26-1-1">19.1.1. Widget List</h4>

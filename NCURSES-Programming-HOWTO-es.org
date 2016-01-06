@@ -678,7 +678,7 @@
      .
      .
 
-     compilar y enlazar: gcc <archivo de programa> -lncurses
+     compilacion y enlace: gcc <archivo de programa> -lncurses
    #+END_EXAMPLE
 
    # *Example 1. The Hello World !!! Program*
@@ -3229,11 +3229,12 @@
    =-lpanel= junto con =-lncurses= en ese orden.
 
    #+BEGIN_EXAMPLE
-        #include <panel.h>
-        .
-        .
-        .
-        compilacion y enlace: gcc <fichero de programa> -lpanel -lncurses
+     #include <panel.h>
+     .
+     .
+     .
+
+     compilacion y enlace: gcc <fichero del programa> -lpanel -lncurses
    #+END_EXAMPLE
 
    # *Example 14. Panel basics*
@@ -3988,10 +3989,10 @@
   # which you can create menus. It provides a set of functions to create
   # menus. But they have to be customized to give a nicer look, with
   # colors etc. Let's get into the details.
-  La libreria de menús proporciona una agradable extensión a curses básicos, a través de
-  el que puede crear menús. Proporciona un conjunto de funciones para crear
-  menús. Pero tienen que ser personalizado para dar un aspecto más agradable, con
-  colores etc. Vamos a entrar en los detalles.
+  La libreria menu proporciona una buena extensión al curses básico, a
+  través de esta se pueden crear menús. Proporciona un conjunto de
+  funciones para crear menús. Pero tiene que personalizarce para dar
+  un aspecto más agradable, con colores etc. Entremos a los detalles.
 
   # A menu is a screen display that assists the user to choose some
   # subset of a given set of items. To put it simple, a menu is a
@@ -4001,14 +4002,14 @@
   # which the user can chose more than one item as the preferred
   # choice. This is dealt with in a later section. Now it is time for
   # some rudiments.
-  Un menú es una visualización de pantalla que ayuda al usuario a elegir un cierto
-  subconjunto de un conjunto dado de elementos. Para ponerlo simple, un menú es una
-  colección de elementos de los que se pueden elegir uno o más elementos. Algunos
-  lectores podrían no ser conscientes de selección de elementos múltiples
-  capacidad. Libreria menú ofrece funcionalidad para escribir menús de
-  que el usuario puede elegir más de un elemento como el preferido
-  elección. Esto se trata en una sección posterior. Ahora es el momento para
-  algunos rudimentos.
+  Un menú es una visualización de pantalla que ayuda al usuario a
+  elegir un cierto subconjunto de un conjunto dado de elementos. Para
+  ponerlo simple, un menú es una colección de elementos de los que se
+  pueden elegir uno o más elementos. Algunos lectores podrían no ser
+  conscientes de la capacidad de seliccion de elementos multiples.  La
+  libreria menu ofrece funcionalidad para escribir menús de los cuales
+  es usuario puede elegir más de un elemento. Esto se trata en una
+  sección posterior. Ahora es el momento para algunas nociones.
 
 # ** 17.1. The Basics
 ** 17.1. Lo basico
@@ -4017,53 +4018,55 @@
    # the display. After that, all the processing of user responses is
    # done in an elegant function =menu_driver()= which is the work horse
    # of any menu program.
-   Para crear menús, primero debe crear objetos, y luego publicar el menú para
-   la pantalla. Después de eso, todo el procesamiento de las respuestas de los usuarios es
-   hecho en una función elegante =menu_driver()= que es el caballo de trabajo
-   de cualquier programa de menú.
+   Para crear menús, primero debe crear elementos, y luego colocar el
+   menú en la pantalla. Después de eso, todo el procesamiento de las
+   respuestas del usuario es hecho en una función elegante llamada
+   =menu_driver()= que es el caballo de trabajo de cualquier programa
+   de menú.
 
    # The general flow of control of a menu program looks like this.
-   El flujo general de control de un programa de menú se parece a esto.
+   El flujo general de control de un programa de menú se parece a
+   esto.
 
    # 1. Initialize curses
-   1. curses Inicializar
+   1. Inicializar curses
 
    # 2. Create items using =new_item()=. You can specify a name and
    #    description for the items.
-   2. Cree elementos usando =NEW_ITEM()=. Puede especificar un nombre y
-      descripción de los artículos.
+   2. Cree elementos usando =new_item()=. Puede especificar un nombre
+      y una descripción de los elementos.
 
    # 3. Create the menu with =new_menu()= by specifying the items to be
    #    attached with.
-   3. Crear el menú con new_menu()= especificando los elementos para ser
-      adjunto con.
+   3. Crear el menú con =new_menu()= especificando los elementos que
+      se agregaran a este.
 
    # 4. Post the menu with =menu_post()= and refresh the screen.
-   4. Publicar el menú con menu_post()= y refrescar la pantalla.
+   4. Publicar el menú con =menu_post()= y refrescar la pantalla.
 
    # 5. Process the user requests with a loop and do necessary updates
    #    to menu with =menu_driver=.
-   5. Proceso de las peticiones de los usuarios con un lazo y hacer las actualizaciones necesarias
-      al menú con menu_driver =.
+   5. Procesar las las peticiones de los usuarios con un bucle y hacer
+      las actualizaciones necesarias al menú con =menu_driver=.
 
    # 6. Unpost the menu with =menu_unpost()=
-   6. Unpost el menú con menu_unpost()=
+   6. Quitar el menú con =menu_unpost()=
 
    # 7. Free the memory allocated to menu by =free_menu()=
-   7. Liberar la memoria asignada al menú =free_menu()=
+   7. Liberar la memoria asignada al menú con =free_menu()=
 
    # 8. Free the memory allocated to the items with =free_item()=
-   8. Liberar la memoria asignada a los elementos con free_item()=
+   8. Liberar la memoria asignada a los elementos con =free_item()=
 
    # 9. End curses
-   9. curses End
+   9. Finalizar curses
 
 
    # Let's see a program which prints a simple menu and updates the
    # current selection with up, down arrows.
 
    Vamos a ver un programa que imprime un menú sencillo y actualiza la
-   selección actual por arriba, abajo flechas.
+   selección actual con las teclas de flecha arriba, abajo.
 
 # ** 17.2. Compiling With the Menu Library
 ** 17.2. Compilación con la Libreria Menú
@@ -4071,24 +4074,25 @@
    # To use menu library functions, you have to include menu.h and to
    # link the program with menu library the flag =-lmenu= should be
    # added along with =-lncurses= in that order.
-   Para utilizar las funciones de libreria de menú, usted tiene que incluir menu.h y
-   vincular el programa con la libreria menú de la bandera =-lmenu = debe ser
-   añadido junto con =-lncurses en ese orden.
+   Para utilizar las funciones de libreria de menu, tiene que incluir
+   =menu.h= y enlazar el programa con la libreria menu mediante la
+   bandera =-lmenu= debe ser añadido junto con =-lncurses= en ese
+   orden.
 
    #+BEGIN_EXAMPLE
      #include <menu.h>
      .
      .
      .
-     compile and link: gcc <program file> -lmenu -lncurses
+
+     compilacion y enlace: gcc <fichero del programa> -lmenu -lncurses
    #+END_EXAMPLE
 
-   # + END_EXAMPLE
-
    # *Example 18. Menu Basics*
-   [[file:ncurses_programs/basics/][*Ejemplo 18. Conceptos básicos de menú*]]
+   [[file:ncurses_programs/menus/menu_simple.c][*Ejemplo 18. Conceptos básicos de Menu*]]
 
    #+BEGIN_SRC c
+     #include <stdlib.h>
      #include <curses.h>
      #include <menu.h>
 
@@ -4096,15 +4100,15 @@
      #define CTRLD   4
 
      char *choices[] = {
-       "Choice 1",
-       "Choice 2",
-       "Choice 3",
-       "Choice 4",
-       "Exit",
+       "Eleccion 1",
+       "Eleccion 2",
+       "Eleccion 3",
+       "Eleccion 4",
+       "Salir",
      };
 
      int main()
-     {   ITEM **my_items;
+     { ITEM **my_items;
        int c;
        MENU *my_menu;
        int n_choices, i;
@@ -4124,7 +4128,7 @@
        my_items[n_choices] = (ITEM *)NULL;
 
        my_menu = new_menu((ITEM **)my_items);
-       mvprintw(LINES - 2, 0, "F1 to Exit");
+       mvprintw(LINES - 2, 0, "F1 para Salir");
        post_menu(my_menu);
        refresh();
 
@@ -4157,72 +4161,75 @@
    # =menu_driver()= does the corresponding task.  The value can be
    # either a menu navigational request, an ascii character, or a
    # =KEY_MOUSE= special key associated with a mouse event.
-   Este programa demuestra los conceptos básicos que intervienen en la creación de un
-   menú con libreria menús. Primero creamos los elementos mediante
-   =NEW_ITEM()= y luego adjuntar a la carta con new_menu()=
-   función. Después de publicar el menú y la actualización de la pantalla, el
-   bucle principal de procesamiento comienza. Se lee la entrada del usuario y toma
-   acción correspondiente. La función =menu_driver()= es el trabajo principal
-   caballo del sistema de menús. El segundo parámetro para esta función
-   dice lo que hay que hacer con el menú. De acuerdo con el parámetro,
-   =menu_driver()= hace la tarea correspondiente. El valor puede ser
-   ya sea una solicitud menú de navegación, un carácter ASCII, o una
-   =KEY_MOUSE llave especial asociada a un evento de ratón.
+   Este programa demuestra los conceptos básicos que intervienen en la
+   creación de un menú con libreria menu. Primero creamos los
+   elementos mediante =new_item()= y luego los agregamos al menu con
+   la funcion =new_menu()=. Después de publicar el menu y actualizar
+   la pantalla, inicia el bucle principal de procesamiento. Se lee la
+   entrada del usuario y se toma la acción correspondiente. La función
+   =menu_driver()= es el principal caballo de trabajo del sistema de
+   menus. El segundo parámetro para esta función dice lo que hay que
+   hacer con el menu. De acuerdo con el parámetro, =menu_driver()=
+   hace la tarea correspondiente. El valor puede ser ya sea una
+   solicitud de navegación, un carácter ASCII, o una clave especial
+   =KEY_MOUSE= asociada a un evento de ratón.
 
    # The =menu_driver= accepts following navigational requests.
-   El menu_driver= acepta siguientes solicitudes de navegación.
+   =menu_driver= acepta las siguientes solicitudes de navegación.
+
+   # #+BEGIN_EXAMPLE
+   #   REQ_LEFT_ITEM       Move left to an item.
+   #   REQ_RIGHT_ITEM      Move right to an item.
+   #   REQ_UP_ITEM         Move up to an item.
+   #   REQ_DOWN_ITEM       Move down to an item.
+   #   REQ_SCR_ULINE       Scroll up a line.
+   #   REQ_SCR_DLINE       Scroll down a line.
+   #   REQ_SCR_DPAGE       Scroll down a page.
+   #   REQ_SCR_UPAGE       Scroll up a page.
+   #   REQ_FIRST_ITEM      Move to the first item.
+   #   REQ_LAST_ITEM       Move to the last item.
+   #   REQ_NEXT_ITEM       Move to the next item.
+   #   REQ_PREV_ITEM       Move to the previous item.
+   #   REQ_TOGGLE_ITEM     Select/deselect an item.
+   #   REQ_CLEAR_PATTERN   Clear the ¤menu pattern buffer.
+   #   REQ_BACK_PATTERN    Delete the previous character from the pattern buffer.
+   #   REQ_NEXT_MATCH      Move to the next item matching the pattern match.
+   #   REQ_PREV_MATCH      Move to the previous item matching the pattern match.
+   # #+END_EXAMPLE
 
    #+BEGIN_EXAMPLE
-     REQ_LEFT_ITEM       Move left to an item.
-     REQ_RIGHT_ITEM      Move right to an item.
-     REQ_UP_ITEM         Move up to an item.
-     REQ_DOWN_ITEM       Move down to an item.
-     REQ_SCR_ULINE       Scroll up a line.
-     REQ_SCR_DLINE       Scroll down a line.
-     REQ_SCR_DPAGE       Scroll down a page.
-     REQ_SCR_UPAGE       Scroll up a page.
-     REQ_FIRST_ITEM      Move to the first item.
-     REQ_LAST_ITEM       Move to the last item.
-     REQ_NEXT_ITEM       Move to the next item.
-     REQ_PREV_ITEM       Move to the previous item.
-     REQ_TOGGLE_ITEM     Select/deselect an item.
-     REQ_CLEAR_PATTERN   Clear the menu pattern buffer.
-     REQ_BACK_PATTERN    Delete the previous character from the pattern buffer.
-     REQ_NEXT_MATCH      Move to the next item matching the pattern match.
-     REQ_PREV_MATCH      Move to the previous item matching the pattern match.
+     REQ_LEFT_ITEM      	 Mover un elemento a la izquierda.
+     REQ_RIGHT_ITEM     	 Mover un elemento a la derecha.
+     REQ_UP_ITEM        	 Mover un elemento hacia arriba.
+     REQ_DOWN_ITEM      	 Mover un elemento hacia abajo.
+     REQ_SCR_ULINE      	 Desplácese una línea arriba.
+     REQ_SCR_DLINE      	 Desplácese una línea abajo.
+     REQ_SCR_DPAGE      	 Desplazarse una página hacia arriba.
+     REQ_SCR_UPAGE      	 Desplazarse una página hacia abajo.
+     REQ_FIRST_ITEM     	 Mover al primer elemento.
+     REQ_LAST_ITEM      	 Mover al último elemento.
+     REQ_NEXT_ITEM      	 Mover al siguiente elemento.
+     REQ_PREV_ITEM      	 Mover al elemento anterior.
+     REQ_TOGGLE_ITEM    	 Seleccionar/deseleccionar un elemento.
+     REQ_CLEAR_PATTERN  	 Borrar el buffer de patrones menu.
+     REQ_BACK_PATTERN   	 Eliminar el carácter anterior desde el buffer de patrones.
+     REQ_NEXT_MATCH     	 Mover al elemento siguiente que coincida con el patron.
+     REQ_PREV_MATCH     	 Mover al elemento anterior que coincida con el patron.
    #+END_EXAMPLE
-
-     REQ_LEFT_ITEM Mover a la izquierda a un elemento.
-     REQ_RIGHT_ITEM Mover a la derecha a un elemento.
-     REQ_UP_ITEM Mover hasta un elemento.
-     REQ_DOWN_ITEM Bajar a un elemento.
-     REQ_SCR_ULINE Desplácese hasta una línea.
-     REQ_SCR_DLINE Desplácese hacia abajo una línea.
-     REQ_SCR_DPAGE Desplazarse por una página.
-     REQ_SCR_UPAGE Desplazarse una página.
-     REQ_FIRST_ITEM Mueve al primer elemento.
-     REQ_LAST_ITEM Mueva al último elemento.
-     REQ_NEXT_ITEM Mover al siguiente elemento.
-     REQ_PREV_ITEM Mover al elemento anterior.
-     REQ_TOGGLE_ITEM Seleccionar / deseleccionar un elemento.
-     REQ_CLEAR_PATTERN Borrar el buffer de patrones menú.
-     REQ_BACK_PATTERN Eliminar el carácter anterior desde el buffer de patrones.
-     REQ_NEXT_MATCH Mover al siguiente elemento que coincida con el ajuste de patrones.
-     REQ_PREV_MATCH Mover al elemento anterior que coincida con el ajuste de patrones.
 
    # Don't get overwhelmed by the number of options. We will see them
    # slowly one after another. The options of interest in this example
    # are =REQ_UP_ITEM= and =REQ_DOWN_ITEM=. These two options when
    # passed to =menu_driver=, menu driver updates the current item to
    # one item up or down respectively.
-   No se dejen confundir por el número de opciones. Vamos a verlos
-   lentamente una tras otra. Las opciones de interés en este ejemplo
-   son = REQ_UP_ITEM = y = REQ_DOWN_ITEM =. Estas dos opciones cuando
-   pasó a = menu_driver, conductor menú actualiza el elemento actual de
-   un elemento hacia arriba o hacia abajo, respectivamente.
+   No se deje abrumar por el número de opciones. Vamos a verlos
+   lentamente una tras otro. Las opciones de interés en este ejemplo
+   son =REQ_UP_ITEM= y =REQ_DOWN_ITEM=. Estas dos opciones son pasadas
+   a =menu_driver=, que actualiza el elemento actual a un elemento
+   hacia arriba o hacia abajo, respectivamente.
 
 # ** 17.3. Menu Driver: The work horse of the menu system
-** 17.3. Menú del conductor: El caballo de trabajo del sistema de menús
+** 17.3. Menu Driver: El caballo de trabajo del sistema de menus
 
    # As you have seen in the above example, =menu_driver= plays an
    # important role in updating the menu. It is very important to
@@ -4230,36 +4237,37 @@
    # above, the second parameter to =menu_driver()= can be either a
    # navigational request, a printable character or a =KEY_MOUSE=
    # key. Let's dissect the different navigational requests.
-   Como se ha visto en el ejemplo anterior, = menu_driver juega un
-   papel importante en la actualización del menú. Es muy importante
-   comprender las diversas opciones que se necesita y lo que hacen. Como se ha explicado
-   anteriormente, el segundo parámetro a = menu_driver()= puede ser una
-   solicitud de navegación, un carácter imprimible o una = KEY_MOUSE =
-   llave. Vamos a diseccionar las diferentes solicitudes de navegación.
+   Como se ha visto en el ejemplo anterior, =menu_driver= juega un
+   papel importante en la actualización del menu. Es muy importante
+   comprender las diversas opciones y lo que hacen. Como se ha
+   explicado, el segundo parámetro de =menu_driver()= puede ser una
+   solicitud de navegación, un carácter imprimible o una clave
+   =KEY_MOUSE=. Vamos a analizar las diferentes solicitudes de
+   navegación.
 
-   - =REQ_LEFT_ITEM= and =REQ_RIGHT_ITEM=
+   - =REQ_LEFT_ITEM= y =REQ_RIGHT_ITEM=
 
      # A Menu can be displayed with multiple columns for more than one
      # item.  This can be done by using the
      # =menu_format()=function. When a multi columnar menu is displayed
      # these requests cause the menu driver to move the current
      # selection to left or right.
-     Un menú se puede visualizar con varias columnas de más de un
-     ítem. Esto se puede hacer mediante el uso de la
-     = menu_format()= función. Cuando se muestra un menú de columnas múltiples
-     estas peticiones provocan el conductor menú para mover el actual
-     selección a la izquierda oa la derecha.
+     Se puede visualizar un menu con varias columnas de más de un
+     ítem. Esto se realiza mediante la funcion =menu_format()=. Cuando
+     se muestra un menu de columnas múltiples estas peticiones hacen
+     que =menu_driver= de menu mueva la eleccion actual a la izquierda
+     o la derecha.
 
    - =REQ_UP_ITEM= and =REQ_DOWN_ITEM=
 
      # These two options you have seen in the above example. These
      # options when given, makes the =menu_driver= to move the current
      # selection to an item up or down.
-     Estas dos opciones que se han visto en el ejemplo anterior. Estas
-     opciones cuando se dan, hacen que el menu_driver = para mover la corriente
-     la selección de un elemento hacia arriba o hacia abajo.
+     Estas dos opciones se han visto en el ejemplo anterior. Cuando se
+     pasan estas opciones, hacen que =menu_driver= mueva la eleccion
+     actual un elemento hacia arriba o hacia abajo.
 
-   - =REQ_SCR_*= options
+   - Opciones =REQ_SCR_*=
 
      # The four options =REQ_SCR_ULINE=, =REQ_SCR_DLINE=,
      # =REQ_SCR_DPAGE=, =REQ_SCR_UPAGE= are related to scrolling. If all
@@ -4267,18 +4275,19 @@
      # then the menu is scrollable. These requests can be given to the
      # =menu_driver= to do the scrolling either one line up, down or one
      # page down or up respectively.
-     Las cuatro opciones = REQ_SCR_ULINE = = REQ_SCR_DLINE,
-     = REQ_SCR_DPAGE = = REQ_SCR_UPAGE están relacionados con el desplazamiento. Me caigo
-     los elementos en el menú no se pueden visualizar en la ventana de submenú,
-     a continuación, el menú es desplazable. Estas solicitudes se pueden dar a la
-     = menu_driver para hacer el desplazamiento, ya sea una línea hacia arriba, hacia abajo o uno
-     página hacia abajo o hacia arriba respectivamente.
+     Las cuatro opciones =REQ_SCR_ULINE=, =REQ_SCR_DLINE=,
+     =REQ_SCR_DPAGE=, =REQ_SCR_UPAGE= están relacionadas con el
+     desplazamiento. Si no se pueden mostrar todos los elementos de el
+     menu en la subventana menu, el menu es desplazable. Estas
+     solicitudes se pueden pasar a =menu_driver= para realizar el
+     desplazamiento, ya sea por línea o por pagina hacia arriba o
+     hacia abajo respectivamente.
 
    - =REQ_FIRST_ITEM=, =REQ_LAST_ITEM=, =REQ_NEXT_ITEM= and
      =REQ_PREV_ITEM=
 
      # These requests are self explanatory.
-     Estas solicitudes son explica por sí mismo.
+     Estas solicitudes se explica por sí mismas.
 
    - =REQ_TOGGLE_ITEM=
 
@@ -4286,13 +4295,14 @@
      # option is to be used only in a multi valued menu. So to use this
      # request the option =O_ONEVALUE= must be off. This option can be
      # made off or on with =set_menu_opts()=.
-     Esta solicitud cuando se administra, se alterna la selección actual. Esta
-     opción es para ser utilizado sólo en un menú de múltiples valioso. Así que para utilizar este
-     Solicitar la opción = O_ONEVALUE = debe estar apagado. Esta opción puede ser
-     hecho o desactivar con set_menu_opts()=.
+     Quando se pasa esta solicitud, se alterna la selección actual.
+     Solo se utiliza esta opción en un menu de valores múltiples. Para
+     utilizar esta solicitud la opción =O_ONEVALUE= debe estar
+     apagada. Esta opción puede ser apagar o encender con
+     =set_menu_opts()=.
 
    # - /Pattern Requests/
-   Solicitudes / Patrón / -
+   - /Solicitud por Patrones/
 
      # Every menu has an associated pattern buffer, which is used to
      # find the nearest match to the ascii characters entered by the
@@ -4305,27 +4315,28 @@
      # matches more than one item then the matched items can be cycled
      # through =REQ_NEXT_MATCH= and =REQ_PREV_MATCH= which move the
      # current selection to the next and previous matches respectively.
-     Cada menú tiene una memoria intermedia de patrón asociado, que se utiliza para
-     encontrar la coincidencia más cercana a los caracteres ASCII introducidos por el
-     usuario. Siempre caracteres ASCII se dan a = menu_driver =, que
-     pone en al tampón patrón. También trata de encontrar la más cercana
-     coincida con el patrón en la lista de artículos y mueve actual
-     la selección de ese elemento. La solicitud = REQ_CLEAR_PATTERN = claros
-     el buffer de patrones. La solicitud = REQ_BACK_PATTERN = borra el
-     carácter anterior en el buffer de patrones. En caso de que el patrón
-     partidos de más de un artículo a continuación los elementos coincidentes puede ciclar
-     a través = REQ_NEXT_MATCH = y = REQ_PREV_MATCH que mover el
-     la selección actual para los próximos partidos y los anteriores, respectivamente.
+     Cada menu tiene una buffer de patrones asociado, que se utiliza
+     para encontrar la coincidencia más cercana a los caracteres ASCII
+     introducidos por el usuario. Siempre que se pasan caracteres
+     ASCII a =menu_driver=, se colocan el el buffer de patrones. Este
+     inteta encontrar la coincida más cercana con el patrón en la
+     lista de elementos y mueve la seleccion a ese elemento. La
+     solicitud =REQ_CLEAR_PATTERN= limpia el buffer de patrones. La
+     solicitud =REQ_BACK_PATTERN= borra el carácter anterior en el
+     buffer de patrones. En caso de que el patrón coincida con mas de
+     un elemento se puede rotar por los elementos coincidentes con
+     =REQ_NEXT_MATCH= y =REQ_PREV_MATCH= que mueven la selección a la
+     conicidencia siguiente y anterior, respectivamente.
 
    # - /Mouse Requests/
-   - Solicitudes / mouse /
+   - /Solicitudes del raton/
 
      # In case of =KEY_MOUSE= requests, according to the mouse position
      # an action is taken accordingly. The action to be taken is
      # explained in the man page as,
-     En caso de = KEY_MOUSE solicitudes, de acuerdo con la posición del ratón
-     una acción se toma en consecuencia. La acción a tomar es
-     se explica en la página del manual como,
+     En caso de solicitudes =KEY_MOUSE=, de acuerdo con la posición
+     del ratón se toma una acción en consecuencia. La acción a tomar
+     se explica en la página man como,
 
      # #+BEGIN_QUOTE
      #   If  the  second argument is the KEY_MOUSE special key, the
@@ -4342,31 +4353,32 @@
      #   you click at an item inside the display area of the  menu,
      #   the menu cursor is positioned to that item.
      # #+END_QUOTE
-     # + BEGIN_QUOTE
-       Si el segundo argumento es la llave especial KEY_MOUSE, la
-       evento de ratón asociado se traduce en uno de los anteriores
-       solicitudes de pre-definido. Actualmente, sólo los clics en el usuario
-       ventana (por ejemplo, dentro del área de visualización del menú o la decora
-       la ventana) se manejan. Si hace clic encima de la pantalla
-       región del menú, se genera un REQ_SCR_ULINE, si
-       DoubleClick un REQ_SCR_UPAGE se genera y si
-       se genera un tripleclick REQ_FIRST_ITEM. Si hace clic en
-       por debajo de la zona de visualización del menú, una REQ_SCR_DLINE es
-       generado, se genera si haces doble un REQ_SCR_DPAGE
-       y si tripleclick se genera una REQ_LAST_ITEM. Si
-       hace clic en un elemento dentro del área de visualización del menú,
-       el cursor del menú se coloca a dicho elemento.
-     # + END_QUOTE
+
+     #+BEGIN_QUOTE
+       Si el segundo argumento es la clave especial =KEY_MOUSE=, el
+       evento de ratón asociado se traduce en una de las anteriores
+       solicitudes pre-definidas. Actualmente, solo se manejan los
+       clics en la ventana de usuario (por ejemplo, dentro del área de
+       visualización del menu o la decoracion de ventana). Si hace
+       clic sobre la zona de visualizacion del menu, se genera un
+       =REQ_SCR_ULINE=, con doble clic se genera =REQ_SCR_UPAGE= y con
+       triple clic =REQ_FIRST_ITEM=. Si hace clic por debajo de la
+       zona de visualización del menu, se genera un =REQ_SCR_DLINE=,
+       un doble clic =REQ_SCR_DPAGE= y un triple click genera
+       =REQ_LAST_ITEM=.  Si hace clic en un elemento dentro del área
+       de visualización del menu, el cursor del menu se coloca en
+       dicho elemento.
+     #+END_QUOTE
 
 
    # Each of the above requests will be explained in the following lines
    # with several examples whenever appropriate.
 
-   Cada una de las solicitudes anteriores se explicará en las siguientes líneas
-   con varios ejemplos siempre que sea apropiado.
+   Cada una de las solicitudes anteriores se explicará en las
+   siguientes líneas con varios ejemplos siempre que sea apropiado.
 
 # ** 17.4. Menu Windows
-** 17.4. Menú de Windows
+** 17.4. Ventanas Menu
 
    # Every menu created is associated with a window and a sub
    # window. The menu window displays any title or border associated
@@ -4378,44 +4390,47 @@
    # items. Then items are displayed in the calculated sub window. So
    # let's play with these windows and display a menu with a border and
    # a title.
-   Cada menú creado se asocia con una ventana y una sub
-   ventana. La ventana de menú muestra cualquier título o de la frontera asociado
-   con el menú. La ventana de submenú muestra los elementos del menú
-   Actualmente disponible para la selección. Pero no especificamos cualquier ventana
-   o ventana secundaria en el sencillo ejemplo. Cuando una ventana no es
-   especificado,=stdscr= se toma como la ventana principal y, a continuación sistema de menús
-   calcula el tamaño de la ventana sub requerido para la visualización de
-   artículos. A continuación se muestran los elementos en la ventana sub calculada. Asi que
-   Vamos a jugar con estas ventanas y mostrar un menú con un borde y
-   un título.
+   Cada menu creado se asocia con una ventana y una sub ventana. La
+   ventana menu muestra cualquier título o borde asociado con el
+   menu. La ventana submenu muestra los elementos del menu actualmente
+   disponible para su selección. Pero no especificamos ninguna ventana
+   o subventana en el ejemplo. Cuando no se especifica una ventana,
+   =stdscr= se toma como la ventana principal y, el sistema de menus
+   calcula el tamaño requerido de la subventana para la visualización
+   de elementos. A continuación se muestran los elementos en la
+   subventana. Asi que vamos a jugar con estas ventanas, mostrado un
+   menu con un borde y un título.
 
    # *Example 19. Menu Windows Usage example*
-   [[file:ncurses_programs/basics/][*Ejemplo 19. Menú Ejemplo de uso de Windows*]]
+   [[file:ncurses_programs/menus/menu_win.c][*Ejemplo 19. Uso de Ventanas Menu*]]
 
    #+BEGIN_SRC c
      #include <menu.h>
+     #include <stdlib.h>
+     #include <string.h>
 
      #define ARRAY_SIZE(a) (sizeof(a) / sizeof(a[0]))
      #define CTRLD   4
 
      char *choices[] = {
-       "Choice 1",
-       "Choice 2",
-       "Choice 3",
-       "Choice 4",
-       "Exit",
+       "Opcion 1",
+       "Opcion 2",
+       "Opcion 3",
+       "Opcion 4",
+       "Salir",
        (char *)NULL,
      };
+
      void print_in_middle(WINDOW *win, int starty, int startx, int width, char *string, chtype color);
 
      int main()
-     {   ITEM **my_items;
+     { ITEM **my_items;
        int c;
        MENU *my_menu;
        WINDOW *my_menu_win;
        int n_choices, i;
 
-       /* Initialize curses */
+       /* Inicializa curses */
        initscr();
        start_color();
        cbreak();
@@ -4423,52 +4438,52 @@
        keypad(stdscr, TRUE);
        init_pair(1, COLOR_RED, COLOR_BLACK);
 
-       /* Create items */
+       /* Crea los elementos */
        n_choices = ARRAY_SIZE(choices);
        my_items = (ITEM **)calloc(n_choices, sizeof(ITEM *));
        for(i = 0; i < n_choices; ++i)
          my_items[i] = new_item(choices[i], choices[i]);
 
-       /* Crate menu */
+       /* Crea el menu */
        my_menu = new_menu((ITEM **)my_items);
 
-       /* Create the window to be associated with the menu */
+       /* Crea la ventana que sera asociada con el menu */
        my_menu_win = newwin(10, 40, 4, 4);
        keypad(my_menu_win, TRUE);
 
-       /* Set main window and sub window */
+       /* Establece la ventana principal y la subventana */
        set_menu_win(my_menu, my_menu_win);
        set_menu_sub(my_menu, derwin(my_menu_win, 6, 38, 3, 1));
 
-       /* Set menu mark to the string " * " */
+       /* Establece la marca del menu con la cadena " * " */
        set_menu_mark(my_menu, " * ");
 
-       /* Print a border around the main window and print a title */
+       /* Imprime un margen alrededor de la ventana pricipal e imprime el titulo */
        box(my_menu_win, 0, 0);
-       print_in_middle(my_menu_win, 1, 0, 40, "My Menu", COLOR_PAIR(1));
+       print_in_middle(my_menu_win, 1, 0, 40, "Mi Menu", COLOR_PAIR(1));
        mvwaddch(my_menu_win, 2, 0, ACS_LTEE);
        mvwhline(my_menu_win, 2, 1, ACS_HLINE, 38);
        mvwaddch(my_menu_win, 2, 39, ACS_RTEE);
-       mvprintw(LINES - 2, 0, "F1 to exit");
+       mvprintw(LINES - 2, 0, "F1 para Salir");
        refresh();
 
-       /* Post the menu */
+       /* Publica el menu */
        post_menu(my_menu);
        wrefresh(my_menu_win);
 
-       while((c = wgetch(my_menu_win)) != KEY_F(1))
-         {       switch(c)
-             {   case KEY_DOWN:
-                 menu_driver(my_menu, REQ_DOWN_ITEM);
-                 break;
-             case KEY_UP:
-               menu_driver(my_menu, REQ_UP_ITEM);
-               break;
-             }
-           wrefresh(my_menu_win);
+       while((c = wgetch(my_menu_win)) != KEY_F(1)){
+         switch(c){
+         case KEY_DOWN:
+           menu_driver(my_menu, REQ_DOWN_ITEM);
+           break;
+         case KEY_UP:
+           menu_driver(my_menu, REQ_UP_ITEM);
+           break;
          }
+         wrefresh(my_menu_win);
+       }
 
-       /* Unpost and free all the memory taken up */
+       /* remueve el menu y libera toda la memoria tomada */
        unpost_menu(my_menu);
        free_menu(my_menu);
        for(i = 0; i < n_choices; ++i)
@@ -4477,7 +4492,7 @@
      }
 
      void print_in_middle(WINDOW *win, int starty, int startx, int width, char *string, chtype color)
-     {   int length, x, y;
+     { int length, x, y;
        float temp;
 
        if(win == NULL)
@@ -4506,15 +4521,16 @@
    # used. Then we attach the sub window also. This displays the items
    # in the sub window.  You can also set the mark string which gets
    # displayed to the left of the selected item with =set_menu_mark()=.
-   En este ejemplo se crea un menú con un título, frontera, una línea de lujo
-   separando título y los artículos. Como se puede ver, con el fin de adjuntar
-   una ventana a un menú la función set_menu_win()= tiene que ser
-   utilizado. A continuación adjuntamos la ventana secundaria también. Esto muestra los elementos
-   en la ventana secundaria. También puede establecer la cadena de marca que consigue
-   se muestra a la izquierda del elemento seleccionado con set_menu_mark()=.
+   En este ejemplo se crea un menu con un título, margen, una
+   fantastica línea separa el título y los elementos. Como puede ver,
+   con el fin de unir una ventana a un menu se utiliza la función
+   =set_menu_win()=. A continuación agregamos tambien la ventana
+   secundaria. Esto despliega los elementos en la subventana. También
+   puede establecer la cadena de marca que se muestra a la izquierda
+   del elemento seleccionado con =set_menu_mark()=.
 
 # ** 17.5. Scrolling Menus
-** 17.5. Desplazamiento Menús
+** 17.5. Desplazamiento en Menus
 
    # If the sub window given for a window is not big enough to show all
    # the items, then the menu will be scrollable. When you are on the
@@ -4522,47 +4538,50 @@
    # translated into =REQ_SCR_DLINE= and the menu scrolls by one
    # item. You can manually give =REQ_SCR_= operations to do
    # scrolling. Let's see how it can be done.
-   Si la ventana sub dado para una ventana no es lo suficientemente grande para mostrar todo
-   los artículos, después el menú serán desplazable. Cuando usted está en el
-   último elemento de la lista actual, si envía = REQ_DOWN_ITEM =, se pone
-   traducido a = REQ_SCR_DLINE = y el menú se desplaza por uno
-   ítem. Usted puede dar de forma manual = REQ_SCR_ = operaciones que hacer
-   desplazamiento. Vamos a ver cómo se puede hacer.
+   Si la subventana dada no es lo suficientemente grande para mostrar
+   todo los elementos, el menu serán desplazable. Cuando se está en el
+   último elemento de la lista actual, si envía =REQ_DOWN_ITEM=, sera
+   traducido como =REQ_SCR_DLINE= y el menu se desplaza un elemento.
+   Puede pasar manualmente operaciones =REQ_SCR_= para realizar el
+   desplazamiento. Veamos cómo se puede realizar.
 
    # *Example 20. Scrolling Menus example*
-   [[file:ncurses_programs/basics/][*Ejemplo Ejemplo 20. Desplazamiento Menús*]]
+   [[file:ncurses_programs/menus/menu_scroll.c][*Ejemplo 20. Menu con Desplazamiento*]]
 
    #+BEGIN_SRC c
      #include <curses.h>
      #include <menu.h>
+     #include <stdlib.h>
+     #include <string.h>
 
      #define ARRAY_SIZE(a) (sizeof(a) / sizeof(a[0]))
      #define CTRLD   4
 
      char *choices[] = {
-       "Choice 1",
-       "Choice 2",
-       "Choice 3",
-       "Choice 4",
-       "Choice 5",
-       "Choice 6",
-       "Choice 7",
-       "Choice 8",
-       "Choice 9",
-       "Choice 10",
-       "Exit",
+       "Opcion 1",
+       "Opcion 2",
+       "Opcion 3",
+       "Opcion 4",
+       "Opcion 5",
+       "Opcion 6",
+       "Opcion 7",
+       "Opcion 8",
+       "Opcion 9",
+       "Opcion 10",
+       "Salir",
        (char *)NULL,
      };
+
      void print_in_middle(WINDOW *win, int starty, int startx, int width, char *string, chtype color);
 
-     int main()
-     {   ITEM **my_items;
+     int main(){
+       ITEM **my_items;
        int c;
        MENU *my_menu;
        WINDOW *my_menu_win;
        int n_choices, i;
 
-       /* Initialize curses */
+       /* Inicializa curses */
        initscr();
        start_color();
        cbreak();
@@ -4571,63 +4590,63 @@
        init_pair(1, COLOR_RED, COLOR_BLACK);
        init_pair(2, COLOR_CYAN, COLOR_BLACK);
 
-       /* Create items */
+       /* Crea los elementos */
        n_choices = ARRAY_SIZE(choices);
        my_items = (ITEM **)calloc(n_choices, sizeof(ITEM *));
        for(i = 0; i < n_choices; ++i)
          my_items[i] = new_item(choices[i], choices[i]);
 
-       /* Crate menu */
+       /* Crea el menu */
        my_menu = new_menu((ITEM **)my_items);
 
-       /* Create the window to be associated with the menu */
+       /* Crea la ventana que sera asociada con el menu */
        my_menu_win = newwin(10, 40, 4, 4);
        keypad(my_menu_win, TRUE);
 
-       /* Set main window and sub window */
+       /* Establece la ventana principal y la subventana */
        set_menu_win(my_menu, my_menu_win);
        set_menu_sub(my_menu, derwin(my_menu_win, 6, 38, 3, 1));
        set_menu_format(my_menu, 5, 1);
 
-       /* Set menu mark to the string " * " */
+       /* Establece la marca del menu con la cadena " * " */
        set_menu_mark(my_menu, " * ");
 
-       /* Print a border around the main window and print a title */
+       /* Imprime un margen alrededor de la ventana pricipal e imprime el titulo */
        box(my_menu_win, 0, 0);
-       print_in_middle(my_menu_win, 1, 0, 40, "My Menu", COLOR_PAIR(1));
+       print_in_middle(my_menu_win, 1, 0, 40, "Mi Menu", COLOR_PAIR(1));
        mvwaddch(my_menu_win, 2, 0, ACS_LTEE);
        mvwhline(my_menu_win, 2, 1, ACS_HLINE, 38);
        mvwaddch(my_menu_win, 2, 39, ACS_RTEE);
 
-       /* Post the menu */
+       /* Publica el menu */
        post_menu(my_menu);
        wrefresh(my_menu_win);
 
        attron(COLOR_PAIR(2));
-       mvprintw(LINES - 2, 0, "Use PageUp and PageDown to scoll down or up a page of items");
-       mvprintw(LINES - 1, 0, "Arrow Keys to navigate (F1 to Exit)");
+       mvprintw(LINES - 2, 0, "Use PageUp y PageDown para desplazar una pagina de elementos abajo o arriba");
+       mvprintw(LINES - 1, 0, "Las flechas para navegar (F1 Para Salir)");
        attroff(COLOR_PAIR(2));
        refresh();
 
-       while((c = wgetch(my_menu_win)) != KEY_F(1))
-         {       switch(c)
-             {   case KEY_DOWN:
-                 menu_driver(my_menu, REQ_DOWN_ITEM);
-                 break;
-             case KEY_UP:
-               menu_driver(my_menu, REQ_UP_ITEM);
-               break;
-             case KEY_NPAGE:
-               menu_driver(my_menu, REQ_SCR_DPAGE);
-               break;
-             case KEY_PPAGE:
-               menu_driver(my_menu, REQ_SCR_UPAGE);
-               break;
-             }
-           wrefresh(my_menu_win);
+       while((c = wgetch(my_menu_win)) != KEY_F(1)){
+         switch(c){
+         case KEY_DOWN:
+           menu_driver(my_menu, REQ_DOWN_ITEM);
+           break;
+         case KEY_UP:
+           menu_driver(my_menu, REQ_UP_ITEM);
+           break;
+         case KEY_NPAGE:
+           menu_driver(my_menu, REQ_SCR_DPAGE);
+           break;
+         case KEY_PPAGE:
+           menu_driver(my_menu, REQ_SCR_UPAGE);
+           break;
          }
+         wrefresh(my_menu_win);
+       }
 
-       /* Unpost and free all the memory taken up */
+       /* Remueve el menu y libera toda la memoria tomada */
        unpost_menu(my_menu);
        free_menu(my_menu);
        for(i = 0; i < n_choices; ++i)
@@ -4635,8 +4654,8 @@
        endwin();
      }
 
-     void print_in_middle(WINDOW *win, int starty, int startx, int width, char *string, chtype color)
-     {   int length, x, y;
+     void print_in_middle(WINDOW *win, int starty, int startx, int width, char *string, chtype color){
+       int length, x, y;
        float temp;
 
        if(win == NULL)
@@ -4671,19 +4690,19 @@
    # the requests (=REQ_SCR_DPAGE= and =REQ_SCR_UPAGE=) given to
    # =menu_driver()=.
    Este programa se explica por sí. En este ejemplo, el número de
-   opciones ha sido aumentado a diez, que es más grande que nuestro sub
-   tamaño de la ventana que puede albergar 6 artículos. Este mensaje tiene que ser
-   transmitido explícitamente al sistema de menús con la función
-   set_menu_format()=. Aquí especificamos el número de filas y
-   columnas que queremos que se muestren para una sola página. Podemos especificar
-   cualquier número de temas que se muestra, en las variables de filas, si es
-   menor que la altura de la ventana sub. Si la tecla presionada por el
-   usuario es un PÁG o AV PÁG, el menú se desplaza una página debido a la
-   las solicitudes (= REQ_SCR_DPAGE = y = REQ_SCR_UPAGE =) dado a
-   menu_driver()=.
+   opciones ha sido aumentado a diez, que es más grande que el tamaño
+   que nuestra subventana puede albergar (6 elementos). Este mensaje
+   tiene que ser transmitido explícitamente al sistema de menus con la
+   función =set_menu_format()=. Aquí especificamos el número de filas
+   y columnas que queremos que se muestren para una sola página.
+   Podemos especificar cualquier número de elementos a mostrar, en la
+   variable rows, si este es menor que la altura de la subventana. Si
+   la tecla presionada por el usuario es PAGE UP o PAGE DOWN, el menu
+   se desplaza una página debido a la las solicitudes (=REQ_SCR_DPAGE=
+   y =REQ_SCR_UPAGE=) dadas a =menu_driver()=.
 
 # ** 17.6. Multi Columnar Menus
-** 17.6. Multi columnas Menús
+** 17.6. Menu de Multiples Columnas
 
    # In the above example you have seen how to use the function
    # =set_menu_format()=. I didn't mention what the cols variable (third
@@ -4691,40 +4710,41 @@
    # opt to display more than one item per row. This can be specified in
    # the cols variable. To make things simpler, the following example
    # doesn't show descriptions for the items.
-   En el ejemplo anterior has visto cómo utilizar la función
-   set_menu_format()=. No mencioné lo que la variable cols (tercero
-   parámetro) hace. Bueno, si su ventana secundaria es lo suficientemente amplia, se puede
-   optar por mostrar más de un artículo por fila. Esto se puede especificar en
-   la variable cols. Para simplificar las cosas, el siguiente ejemplo
-   no muestra las descripciones de los artículos.
+   En el ejemplo anterior se vio cómo utilizar la función
+   =set_menu_format()=. No mencioné lo que hace la variable =cols=
+   (tercer parámetro). Si la subventana es lo suficientemente amplia,
+   puede optar por mostrar más de un elemento por fila. Esto se puede
+   especificar en la variable =cols=. Para aclarar las cosas, El
+   siguiente ejemplo no muestra la descripcion de los elementos.
 
    # *Example 21. Milt Columnar Menus Example*
-   [[file:ncurses_programs/basics/][*Ejemplo 21. Milt columnas Menús Ejemplo*]]
+   [[file:ncurses_programs/menus/menu_multi_column.c][*Ejemplo 21. Menu con Columnas Multiples*]]
 
    #+BEGIN_SRC c
      #include <curses.h>
      #include <menu.h>
+     #include <stdlib.h>
 
      #define ARRAY_SIZE(a) (sizeof(a) / sizeof(a[0]))
      #define CTRLD   4
 
      char *choices[] = {
-       "Choice 1",  "Choice 2",  "Choice 3",  "Choice 4",  "Choice 5",
-       "Choice 6",  "Choice 7",  "Choice 8",  "Choice 9",  "Choice 10",
-       "Choice 11", "Choice 12", "Choice 13", "Choice 14", "Choice 15",
-       "Choice 16", "Choice 17", "Choice 18", "Choice 19", "Choice 20",
-       "Exit",
+       "Opcion 1",  "Opcion 2",  "Opcion 3",  "Opcion 4",  "Opcion 5",
+       "Opcion 6",  "Opcion 7",  "Opcion 8",  "Opcion 9",  "Opcion 10",
+       "Opcion 11", "Opcion 12", "Opcion 13", "Opcion 14", "Opcion 15",
+       "Opcion 16", "Opcion 17", "Opcion 18", "Opcion 19", "Opcion 20",
+       "Salir",
        (char *)NULL,
      };
 
-     int main()
-     {   ITEM **my_items;
+     int main(){
+       ITEM **my_items;
        int c;
        MENU *my_menu;
        WINDOW *my_menu_win;
        int n_choices, i;
 
-       /* Initialize curses */
+       /* Tnicializa curses */
        initscr();
        start_color();
        cbreak();
@@ -4733,66 +4753,66 @@
        init_pair(1, COLOR_RED, COLOR_BLACK);
        init_pair(2, COLOR_CYAN, COLOR_BLACK);
 
-       /* Create items */
+       /* Crea los elementos */
        n_choices = ARRAY_SIZE(choices);
        my_items = (ITEM **)calloc(n_choices, sizeof(ITEM *));
        for(i = 0; i < n_choices; ++i)
          my_items[i] = new_item(choices[i], choices[i]);
 
-       /* Crate menu */
+       /* Crea el menu */
        my_menu = new_menu((ITEM **)my_items);
 
-       /* Set menu option not to show the description */
+       /* Configura la opcion del menu para no mostar la descripcion */
        menu_opts_off(my_menu, O_SHOWDESC);
 
-       /* Create the window to be associated with the menu */
+       /* Crea la ventana que sera asaciada al menu */
        my_menu_win = newwin(10, 70, 4, 4);
        keypad(my_menu_win, TRUE);
 
-       /* Set main window and sub window */
+       /* Establece la vetana principal y la subventana */
        set_menu_win(my_menu, my_menu_win);
        set_menu_sub(my_menu, derwin(my_menu_win, 6, 68, 3, 1));
        set_menu_format(my_menu, 5, 3);
        set_menu_mark(my_menu, " * ");
 
-       /* Print a border around the main window and print a title */
+       /* Imprime un margen alrededor de la ventana pricipal e imprime el titulo */
        box(my_menu_win, 0, 0);
 
        attron(COLOR_PAIR(2));
-       mvprintw(LINES - 3, 0, "Use PageUp and PageDown to scroll");
-       mvprintw(LINES - 2, 0, "Use Arrow Keys to navigate (F1 to Exit)");
+       mvprintw(LINES - 3, 0, "Use PageUp y PageDown para el desplazamiento");
+       mvprintw(LINES - 2, 0, "Use Las flechas para navegar (F1 Para Salir)");
        attroff(COLOR_PAIR(2));
        refresh();
 
-       /* Post the menu */
+       /* Publica el menu */
        post_menu(my_menu);
        wrefresh(my_menu_win);
 
-       while((c = wgetch(my_menu_win)) != KEY_F(1))
-         {       switch(c)
-             {   case KEY_DOWN:
-                 menu_driver(my_menu, REQ_DOWN_ITEM);
-                 break;
-             case KEY_UP:
-               menu_driver(my_menu, REQ_UP_ITEM);
-               break;
-             case KEY_LEFT:
-               menu_driver(my_menu, REQ_LEFT_ITEM);
-               break;
-             case KEY_RIGHT:
-               menu_driver(my_menu, REQ_RIGHT_ITEM);
-               break;
-             case KEY_NPAGE:
-               menu_driver(my_menu, REQ_SCR_DPAGE);
-               break;
-             case KEY_PPAGE:
-               menu_driver(my_menu, REQ_SCR_UPAGE);
-               break;
-             }
-           wrefresh(my_menu_win);
+       while((c = wgetch(my_menu_win)) != KEY_F(1)){
+         switch(c){
+         case KEY_DOWN:
+           menu_driver(my_menu, REQ_DOWN_ITEM);
+           break;
+         case KEY_UP:
+           menu_driver(my_menu, REQ_UP_ITEM);
+           break;
+         case KEY_LEFT:
+           menu_driver(my_menu, REQ_LEFT_ITEM);
+           break;
+         case KEY_RIGHT:
+           menu_driver(my_menu, REQ_RIGHT_ITEM);
+           break;
+         case KEY_NPAGE:
+           menu_driver(my_menu, REQ_SCR_DPAGE);
+           break;
+         case KEY_PPAGE:
+           menu_driver(my_menu, REQ_SCR_UPAGE);
+           break;
          }
+         wrefresh(my_menu_win);
+       }
 
-       /* Unpost and free all the memory taken up */
+       /* Remueve el menu y libera toda la memoria tomada */
        unpost_menu(my_menu);
        free_menu(my_menu);
        for(i = 0; i < n_choices; ++i)
@@ -4813,46 +4833,48 @@
    También apagado las descripciones que muestran con la función
    menu_opts_off()=. Hay par de funciones = set_menu_opts()=,
    menu_opts_on()= y = menu_opts()= que se pueden utilizar para manipular
-   opciones de menú. Las siguientes opciones de menú se pueden especificar.
+   opciones de menu. Las siguientes opciones de menu se pueden especificar.
 
-   #+BEGIN_EXAMPLE
-     O_ONEVALUE
-          Only one item can be selected for this menu.
+   # #+BEGIN_EXAMPLE
+   #   O_ONEVALUE
+   #        Only one item can be selected for this menu.
 
-     O_SHOWDESC
-          Display  the  item  descriptions  when  the  menu  is
-          posted.
+   #   O_SHOWDESC
+   #        Display  the  item  descriptions  when  the  menu  is
+   #        posted.
 
-     O_ROWMAJOR
-          Display the menu in row-major order.
+   #   O_ROWMAJOR
+   #        Display the menu in row-major order.
 
-     O_IGNORECASE
-          Ignore the case when pattern-matching.
+   #   O_IGNORECASE
+   #        Ignore the case when pattern-matching.
 
-     O_SHOWMATCH
-          Move the cursor to within the item  name  while  pat­
-          tern-matching.
+   #   O_SHOWMATCH
+   #        Move the cursor to within the item  name  while  pat­
+   #        tern-matching.
 
-     O_NONCYCLIC
-          Don't   wrap   around  next-item  and  previous-item,
-          requests to the other end of the menu.
-   #+END_EXAMPLE
-     O_ONEVALUE
-          Sólo una opción puede seleccionarse para este menú.
+   #   O_NONCYCLIC
+   #        ¤Don't   wrap   around  next-item  and  previous-item,
+   #        requests to the other end of the menu.
+   # #+END_EXAMPLE
 
-     O_SHOWDESC
-          Mostrar las descripciones de los artículos cuando el menú es
-          al corriente.
-     O_ROWMAJOR
-          Mostrar el menú en orden de las filas.
-     O_IGNORECASE
-          Ignorar el caso de patrones.
-     O_SHOWMATCH
-          Mueva el cursor dentro del nombre del elemento, mientras pat
-          golondrina de mar de coincidencia.
-     O_NONCYCLIC
-          No envuelva alrededor de siguiente artículo y el anterior ítem,
-          solicitudes al otro extremo del menú.
+   - =O_ONEVALUE=   :: Solo un elemento puede seleccionarse para este
+                       menu.
+
+   - =O_SHOWDESC=   :: Mostrar las descripciones de los elementos
+                       cuando el menu es publicado.
+
+   - =O_ROWMAJOR=   :: Mostrar el menu en orden de importancia de las
+                       filas.
+
+   - =O_IGNORECASE= :: Ignorar el caso en cuando el patron coincida.
+
+   - =O_SHOWMATCH=  :: Mueve el cursor dentro del nombre del elemento,
+                       mientras el patron coincide.
+
+   - =O_NONCYCLIC=  :: No rotar entre el siguiente/anterior elemento,
+                       solicitar por por el otro extremo del menu.
+
 
    # All options are on by default. You can switch specific attributes
    # on or off with =menu_opts_on()= and =menu_opts_off()=
@@ -4860,60 +4882,63 @@
    # the options. The argument to this function should be a OR ed value
    # of some of those above constants.  The function =menu_opts()= can
    # be used to find out a menu's present options.
-   Todas las opciones están de forma predeterminada. Puede cambiar los atributos específicos
-   o desactivar con menu_opts_on()= y = menu_opts_off()=
-   funciones. También puede utilizar = set_menu_opts()= para especificar directamente
-   las opciones. El argumento para esta función debe ser un valor de O ed
-   de algunas de esas constantes anteriores. La función = menu_opts()= lata
-   ser utilizado para determinar las opciones actuales de un menú.
+   Todas las opciones están habilitadas de forma predeterminada. Puede
+   cambiar los atributos específicos a encendido o apagado con las
+   funciones =menu_opts_on()= y =menu_opts_off()=. También puede
+   utilizar =set_menu_opts()= para especificar directamente las
+   opciones. El argumento para esta función debe ser un valor OR de
+   algunas de las constantes anteriores. Puede utilazar la función
+   =menu_opts()= para optener las opciones actuales de un menu.
 
 # ** 17.7. Multi Valued Menus
-** 17.7. Menús Multi Valoradas
+** 17.7. Menu de Valores Multiples
 
    # You might be wondering what if you switch off the option
    # =O_ONEVALUE=.  Then the menu becomes multi-valued. That means you
    # can select more than one item. This brings us to the request
    # =REQ_TOGGLE_ITEM=. Let's see it in action.
-   Tal vez se pregunte lo que si apaga la opción
-   = O_ONEVALUE. A continuación, el menú se convierte en multi-valorada. Eso significa que usted
-   puede seleccionar más de un elemento. Esto nos lleva a la solicitud
-   = REQ_TOGGLE_ITEM. Vamos a ver en acción.
+   Tal vez se pregunte lo que ocurre si apaga la opción =O_ONEVALUE=.
+   Esto crea un menu de valores multiples. Eso significa que se puede
+   seleccionar más de un elemento. Esto nos lleva a la solicitud
+   =REQ_TOGGLE_ITEM=. Veamoslo en acción.
 
    # *Example 22. Multi Valued Menus example*
-   [[file:ncurses_programs/basics/][*Ejemplo 22. Multi ejemplo Menús Valorado*]]
+   [[file:ncurses_programs/menus/menu_toggle.c][*Ejemplo 22. Menu de Valores Multiples*]]
 
    #+BEGIN_SRC c
      #include <curses.h>
      #include <menu.h>
+     #include <stdlib.h>
+     #include <string.h>
 
      #define ARRAY_SIZE(a) (sizeof(a) / sizeof(a[0]))
      #define CTRLD   4
 
      char *choices[] = {
-       "Choice 1",
-       "Choice 2",
-       "Choice 3",
-       "Choice 4",
-       "Choice 5",
-       "Choice 6",
-       "Choice 7",
-       "Exit",
+       "Opcion 1",
+       "Opcion 2",
+       "Opcion 3",
+       "Opcion 4",
+       "Opcion 5",
+       "Opcion 6",
+       "Opcion 7",
+       "Salir",
      };
 
-     int main()
-     {   ITEM **my_items;
+     int main(){
+       ITEM **my_items;
        int c;
        MENU *my_menu;
        int n_choices, i;
        ITEM *cur_item;
 
-       /* Initialize curses */
+       /* Inicializa curses */
        initscr();
        cbreak();
        noecho();
        keypad(stdscr, TRUE);
 
-       /* Initialize items */
+       /* Inicializa elementos */
        n_choices = ARRAY_SIZE(choices);
        my_items = (ITEM **)calloc(n_choices + 1, sizeof(ITEM *));
        for(i = 0; i < n_choices; ++i)
@@ -4922,44 +4947,44 @@
 
        my_menu = new_menu((ITEM **)my_items);
 
-       /* Make the menu multi valued */
+       /* Crea el menu de valores multiples */
        menu_opts_off(my_menu, O_ONEVALUE);
 
-       mvprintw(LINES - 3, 0, "Use <SPACE> to select or unselect an item.");
-       mvprintw(LINES - 2, 0, "<ENTER> to see presently selected items(F1 to Exit)");
+       mvprintw(LINES - 3, 0, "Use <SPACE> para seleccionar o deseleccionar un elemento.");
+       mvprintw(LINES - 2, 0, "<ENTER> para ver los elementos seleccionados(F1 Para Salir)");
        post_menu(my_menu);
        refresh();
 
-       while((c = getch()) != KEY_F(1))
-         {       switch(c)
-             {   case KEY_DOWN:
-                 menu_driver(my_menu, REQ_DOWN_ITEM);
-                 break;
-             case KEY_UP:
-               menu_driver(my_menu, REQ_UP_ITEM);
-               break;
-             case ' ':
-               menu_driver(my_menu, REQ_TOGGLE_ITEM);
-               break;
-             case 10:    /* Enter */
-               {   char temp[200];
-                 ITEM **items;
+       while((c = getch()) != KEY_F(1)){
+         switch(c){
+         case KEY_DOWN:
+           menu_driver(my_menu, REQ_DOWN_ITEM);
+           break;
+         case KEY_UP:
+           menu_driver(my_menu, REQ_UP_ITEM);
+           break;
+         case ' ':
+           menu_driver(my_menu, REQ_TOGGLE_ITEM);
+           break;
+         case 10:    /* Enter */
+           { char temp[200];
+             ITEM **items;
 
-                 items = menu_items(my_menu);
-                 temp[0] = '\0';
-                 for(i = 0; i < item_count(my_menu); ++i)
-                   if(item_value(items[i]) == TRUE)
-                     {   strcat(temp, item_name(items[i]));
-                       strcat(temp, " ");
-                     }
-                 move(20, 0);
-                 clrtoeol();
-                 mvprintw(20, 0, temp);
-                 refresh();
+             items = menu_items(my_menu);
+             temp[0] = '\0';
+             for(i = 0; i < item_count(my_menu); ++i)
+               if(item_value(items[i]) == TRUE){
+                 strcat(temp, item_name(items[i]));
+                 strcat(temp, " ");
                }
-               break;
-             }
+             move(20, 0);
+             clrtoeol();
+             mvprintw(20, 0, temp);
+             refresh();
+           }
+           break;
          }
+       }
 
        free_item(my_items[0]);
        free_item(my_items[1]);
@@ -4974,12 +4999,12 @@
    # request =REQ_TOGGLE_ITEM= toggles the present selection. In this
    # case when space is pressed =REQ_TOGGLE_ITEM= request is sent to
    # =menu_driver= to achieve the result.
-   ¡Menos mal, un montón de nuevas funciones. Vamos a tomar una tras otra.
-   En primer lugar, la REQ_TOGGLE_ITEM =. En un menú de varios valores, el usuario
-   se debe permitir para seleccionar o anular seleccionar más de un elemento. los
-   Solicitar = REQ_TOGGLE_ITEM = Alterna la selección actual. En esto
-   caso cuando se pulsa el espacio = REQ_TOGGLE_ITEM = solicitud se envía al
-   = menu_driver para lograr el resultado.
+   Menos mal, un montón de nuevas funciones. Vamos a tomar una tras
+   otra.  En primer lugar, =REQ_TOGGLE_ITEM=. En un menu de valores
+   multiples, se debe permitir a el usuario seleccionar o anular más
+   de un elemento. La solicitud =REQ_TOGGLE_ITEM= alterna la selección
+   actual. En esto caso cuando se pulsa espacio se envia la solicitud
+   =REQ_TOGGLE_ITEM= a =menu_driver= para conseguir el resultado.
 
    # Now when the user presses <ENTER> we show the items he presently
    # selected. First we find out the items associated with the menu
@@ -4989,17 +5014,18 @@
    # =item_count()= returns the number of items in the menu. The item
    # name can be found with =item_name()=. You can also find the
    # description associated with an item using =item_description()=.
-   Ahora, cuando el usuario presiona <Enter> se muestran los objetos que actualmente
-   seleccionado. En primer lugar nos encontramos con los elementos asociados con el menú
-   Uso de la función = menu_items()=. A continuación, recorrer los elementos
-   para saber si el elemento se selecciona o no. La función
-   = item_value()= devuelve TRUE si se ha seleccionado un elemento. La función
-   = ITEM_COUNT()= devuelve el número de elementos en el menú. El objeto
-   nombre se puede encontrar con item_name()=. También puede encontrar el
-   Descripción asociado con un elemento utilizando = item_description()=.
+   Ahora, cuando el usuario presiona <ENTER> se muestran los elementos
+   actualmente seleccionados. Primero debemos encontrar los elementos
+   asociados con el menu empleando la función =menu_items()=. A
+   continuación, recorrer los elementos para saber si el elemento se
+   selecciona o no. La función =item_value()= devuelve =TRUE= si el
+   elemento se ha seleccionado. La función =item_count()= devuelve el
+   número de elementos en el menu. El objeto nombre se puede optener
+   con =item_name()=. También puede optener la descripción asociado
+   con un elemento utilizando =item_description()=.
 
 # ** 17.8. Menu Options
-** 17.8. Opciones de menú
+** 17.8. Opciones de Menu
 
    # Well, by this time you must be itching for some difference in your
    # menu, with lots of functionality. I know. You want Colors !!!. You
@@ -5008,13 +5034,14 @@
    # change the attribute of the selected item and unselected item. The
    # names are misleading. They don't change menu's foreground or
    # background which would have been useless.
-   Bueno, a estas alturas ya debe estar picando por alguna diferencia en su
-   menú, con un montón de funcionalidad. Lo sé. ¿Quieres Colores !!!. usted
-   querer crear menús agradables similares a las que el modo de texto [[http://www.jersey.net/~debinjoe/games/][dos juegos]]. los
-   funciones set_menu_fore()= y = set_menu_back()= puede ser usado para
-   cambiar el atributo del elemento seleccionado y el tema no seleccionada. los
-   nombres son engañosos. No cambian primer plano de menú o
-   fondo que habría sido inútil.
+   Bueno, a estas alturas ya debe estar buscando alguna diferencia en
+   su menu, con un montón de funcionalidades. Lo sé. Quiere Colores
+   !!!. Quiere crear menus agradables similares a las de aquellos
+   [[http://www.jersey.net/~debinjoe/games/][juegos dos]] en modo texto. Puede utilizar las funciones
+   =set_menu_fore()= y =set_menu_back()= para cambiar el atributo de
+   los elementos seleccionados y no seleccionados. Los nombres son
+   engañosos. No cambian el primer plano o el fondo del menu lo cual
+   los haria menos utiles.
 
    # The function =set_menu_grey()= can be used to set the display
    # attribute for the non-selectable items in the menu. This brings us
@@ -5023,42 +5050,43 @@
    # =item_opts_off()= and after that that item is not selectable. It's
    # like a grayed item in those fancy windows menus.  Let's put these
    # concepts in practice with this example
-   La función = set_menu_grey()= se puede utilizar para ajustar la pantalla
-   atributo para los elementos no seleccionables en el menú. Esto nos lleva
-   a la opción interesante para un artículo el único
-   = O_SELECTABLE. Podemos apagarlo por la función
-   = item_opts_off()= y después de que ese elemento no se puede seleccionar. Sus
-   como un elemento atenuados los menús de las ventanas de lujo. Vamos a poner estos
-   conceptos en la práctica con este ejemplo
+   Puede utilizar la función =set_menu_grey()= para establecer el
+   atributo de pantalla para los elementos no seleccionables en el
+   menu. Esto nos lleva a la interesante opción para un unico elemento
+   =O_SELECTABLE=. Podemos apagar dicha opcion con la función
+   =item_opts_off()= y luego el elemento deja de ser seleccionable.
+   Esto es parecido a atenuar un elemento en alquellos fantasticos
+   menus.  Vamos a poner estos conceptos en práctica con este ejemplo
 
    # *Example 23. Menu Options example*
-   [[file:ncurses_programs/basics/][*Ejemplo 23. Opciones del menú de ejemplo*]]
+   [[file:ncurses_programs/menus/menu_attrib.c][*Ejemplo 23. Opciones del Menu*]]
 
    #+BEGIN_SRC c
      #include <menu.h>
+     #include <stdlib.h>
 
      #define ARRAY_SIZE(a) (sizeof(a) / sizeof(a[0]))
      #define CTRLD   4
 
      char *choices[] = {
-       "Choice 1",
-       "Choice 2",
-       "Choice 3",
-       "Choice 4",
-       "Choice 5",
-       "Choice 6",
-       "Choice 7",
-       "Exit",
+       "Opcion 1",
+       "Opcion 2",
+       "Opcion 3",
+       "Opcion 4",
+       "Opcion 5",
+       "Opcion 6",
+       "Opcion 7",
+       "Salir",
      };
 
-     int main()
-     {   ITEM **my_items;
+     int main(){
+       ITEM **my_items;
        int c;
        MENU *my_menu;
        int n_choices, i;
        ITEM *cur_item;
 
-       /* Initialize curses */
+       /* Inicializa curses */
        initscr();
        start_color();
        cbreak();
@@ -5068,7 +5096,7 @@
        init_pair(2, COLOR_GREEN, COLOR_BLACK);
        init_pair(3, COLOR_MAGENTA, COLOR_BLACK);
 
-       /* Initialize items */
+       /* Inicializa los elementos */
        n_choices = ARRAY_SIZE(choices);
        my_items = (ITEM **)calloc(n_choices + 1, sizeof(ITEM *));
        for(i = 0; i < n_choices; ++i)
@@ -5077,37 +5105,38 @@
        item_opts_off(my_items[3], O_SELECTABLE);
        item_opts_off(my_items[6], O_SELECTABLE);
 
-       /* Create menu */
+       /* Crea el menu */
        my_menu = new_menu((ITEM **)my_items);
 
-       /* Set fore ground and back ground of the menu */
+       /* Establece el primer plano y el fondo del menu */
        set_menu_fore(my_menu, COLOR_PAIR(1) | A_REVERSE);
        set_menu_back(my_menu, COLOR_PAIR(2));
        set_menu_grey(my_menu, COLOR_PAIR(3));
 
        /* Post the menu */
-       mvprintw(LINES - 3, 0, "Press <ENTER> to see the option selected");
-       mvprintw(LINES - 2, 0, "Up and Down arrow keys to naviage (F1 to Exit)");
+       mvprintw(LINES - 3, 0, "Presione <ENTER> para ver la opcion seleccionada");
+       mvprintw(LINES - 2, 0, "Flechas Arriba y Abajo para navegar (F1 para Salir)");
        post_menu(my_menu);
        refresh();
 
-       while((c = getch()) != KEY_F(1))
-         {       switch(c)
-             {   case KEY_DOWN:
-                 menu_driver(my_menu, REQ_DOWN_ITEM);
-                 break;
-             case KEY_UP:
-               menu_driver(my_menu, REQ_UP_ITEM);
-               break;
-             case 10: /* Enter */
-               move(20, 0);
-               clrtoeol();
-               mvprintw(20, 0, "Item selected is : %s",
-                        item_name(current_item(my_menu)));
-               pos_menu_cursor(my_menu);
-               break;
-             }
+       while((c = getch()) != KEY_F(1)){
+         switch(c){
+         case KEY_DOWN:
+           menu_driver(my_menu, REQ_DOWN_ITEM);
+           break;
+         case KEY_UP:
+           menu_driver(my_menu, REQ_UP_ITEM);
+           break;
+         case 10: /* Enter */
+           move(20, 0);
+           clrtoeol();
+           mvprintw(20, 0, "El elemento seleccionado es : %s",
+                    item_name(current_item(my_menu)));
+           pos_menu_cursor(my_menu);
+           break;
          }
+       }
+
        unpost_menu(my_menu);
        for(i = 0; i < n_choices; ++i)
          free_item(my_items[i]);
@@ -5117,50 +5146,53 @@
    #+END_SRC
 
 # ** 17.9. The useful User Pointer
-** 17.9. El puntero del usuario útil
+** 17.9. El conveniente Puntero de Usuario
 
    # We can associate a user pointer with each item in the menu. It
    # works the same way as user pointer in panels. It's not touched by
    # menu system. You can store any thing you like in that. I usually
    # use it to store the function to be executed when the menu option is
    # chosen (It's selected and may be the user pressed <ENTER>);
-   Podemos asociar un puntero usuario con cada elemento del menú. Ello
-   funciona de la misma manera como puntero de usuario en los paneles. No es tocado por
-   sistema de menús. Puede almacenar cualquier cosa que te guste en eso. Yo suelo
-   lo utilizan para almacenar la función a ejecutar cuando la opción de menú es
-   elegido (Se selecciona y puede ser el usuario pulsa <ENTER>);
+   Podemos asociar un puntero de usuario a cada elemento del
+   menu. Esto funciona de la misma forma que en los paneles. Esto no
+   es tocado por el sistema de menus. Puede almacenar cualquier cosa
+   en estos. Yo suelo utilizarlo para almacenar la función a ejecutar
+   cuando se elige la opcion de menu (Esta seleccionada y el usuario
+   pulsa <ENTER>);
 
 
    # *Example 24. Menu User Pointer Usage*
-   [[file:ncurses_programs/basics/][*Ejemplo 24. Menú Uso Puntero Usuario*]]
+   [[file:ncurses_programs/menus/menu_userptr.c][*Ejemplo 24. Menu con Puntero de Usuario*]]
 
    #+BEGIN_SRC c
      #include <curses.h>
      #include <menu.h>
+     #include <stdlib.h>
 
      #define ARRAY_SIZE(a) (sizeof(a) / sizeof(a[0]))
      #define CTRLD   4
 
      char *choices[] = {
-       "Choice 1",
-       "Choice 2",
-       "Choice 3",
-       "Choice 4",
-       "Choice 5",
-       "Choice 6",
-       "Choice 7",
-       "Exit",
+       "Opcion 1",
+       "Opcion 2",
+       "Opcion 3",
+       "Opcion 4",
+       "Opcion 5",
+       "Opcion 6",
+       "Opcion 7",
+       "Salir",
      };
+
      void func(char *name);
 
-     int main()
-     {   ITEM **my_items;
+     int main(){
+       ITEM **my_items;
        int c;
        MENU *my_menu;
        int n_choices, i;
        ITEM *cur_item;
 
-       /* Initialize curses */
+       /* Inicializa curses */
        initscr();
        start_color();
        cbreak();
@@ -5170,46 +5202,47 @@
        init_pair(2, COLOR_GREEN, COLOR_BLACK);
        init_pair(3, COLOR_MAGENTA, COLOR_BLACK);
 
-       /* Initialize items */
+       /* Inicializa los elementos */
        n_choices = ARRAY_SIZE(choices);
        my_items = (ITEM **)calloc(n_choices + 1, sizeof(ITEM *));
-       for(i = 0; i < n_choices; ++i)
-         {       my_items[i] = new_item(choices[i], choices[i]);
-           /* Set the user pointer */
-           set_item_userptr(my_items[i], func);
-         }
+       for(i = 0; i < n_choices; ++i){
+         my_items[i] = new_item(choices[i], choices[i]);
+         /* Establece el puntero de usuario */
+         set_item_userptr(my_items[i], func);
+       }
        my_items[n_choices] = (ITEM *)NULL;
 
-       /* Create menu */
+       /* Crea el menu */
        my_menu = new_menu((ITEM **)my_items);
 
-       /* Post the menu */
-       mvprintw(LINES - 3, 0, "Press <ENTER> to see the option selected");
-       mvprintw(LINES - 2, 0, "Up and Down arrow keys to naviage (F1 to Exit)");
+       /* Publica el menu */
+       mvprintw(LINES - 3, 0, "Presione <ENTER> para ver la opcion seleccionada");
+       mvprintw(LINES - 2, 0, "Flechas Arriba y Abajo para navegar (F1 para Salir)");
        post_menu(my_menu);
        refresh();
 
-       while((c = getch()) != KEY_F(1))
-         {       switch(c)
-             {   case KEY_DOWN:
-                 menu_driver(my_menu, REQ_DOWN_ITEM);
-                 break;
-             case KEY_UP:
-               menu_driver(my_menu, REQ_UP_ITEM);
-               break;
-             case 10: /* Enter */
-               {   ITEM *cur;
-                 void (*p)(char *);
+       while((c = getch()) != KEY_F(1)){
+         switch(c){
+         case KEY_DOWN:
+           menu_driver(my_menu, REQ_DOWN_ITEM);
+           break;
+         case KEY_UP:
+           menu_driver(my_menu, REQ_UP_ITEM);
+           break;
+         case 10: /* Enter */
+           { ITEM *cur;
+             void (*p)(char *);
 
-                 cur = current_item(my_menu);
-                 p = item_userptr(cur);
-                 p((char *)item_name(cur));
-                 pos_menu_cursor(my_menu);
-                 break;
-               }
-               break;
-             }
+             cur = current_item(my_menu);
+             p = item_userptr(cur);
+             p((char *)item_name(cur));
+             pos_menu_cursor(my_menu);
+             break;
+           }
+           break;
          }
+       }
+
        unpost_menu(my_menu);
        for(i = 0; i < n_choices; ++i)
          free_item(my_items[i]);
@@ -5217,15 +5250,15 @@
        endwin();
      }
 
-     void func(char *name)
-     {   move(20, 0);
+     void func(char *name){
+       move(20, 0);
        clrtoeol();
-       mvprintw(20, 0, "Item selected is : %s", name);
+       mvprintw(20, 0, "El elemento seleccionado es : %s", name);
      }
    #+END_SRC
 
 # * 18. Forms Library
-* 18. Formas Libreria
+* 18. Libreria Form
 
   # Well. If you have seen those forms on web pages which take input
   # from users and do various kinds of things, you might be wondering
@@ -5234,20 +5267,23 @@
   # tries to provide a basic frame work to build and maintain forms with
   # ease. It has lot of features(functions) which manage validation,
   # dynamic expansion of fields etc.. Let's see it in full flow.
-  Bien. Si usted ha visto esos formularios en páginas web que tengan entrada
-  de los usuarios y hacer varios tipos de cosas, puede que se pregunte
-  ¿cómo cualquiera crear esas formas en la pantalla en modo texto. Es silencioso
-  difícil de escribir esas formas ingeniosas en ncurses llanos. Formas libreria
-  trata de proporcionar un marco de trabajo básico para construir y mantener las formas con
-  facilidad. Cuenta con gran cantidad de características (funciones) que gestionan la validación,
-  expansión dinámica de campos, etc .. Vamos a ver que en pleno desarrollo.
+  Bien. Si usted ha visto esos formularios en páginas web que toman la
+  entrada del usuario y hacen varios tipos de cosas, puede que se
+  pregunte cómo crear formularios en pantalla en modo texto. Es
+  bastante difícil escribir esos elegantes formularios en ncurses
+  puro. La libreria form intenta proporcionar un marco de trabajo
+  básico para construir y mantener formularios con facilidad. Cuenta
+  con gran cantidad de características (funciones) que gestionan la
+  validación, expansión dinámica de campos, etc.. Veamos esto en pleno
+  desarrollo.
 
   # A form is a collection of fields; each field can be either a
   # label(static text) or a data-entry location. The forms also library
   # provides functions to divide forms into multiple pages.
-  Un formulario es una colección de campos; Cada campo puede ser o bien una
-  etiqueta (texto estático) o en un lugar de entrada de datos. Los formularios también libreria
-  proporciona funciones para dividir las formas en varias páginas.
+  Un formulario es una colección de campos; Cada campo puede ser o
+  bien una etiqueta (texto estático) o un lugar de entrada de datos.
+  La libreria también proporciona funciones para dividir los
+  formularios en varias páginas.
 
 # ** 18.1. The Basics
 ** 18.1. Lo basico
@@ -5263,143 +5299,148 @@
    # focus to a certain field, move cursor to end of the field
    # etc.. After the user enters values in the fields and validation
    # done, form can be unposted and memory allocated can be freed.
-   Formas se crean en la misma manera como menús. Primero los campos
-   relacionada con la forma se crean con new_field()=. Puede configurar
-   Opciones para los campos, de manera que se pueden mostrar con cierta
-   atributos de lujo, validados antes de que el campo pierde el foco
-   etc .. A continuación, los campos están unidos para formar. Después de esto, el formulario
-   puede ser publicado para mostrar y está listo para recibir entradas. En el
-   líneas similares a = menu_driver()=, la forma se manipula con
-   form_driver()=. Podemos enviar solicitudes a = form_driver = mover
-   enfoque a un cierto campo, mover el cursor al final del campo
-   etc .. Después de que el usuario introduce los valores en los campos y validación
-   hecho, la forma puede ser sin contabilizar y memoria asignada puede ser liberado.
+   Los formularios se crean en la misma manera que los menus. Primero
+   se crean los campos relacionados con el formulario con
+   =new_field()=.  Puede configurar las opciones de los campos, de
+   manera que se pueden mostrar con ciertos atributos, validar el
+   contenido antes de perder el foco del campo etc.. A continuación,
+   los campos se agregan al formulario. Después de esto, el formulario
+   puede ser publicado y está listo para recibir entradas. En líneas
+   similares a =menu_driver()=, los formularios se manejan con
+   =form_driver()=. Podemos enviar solicitudes a =form_driver= para
+   mover el foco a un cierto campo, mover el cursor al final del campo
+   etc.. Después de que el usuario introduce los valores en los campos
+   y se termina la validación, su puede remover el formulario liberar
+   la menoria asignada.
 
    # The general flow of control of a forms program looks like this.
-   El flujo general de control de un programa formas se parece a esto.
+   El flujo de control general de un programa de formulario se vee
+   como esto.
 
    # 1. Initialize curses
-   1. curses Inicializar
+   1. Inicializar curses
 
    # 2. Create fields using =new_field()=. You can specify the height and
    #    width of the field, and its position on the form.
-   2. Cree campos utilizando = new_field()=. Puede especificar la altura y
-      ancho del campo, y su posición en el formulario.
+   2. Crear campos utilizando =new_field()=. Puede especificar la
+      altura y anchura del campo, y su posición en el formulario.
 
    # 3. Create the forms with =new_form()= by specifying the fields to
    #    be attached with.
-   3. Crear los formularios con new_form()= especificando los campos de
-      se adjunta con.
+   3. Crear los formularios con =new_form()= especificando los campos
+      a agregar.
 
    # 4. Post the form with =form_post()= and refresh the screen.
-   4. Publicar el formulario con form_post()= y refrescar la pantalla.
+   4. Publicar el formulario con =form_post()= y refrescar la
+      pantalla.
 
    # 5. Process the user requests with a loop and do necessary updates
    #    to form with =form_driver=.
-   5. Proceso de las peticiones de los usuarios con un lazo y hacer las actualizaciones necesarias
-      para formar con form_driver =.
+   5. Procesar las peticiones de usuarios con un bucle y hacer las
+      actualizaciones necesarias al formulario con =form_driver=.
 
    # 6. Unpost the menu with =form_unpost()=
-   6. Unpost el menú con form_unpost()=
+   6. Remover  el menu con =form_unpost()=
 
    # 7. Free the memory allocated to menu by =free_form()=
-   7. Liberar la memoria asignada al menú = free_form()=
+   7. Liberar la memoria asignada al menu con =free_form()=
 
    # 8. Free the memory allocated to the items with =free_field()=
-   8. Liberar la memoria asignada a los elementos con free_field()=
+   8. Liberar la memoria asignada a los elementos con =free_field()=
 
    # 9. End curses
-   9. curses End
+   9. Finalizar curses
 
    # As you can see, working with forms library is much similar to
    # handling menu library. The following examples will explore various
    # aspects of form processing. Let's start the journey with a simple
    # example. first.
-   Como se puede ver, el trabajo con formas libreria es mucho más similar a
-   el manejo de la libreria menú. Los siguientes ejemplos explorarán diversos
-   aspectos de procesamiento de formularios. Vamos a empezar el viaje con un simple
-   ejemplo. primero.
+   Como puede ver, trabajar con la libreria form es muy similar a el
+   manejo de la libreria menu. Los siguientes ejemplos explorarán
+   diversos aspectos de procesamiento de formularios. Vamos a empezar
+   el viaje con un simple ejemplo. antes.
 
 # ** 18.2. Compiling With the Forms Library
-** 18.2. Compilación con la libreria de formularios
+** 18.2. Compilación con la Libreria Form
 
    # To use forms library functions, you have to include form.h and to
    # link the program with forms library the flag =-lform= should be
    # added along with =-lncurses= in that order.
-   Para utilizar formas funciones de la libreria, que tiene que incluir form.h y
-   vincular el programa con formas libreria de la bandera = -lform = debe ser
-   añadido junto con = -lncurses en ese orden.
+   Para utilizar funciones de la libreria form, tiene que incluir
+   =form.h= y vincular el programa a la libreria con la bandera
+   =-lform= se debe añadir junto con =-lncurses= en ese orden.
 
    #+BEGIN_EXAMPLE
      #include <form.h>
      .
      .
      .
-     compile and link: gcc <program file> -lform -lncurses
+
+     compilacion y enlace: gcc <fichero del programa> -lform -lncurses
    #+END_EXAMPLE
 
    # *Example 25. Forms Basics*
-   [[file:ncurses_programs/basics/][*Ejemplo 25. Formularios Básicos*]]
+   [[file:ncurses_programs/forms/form_simple.c][*Ejemplo 25. Formularios Básicos*]]
 
    #+BEGIN_SRC c
      #include <form.h>
 
-     int main()
-     {   FIELD *field[3];
+     int main(){
+       FIELD *field[3];
        FORM  *my_form;
        int ch;
 
-       /* Initialize curses */
+       /* Inicializar curses */
        initscr();
        cbreak();
        noecho();
        keypad(stdscr, TRUE);
 
-       /* Initialize the fields */
+       /* Inicializar los campos */
        field[0] = new_field(1, 10, 4, 18, 0, 0);
        field[1] = new_field(1, 10, 6, 18, 0, 0);
        field[2] = NULL;
 
-       /* Set field options */
-       set_field_back(field[0], A_UNDERLINE);  /* Print a line for the option      */
-       field_opts_off(field[0], O_AUTOSKIP);   /* Don't go to next field when this */
-                                               /* Field is filled up               */
+       /* Establecer las opciones de campo */
+       set_field_back(field[0], A_UNDERLINE);  /* Imprime una linea para la opcion */
+       field_opts_off(field[0], O_AUTOSKIP);   /* No ir al siguente campo si este  */
+                                               /* campo es llenado                 */
        set_field_back(field[1], A_UNDERLINE);
        field_opts_off(field[1], O_AUTOSKIP);
 
-       /* Create the form and post it */
+       /* Crear el formulario y publicarlo */
        my_form = new_form(field);
        post_form(my_form);
        refresh();
 
-       mvprintw(4, 10, "Value 1:");
-       mvprintw(6, 10, "Value 2:");
+       mvprintw(4, 10, "Valor 1:");
+       mvprintw(6, 10, "Valor 2:");
        refresh();
 
-       /* Loop through to get user requests */
-       while((ch = getch()) != KEY_F(1))
-         {   switch(ch)
-             {   case KEY_DOWN:
-                 /* Go to next field */
-                 form_driver(my_form, REQ_NEXT_FIELD);
-                 /* Go to the end of the present buffer */
-                 /* Leaves nicely at the last character */
-                 form_driver(my_form, REQ_END_LINE);
-                 break;
-             case KEY_UP:
-               /* Go to previous field */
-               form_driver(my_form, REQ_PREV_FIELD);
-               form_driver(my_form, REQ_END_LINE);
-               break;
-             default:
-               /* If this is a normal character, it gets */
-               /* Printed                */
-               form_driver(my_form, ch);
-               break;
-             }
+       /* Ciclo para optener solicitudes del usuario */
+       while((ch = getch()) != KEY_F(1)){
+         switch(ch){
+         case KEY_DOWN:
+           /* Ir al siguiente campo */
+           form_driver(my_form, REQ_NEXT_FIELD);
+           /* Ir al final del buffer actual */
+           /* Abandonar en el ultimo caracter */
+           form_driver(my_form, REQ_END_LINE);
+           break;
+         case KEY_UP:
+           /* Ir al campo anterior */
+           form_driver(my_form, REQ_PREV_FIELD);
+           form_driver(my_form, REQ_END_LINE);
+           break;
+         default:
+           /* Si este es un caracter normal, se optiene */
+           /* Imprime                                   */
+           form_driver(my_form, ch);
+           break;
          }
+       }
 
-       /* Un post form and free the memory */
+       /* Remueve el formulario y libera la memoria */
        unpost_form(my_form);
        free_form(my_form);
        free_field(field[0]);
@@ -5412,49 +5453,49 @@
 
    # Above example is pretty straight forward. It creates two fields
    # with =new_field()=. =new_field()= takes height, width, starty,
-   # startx, number of offscreen rows and number of additional working
+   # startx, number of offscreen rows and number of ¤additional working
    # buffers. The fifth argument number of offscreen rows specifies how
    # much of the field to be shown. If it is zero, the entire field is
    # always displayed otherwise the form will be scrollable when the
    # user accesses not displayed parts of the field. The forms library
-   # allocates one buffer per field to store the data user enters. Using
+   # allocates one buffer per field to store the data user enters. ¤Using
    # the last parameter to =new_field()= we can specify it to allocate
    # some additional buffers. These can be used for any purpose you
    # like.
-   El ejemplo de arriba es bastante sencillo. Crea dos campos
-   con new_field()=. = new_field()= toma altura, anchura, starty,
-   startx, número de filas fuera de la pantalla y el número de trabajo adicional
-   tampones. El quinto argumento número de filas fuera de la pantalla especifica cómo
-   gran parte del campo para mostrar. Si es cero, todo el campo es
-   siempre aparece otro modo la forma será desplazable cuando la
-   Los accesos de usuario no está representada partes del campo. La libreria de formularios
-   asigna un búfer por campo para almacenar los datos que el usuario entra. Usando
-   el último parámetro a = new_field()= podemos especificarlo para asignar
-   algunos amortiguadores adicionales. Estos pueden ser usados ​​para cualquier propósito que
-   como.
+   El ejemplo anterior es bastante sencillo. Se crean dos campos con
+   =new_field()=. =new_field()= toma altura, anchura, starty, startx,
+   número de filas fuera de la pantalla y el número de buffers de
+   trabajo adicional. El quinto argumento especifica cómo mostrar gran
+   parte del campo. Si es cero, todo el campo se muestra simpre de
+   otra manera el formulario será desplazable cuando el campo no
+   muestre partes de la entrada de usuario. La libreria de formularios
+   asigna un búfer por campo para almacenar los datos que el usuario
+   ingresa. Con el ultimo parametro de =new_field()= podemos
+   especificar si se almacena en buffers adicionales. Estos puede
+   utilizarse ​​para cualquier propósito.
 
    # After creating the fields, back ground attribute of both of them is
    # set to an underscore with =set_field_back()=. The AUTOSKIP option
    # is turned off using =field_opts_off()=. If this option is turned
    # on, focus will move to the next field in the form once the active
    # field is filled up completely.
-   Después de crear los campos, de nuevo atributo de tierra de ambos es
-   ajustado a un guión con set_field_back()=. La opción AUTOSKIP
-   se desactiva usando = field_opts_off()=. Si esta opción está activada
-   en, el foco se desplazará al siguiente campo en el formulario una vez que el activo
-   campo se llenó por completo.
+   Después de crear los campos, el atributo de fondo de ambos es
+   establecido como subrayado con =set_field_back()=. La opción
+   =AUTOSKIP= se desactiva usando =field_opts_off()=. Si esta opción
+   está activada, el foco se desplazará al siguiente campo en el
+   formulario una vez que el campo activo se llene por completo.
 
    # After attaching the fields to the form, it is posted. Here on, user
    # inputs are processed in the while loop, by making corresponding
    # requests to =form_driver=. The details of all the requests to the
    # =form_driver()= are explained later.
-   Después de colocar los campos del formulario, se registró. Aquí, en, el usuario
-   las entradas se procesan en el bucle while, haciendo que corresponde
-   solicitudes a form_driver =. Los detalles de todas las solicitudes a la
-   = form_driver()= se explican más adelante.
+   Después de colocar los campos en el formulario, se publica. Aquí,
+   se procesa la entrada de usuario en un bucle =while=, haciendo las
+   peticiones correspondientes a =form_driver=. Los detalles de todas
+   las solicitudes a =form_driver()= se explican más adelante.
 
 # ** 18.3. Playing with Fields
-** 18.3. El jugar con los campos
+** 18.3. Jugando con Campos
 
    # Each form field is associated with a lot of attributes. They can be
    # manipulated to get the required effect and to have fun !!!. So why
@@ -6261,7 +6302,7 @@
    # contains all the fields and displays them according to their
    # position. This gives the flexibility of manipulating fancy form
    # displaying very easily.
-   El concepto de formulario de Windows es más o menos similar al menú
+   El concepto de formulario de Windows es más o menos similar al menu
    ventanas. Cada forma está asociada con una ventana principal y un sub
    ventana. La ventana principal de formulario muestra cualquier título o de la frontera
    asociada o lo que sea el usuario desee. A continuación, la ventana sub
@@ -6272,7 +6313,7 @@
    # Since this is pretty much similar to menu windows, I am providing
    # an example with out much explanation. The functions are similar and
    # they work the same way.
-   Dado que este es más o menos similar a las ventanas de menú, estoy proporcionando
+   Dado que este es más o menos similar a las ventanas de menu, estoy proporcionando
    un ejemplo con fuera mucha explicación. Las funciones son similares y
    que funcionan de la misma manera.
 
@@ -6668,7 +6709,7 @@
    # As in the menu system, =form_driver()= plays a very important role
    # in forms system. All types of requests to forms system should be
    # funneled through =form_driver()=.
-   Al igual que en el sistema de menús, = form_driver()= juega un papel muy importante
+   Al igual que en el sistema de menus, = form_driver()= juega un papel muy importante
    en el sistema de formas. Todos los tipos de peticiones al sistema de formularios deben ser
    canalizado a través = form_driver()=.
 
@@ -7250,7 +7291,7 @@
                           considerado parte de la pantalla.
     Marquesina Muestra un mensaje en una marquesina de desplazamiento.
     Matrix Crea una matriz compleja con muchas opciones.
-    Menú Crea una interfaz de menú desplegable.
+    Menu Crea una interfaz de menu desplegable.
     Múltiple Entrada Línea A campo de entrada de varias líneas. Muy útil
                           para los campos largos. (como una descripción
                           campo)
@@ -7258,7 +7299,7 @@
     Escala Crea una escala numérica. Se utiliza para permitir a un usuario
                           elegir un valor numérico y restringirlos a una serie de
                           valores.
-    Desplazamiento Listado Crea una lista lista / menú desplegable.
+    Desplazamiento Listado Crea una lista lista / menu desplegable.
     Desplazamiento Ventana Crea un visor de archivos de registro de desplazamiento. Puede agregar
                           información en la ventana mientras su funcionamiento.
                           Un buen widget de para visualizar el progreso de
@@ -7359,7 +7400,7 @@
    # not, you can download it from [[http://invisible-island.net/dialog/][Thomas Dickey]]'s site.
    Como él mismo explica, de diálogo es una verdadera joya en la toma de aspecto profesional
    cuadros de diálogo con facilidad. Crea una variedad de cuadros de diálogo,
-   menús, listas de verificación, etc .. Por lo general se instala de forma predeterminada. Si
+   menus, listas de verificación, etc .. Por lo general se instala de forma predeterminada. Si
    no, puede descargarlo desde [[http://invisible-island.net/dialog/][Thomas Dickey]] 's sitio.
 
    # The above-mentioned article gives a very good overview of its uses

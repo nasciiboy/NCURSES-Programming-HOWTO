@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <curses.h>
 #include <menu.h>
 
@@ -14,17 +15,17 @@ char *choices[] = {
 
 int main()
 {	ITEM **my_items;
-	int c;				
+	int c;
 	MENU *my_menu;
 	int n_choices, i;
 	ITEM *cur_item;
-	
-	
+
+
 	initscr();
 	cbreak();
 	noecho();
 	keypad(stdscr, TRUE);
-	
+
 	n_choices = ARRAY_SIZE(choices);
 	my_items = (ITEM **)calloc(n_choices + 1, sizeof(ITEM *));
 
@@ -46,11 +47,10 @@ int main()
 				menu_driver(my_menu, REQ_UP_ITEM);
 				break;
 		}
-	}	
+	}
 
 	free_item(my_items[0]);
 	free_item(my_items[1]);
 	free_menu(my_menu);
 	endwin();
 }
-	

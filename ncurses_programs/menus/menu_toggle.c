@@ -1,5 +1,7 @@
 #include <curses.h>
 #include <menu.h>
+#include <stdlib.h>
+#include <string.h>
 
 #define ARRAY_SIZE(a) (sizeof(a) / sizeof(a[0]))
 #define CTRLD 	4
@@ -17,12 +19,12 @@ char *choices[] = {
 
 int main()
 {	ITEM **my_items;
-	int c;				
+	int c;
 	MENU *my_menu;
         int n_choices, i;
 	ITEM *cur_item;
-	
-	/* Initialize curses */	
+
+	/* Initialize curses */
 	initscr();
         cbreak();
         noecho();
@@ -74,11 +76,10 @@ int main()
 			}
 			break;
 		}
-	}	
+	}
 
 	free_item(my_items[0]);
         free_item(my_items[1]);
 	free_menu(my_menu);
 	endwin();
 }
-	

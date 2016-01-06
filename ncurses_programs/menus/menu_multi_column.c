@@ -1,5 +1,6 @@
 #include <curses.h>
 #include <menu.h>
+#include <stdlib.h>
 
 #define ARRAY_SIZE(a) (sizeof(a) / sizeof(a[0]))
 #define CTRLD 	4
@@ -15,11 +16,11 @@ char *choices[] = {
 
 int main()
 {	ITEM **my_items;
-	int c;				
+	int c;
 	MENU *my_menu;
         WINDOW *my_menu_win;
         int n_choices, i;
-	
+
 	/* Initialize curses */
 	initscr();
 	start_color();
@@ -44,7 +45,7 @@ int main()
 	/* Create the window to be associated with the menu */
         my_menu_win = newwin(10, 70, 4, 4);
         keypad(my_menu_win, TRUE);
-     
+
 	/* Set main window and sub window */
         set_menu_win(my_menu, my_menu_win);
         set_menu_sub(my_menu, derwin(my_menu_win, 6, 68, 3, 1));
@@ -53,7 +54,7 @@ int main()
 
 	/* Print a border around the main window and print a title */
         box(my_menu_win, 0, 0);
-	
+
 	attron(COLOR_PAIR(2));
 	mvprintw(LINES - 3, 0, "Use PageUp and PageDown to scroll");
 	mvprintw(LINES - 2, 0, "Use Arrow Keys to navigate (F1 to Exit)");
@@ -63,7 +64,7 @@ int main()
 	/* Post the menu */
 	post_menu(my_menu);
 	wrefresh(my_menu_win);
-	
+
 	while((c = wgetch(my_menu_win)) != KEY_F(1))
 	{       switch(c)
 	        {	case KEY_DOWN:
@@ -86,7 +87,7 @@ int main()
 				break;
 		}
                 wrefresh(my_menu_win);
-	}	
+	}
 
 	/* Unpost and free all the memory taken up */
         unpost_menu(my_menu);

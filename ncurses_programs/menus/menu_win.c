@@ -1,4 +1,6 @@
 #include <menu.h>
+#include <stdlib.h>
+#include <string.h>
 
 #define ARRAY_SIZE(a) (sizeof(a) / sizeof(a[0]))
 #define CTRLD 	4
@@ -15,11 +17,11 @@ void print_in_middle(WINDOW *win, int starty, int startx, int width, char *strin
 
 int main()
 {	ITEM **my_items;
-	int c;				
+	int c;
 	MENU *my_menu;
         WINDOW *my_menu_win;
         int n_choices, i;
-	
+
 	/* Initialize curses */
 	initscr();
 	start_color();
@@ -40,7 +42,7 @@ int main()
 	/* Create the window to be associated with the menu */
         my_menu_win = newwin(10, 40, 4, 4);
         keypad(my_menu_win, TRUE);
-     
+
 	/* Set main window and sub window */
         set_menu_win(my_menu, my_menu_win);
         set_menu_sub(my_menu, derwin(my_menu_win, 6, 38, 3, 1));
@@ -56,7 +58,7 @@ int main()
 	mvwaddch(my_menu_win, 2, 39, ACS_RTEE);
 	mvprintw(LINES - 2, 0, "F1 to exit");
 	refresh();
-        
+
 	/* Post the menu */
 	post_menu(my_menu);
 	wrefresh(my_menu_win);
@@ -71,7 +73,7 @@ int main()
 				break;
 		}
                 wrefresh(my_menu_win);
-	}	
+	}
 
 	/* Unpost and free all the memory taken up */
         unpost_menu(my_menu);
