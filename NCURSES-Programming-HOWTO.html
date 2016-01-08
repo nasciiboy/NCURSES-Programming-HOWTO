@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>NCURSES Programming HOWTO</title>
-<!-- 2016-01-06 mié 16:49 -->
+<!-- 2016-01-08 vie 16:43 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="ppadala" />
@@ -5365,7 +5365,7 @@ with <code>move_field()</code>.
 
 <p>
 As usual, the changed position can be queried with
-<code>field_infor()</code>.
+<code>field_info()</code>.
 </p>
 </div>
 </div>
@@ -5399,15 +5399,15 @@ or <code>JUSTIFY_CENTER</code>.
 <div class="outline-text-4" id="text-19-3-4">
 <p>
 As you have seen, in the above example, display attribute for the
-fields can be set with <code>set_field_fore()</code> and
-<code>setfield_back()</code>. These functions set foreground and background
-attribute of the fields. You can also specify a pad character
-which will be filled in the unfilled portion of the field. The pad
-character is set with a call to <code>set_field_pad()</code>.  Default pad
-value is a space. The functions <code>field_fore()</code>, <code>field_back</code>,
-<code>field_pad()</code> can be used to query the present foreground,
-background attributes and pad character for the field. The
-following list gives the usage of functions.
+fields can be set with <code>set_field_fore()</code> and <code>set_field_back()</code>.
+These functions set foreground and background attribute of the
+fields. You can also specify a pad character which will be filled
+in the unfilled portion of the field. The pad character is set
+with a call to <code>set_field_pad()</code>.  Default pad value is a space.
+The functions <code>field_fore()</code>, <code>field_back</code>, <code>field_pad()</code> can be
+used to query the present foreground, background attributes and
+pad character for the field. The following list gives the usage of
+functions.
 </p>
 
 <div class="org-src-container">
@@ -5447,15 +5447,15 @@ attributes.
 </p>
 
 <p>
-<a href="ncurses_programs/basics/"><b>Example 26. Form Attributes example</b></a>
+<a href="ncurses_programs/forms/form_attrib.c"><b>Example 26. Form Attributes example</b></a>
 </p>
 
 <div class="org-src-container">
 
 <pre class="src src-c">#include &lt;form.h&gt;
 
-int main()
-{   FIELD *field[3];
+int main(){
+  FIELD *field[3];
   FORM  *my_form;
   int ch;
 
@@ -5496,27 +5496,27 @@ int main()
   refresh();
 
   /* Loop through to get user requests */
-  while((ch = getch()) != KEY_F(1))
-    {   switch(ch)
-        {   case KEY_DOWN:
-            /* Go to next field */
-            form_driver(my_form, REQ_NEXT_FIELD);
-            /* Go to the end of the present buffer */
-            /* Leaves nicely at the last character */
-            form_driver(my_form, REQ_END_LINE);
-            break;
-        case KEY_UP:
-          /* Go to previous field */
-          form_driver(my_form, REQ_PREV_FIELD);
-          form_driver(my_form, REQ_END_LINE);
-          break;
-        default:
-          /* If this is a normal character, it gets */
-          /* Printed                */
-          form_driver(my_form, ch);
-          break;
-        }
+  while( (ch = getch()) != KEY_F(1) ){
+    switch( ch ){
+    case KEY_DOWN:
+      /* Go to next field */
+      form_driver(my_form, REQ_NEXT_FIELD);
+      /* Go to the end of the present buffer */
+      /* Leaves nicely at the last character */
+      form_driver(my_form, REQ_END_LINE);
+      break;
+    case KEY_UP:
+      /* Go to previous field */
+      form_driver(my_form, REQ_PREV_FIELD);
+      form_driver(my_form, REQ_END_LINE);
+      break;
+    default:
+      /* If this is a normal character, it gets */
+      /* Printed                */
+      form_driver(my_form, ch);
+      break;
     }
+  }
 
   /* Un post form and free the memory */
   unpost_form(my_form);
@@ -5571,7 +5571,6 @@ selectively. Anytime you can query the attributes of a field with
 <code>field_opts()</code>. The following is the list of available options. By
 default, all options are on.
 </p>
-
 
 <dl class="org-dl">
 <dt> <code>O_VISIBLE</code>  </dt><dd>Controls whether the field is visible on the
@@ -5667,7 +5666,7 @@ appropriate.
 </p>
 
 <p>
-<a href="ncurses_programs/basics/"><b>Example 27. Field Options Usage example</b></a>
+<a href="ncurses_programs/forms/form_options.c"><b>Example 27. Field Options Usage example</b></a>
 </p>
 
 <div class="org-src-container">
@@ -5680,8 +5679,8 @@ appropriate.
 
 #define N_FIELDS 3
 
-int main()
-{   FIELD *field[N_FIELDS];
+int main(){
+  FIELD *field[N_FIELDS];
   FORM  *my_form;
   int ch, i;
 
@@ -5697,47 +5696,48 @@ int main()
   field[N_FIELDS - 1] = NULL;
 
   /* Set field options */
-  set_field_back(field[1], A_UNDERLINE);  /* Print a line for the option         */
+  set_field_back(field[1], A_UNDERLINE);    /* Print a line for the option         */
 
-  field_opts_off(field[0], O_ACTIVE);     /* This field is a static label        */
-  field_opts_off(field[1], O_PUBLIC);     /* This filed is like a password field */
-  field_opts_off(field[1], O_AUTOSKIP);   /* To avoid entering the same field    */
-                                          /* after last character is entered     */
+  field_opts_off(field[0], O_ACTIVE);       /* This field is a static label        */
+  field_opts_off(field[1], O_PUBLIC);       /* This filed is like a password field */
+  field_opts_off(field[1], O_AUTOSKIP);     /* To avoid entering the same field    */
+                                            /* after last character is entered     */
 
   /* Create the form and post it */
   my_form = new_form(field);
   post_form(my_form);
   refresh();
 
-  set_field_just(field[0], JUSTIFY_CENTER); /* Center Justification */
+  set_field_just(field[0], JUSTIFY_CENTER); /* Center Justification                */
   set_field_buffer(field[0], 0, "This is a static Field");
+
   /* Initialize the field  */
   mvprintw(STARTY, STARTX - 10, "Field 1:");
   mvprintw(STARTY + 2, STARTX - 10, "Field 2:");
   refresh();
 
   /* Loop through to get user requests */
-  while((ch = getch()) != KEY_F(1))
-    {   switch(ch)
-        {   case KEY_DOWN:
-            /* Go to next field */
-            form_driver(my_form, REQ_NEXT_FIELD);
-            /* Go to the end of the present buffer */
-            /* Leaves nicely at the last character */
-            form_driver(my_form, REQ_END_LINE);
-            break;
-        case KEY_UP:
-          /* Go to previous field */
-          form_driver(my_form, REQ_PREV_FIELD);
-          form_driver(my_form, REQ_END_LINE);
-          break;
-        default:
-          /* If this is a normal character, it gets */
-          /* Printed                */
-          form_driver(my_form, ch);
-          break;
-        }
+  while( (ch = getch()) != KEY_F(1) ){
+    switch( ch ){
+    case KEY_DOWN:
+      /* Go to next field */
+      form_driver(my_form, REQ_NEXT_FIELD);
+      /* Go to the end of the present buffer */
+      /* Leaves nicely at the last character */
+      form_driver(my_form, REQ_END_LINE);
+      break;
+    case KEY_UP:
+      /* Go to previous field */
+      form_driver(my_form, REQ_PREV_FIELD);
+      form_driver(my_form, REQ_END_LINE);
+      break;
+    default:
+      /* If this is a normal character, it gets */
+      /* Printed                */
+      form_driver(my_form, ch);
+      break;
     }
+  }
 
   /* Un post form and free the memory */
   unpost_form(my_form);

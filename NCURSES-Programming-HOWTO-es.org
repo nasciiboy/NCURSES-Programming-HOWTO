@@ -5500,86 +5500,70 @@
    # Each form field is associated with a lot of attributes. They can be
    # manipulated to get the required effect and to have fun !!!. So why
    # wait?
-   Cada campo de formulario se asocia con una gran cantidad de atributos. Ellos pueden ser
-   manipulada para conseguir el efecto deseado y divertirse !!!. Entonces por qué
-   ¿espera?
+   Cada campo del formulario se asocia con una gran cantidad de
+   atributos. Estos se pueden manipular para conseguir el efecto
+   deseado y divertirse !!!. Asi que ¿por que esperar?
 
 # *** 18.3.1. Fetching Size and Location of Field
-*** 18.3.1. Recogida del tamaño y localización del campo
+*** 18.3.1. Recuperar el Tamaño y Posicion del campo
 
     # The parameters we have given at the time of creation of a field
     # can be retrieved with =field_info()=. It returns height, width,
     # starty, startx, number of offscreen rows, and number of additional
     # buffers into the parameters given to it. It is a sort of inverse
     # of =new_field()=.
-    Los parámetros que se han dado en el momento de la creación de un campo
-    puede ser recuperada con field_info()=. Devuelve la altura, anchura,
-    starty, startx, número de filas fuera de la pantalla, y el número de adicional
-    buffers en los parámetros dados a ella. Es una especie de inversa
-    de = new_field()=.
+    Los parámetros dados a el momento de la creación de un campo
+    pueden ser recuperados con =field_info()=. Devuelve la altura,
+    anchura, starty, startx, número de filas fuera de la pantalla, y
+    el número buffers adicionales en los parámetros que le son dados.
+    Es una especie de =new_field()= inversa.
 
     #+BEGIN_SRC c
-      int field_info(     FIELD *field,              /* field from which to fetch */
-                          int *height, *int width,   /* field size                */
-                          int *top, int *left,       /* upper left corner         */
-                          int *offscreen,            /* number of offscreen rows  */
-                          int *nbuf);                /* number of working buffers */
+      int field_info(     FIELD *field,              /* campo a extraer datos                */
+                          int *height, *int width,   /* tamaño de campo                      */
+                          int *top, int *left,       /* esquina superior izquierda           */
+                          int *offscreen,            /* numero de columnas fuera de pantalla */
+                          int *nbuf);                /* numero de buffers de trabajo         */
     #+END_SRC
-
-      int field_info (* El campo FIELD, / * El campo desde el que traiga * /
-                          int * altura * int ancho, / * tamaño del campo * /
-                          int * superior, int * a la izquierda, / * esquina superior izquierda * /
-                          int * fuera de la pantalla, / * número de filas fuera de la pantalla * /
-                          int * nbuf); / * Número de buffers de trabajo * /
 
 # *** 18.3.2. Moving the field
 *** 18.3.2. Mover el campo
 
     # The location of the field can be moved to a different position
     # with =move_field()=.
-    La ubicación del campo se puede mover a una posición diferente
-    con move_field()=.
+    Puede mover el campo a una posición diferente con =move_field()=.
 
     #+BEGIN_SRC c
-      int move_field(    FIELD *field,              /* field to alter */
-                         int top, int left);        /* new upper-left corner */
+      int move_field(    FIELD *field,              /* campo a modificar                */
+                         int top, int left);        /* nueva esquina superior izquierda */
     #+END_SRC
-
-      int move_field (FIELD * El campo, / * El campo de alterar * /
-                         int top, int izquierda); / * Nueva esquina superior izquierda * /
 
     # As usual, the changed position can be queried with
     # =field_infor()=.
-    Como de costumbre, la posición cambiado se puede consultar con
-    field_infor()=.
+    Puede consultar la posición modificada =field_infor()=.
 
 # *** 18.3.3. Field Justification
-*** 18.3.3. El campo Justificación
+*** 18.3.3. Justificar un campo
 
     # The justification to be done for the field can be fixed using the
     # function =set_field_just()=.
-    La justificación que hacer para el campo se puede solucionar mediante el
-    función = set_field_just()=.
+    Puede justificar un campo mediante la función =set_field_just()=.
 
     #+BEGIN_SRC c
-      int set_field_just(FIELD *field,       /* field to alter              */
-                         int justmode);      /* mode to set                 */
-      int field_just(FIELD *field);          /* fetch justify mode of field */
+      int set_field_just(FIELD *field,       /* campo a modificar  */
+                         int justmode);      /* modo de ajuste     */
+      int field_just(FIELD *field);          /* obtener el modo de justificacion de un campo */
     #+END_SRC
-
-      int set_field_just (FIELD * El campo, / * El campo de alterar * /
-                         int justmode); / * Modo de configurar * /
-      int field_just (FIELD * campo); / * Modo de zona de alcance de campo justificar * /
 
     # The justification mode valued accepted and returned by these
     # functions are =NO_JUSTIFICATION=, =JUSTIFY_RIGHT=, =JUSTIFY_LEFT=,
     # or =JUSTIFY_CENTER=.
-    El modo de justificación apreciando aceptado y devuelto por estos
-    funciones son NO_JUSTIFICATION =, = JUSTIFY_RIGHT =, = JUSTIFY_LEFT,
-    o = JUSTIFY_CENTER =.
+    Los valores aceptados y devueltos para el modo de justificación
+    son =NO_JUSTIFICATION=, =JUSTIFY_RIGHT=, =JUSTIFY_LEFT=, o
+    =JUSTIFY_CENTER=.
 
 # *** 18.3.4. Field Display Attributes
-*** 18.3.4. Campo Atributos de pantalla
+*** 18.3.4. Atributos de Visualizacion del Campo
 
     # As you have seen, in the above example, display attribute for the
     # fields can be set with =set_field_fore()= and
@@ -5591,49 +5575,36 @@
     # =field_pad()= can be used to query the present foreground,
     # background attributes and pad character for the field. The
     # following list gives the usage of functions.
-    Como se ha visto, en el ejemplo anterior, el atributo de visualización para el
-    campos se pueden establecer con set_field_fore()= y
-    setfield_back()=. Estas funciones establecen primer y segundo plano
-    atributo de los campos. También puede especificar un carácter de relleno
-    que se llenará en la porción vacante del campo. La almohadilla
-    carácter se establece con una llamada a = set_field_pad()=. Pad por defecto
-    valor es un espacio. Las funciones = field_fore()= = field_back,
-    field_pad()= puede ser utilizado para consultar el presente primer plano,
-    atribuye antecedentes y carácter de relleno para el campo. los
-    siguiente lista da el uso de las funciones.
+    Como se ha visto, en el ejemplo anterior, se pueden establecer los
+    atributos de visualización del campo con =set_field_fore()= y
+    =set_field_back()=. Estas funciones establecen el atributo de
+    campo para el primer y segundo plano. También puede especificar un
+    carácter de relleno que llenará la porción restante del campo. El
+    carácter de relleno se establece con una llamada a
+    =set_field_pad()=. Este valor por defecto es espacio. Puede
+    utilizar las funciones =field_fore()=, =field_back=, =field_pad()=
+    para consultar los atributos de relleno, del primer y segundo
+    plano. El siguiente listado muestra el uso de estas funciones.
 
     #+BEGIN_SRC c
-      int set_field_fore(FIELD *field,        /* field to alter                */
-                         chtype attr);        /* attribute to set              */
+      int set_field_fore(FIELD *field,        /* campo a modificar                 */
+                         chtype attr);        /* atributo a establecer             */
 
-      chtype field_fore(FIELD *field);        /* field to query                */
-                                              /* returns foreground attribute  */
+      chtype field_fore(FIELD *field);        /* campo a consultar                 */
+                                              /* devuelve atributo de primer plano */
 
-      int set_field_back(FIELD *field,        /* field to alter                */
-                         chtype attr);        /* attribute to set              */
+      int set_field_back(FIELD *field,        /* campo a modificar                 */
+                         chtype attr);        /* atributo a establecer             */
 
-      chtype field_back(FIELD *field);        /* field to query                */
-                                              /* returns background attribute  */
+      chtype field_back(FIELD *field);        /* campo a consultar                 */
+                                              /* devuelve atributo de fondo        */
 
-      int set_field_pad(FIELD *field,         /* field to alter                */
-                        int pad);             /* pad character to set          */
+      int set_field_pad(FIELD *field,         /* campo a modificar                */
+                        int pad);             /* caracter de relleno a establecer */
 
-      chtype field_pad(FIELD *field);         /* field to query                */
-                                              /* returns present pad character */
+      chtype field_pad(FIELD *field);         /* campo a consultar                */
+                                              /* devuelve el caracter de relleno */
     #+END_SRC
-      int set_field_fore (* El campo FIELD, / * El campo de alterar * /
-                         CHTYPE attr); / * Atribuir a establecer * /
-
-      field_fore CHTYPE (FIELD * campo); / * El campo para consultar * /
-                                              / * Devuelve atributo de primer plano * /
-      int set_field_back (FIELD * El campo, / * El campo de alterar * /
-                         CHTYPE attr); / * Atribuir a establecer * /
-      field_back CHTYPE (FIELD * campo); / * El campo para consultar * /
-                                              / * Devuelve atributo fondo * /
-      int set_field_pad (FIELD * El campo, / * El campo de alterar * /
-                        int pad); / * Carácter de relleno para establecer * /
-      field_pad CHTYPE (FIELD * campo); / * El campo para consultar * /
-                                              / * Vuelve presente carácter de relleno * /
 
     # Though above functions seem quite simple, using colors with
     # =set_field_fore()= may be frustrating in the beginning. Let me
@@ -5646,89 +5617,90 @@
     # colors are always defined in pairs, what is the right way to
     # display colored fields? Here's an example clarifying color
     # attributes.
-    Aunque funciones anteriores parecen bastante simple, el uso de colores con
-    = set_field_fore()= puede ser frustrante al principio. Dejame
-    primero explicar acerca de los atributos de primer plano y de fondo de un
-    campo. El atributo de primer plano está asociado con el
-    caracter. Eso significa que un carácter en el campo se imprime con el
-    Atributo que ha configurado con set_field_fore()=. Fondo
-    atributo es el atributo utilizado para llenar el fondo del campo,
-    si algún caracter está allí o no. Entonces, ¿qué acerca de los colores? Desde
-    colores siempre se definen en pares, ¿cuál es la manera correcta de
-    mostrar los campos de colores? He aquí un ejemplo de color aclarar
-    atributos.
+    A pesar de que el uso de las funciones anteriores parece bastante
+    simple, utilizar de colores con =set_field_fore()= puede ser
+    frustrante al principio. Primero dejame explicar acerca de los
+    atributos de primer plano y fondo de un campo. El atributo de
+    primer plano está asociado con el caracter. Eso significa que un
+    carácter en el campo se imprime con el atributo que ha configurado
+    con =set_field_fore()=. El atributo de fondo es utilizado para
+    llenar el fondo del campo, si algún caracter está allí o
+    no. Entonces, ¿qué hay acerca de los colores? Los colores siempre
+    se definen en pares, ¿cuál es la manera correcta de mostrar
+    colores en los campos? He aquí un ejemplo para aclara el uso de
+    atributos de color.
 
     # *Example 26. Form Attributes example*
-   [[file:ncurses_programs/basics/][*Ejemplo Formulario 26. Atributos ejemplo*]]
+    [[file:ncurses_programs/forms/form_attrib.c][*Ejemplo 26. Atributos de Campo*]]
 
     #+BEGIN_SRC c
       #include <form.h>
 
-      int main()
-      {   FIELD *field[3];
+      int main(){
+        FIELD *field[3];
         FORM  *my_form;
         int ch;
 
-        /* Initialize curses */
+        /* Inicializa curses */
         initscr();
         start_color();
         cbreak();
         noecho();
         keypad(stdscr, TRUE);
 
-        /* Initialize few color pairs */
+        /* Inicializa unos pocos pares de color */
         init_pair(1, COLOR_WHITE, COLOR_BLUE);
         init_pair(2, COLOR_WHITE, COLOR_BLUE);
 
-        /* Initialize the fields */
+        /* Inicializa los compos */
         field[0] = new_field(1, 10, 4, 18, 0, 0);
         field[1] = new_field(1, 10, 6, 18, 0, 0);
         field[2] = NULL;
 
-        /* Set field options */
-        set_field_fore(field[0], COLOR_PAIR(1));     /* Put the field with blue background */
-        set_field_back(field[0], COLOR_PAIR(2));     /* and white foreground (characters   */
-                                                     /* are printed in white               */
-        field_opts_off(field[0], O_AUTOSKIP);        /* Don't go to next field when this   */
-                                                     /* Field is filled up                 */
+        /* Establecer las opciones de campo */
+        set_field_fore(field[0], COLOR_PAIR(1));     /* Coloca el campo con el fordo azul  */
+        set_field_back(field[0], COLOR_PAIR(2));     /* y el frente blanco (los caracteres */
+                                                     /* son impresos en BLANCO             */
+        field_opts_off(field[0], O_AUTOSKIP);        /* No ir al siguiente campo cuando    */
+                                                     /* este campo se llene por completo   */
         set_field_back(field[1], A_UNDERLINE);
         field_opts_off(field[1], O_AUTOSKIP);
 
-        /* Create the form and post it */
+        /* Crea el formulario y lo publica */
         my_form = new_form(field);
         post_form(my_form);
         refresh();
 
-        set_current_field(my_form, field[0]);        /* Set focus to the colored field     */
-        mvprintw(4, 10, "Value 1:");
-        mvprintw(6, 10, "Value 2:");
-        mvprintw(LINES - 2, 0, "Use UP, DOWN arrow keys to switch between fields");
+        set_current_field(my_form, field[0]);        /* Establece foco en campo coloreado  */
+        mvprintw(4, 10, "Valor 1:");
+        mvprintw(6, 10, "Valor 2:");
+        mvprintw(LINES - 2, 0, "Utilice las teclas de flecha UP, DOWN para cambiar entre campos");
         refresh();
 
-        /* Loop through to get user requests */
-        while((ch = getch()) != KEY_F(1))
-          {   switch(ch)
-              {   case KEY_DOWN:
-                  /* Go to next field */
-                  form_driver(my_form, REQ_NEXT_FIELD);
-                  /* Go to the end of the present buffer */
-                  /* Leaves nicely at the last character */
-                  form_driver(my_form, REQ_END_LINE);
-                  break;
-              case KEY_UP:
-                /* Go to previous field */
-                form_driver(my_form, REQ_PREV_FIELD);
-                form_driver(my_form, REQ_END_LINE);
-                break;
-              default:
-                /* If this is a normal character, it gets */
-                /* Printed                */
-                form_driver(my_form, ch);
-                break;
-              }
+        /* Ciclo para optener solicitudes del usuario */
+        while( (ch = getch()) != KEY_F(1) ){
+          switch( ch ){
+          case KEY_DOWN:
+            /* Ir al siguiente campo */
+            form_driver(my_form, REQ_NEXT_FIELD);
+            /* Ir al final del buffer actual */
+            /* Abandonar en el ultimo caracter */
+            form_driver(my_form, REQ_END_LINE);
+            break;
+          case KEY_UP:
+            /* Ir al campo anterior */
+            form_driver(my_form, REQ_PREV_FIELD);
+            form_driver(my_form, REQ_END_LINE);
+            break;
+          default:
+            /* Si este es un caracter normal, se optiene */
+            /* Imprime                                   */
+            form_driver(my_form, ch);
+            break;
           }
+        }
 
-        /* Un post form and free the memory */
+        /* Remueve el formulario y libera la memoria */
         unpost_form(my_form);
         free_form(my_form);
         free_field(field[0]);
@@ -5739,46 +5711,39 @@
       }
     #+END_SRC
 
+
     # Play with the color pairs and try to understand the foreground and
     # background attributes. In my programs using color attributes, I
     # usually set only the background with =set_field_back()=. curses
     # simply doesn't allow defining individual color attributes.
-    Juega con los pares de colores y tratar de entender el primer plano y
-    atributos de fondo. En mis programas utilizando atributos de color, yo
-    por lo general establecer sólo el fondo con set_field_back()=. curses
-    simplemente no permite definir los atributos de color individuales.
+    Juega con los pares de color y tratar de entender los atributos de
+    de fondo y primer plano. En mis programas cuando utilizo atributos
+    de color, por lo general estableco sólo el fondo con
+    =set_field_back()=. curses simplemente no permite definir
+    atributos de color individuales.
 
 # *** 18.3.5. Field Option Bits
-*** 18.3.5. Bits de opciones de campo
+*** 18.3.5. Bits de Opcion de Campo
 
     # There is also a large collection of field option bits you can set to
     # control various aspects of forms processing. You can manipulate them
     # with these functions:
-    También hay una gran colección de bits de opciones de campo que puede configurar para
-    controlar varios aspectos de procesamiento de formularios. Usted puede manipularlos
-    Con estas funciones:
+    Hay también una gran colección de bits de opcion de campo que
+    puede configurar para controlar varios aspectos al procesar
+    formularios. Puede manipularlos con estas funciones:
 
     #+BEGIN_SRC c
-      int set_field_opts(FIELD *field,          /* field to alter          */
-                         int attr);             /* attribute to set        */
+      int set_field_opts(FIELD *field,          /* campo a modificar          */
+                         int attr);             /* atributo a establecer      */
 
-      int field_opts_on(FIELD *field,           /* field to alter          */
-                        int attr);              /* attributes to turn on   */
+      int field_opts_on(FIELD *field,           /* campo a modificar          */
+                        int attr);              /* atributo a encender        */
 
-      int field_opts_off(FIELD *field,          /* field to alter          */
-                         int attr);              /* attributes to turn off */
+      int field_opts_off(FIELD *field,          /* campo a modificar          */
+                         int attr);             /* atributo a apagar          */
 
-      int field_opts(FIELD *field);             /* field to query          */
+      int field_opts(FIELD *field);             /* campo a consultar          */
     #+END_SRC
-      int set_field_opts (FIELD * El campo, / * El campo de alterar * /
-                         int attr); / * Atribuir a establecer * /
-
-      int field_opts_on (FIELD * El campo, / * El campo de alterar * /
-                        int attr); / * Atributos para encender * /
-
-      int field_opts_off (FIELD * El campo, / * El campo de alterar * /
-                         int attr); / * Atributos para apagar * /
-      int field_opts (FIELD * campo); / * El campo para consultar * /
 
     # The function =set_field_opts()= can be used to directly set
     # attributes of a field or you can choose to switch a few attributes
@@ -5786,34 +5751,35 @@
     # selectively. Anytime you can query the attributes of a field with
     # =field_opts()=. The following is the list of available options. By
     # default, all options are on.
-    La función = set_field_opts()= se pueden utilizar para establecer directamente
-    atributos de un campo o se puede optar por cambiar algunos atributos
-    y se apaga con field_opts_on()= y = field_opts_off()=
-    selectivamente. En cualquier momento puede consultar los atributos de un campo con
-    field_opts()=. La siguiente es la lista de opciones disponibles. Por
-    De forma predeterminada, todas las opciones están sobre.
-
+    Puede utilizar la función =set_field_opts()= para establecer
+    directamente atributos de un campo o puede optar por
+    encender/apagar algunos atributos con =field_opts_on()= y
+    =field_opts_off()= . En cualquier momento puede consultar los
+    atributos de un campo con =field_opts()=. La siguiente es la lista
+    de opciones disponibles. De forma predeterminada, todas las
+    opciones están encedidas.
 
     # - =O_VISIBLE=  :: Controls whether the field is visible on the
     #                   screen.  Can be used during form processing to
     #                   hide or pop up fields depending on the value of
     #                   parent fields.
-
-    - = O_VISIBLE :: Controla si el campo es visible en el
-                      pantalla. Puede ser utilizado durante el procesamiento formulario para
-                      ocultar o pop-up campos en función del valor de
-                      campos de padres.
+    - =O_VISIBLE=  :: Controla si el campo es visible en pantalla.
+                      Puede ser utilizado al procesar el formulario
+                      para ocultar o mostar campos en función del
+                      valor de campos padre.
 
     # - =O_ACTIVE=   :: Controls whether the field is active during
     #                   forms processing (i.e. visited by form
     #                   navigation keys). Can be used to make labels or
     #                   derived fields with buffer values alterable by
     #                   the forms application, not the user.
-    - = O_ACTIVE :: Controla si el campo está activo durante
-                      procesamiento de formularios (es decir, la visita de forma
-                      teclas de navegación). Se puede utilizar para hacer etiquetas o
-                      campos derivados con valores de amortiguamiento alterable por
-                      la aplicación formas, no el usuario.
+    - =O_ACTIVE=   :: Controla si el campo está activo durante el
+                      procesamiento de formularios (es decir, se puede
+                      visitar el formulario con las teclas de
+                      navegación). Se puede utilizar para crear
+                      etiquetas o campos derivados con valores de
+                      buffer modificados por la aplicación, no el
+                      usuario.
 
     # - =O_PUBLIC=   :: Controls whether data is displayed during field
     #                   entry.  If this option is turned off on a field,
@@ -5822,24 +5788,24 @@
     #                   visible field cursor will not move. You can turn
     #                   off the =O_PUBLIC= bit to define password
     #                   fields.
-    - = O_PUBLIC :: Controla si se muestra los datos durante campo
-                      entrada. Si esta opción está desactivada en un campo,
-                      la libreria va a aceptar y editar datos en ese
-                      campo, pero no se mostrará y la
-                      cursor campo visible no se moverá. Usted puede dar vuelta
-                      fuera de la = O_PUBLIC poco para definir la contraseña
-                      campos.
+    - =O_PUBLIC=   :: Controla si se muestran los datos durante lo
+                      entrada. Si se desactiva esta opción en un
+                      campo, la libreria va a aceptar y editar datos
+                      en ese campo, pero no se mostrarán y el cursor
+                      no se moverá. Puede apagar el bit =O_PUBLIC=
+                      para definir campos de contraseña.
 
     # - =O_EDIT=     :: Controls whether the field's data can be
     #                   modified. When this option is off, all editing
     #                   requests except =REQ_PREV_CHOICE= and
     #                   =REQ_NEXT_CHOICE= will fail. Such read-only
     #                   fields may be useful for help messages.
-    - = O_EDIT :: Controla si los datos del campo pueden ser
-                      modificado. Cuando esta opción está desactivada, toda la edición
-                      peticiones excepto = REQ_PREV_CHOICE = y
-                      = REQ_NEXT_CHOICE fallará. De sólo lectura Tal
-                      campos pueden ser útiles para mensajes de ayuda.
+    - =O_EDIT=     :: Controla si los datos del campo pueden ser
+                      modificados. Cuando esta opción está
+                      desactivada, fallaran todas las peticiones de
+                      edición excepto =REQ_PREV_CHOICE= y
+                      =REQ_NEXT_CHOICE=. Estos campos de sólo lectura
+                      pueden ser útiles para mensajes de ayuda.
 
     # - =O_WRAP=     :: Controls word-wrapping in multi-line
     #                   fields. Normally, when any character of a
@@ -5848,22 +5814,23 @@
     #                   next line (assuming there is one). When this
     #                   option is off, the word will be split across the
     #                   line break.
-    - = O_WRAP :: Controla palabra y embalaje en varias líneas
-                      campos. Normalmente, cuando cualquier carácter de una
-                      (separados en blanco-) palabra llega al final de la
-                      línea actual, la palabra entera se envuelve a la
-                      línea siguiente (suponiendo que lo hay). Cuando esto
-                      opción está desactivada, la palabra se dividirá en todo el
+    - =O_WRAP=     :: Controla el ajuste de texto en campos
+                      multi-linea. Normalmente, cuando cualquier
+                      carácter o (espacio separador) palabra llega al
+                      final de la línea actual, se envuelve la palabra
+                      entera y salta a la línea siguiente (suponiendo
+                      que la hay). Cuando esto opción está
+                      desactivada, la palabra se dividirá atraves del
                       salto de línea.
 
     # - =O_BLANK=    :: Controls field blanking. When this option is on,
     #                   entering a character at the first field position
     #                   erases the entire field (except for the
     #                   just-entered character).
-    - = O_BLANK :: campo Controles de supresión. Cuando esta opción está activada,
-                      introducir un carácter en la primera posición en el campo
-                      borra todo el campo (excepto para el
-                      simplemente a entrar en caracter).
+    - =O_BLANK=    :: Controla la suprecion de caracteres. Cuando esta
+                      opción está activa, al introducir un carácter en
+                      la primera posición del campo se borra todo el
+                      campo (excepto el caracter ingresado).
 
     # - =O_AUTOSKIP= :: Controls automatic skip to next field when this
     #                   one fills. Normally, when the forms user tries
@@ -5873,27 +5840,28 @@
     #                   at the end of the field. This option is ignored
     #                   in dynamic fields that have not reached their
     #                   size limit.
-    - = O_AUTOSKIP :: Controla salto automático al siguiente campo cuando este
-                      uno llena. Normalmente, cuando los intentos formularios de usuario
-                      para escribir más datos en un campo que se ajuste,
-                      la ubicación de edición salta al siguiente campo. Cuando
-                      esta opción está desactivada, el cursor del usuario cuelgue
-                      al final del campo. Esta opción se ignora
-                      en los campos dinámicos que no han alcanzado su
-                      límite de tamaño.
+    - =O_AUTOSKIP= :: Controla el salto automático al siguiente campo
+                      cuando el actual se llena. Normalmente, cuando
+                      el usuario trata de ingresar mas datos en un
+                      campo hasta llenarlo, la ubicación de edición
+                      salta al siguiente campo. Cuando esta opción
+                      está desactivada, el cursor cuelga al final del
+                      campo. Esta opción se ignora en los campos
+                      dinámicos que no han alcanzado su límite de
+                      tamaño.
 
     # - =O_NULLOK=   :: Controls whether validation is applied to blank
     #                   fields.  Normally, it is not; the user can leave
     #                   a field blank without invoking the usual
-    #                   validation check on exit. If this option is off
+    #                   validation check ¤on exit. If this option is off
     #                   on a field, exit from it will invoke a
     #                   validation check.
-    - = O_NULLOK :: Controla si la validación se aplica al blanco
-                      campos. Normalmente, no lo es; el usuario puede dejar
-                      un campo en blanco sin invocar la costumbre
-                      comprobación de validación en la salida. Si esta opción está desactivada
-                      en un campo, la salida de él invocará una
-                      comprobación de validación.
+    - =O_NULLOK=   :: Controla si la validación se aplica a campos en
+                      blanco. Normalmente, no es asi; el usuario puede
+                      dejar un campo en blanco sin invocar la
+                      comprobación de validación al salir. Si esta
+                      opción está desactivada en un campo, la salida
+                      invocará una comprobación de validación.
 
     # - =O_PASSOK=   :: Controls whether validation occurs on every
     #                   exit, or only after the field is
@@ -5901,20 +5869,20 @@
     #                   =O_PASSOK= may be useful if your field's
     #                   validation function may change during forms
     #                   processing.
-    - = O_PASSOK :: Controla si la validación ocurre en cada
-                      salida, o sólo después de que el campo es
-                      modificado. Normalmente esto último es cierto. Ajuste
-                      = O_PASSOK puede ser útil si su ámbito de
-                      función de validación puede cambiar durante formas
-                      tratamiento.
+    - =O_PASSOK=   :: Controla si la validación ocurre en cada salida,
+                      o sólo después de que el campo es
+                      modificado. Normalmente es cierto esto
+                      último. Ajustar =O_PASSOK= puede ser útil si su
+                      funcion de validación puede cambiar durante el
+                      tratamiento de formularios.
 
     # - =O_STATIC=   :: Controls whether the field is fixed to its
     #                   initial dimensions. If you turn this off, the
     #                   field becomes dynamic and will stretch to fit
     #                   entered data.
-    - = O_STATIC :: Controla si el campo se fija a su
-                      dimensiones iniciales. Si la desactivas, el
-                      campo se convierte en dinámica y se estira para adaptarse
+    - =O_STATIC=   :: Controla si el campo se fija a su dimensiones
+                      iniciales. Si se desactiva, el campo se vuelve
+                      dinámico y se extiende para adaptarse a los
                       datos introducidos.
 
 
@@ -5922,23 +5890,23 @@
     # selected. However, options may be changed on posted fields that
     # are not current.
 
-    Opciones de un campo no se puede cambiar mientras el campo se encuentra actualmente
-    seleccionado. Sin embargo, las opciones se pueden cambiar en los campos de desplazados que
-    no son actuales.
+    Las opciones de un campo no se puede cambiar mientras el campo se
+    encuentra seleccionado. Sin embargo, se pueden cambiar las
+    opciones en los demas campos.
 
     # The option values are bit-masks and can be composed with
     # logical-or in the obvious way. You have seen the usage of
     # switching off =O_AUTOSKIP= option. The following example clarifies
     # usage of some more options.  Other options are explained where
     # appropriate.
-    Los valores de las opciones son mascaras de bits y se pueden componer con
-    lógica o de la manera obvia. Ustedes han visto el uso de
-    desconexión = O_AUTOSKIP = opción. El siguiente ejemplo aclara
-    uso de algunas opciones más. Otras opciones se explican en
-    apropiado.
+    Los valores de las opciones son mascaras de bits y se pueden
+    componer con puertas logicas OR de manera obvia. Usted ha visto el
+    uso de apagar la opcion =O_AUTOSKIP=. El siguiente ejemplo aclara
+    uso de algunas opciones más. Las otras opciones se explicaran
+    cuando sea apropiado.
 
     # *Example 27. Field Options Usage example*
-    [[file:ncurses_programs/basics/][*Opciones de campo Ejemplo 27. Ejemplo de uso*]]
+    [[file:ncurses_programs/forms/form_options.c][*Ejemplo 27. Opciones de Campo*]]
 
     #+BEGIN_SRC c
       #include <form.h>
@@ -5949,66 +5917,67 @@
 
       #define N_FIELDS 3
 
-      int main()
-      {   FIELD *field[N_FIELDS];
+      int main(){
+        FIELD *field[N_FIELDS];
         FORM  *my_form;
         int ch, i;
 
-        /* Initialize curses */
+        /* Inicializa curses */
         initscr();
         cbreak();
         noecho();
         keypad(stdscr, TRUE);
 
-        /* Initialize the fields */
+        /* Inicializa los campos */
         for(i = 0; i < N_FIELDS - 1; ++i)
           field[i] = new_field(1, WIDTH, STARTY + i * 2, STARTX, 0, 0);
         field[N_FIELDS - 1] = NULL;
 
-        /* Set field options */
-        set_field_back(field[1], A_UNDERLINE);  /* Print a line for the option         */
+        /* Establecer las opciones de campo */
+        set_field_back(field[1], A_UNDERLINE);    /* Imprime una linea pora la opcion       */
 
-        field_opts_off(field[0], O_ACTIVE);     /* This field is a static label        */
-        field_opts_off(field[1], O_PUBLIC);     /* This filed is like a password field */
-        field_opts_off(field[1], O_AUTOSKIP);   /* To avoid entering the same field    */
-                                                /* after last character is entered     */
+        field_opts_off(field[0], O_ACTIVE);       /* Este campo es una etiqueta estatica    */
+        field_opts_off(field[1], O_PUBLIC);       /* Este es un campo estilo contraseña     */
+        field_opts_off(field[1], O_AUTOSKIP);     /* Evita entrar en algun otro campo       */
+                                                  /* despues de ingresar el ultimo caracter */
 
-        /* Create the form and post it */
+        /* Crea el formulario y lo publica */
         my_form = new_form(field);
         post_form(my_form);
         refresh();
 
-        set_field_just(field[0], JUSTIFY_CENTER); /* Center Justification */
-        set_field_buffer(field[0], 0, "This is a static Field");
-        /* Initialize the field  */
-        mvprintw(STARTY, STARTX - 10, "Field 1:");
-        mvprintw(STARTY + 2, STARTX - 10, "Field 2:");
+        set_field_just(field[0], JUSTIFY_CENTER); /* Justificar al centro                   */
+        set_field_buffer(field[0], 0, "Este es un campo estatico");
+
+        /* Inicializa el campo  */
+        mvprintw(STARTY, STARTX - 10, "Campo 1:");
+        mvprintw(STARTY + 2, STARTX - 10, "Campo 2:");
         refresh();
 
-        /* Loop through to get user requests */
-        while((ch = getch()) != KEY_F(1))
-          {   switch(ch)
-              {   case KEY_DOWN:
-                  /* Go to next field */
-                  form_driver(my_form, REQ_NEXT_FIELD);
-                  /* Go to the end of the present buffer */
-                  /* Leaves nicely at the last character */
-                  form_driver(my_form, REQ_END_LINE);
-                  break;
-              case KEY_UP:
-                /* Go to previous field */
-                form_driver(my_form, REQ_PREV_FIELD);
-                form_driver(my_form, REQ_END_LINE);
-                break;
-              default:
-                /* If this is a normal character, it gets */
-                /* Printed                */
-                form_driver(my_form, ch);
-                break;
-              }
+        /* Ciclo para optener solicitudes del usuario */
+        while( (ch = getch()) != KEY_F(1) ){
+          switch( ch ){
+          case KEY_DOWN:
+            /* Ir al siguiente campo */
+            form_driver(my_form, REQ_NEXT_FIELD);
+            /* Ir al final del buffer actual */
+            /* Abandonar en el ultimo caracter */
+            form_driver(my_form, REQ_END_LINE);
+            break;
+          case KEY_UP:
+            /* Ir al campo anterior */
+            form_driver(my_form, REQ_PREV_FIELD);
+            form_driver(my_form, REQ_END_LINE);
+            break;
+          default:
+            /* Si este es un caracter normal, se optiene */
+            /* Imprime                                   */
+            form_driver(my_form, ch);
+            break;
           }
+        }
 
-        /* Un post form and free the memory */
+        /* Remueve el formulario y libera la memoria */
         unpost_form(my_form);
         free_form(my_form);
         free_field(field[0]);
@@ -6023,13 +5992,13 @@
     # properly, they can present information very effectively in a
     # form. The second field being not =O_PUBLIC=, does not show the
     # characters you are typing.
-    En este ejemplo, aunque inútil, muestra el uso de opciones. Si se usa
-    adecuadamente, pueden presentar la información de manera muy eficaz en una
-    formar. El segundo campo es no = O_PUBLIC =, no muestran la
-    caracteres que están escribiendo.
+    En este ejemplo, aunque inútil, muestra el uso de opciones. Si se
+    usan adecuadamente, puede presentar la información de manera muy
+    eficaz. El segundo campo es no =O_PUBLIC=, no muestra los
+    caracteres que se están escribiendo.
 
 # *** 18.3.6. Field Status
-*** 18.3.6. El campo de estado
+*** 18.3.6. Estado del Campo
 
     # The field status specifies whether the field has got edited or
     # not. It is initially set to FALSE and when user enters something
@@ -6043,7 +6012,7 @@
     no. Las siguientes funciones pueden ayudar a esas operaciones.
 
     #+BEGIN_SRC c
-      int set_field_status(FIELD *field,      /* field to alter */
+      int set_field_status(FIELD *field,      /* campo a modificar */
                            int status);       /* status to set  */
 
       int field_status(FIELD *field);         /* fetch status of field */
@@ -6455,7 +6424,7 @@
    Validación se puede conectar a un campo con la siguiente función.
 
    #+BEGIN_SRC c
-     int set_field_type(FIELD *field,          /* field to alter       */
+     int set_field_type(FIELD *field,          /* campo a modificar       */
                         FIELDTYPE *ftype,      /* type to associate    */
                         ...);                  /* additional arguments */
    #+END_SRC
@@ -6467,7 +6436,7 @@
    Una vez establecido, el tipo de validación para un campo se puede consultar con
 
    #+BEGIN_SRC c
-     FIELDTYPE *field_type(FIELD *field);      /* field to query       */
+     FIELDTYPE *field_type(FIELD *field);      /* campo a consultar       */
    #+END_SRC
      FIELDTYPE * field_type (FIELD * campo); / * El campo para consultar * /
 
@@ -6504,7 +6473,7 @@
   creado con:
 
   #+BEGIN_SRC c
-    int set_field_type(FIELD *field,          /* field to alter         */
+    int set_field_type(FIELD *field,          /* campo a modificar         */
                        TYPE_ALPHA,            /* type to associate      */
                        int width);            /* maximum width of field */
   #+END_SRC
@@ -6534,7 +6503,7 @@
   creado con:
 
   #+BEGIN_SRC c
-    int set_field_type(FIELD *field,          /* field to alter         */
+    int set_field_type(FIELD *field,          /* campo a modificar         */
                        TYPE_ALNUM,            /* type to associate      */
                        int width);            /* maximum width of field */
   #+END_SRC
@@ -6565,7 +6534,7 @@
   códigos de los estados de Estados Unidos). Se creó con:
 
   #+BEGIN_SRC c
-    int set_field_type(FIELD *field,          /* field to alter          */
+    int set_field_type(FIELD *field,          /* campo a modificar          */
                        TYPE_ENUM,             /* type to associate       */
                        char **valuelist;      /* list of possible values */
                        int checkcase;         /* case-sensitive?         */
@@ -6616,7 +6585,7 @@
   Este tipo de campo acepta un entero. Se configura de la siguiente manera:
 
   #+BEGIN_SRC c
-    int set_field_type(FIELD *field,          /* field to alter          */
+    int set_field_type(FIELD *field,          /* campo a modificar          */
                        TYPE_INTEGER,          /* type to associate       */
                        int padding,           /* # places to zero-pad to */
                        int vmin, int vmax);   /* valid range             */
@@ -6650,7 +6619,7 @@
   Este tipo de campo acepta un número decimal. Se configura de la siguiente manera:
 
   #+BEGIN_SRC c
-    int set_field_type(FIELD *field,          /* field to alter        */
+    int set_field_type(FIELD *field,          /* campo a modificar        */
                        TYPE_NUMERIC,          /* type to associate     */
                        int padding,           /* # places of precision */
                        int vmin, int vmax);   /* valid range           */
@@ -6689,7 +6658,7 @@
   establecido de la siguiente manera:
 
   #+BEGIN_SRC c
-    int set_field_type(FIELD *field,          /* field to alter      */
+    int set_field_type(FIELD *field,          /* campo a modificar      */
                        TYPE_REGEXP,           /* type to associate   */
                        char *regexp);         /* expression to match */
   #+END_SRC
