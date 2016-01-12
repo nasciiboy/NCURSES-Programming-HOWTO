@@ -1,4 +1,5 @@
 #include <form.h>
+#include <string.h>
 
 void print_in_middle(WINDOW *win, int starty, int startx, int width, char *string, chtype color);
 
@@ -8,7 +9,7 @@ int main()
 	FORM  *my_form;
 	WINDOW *my_form_win;
 	int ch, rows, cols;
-	
+
 	/* Initialize curses */
 	initscr();
 	start_color();
@@ -28,12 +29,12 @@ int main()
 	set_field_back(field[0], A_UNDERLINE);
 	field_opts_off(field[0], O_AUTOSKIP); /* Don't go to next field when this */
 					      /* Field is filled up 		*/
-	set_field_back(field[1], A_UNDERLINE); 
+	set_field_back(field[1], A_UNDERLINE);
 	field_opts_off(field[1], O_AUTOSKIP);
-	
+
 	/* Create the form and post it */
 	my_form = new_form(field);
-	
+
 	/* Calculate the area required for the form */
 	scale_form(my_form, &rows, &cols);
 
@@ -48,7 +49,7 @@ int main()
 	/* Print a border around the main window and print a title */
         box(my_form_win, 0, 0);
 	print_in_middle(my_form_win, 1, 0, cols + 4, "My Form", COLOR_PAIR(1));
-	
+
 	post_form(my_form);
 	wrefresh(my_form_win);
 
@@ -72,7 +73,7 @@ int main()
 				break;
 			default:
 				/* If this is a normal character, it gets */
-				/* Printed				  */	
+				/* Printed				  */
 				form_driver(my_form, ch);
 				break;
 		}
@@ -82,7 +83,7 @@ int main()
 	unpost_form(my_form);
 	free_form(my_form);
 	free_field(field[0]);
-	free_field(field[1]); 
+	free_field(field[1]);
 
 	endwin();
 	return 0;

@@ -4378,7 +4378,7 @@
    siguientes líneas con varios ejemplos siempre que sea apropiado.
 
 # ** 17.4. Menu Windows
-** 17.4. Ventanas Menu
+** 17.4. Ventanas de Menu
 
    # Every menu created is associated with a window and a sub
    # window. The menu window displays any title or border associated
@@ -4765,7 +4765,7 @@
        /* Configura la opcion del menu para no mostar la descripcion */
        menu_opts_off(my_menu, O_SHOWDESC);
 
-       /* Crea la ventana que sera asaciada al menu */
+       /* Crea la ventana que sera asociada al menu */
        my_menu_win = newwin(10, 70, 4, 4);
        keypad(my_menu_win, TRUE);
 
@@ -5424,7 +5424,7 @@
            /* Ir al siguiente campo */
            form_driver(my_form, REQ_NEXT_FIELD);
            /* Ir al final del buffer actual */
-           /* Abandonar en el ultimo caracter */
+           /* Deja en el ultimo caracter    */
            form_driver(my_form, REQ_END_LINE);
            break;
          case KEY_UP:
@@ -5652,12 +5652,12 @@
         init_pair(1, COLOR_WHITE, COLOR_BLUE);
         init_pair(2, COLOR_WHITE, COLOR_BLUE);
 
-        /* Inicializa los compos */
+        /* Inicializa los campos */
         field[0] = new_field(1, 10, 4, 18, 0, 0);
         field[1] = new_field(1, 10, 6, 18, 0, 0);
         field[2] = NULL;
 
-        /* Establecer las opciones de campo */
+        /* Establece las opciones de campo */
         set_field_fore(field[0], COLOR_PAIR(1));     /* Coloca el campo con el fordo azul  */
         set_field_back(field[0], COLOR_PAIR(2));     /* y el frente blanco (los caracteres */
                                                      /* son impresos en BLANCO             */
@@ -5683,8 +5683,8 @@
           case KEY_DOWN:
             /* Ir al siguiente campo */
             form_driver(my_form, REQ_NEXT_FIELD);
-            /* Ir al final del buffer actual */
-            /* Abandonar en el ultimo caracter */
+            /* Ir al final del buffer actual  */
+            /* Deja en el ultimo caracter     */
             form_driver(my_form, REQ_END_LINE);
             break;
           case KEY_UP:
@@ -5961,7 +5961,7 @@
             /* Ir al siguiente campo */
             form_driver(my_form, REQ_NEXT_FIELD);
             /* Ir al final del buffer actual */
-            /* Abandonar en el ultimo caracter */
+            /* Deja en el ultimo caracter    */
             form_driver(my_form, REQ_END_LINE);
             break;
           case KEY_UP:
@@ -6005,82 +6005,76 @@
     # and the data buffer gets modified it becomes TRUE. So a field's
     # status can be queried to find out whether it has been modified or
     # not. The following functions can assist in those operations.
-    El estado de campo especifica si el campo tiene editado o
-    no. Inicialmente se establece en FALSE y cuando el usuario entra en algo
-    y el búfer de datos se modifica se convierte en TRUE. Por lo tanto un campo de
-    el estado se puede consultar para saber si se ha modificado o
-    no. Las siguientes funciones pueden ayudar a esas operaciones.
+    El estado de campo especifica si el campo ha sido editado o
+    no. Inicialmente se establece en =FALSE= y cuando el usuario
+    escribe algo y los datos del buffer son modificados se convierte
+    en =TRUE=. Por lo tanto se puede consultar el estado de un campo
+    para saber si se ha modificado o no. Las siguientes funciones
+    pueden ayudar a esas operaciones.
 
     #+BEGIN_SRC c
-      int set_field_status(FIELD *field,      /* campo a modificar */
-                           int status);       /* status to set  */
+      int set_field_status(FIELD *field,      /* campo a modificar       */
+                           int status);       /* estado a entablecer     */
 
-      int field_status(FIELD *field);         /* fetch status of field */
+      int field_status(FIELD *field);         /* obtener estado de campo */
     #+END_SRC
-
-      int set_field_status (FIELD * El campo, / * El campo de alterar * /
-                           int status); / * Estado para establecer * /
-      int field_status (FIELD * campo); / * Obtener estado del campo * /
-
 
     # It's better to check the field's status only after after leaving
     # the field, as data buffer might not have been updated yet as the
     # validation is still due. To guarantee that right status is
     # returned, call =field_status()= either (1) in the field's exit
-    # validation check routine, (2) from the field's or form's
+    # validation check routine, (2) ¤from the field's or form's
     # initialization or termination hooks, or (3) just after a
     # =REQ_VALIDATION= request has been processed by the forms driver
-    Es mejor para comprobar el estado del terreno de juego sólo después de que después de salir
-    el campo, como búfer de datos puede que no se han actualizado todavía como el
-    validación es todavía debido. Para garantizar que el estado de derecho es
-    regresado, llamada = field_status()= o bien (1) en la salida del campo
-    control de rutina de validación, (2) desde el campo de formulario o de
-    inicialización o terminación de ganchos, o (3) enseguida después de una
-    = REQ_VALIDATION solicitud ha sido procesada por el conductor formas
+    Es mejor comprobar el estado de un campo sólo después de salir de
+    este, ya que los datos del buffer podrian no haber sido
+    actualizados aun, mientras la validacion no se ha teminado. Para
+    garantizar que es regresado el estado correcto, llamade a
+    =field_status()= ya sea (1) cuando termina la rutina de validacion
+    del campo, (2) a partir de la inicializacion o terminacion de los
+    campos o formularios, o (3) enseguida de que una solicitud
+    =REQ_VALIDATION= ha sido procesada por =form_driver()=.
 
 # *** 18.3.7. Field User Pointer
-*** 18.3.7. El campo puntero del usuario
+*** 18.3.7. Puntero de Usuario de Campo
 
     # Every field structure contains one pointer that can be used by the
     # user for various purposes. It is not touched by forms library and
     # can be used for any purpose by the user. The following functions
     # set and fetch user pointer.
-    Cada estructura de campo contiene un puntero que puede ser utilizado por el
-    usuario para diversos fines. No es tocado por formas libreria y
-    puede ser utilizado para cualquier propósito por el usuario. Las siguientes funciones
-    establecer a buscar puntero del usuario.
+    Cada estructura de campo contiene un puntero que puede ser
+    utilizado por el usuario para diversos fines. No es empleado por
+    la libreria form y puede ser utilizado por el usuario para
+    cualquier propósito. Las siguientes funciones establecen y
+    obtienen el puntero del usuario.
 
     #+BEGIN_SRC c
       int set_field_userptr(FIELD *field,
-                            char *userptr);   /* the user pointer you wish to associate */
-                                              /* with the field                         */
+                            char *userptr);   /* el puntero de usuario que desea asociar */
+                                              /* con el campo                            */
 
-      char *field_userptr(FIELD *field);      /* fetch user pointer of the field        */
+      char *field_userptr(FIELD *field);      /* obtener el puntero de usuario del campo */
     #+END_SRC
-      int set_field_userptr (FIELD * El campo,
-                            char * userptr); / * El usuario puntero que desea asociar * /
-                                              / * Con el campo * /
-
-      char * field_userptr (FIELD * campo); / * Se ha podido recuperar puntero usuario del campo * /
 
 # *** 18.3.8. Variable-Sized Fields
-*** 18.3.8. Los campos de tamaño variable
+*** 18.3.8. Campos de Tamaño Variable
 
     # If you want a dynamically changing field with variable width, this
     # is the feature you want to put to full use. This will allow the
     # user to enter more data than the original size of the field and
     # let the field grow. According to the field orientation it will
     # scroll horizontally or vertically to incorporate the new data.
-    Si quieres un campo que cambia dinámicamente con ancho variable, esta
-    es la característica que desea poner a pleno uso. Esto permitirá que el
-    usuario introducir más datos que el tamaño original del terreno y
-    dejó crecer el campo. De acuerdo con la orientación del campo lo hará
-    desplazarse horizontalmente o verticalmente para incorporar los nuevos datos.
+    Si quiere un campo que cambie su anchura dinámicamente, esta es la
+    característica que desea poner a pleno uso. Esto permite que el
+    usuario introdusca más datos que el tamaño original del campo y
+    deja crecer el campo. De acuerdo con la orientación del campo lo
+    hará desplazarse horizontal o verticalmente para incorporar los
+    nuevos datos.
 
     # To make a field dynamically growable, the option =O_STATIC= should
     # be turned off. This can be done with a
-    Para hacer un campo dinámicamente cultivable, la opción = O_STATIC = deberían
-    ser apagado. Esto se puede hacer con una
+    Para obtener un campo con crecimiento dinámico, la debe apagar la
+    opción =O_STATIC=. Esto se puede hacer con
 
     #+BEGIN_SRC c
       field_opts_off(field_pointer, O_STATIC);
@@ -6089,36 +6083,26 @@
     # But it's usually not advisable to allow a field to grow
     # infinitely. You can set a maximum limit to the growth of the field
     # with
-    Pero por lo general no es aconsejable para permitir un campo para crecer
-    infinitamente. Puede establecer un límite máximo para el crecimiento del campo
-    con
+    Pero por lo general no es aconsejable permitir a un campo para
+    crecer infinitamente. Puede establecer un límite máximo para el
+    crecimiento con
 
     #+BEGIN_SRC c
-      int set_max_field(FIELD *field,    /* Field on which to operate            */
-                        int max_growth); /* maximum growth allowed for the field */
+      int set_max_field(FIELD *field,    /* Campo sabre el cual operar                 */
+                        int max_growth); /* Crecimiento maximo permitido para el campo */
     #+END_SRC
-
-      int set_max_field (FIELD * El campo, / * El campo en el que operar * /
-                        int max_growth); / * Crecimiento máximo permitido para el campo * /
 
     # The field info for a dynamically growable field can be retrieved
     # by
-    El campo de información para un campo dinámicamente cultivable puede ser recuperada
-    por
+    La informacion de un campo con crecimiento dinamico se puede
+    recuperar utilizando
 
     #+BEGIN_SRC c
-      int dynamic_field_info( FIELD *field,     /* Field on which to operate                */
-                              int   *prows,     /* number of rows will be filled in this    */
-                              int   *pcols,     /* number of columns will be filled in this */
-                              int   *pmax)      /* maximum allowable growth will be filled  */
-                                                /* in this                                  */
+      int dynamic_field_info( FIELD *field,     /* campo sobre el cual operar   */
+                              int   *prows,     /* numero de filas              */
+                              int   *pcols,     /* number de columnas           */
+                              int   *pmax)      /* maximo crecimiento permitido */
     #+END_SRC
-
-      int dynamic_field_info (FIELD * El campo, / * El campo en el que operar * /
-                              int * proas, / * número de filas se llenará en esta * /
-                              int * pcols, / * número de columnas se llenará en esta * /
-                              int * pmáx) / * el crecimiento máximo permisible se llenará * /
-                                                /* en esto                                  */
 
     # Though =field_info= work as usual, it is advisable to use this
     # function to get the proper attributes of a dynamically growable
@@ -6126,41 +6110,43 @@
     # created with height set to one will be defined to be a one line
     # field. A new field created with height greater than one will be
     # defined to be a multi line field.
-    Aunque field_info = trabajo como de costumbre, es aconsejable utilizar este
-    función para obtener los atributos propios de una forma dinámica cultivable
-    campo. Recordemos la rutina de libreria = new_field =; un campo nuevo
-    creado con la altura establecida en uno se define para ser una sola línea
-    campo. Un nuevo campo creado con la altura mayor que uno será
-    define como un campo de múltiples líneas.
+    Aunque =field_info= funciona como de costumbre, es aconsejable
+    utilizar esta función para obtener los atributos correctos de un
+    campo con crecimiento dinamico. Recordemos la rutina =new_field=
+    de libreria; un campo creado con la altura establecida en uno
+    define un campo de una sola línea. Un campo creado con una altura
+    mayor a uno define un campo de múltiples líneas.
 
     # A one line field with =O_STATIC= turned off (dynamically growable
     # field) will contain a single fixed row, but the number of columns
     # can increase if the user enters more data than the initial field
     # will hold. The number of columns displayed will remain fixed and
     # the additional data will scroll horizontally.
-    Un campo de una línea con O_STATIC = apagado (dinámica cultivable
-    campo) contendrá una sola fila fijo, pero el número de columnas
-    puede aumentar si el usuario introduce más datos que el campo inicial
-    sostendrá. El número de columnas que se muestran permanecerá fijo y
-    los datos adicionales desplazarse horizontalmente.
+    Un campo de una línea con =O_STATIC= apagado (campo con
+    crecimiento dinamico) contendrá una sola fila fija, pero el número
+    de columnas puede aumentar si el usuario introduce más datos que
+    los fijados originalmente. El número de columnas mostradas
+    permanecerá fijo y los datos adicionales podran desplazarse
+    horizontalmente.
 
     # A multi line field with =O_STATIC= turned off (dynamically
     # growable field) will contain a fixed number of columns, but the
     # number of rows can increase if the user enters more data than the
     # initial field will hold. The number of rows displayed will remain
     # fixed and the additional data will scroll vertically.
-    Un campo multilínea con O_STATIC = apagado (dinámica
-    terreno cultivable) contendrá un número fijo de columnas, pero el
-    número de filas puede aumentar si el usuario introduce más datos que el
-    campo inicial se mantendrá. El número de filas que se muestra permanecerá
-    fijos y los datos adicionales desplazarse verticalmente.
+    Un campo multilínea con =O_STATIC= apagado (campo con crecimiento
+    dinamico) contendrá un número fijo de columnas, pero el número de
+    filas puede aumentar si el usuario introduce más datos que los
+    fijados originalmnte. El número de filas que se muestra
+    permanecerá fijo y los datos adicionales podran desplazarse
+    verticalmente.
 
     # The above two paragraphs pretty much describe a dynamically
     # growable field's behavior. The way other parts of forms library
     # behaves is described below:
-    Los dos párrafos anteriores describen más o menos una forma dinámica
-    el comportamiento del terreno cultivable. La forma en que otras partes de las formas de la libreria
-    se comporta se describe a continuación:
+    Los dos párrafos anteriores describen más o menos el
+    comportamiento de un campo dinamico. La forma en que se comportan
+    otras partes de libreria se describen a continuacion:
 
    # 1. The field option =O_AUTOSKIP= will be ignored if the option
    #    =O_STATIC= is off and there is no maximum growth specified for
@@ -6171,14 +6157,14 @@
    #    position. If a maximum growth is specified, the =O_AUTOSKIP=
    #    option will work as normal if the field has grown to its maximum
    #    size.
-   1. La opción de campo = O_AUTOSKIP = se ignorará si la opción
-      = O_STATIC está apagado y no hay crecimiento máxima especificada para
-      el campo. Actualmente, = O_AUTOSKIP = genera una automática
-      = REQ_NEXT_FIELD solicitar controlador formulario cuando el usuario escribe en el
-      última posición de carácter de un campo. En un campo cultivable sin
-      crecimiento máximo especificado, no hay último carácter
-      posición. Si se especifica un crecimiento máximo, el = O_AUTOSKIP =
-      opción funcionará de forma normal si el campo ha crecido a su máximo
+   1. La opción de campo =O_AUTOSKIP= se ignorará si =O_STATIC= está
+      apagado y no se ha especificado un crecimiento máxima para el
+      campo. Actualmente, =O_AUTOSKIP= genera automaticamente una
+      solicitud =REQ_NEXT_FIELD= cuando el usuario escribe sobre la
+      posición del ultimo carácter de un campo. En un campo sin
+      crecimiento máximo especificado, no hay un último carácter. Si
+      se especifica un crecimiento máximo, la opcion =O_AUTOSKIP=
+      funcionará de forma normal si el campo ha crecido a su máximo
       tamaño.
 
    # 2. The field justification will be ignored if the option =O_STATIC=
@@ -6188,13 +6174,13 @@
    #    definition, grow and scroll horizontally and may contain more
    #    data than can be justified. The return from =field_just= will be
    #    unchanged.
-   2. La justificación campo se ignora si la opción = O_STATIC =
-      esta apagado. Actualmente, = set_field_just = se puede utilizar para
-      = JUSTIFY_LEFT =, = JUSTIFY_RIGHT = = JUSTIFY_CENTER los contenidos
-      de un campo de una línea. Un cultivable un campo de línea será, por
-      definición, crecer y desplazarse horizontalmente y puede contener más
-      datos que se pueden justificar. El regreso de field_just = será
-      sin alterar.
+   2. Se ignora la justificación de campo si se ha apagado la opción
+      =O_STATIC=. Actualmente se puede utilizar, =set_field_just= con
+      =JUSTIFY_LEFT=, =JUSTIFY_RIGHT=, =JUSTIFY_CENTER= para los
+      contenidos de un campo de una línea. Un campo creciente de una
+      linea, por definición, crece y se desplaza horizontalmente y
+      puede contener más datos de los que se pueden justificar. El
+      retorno de =field_just= será =NO_JUSTIFICATION=.
 
    # 3. The overloaded form driver request =REQ_NEW_LINE= will operate
    #    the same way regardless of the =O_NL_OVERLOAD= form option if
@@ -6208,27 +6194,29 @@
    #    =O_NL_OVERLOAD= form option is on, =REQ_NEW_LINE= will only
    #    implicitly generate =REQ_NEXT_FIELD= if the field has grown to
    #    its maximum size and the user is on the last line.
-   3. El conductor formulario de solicitud = REQ_NEW_LINE sobrecargado = operará
-      de la misma manera independientemente de la opción = O_NL_OVERLOAD = formulario si
-      la opción de campo = O_STATIC = está apagado y no hay máximo
-      crecimiento especificado para el campo. Actualmente, si la opción de forma
-      = O_NL_OVERLOAD está encendido, = REQ_NEW_LINE genera implícitamente una
-      = REQ_NEXT_FIELD si llama desde la última línea de un campo. Si una
-      campo puede crecer sin límite, no hay última línea, por lo que
-      = REQ_NEW_LINE = nunca generará implícitamente una
-      = REQ_NEXT_FIELD. Si se especifica y un límite máximo de crecimiento
-      = O_NL_OVERLOAD opción formulario está encendido, = REQ_NEW_LINE = sólo se
-      generar implícitamente = REQ_NEXT_FIELD = si el campo ha crecido hasta
-      su tamaño máximo y el usuario está en la última línea.
+   3. Sobrecargar =form_driver= con la solicitud =REQ_NEW_LINE=
+      operará de la misma manera independientemente de la opción
+      =O_NL_OVERLOAD= si la opción de campo =O_STATIC= está apagada y
+      no hay un crecimiento máximo especificado para el campo.
+      Actualmente, si la opción =O_NL_OVERLOAD= está encendida,
+      =REQ_NEW_LINE= genera implícitamente una solicitud
+      =REQ_NEXT_FIELD= si se llama desde la última línea de un
+      campo. Si una campo puede crecer sin límite, no hay última
+      línea, por lo que =REQ_NEW_LINE= nunca generará implícitamente
+      una solicitud =REQ_NEXT_FIELD=. Si se especifica un límite
+      máximo de crecimiento y se activa la opcion =O_NL_OVERLOAD=,
+      =REQ_NEW_LINE= sólo se generar =REQ_NEXT_FIELD= si el campo ha
+      crecido hasta su tamaño máximo y el usuario está en la última
+      línea.
 
    # 4. The library call =dup_field= will work as usual; it will
    #    duplicate the field, including the current buffer size and
    #    contents of the field being duplicated. Any specified maximum
    #    growth will also be duplicated.
-   4. La llamada libreria = dup_field = funcionará como de costumbre; será
-      duplicar el campo, incluyendo el tamaño del búfer actual y
-      contenido del campo se duplican. Cualquier máximo especificado
-      crecimiento también se duplicará.
+   4. La funcion =dup_field= trabajara como de costumbre; duplicara el
+      campo, incluyendo el tamaño del búfer actual y el contenido del
+      campo. Cualquier crecimiento máximo especificado también se
+      duplicará.
 
    # 5. The library call =link_field= will work as usual; it will
    #    duplicate all field attributes and share buffers with the field
@@ -6237,32 +6225,34 @@
    #    attempt to enter more data into the field than the buffer will
    #    currently hold will depend on the setting of the option in the
    #    current field.
-   5. La llamada libreria = link_field = funcionará como de costumbre; será
-      duplicar todos los atributos de campo y compartir buffers con el campo
-      está vinculado. Si el O_STATIC = opción de campo es posteriormente
-      cambiado por unos tampones de intercambio de campo, las reacciones del sistema a un
-      intentar introducir más datos en el campo de la memoria intermedia de la voluntad
-      Actualmente mantenga dependerá de la configuración de la opción en el
-      campo actual.
+   5. La llamada =link_field= funcionará como de costumbre; duplicara
+      todos los atributos de campo y compartira buffers con el campo
+      enlazado. Si la opcion de campo =O_STATIC= se cambia
+      posteriormente por buffers de campo compatidos, la reaccion del
+      sistema a un intento de introducir más datos en el campo
+      actualmente fijo dependerá de la configuración de la opción en
+      el campo actual.
 
    # 6. The library call =field_info= will work as usual; the variable
    #    nrow will contain the value of the original call to
    #    =new_field=. The user should use =dynamic_field_info=, described
    #    above, to query the current size of the buffer.
-   6. La llamada libreria = field_info = funcionará como de costumbre; la variable
-      nRow contendrá el valor de la llamada original a
-      = new_field. El usuario debe utilizar = dynamic_field_info, descrito
-      anteriormente, para consultar el tamaño actual de la memoria intermedia.
+   6. La llamada =field_info= funcionará como de costumbre; la
+      variable =nrow= contendrá el valor de la llamada original a
+      =new_field=. El usuario debe utilizar =dynamic_field_info=,
+      descrito anteriormente, para consultar el tamaño actual del
+      buffer.
 
 
    # Some of the above points make sense only after explaining form
    # driver.  We will be looking into that in next few sections.
 
-   Algunos de los puntos anteriores tienen sentido sólo después formulario explicando
-   conductor. Vamos a estar buscando en que, en próximas secciones.
+   Algunos de los puntos anteriores tienen sentido sólo después de
+   explicar =form_driver=. Cosa que buscaremos hacer en próximas
+   secciones.
 
 # ** 18.4. Form Windows
-** 18.4. Windows Form
+** 18.4. Ventanas de Formulario
 
    # The form windows concept is pretty much similar to menu
    # windows. Every form is associated with a main window and a sub
@@ -6271,106 +6261,107 @@
    # contains all the fields and displays them according to their
    # position. This gives the flexibility of manipulating fancy form
    # displaying very easily.
-   El concepto de formulario de Windows es más o menos similar al menu
-   ventanas. Cada forma está asociada con una ventana principal y un sub
-   ventana. La ventana principal de formulario muestra cualquier título o de la frontera
-   asociada o lo que sea el usuario desee. A continuación, la ventana sub
-   contiene todos los campos y los muestra en función de su
-   posición. Esto le da la flexibilidad de manipular la forma de fantasía
-   se presentan muy fácilmente.
+   El concepto de ventana de formulario es más o menos similar al de
+   ventana de menu. Cada formulario está asociada con una ventana
+   principal y una sub ventana. La ventana principal del formulario
+   muestra cualquier título o borde asociado o lo que sea que desee.
+   La sub ventana contiene todos los campos y los muestra en función
+   de su posición. Esto le da la flexibilidad de manipular la
+   presentacion de los formularios muy fácilmente.
 
    # Since this is pretty much similar to menu windows, I am providing
    # an example with out much explanation. The functions are similar and
    # they work the same way.
-   Dado que este es más o menos similar a las ventanas de menu, estoy proporcionando
-   un ejemplo con fuera mucha explicación. Las funciones son similares y
-   que funcionan de la misma manera.
+   Dado que esto es muy similar a las ventanas de menu, proporciono un
+   ejemplo con una mayor explicación. Las funciones son similares y
+   funcionan de la misma manera.
 
    # *Example 28. Form Windows Example*
-    [[file:ncurses_programs/basics/][*Ejemplo 28. Ejemplo de formularios Windows*]]
+   [[file:ncurses_programs/forms/form_win.c][*Ejemplo 28. Ventanas de Formulario*]]
 
    #+BEGIN_SRC c
      #include <form.h>
+     #include <string.h>
 
-     void print_in_middle(WINDOW *win, int starty, int startx, int width, char *string, chtype color);
+     void print_in_middle( WINDOW *win, int starty, int startx,
+                           int width, char *string, chtype color );
 
-     int main()
-     {
+     int main(){
        FIELD *field[3];
        FORM  *my_form;
        WINDOW *my_form_win;
        int ch, rows, cols;
 
-       /* Initialize curses */
+       /* Inicialiaza curses */
        initscr();
        start_color();
        cbreak();
        noecho();
-       keypad(stdscr, TRUE);
+       keypad( stdscr, TRUE );
 
-       /* Initialize few color pairs */
-       init_pair(1, COLOR_RED, COLOR_BLACK);
+       /* Inicializa un par de color */
+       init_pair( 1, COLOR_RED, COLOR_BLACK );
 
-       /* Initialize the fields */
-       field[0] = new_field(1, 10, 6, 1, 0, 0);
-       field[1] = new_field(1, 10, 8, 1, 0, 0);
+       /* Inicializa los campos */
+       field[0] = new_field( 1, 10, 6, 1, 0, 0 );
+       field[1] = new_field( 1, 10, 8, 1, 0, 0 );
        field[2] = NULL;
 
-       /* Set field options */
-       set_field_back(field[0], A_UNDERLINE);
-       field_opts_off(field[0], O_AUTOSKIP); /* Don't go to next field when this */
-       /* Field is filled up         */
-       set_field_back(field[1], A_UNDERLINE);
-       field_opts_off(field[1], O_AUTOSKIP);
+       /* Establece las opciones de campo */
+       set_field_back( field[0], A_UNDERLINE );
+       field_opts_off( field[0], O_AUTOSKIP ); /* No ir al siguiente campo cuando  */
+                                               /* este campa se llene por completo */
+       set_field_back( field[1], A_UNDERLINE );
+       field_opts_off( field[1], O_AUTOSKIP );
 
-       /* Create the form and post it */
-       my_form = new_form(field);
+       /* Crea el formulario y lo publica */
+       my_form = new_form( field );
 
-       /* Calculate the area required for the form */
-       scale_form(my_form, &rows, &cols);
+       /* Calcula el area requerida por el formulario */
+       scale_form( my_form, &rows, &cols );
 
-       /* Create the window to be associated with the form */
-       my_form_win = newwin(rows + 4, cols + 4, 4, 4);
-       keypad(my_form_win, TRUE);
+       /* Crea la venta que sera asociada con el formulario */
+       my_form_win = newwin( rows + 4, cols + 4, 4, 4 );
+       keypad( my_form_win, TRUE );
 
-       /* Set main window and sub window */
-       set_form_win(my_form, my_form_win);
-       set_form_sub(my_form, derwin(my_form_win, rows, cols, 2, 2));
+       /* Establece la ventana principal y la subventana */
+       set_form_win( my_form, my_form_win );
+       set_form_sub( my_form, derwin( my_form_win, rows, cols, 2, 2 ) );
 
-       /* Print a border around the main window and print a title */
-       box(my_form_win, 0, 0);
-       print_in_middle(my_form_win, 1, 0, cols + 4, "My Form", COLOR_PAIR(1));
+       /* Imprime un margen alrededor de la ventana principal e imprime el titulo */
+       box( my_form_win, 0, 0 );
+       print_in_middle( my_form_win, 1, 0, cols + 4, "Mi formulario", COLOR_PAIR(1) );
 
-       post_form(my_form);
-       wrefresh(my_form_win);
+       post_form( my_form );
+       wrefresh( my_form_win );
 
-       mvprintw(LINES - 2, 0, "Use UP, DOWN arrow keys to switch between fields");
+       mvprintw( LINES - 2, 0, "Utilice las flechas UP, DOWN para cambiar entre campos" );
        refresh();
 
-       /* Loop through to get user requests */
-       while((ch = wgetch(my_form_win)) != KEY_F(1))
-         {   switch(ch)
-             {   case KEY_DOWN:
-                 /* Go to next field */
-                 form_driver(my_form, REQ_NEXT_FIELD);
-                 /* Go to the end of the present buffer */
-                 /* Leaves nicely at the last character */
-                 form_driver(my_form, REQ_END_LINE);
-                 break;
-             case KEY_UP:
-               /* Go to previous field */
-               form_driver(my_form, REQ_PREV_FIELD);
-               form_driver(my_form, REQ_END_LINE);
-               break;
-             default:
-               /* If this is a normal character, it gets */
-               /* Printed                */
-               form_driver(my_form, ch);
-               break;
-             }
+       /* Ciclo para optener solicitudes del usuario */
+       while( (ch = wgetch(my_form_win)) != KEY_F(1) ){
+         switch( ch ){
+         case KEY_DOWN:
+           /* Ir al siguiente campo */
+           form_driver(my_form, REQ_NEXT_FIELD);
+           /* Ir al final del buffer actual  */
+           /* Deja en el ultimo caracter     */
+           form_driver(my_form, REQ_END_LINE);
+           break;
+         case KEY_UP:
+           /* Ir al campo anterior */
+           form_driver(my_form, REQ_PREV_FIELD);
+           form_driver(my_form, REQ_END_LINE);
+           break;
+         default:
+           /* Si este es un caracter normal, se optiene */
+           /* Imprime                                   */
+           form_driver(my_form, ch);
+           break;
          }
+       }
 
-       /* Un post form and free the memory */
+       /* Remueve el formulario y lebera la memoria */
        unpost_form(my_form);
        free_form(my_form);
        free_field(field[0]);
@@ -6380,26 +6371,27 @@
        return 0;
      }
 
-     void print_in_middle(WINDOW *win, int starty, int startx, int width, char *string, chtype color)
-     {   int length, x, y;
+     void print_in_middle( WINDOW *win, int starty, int startx,
+                          int width, char *string, chtype color ){
+       int length, x, y;
        float temp;
 
-       if(win == NULL)
+       if( win == NULL )
          win = stdscr;
-       getyx(win, y, x);
-       if(startx != 0)
+       getyx( win, y, x );
+       if( startx != 0 )
          x = startx;
-       if(starty != 0)
+       if( starty != 0 )
          y = starty;
-       if(width == 0)
+       if( width == 0 )
          width = 80;
 
-       length = strlen(string);
-       temp = (width - length)/ 2;
+       length = strlen( string );
+       temp = ( width - length )/ 2;
        x = startx + (int)temp;
-       wattron(win, color);
-       mvwprintw(win, y, x, "%s", string);
-       wattroff(win, color);
+       wattron( win, color );
+       mvwprintw( win, y, x, "%s", string );
+       wattroff( win, color );
        refresh();
      }
    #+END_SRC
@@ -6413,267 +6405,242 @@
    # the validation type will fail. Some validation types also have a
    # character-validity check for each time a character is entered in
    # the field.
-   Por defecto, un campo aceptará cualquier entrada de datos por parte del usuario. es
-   posible adjuntar validación para el campo. Entonces, cualquier intento por parte del
-   usuario para abandonar el campo, al tiempo que contiene datos que no coincide
-   el tipo de validación fallará. Algunos tipos de validación también tienen un
-   cheque carácter de validez para cada vez que se introduce un carácter en
-   el campo.
+   Por defecto, un campo aceptará cualquier entrada de datos por parte
+   del usuario. Es posible colocar la validación en el campo. Por
+   tanto, fallará cualquier intento por parte del usuario de abandonar
+   el campo, mientras este contiene datos que no concuerdan con el
+   tipo de validación. Algunos tipos de validación también tienen
+   validacion por carácter para verificar cada vez que se introduce un
+   carácter en el campo.
 
    # Validation can be attached to a field with the following function.
-   Validación se puede conectar a un campo con la siguiente función.
+   La validación a un campo se pude agregar con la siguiente función.
 
    #+BEGIN_SRC c
-     int set_field_type(FIELD *field,          /* campo a modificar       */
-                        FIELDTYPE *ftype,      /* type to associate    */
-                        ...);                  /* additional arguments */
+     int set_field_type(FIELD *field,          /* campo a modificar      */
+                        FIELDTYPE *ftype,      /* tipo asociado          */
+                        ...);                  /* argumentos adicionales */
    #+END_SRC
-     int set_field_type (FIELD * El campo, / * El campo de alterar * /
-                        FIELDTYPE * ftype, / * Tipo de asociar * /
-                        ...); / * Argumentos adicionales * /
 
    # Once set, the validation type for a field can be queried with
-   Una vez establecido, el tipo de validación para un campo se puede consultar con
+   Una vez establecido, el tipo de validación de un campo se puede
+   consultar con
 
    #+BEGIN_SRC c
      FIELDTYPE *field_type(FIELD *field);      /* campo a consultar       */
    #+END_SRC
-     FIELDTYPE * field_type (FIELD * campo); / * El campo para consultar * /
 
    # The form driver validates the data in a field only when data is
    # entered by the end-user. Validation does not occur when
-   El conductor forma valida los datos de un campo de datos sólo cuando es
-   introducida por el usuario final. Validación no se produce cuando
+   El controlador de formulario valida los datos en un campo solo
+   cuando los datos son ingresados por el usuario final. La Validación
+   no se produce cuando
 
    # - the application program changes the field value by calling
    #   =set_field_buffer=.
-   - El programa de aplicación cambia el valor del campo llamando
-     = set_field_buffer.
+   - El programa de aplicación cambia el valor del campo llamando a
+     =set_field_buffer=.
 
    # - linked field values are changed indirectly -- by changing the
    #   field to which they are linked
-   - Valores de los campos vinculados se cambian indirectamente - cambiando la
-     campo a los que están vinculados
+   - Vincular valores de campo y cambiarlos indicertamente --
+     cambiando el campo al que está vinculado
 
 
    # The following are the pre-defined validation types. You can also
    # specify custom validation, though it's a bit tricky and cumbersome.
 
-   Los siguientes son los tipos de validación predefinidas. También puede
-   especificar validación personalizada, aunque es un poco complicado y engorroso.
+   Los siguientes son los tipos de validación predefinidos. También
+   puede especificar una validación personalizada, aunque es un poco
+   complicado y engorroso.
 
-# * =TYPE_ALPHA=
-* = TYPE_ALPHA =
+*** =TYPE_ALPHA=
 
-  # This field type accepts alphabetic data; no blanks, no digits, no
-  # special characters (this is checked at character-entry time). It is
-  # set up with:
-  Este tipo de campo acepta datos alfabético; no hay espacios en blanco, no hay cifras, sin
-  caracteres especiales (esto se comprueba en el momento de caracteres de entrada). es
-  creado con:
+    # This field type accepts alphabetic data; no blanks, no digits, no
+    # special characters (this is checked at character-entry time). It is
+    # set up with:
+    Este tipo de campo acepta datos alfabéticos; sin espacios, digitos
+    o caracteres especiales (esto se comprueba en cada ingreso de
+    caracter). Este se crea con:
 
-  #+BEGIN_SRC c
-    int set_field_type(FIELD *field,          /* campo a modificar         */
-                       TYPE_ALPHA,            /* type to associate      */
-                       int width);            /* maximum width of field */
-  #+END_SRC
-    int set_field_type (FIELD * El campo, / * El campo de alterar * /
-                       TYPE_ALPHA, / * Tipo de asociar * /
-                       int ancho); / * Anchura máxima de campo * /
+    #+BEGIN_SRC c
+      int set_field_type(FIELD *field,          /* campo a modificar     */
+                         TYPE_ALPHA,            /* tipo asociado         */
+                         int width);            /* ancho minimo de campo */
+    #+END_SRC
 
-  # The width argument sets a minimum width of data. The user has to
-  # enter at-least width number of characters before he can leave the
-  # field.  Typically you'll want to set this to the field width; if
-  # it's greater than the field width, the validation check will always
-  # fail. A minimum width of zero makes field completion optional.
-  El argumento de profundidad establece una anchura mínima de datos. El usuario tiene que
-  ingrese el número de menos al ancho de los caracteres antes de que pueda salir de la
-  campo. Normalmente, usted querrá establecer esto a la anchura del campo; si
-  es mayor que el ancho del campo, la comprobación de validación será siempre
-  fallar. Una anchura mínima de cero hace que el campo de terminación opcional.
+    # The width argument sets a minimum width of data. The user has to
+    # enter at-least width number of characters before he can leave the
+    # field.  Typically you'll want to set this to the field width; if
+    # it's greater than the field width, the validation check will always
+    # fail. A minimum width of zero makes field completion optional.
+    El argumento =width= establece una anchura minima de datos. El
+    usuario tiene que ingresar un número de al menos el ancho de
+    caracteres antes poder salir del campo. Normalmente, querrá
+    establecer esto a la anchura del campo; si es mayor que el ancho
+    del campo, la comprobación de validación siempre fallara. Una
+    anchura menor a cero crea un campo con terminación opcional.
 
-# * =TYPE_ALNUM=
-* = TYPE_ALNUM =
+*** =TYPE_ALNUM=
 
-  # This field type accepts alphabetic data and digits; no blanks, no
-  # special characters (this is checked at character-entry time). It is
-  # set up with:
-  Este tipo de campo acepta datos alfabéticos y dígitos; no hay espacios en blanco, sin
-  caracteres especiales (esto se comprueba en el momento de caracteres de entrada). es
-  creado con:
+    # This field type accepts alphabetic data and digits; no blanks, no
+    # special characters (this is checked at character-entry time). It is
+    # set up with:
+    Este tipo de campo acepta datos alfanumericos; sin espacios en
+    blanco, ni caracteres especiales (esto se comprueba en cada
+    ingreso de caracter). Este se crea con:
 
-  #+BEGIN_SRC c
-    int set_field_type(FIELD *field,          /* campo a modificar         */
-                       TYPE_ALNUM,            /* type to associate      */
-                       int width);            /* maximum width of field */
-  #+END_SRC
+    #+BEGIN_SRC c
+      int set_field_type(FIELD *field,          /* campo a modificar     */
+                         TYPE_ALNUM,            /* tipo asociado         */
+                         int width);            /* ancho minimo de campo */
+    #+END_SRC
 
-    int set_field_type (FIELD * El campo, / * El campo de alterar * /
-                       TYPE_ALNUM, / * Tipo de asociar * /
-                       int ancho); / * Anchura máxima de campo * /
+    # The width argument sets a minimum width of data. As with
+    # =TYPE_ALPHA=, typically you'll want to set this to the field width;
+    # if it's greater than the field width, the validation check will
+    # always fail. A minimum width of zero makes field completion
+    # optional.
+    El argumento =width= establece una anchura mínima de datos. Al
+    igual que =TYPE_ALPHA=, normalmente, querrá establecer esto a la
+    anchura del campo; si es mayor que el ancho del campo, la
+    comprobación de validación siempre fallara. Una anchura menor a
+    cero crea un campo con terminación opcional.
 
-  # The width argument sets a minimum width of data. As with
-  # =TYPE_ALPHA=, typically you'll want to set this to the field width;
-  # if it's greater than the field width, the validation check will
-  # always fail. A minimum width of zero makes field completion
-  # optional.
-  El argumento de profundidad establece una anchura mínima de datos. Al igual que con
-  = TYPE_ALPHA, por lo general usted querrá establecer esto a la anchura del campo;
-  si es mayor que el ancho del campo, la comprobación de validación será
-  siempre fallar. Una anchura mínima de cero hace que la terminación de campo
-  opcional.
+*** =TYPE_ENUM=
 
-# * =TYPE_ENUM=
-* = TYPE_ENUM =
+    # This type allows you to restrict a field's values to be among a
+    # specified set of string values (for example, the two-letter postal
+    # codes for U.S. states). It is set up with:
+    Este tipo le permite restringir los valores de un campo a estar
+    entre un conjunto de valores de cadena especifico (por ejemplo, el
+    codigo postal de dos letras de los estados de Estados Unidos). Se
+    crea con:
 
-  # This type allows you to restrict a field's values to be among a
-  # specified set of string values (for example, the two-letter postal
-  # codes for U.S. states). It is set up with:
-  Este tipo le permite restringir los valores de un campo para estar entre un
-  especificado un conjunto de valores de cadena (por ejemplo, las dos letras postal
-  códigos de los estados de Estados Unidos). Se creó con:
+    #+BEGIN_SRC c
+      int set_field_type(FIELD *field,          /* campo a modificar         */
+                         TYPE_ENUM,             /* tipo asociado             */
+                         char **valuelist;      /* lista de valores posibles */
+                         int checkcase;         /* sensible a mayusculas?    */
+                         int checkunique);      /* coincidencia unica?       */
+    #+END_SRC
 
-  #+BEGIN_SRC c
-    int set_field_type(FIELD *field,          /* campo a modificar          */
-                       TYPE_ENUM,             /* type to associate       */
-                       char **valuelist;      /* list of possible values */
-                       int checkcase;         /* case-sensitive?         */
-                       int checkunique);      /* must specify uniquely?  */
-  #+END_SRC
-    int set_field_type (FIELD * El campo, / * El campo de alterar * /
-                       TYPE_ENUM, / * Tipo de asociar * /
-                       char ** ValueList; / * La lista de posibles valores * /
-                       int checkcase; /* ¿Caso sensible? * /
-                       int checkunique); / * Debe especificar de forma única? * /
+    # The valuelist parameter must point at a NULL-terminated list of
+    # valid strings. The checkcase argument, if true, makes comparison
+    # with the string case-sensitive.
+    El parámetro =valuelist= debe apuntar a una lista de cadenas
+    válidas terminada en =NULL=. Si el argumento =checkcase=, es
+    verdadero, hace la comparación sensible a mayúsculas y minúsculas.
 
-  # The valuelist parameter must point at a NULL-terminated list of
-  # valid strings. The checkcase argument, if true, makes comparison
-  # with the string case-sensitive.
-  El parámetro ValueList debe apuntar a una lista terminada en NULL de
-  cadenas válidas. El argumento checkcase, de ser cierto, hace que la comparación
-  con mayúsculas y minúsculas cadena.
+    # When the user exits a =TYPE_ENUM= field, the validation procedure
+    # tries to complete the data in the buffer to a valid entry. If a
+    # complete choice string has been entered, it is of course valid. But
+    # it is also possible to enter a prefix of a valid string and have it
+    # completed for you.
+    Cuando el usuario sale de un campo =TYPE_ENUM=, el procedimiento
+    de validación intenta completar los datos en el buffer a una
+    entrada válida. Si ha ingresado una cadena completa de elección,
+    por supuesto es válido. Pero también es posible introducir un
+    prefijo de una cadena válido y que se complete para usted.
 
-  # When the user exits a =TYPE_ENUM= field, the validation procedure
-  # tries to complete the data in the buffer to a valid entry. If a
-  # complete choice string has been entered, it is of course valid. But
-  # it is also possible to enter a prefix of a valid string and have it
-  # completed for you.
-  Cuando el usuario sale a = TYPE_ENUM = campo, el procedimiento de validación
-  intenta completar los datos en el buffer a una entrada válida. Si una
-  cadena de elección completa ha sido ingresada, por supuesto es válido. Pero
-  también es posible introducir un prefijo de una cadena válida y la tengan
-  completado para usted.
+    # By default, if you enter such a prefix and it matches more than one
+    # value in the string list, the prefix will be completed to the first
+    # matching value. But the checkunique argument, if true, requires
+    # prefix matches to be unique in order to be valid.
+    Por defecto, si se introduce un prefijo y coincide con más de un
+    valor en la lista de cadenas, el prefijo se completará al primer
+    valor coincidente. Pero el argumento =checkunique=, de ser cierto,
+    requiere que el prefijo coincida con un unico valor para ser
+    válido.
 
-  # By default, if you enter such a prefix and it matches more than one
-  # value in the string list, the prefix will be completed to the first
-  # matching value. But the checkunique argument, if true, requires
-  # prefix matches to be unique in order to be valid.
-  Por defecto, si se introduce un prefijo tal y coincide con más de un
-  valor en la lista de cadenas, el prefijo se completará a la primera
-  valor coincidente. Pero el argumento checkunique, de ser cierto, requiere
-  prefijo coincide que ser único para ser válida.
+    # The =REQ_NEXT_CHOICE= and =REQ_PREV_CHOICE= input requests can be
+    # particularly useful with these fields.
+    Las peticiones =REQ_NEXT_CHOICE= y =REQ_PREV_CHOICE= pueden ser
+    particularmente útiles con estos campos.
 
-  # The =REQ_NEXT_CHOICE= and =REQ_PREV_CHOICE= input requests can be
-  # particularly useful with these fields.
-  El REQ_NEXT_CHOICE = = y peticiones REQ_PREV_CHOICE = entrada pueden ser
-  particularmente útil con estos campos.
+*** =TYPE_INTEGER=
 
-# * =TYPE_INTEGER=
-* = TYPE_INTEGER =
+    # This field type accepts an integer. It is set up as follows:
+    Este tipo de campo acepta un entero. Se configura de la siguiente
+    manera:
 
-  # This field type accepts an integer. It is set up as follows:
-  Este tipo de campo acepta un entero. Se configura de la siguiente manera:
+    #+BEGIN_SRC c
+      int set_field_type(FIELD *field,          /* campo a modificar           */
+                         TYPE_INTEGER,          /* tipo asociado               */
+                         int padding,           /* precision de relleno a cero */
+                         int vmin, int vmax);   /* rango valido                */
+    #+END_SRC
 
-  #+BEGIN_SRC c
-    int set_field_type(FIELD *field,          /* campo a modificar          */
-                       TYPE_INTEGER,          /* type to associate       */
-                       int padding,           /* # places to zero-pad to */
-                       int vmin, int vmax);   /* valid range             */
-  #+END_SRC
-    int set_field_type (FIELD * El campo, / * El campo de alterar * /
-                       TYPE_INTEGER, / * Tipo de asociar * /
-                       int relleno, / * # lugares a-pad a cero * /
-                       int vmin, int vmax); / * Rango válido * /
+    # Valid characters consist of an optional leading minus and
+    # digits. The range check is performed on exit. If the range maximum
+    # is less than or equal to the minimum, the range is ignored.
+    Los caracteres válidos consisten en un menos inicial opcional y
+    dígitos. La prueba de rango se realiza a la salida. Si el rango
+    máximo es menor o igual al mínimo, se ignora.
 
-  # Valid characters consist of an optional leading minus and
-  # digits. The range check is performed on exit. If the range maximum
-  # is less than or equal to the minimum, the range is ignored.
-  Los caracteres válidos consisten en un líder menos opcional y
-  dígitos. La prueba de alcance se realiza a la salida. Si el rango máximo
-  es menor que o igual al mínimo, se omite la gama.
+    # If the value passes its range check, it is padded with as many
+    # leading zero digits as necessary to meet the padding argument.
+    Si el valor pasa la prueva de rango, se rellena con ceros a la
+    izquierda hasta cumplir con el argumento =padding=.
 
-  # If the value passes its range check, it is padded with as many
-  # leading zero digits as necessary to meet the padding argument.
-  Si el valor pasa su prueba de alcance, se rellena con el mayor número
-  líder cero dígitos como sea necesario para cumplir con el argumento de relleno.
+    # A =TYPE_INTEGER= value buffer can conveniently be interpreted with
+    # the C library function atoi(3).
+    Un buffer de valor =TYPE_INTEGER= es interpretado convenientemente
+    con la funcion de la libreria C atoi(3).
 
-  # A =TYPE_INTEGER= value buffer can conveniently be interpreted with
-  # the C library function atoi(3).
-  A = TYPE_INTEGER = valor tampón convenientemente se puede interpretar con
-  la C atoi función de libreria (3).
+*** =TYPE_NUMERIC=
 
-# * =TYPE_NUMERIC=
-* = TYPE_NUMERIC =
+    # This field type accepts a decimal number. It is set up as follows:
+    Este tipo de campo acepta un número decimal. Se configura de la
+    siguiente manera:
 
-  # This field type accepts a decimal number. It is set up as follows:
-  Este tipo de campo acepta un número decimal. Se configura de la siguiente manera:
+    #+BEGIN_SRC c
+      int set_field_type(FIELD *field,          /* campo a modificar           */
+                         TYPE_NUMERIC,          /* tipo asociado               */
+                         int padding,           /* procicion de relleno a cero */
+                         int vmin, int vmax);   /* rango valido                */
+    #+END_SRC
 
-  #+BEGIN_SRC c
-    int set_field_type(FIELD *field,          /* campo a modificar        */
-                       TYPE_NUMERIC,          /* type to associate     */
-                       int padding,           /* # places of precision */
-                       int vmin, int vmax);   /* valid range           */
-  #+END_SRC
+    # Valid characters consist of an optional leading minus and digits.
+    # possibly including a decimal point. The range check is performed on
+    # exit. If the range maximum is less than or equal to the minimum, the
+    # range is ignored.
+    Los caracteres válidos consisten en un menos inicial opcional y
+    dígitos, posiblemente incluyendo un punto decimal.  La prueba de
+    rango se realiza a la salida. Si el rango máximo es menor o igual
+    al mínimo, se ignora.
 
-    int set_field_type (FIELD * El campo, / * El campo de alterar * /
-                       TYPE_NUMERIC, / * Tipo de asociar * /
-                       int relleno, / * # lugares de precisión * /
-                       int vmin, int vmax); / * Rango válido * /
+    # If the value passes its range check, it is padded with as many
+    # trailing zero digits as necessary to meet the padding argument.
+    Si el valor pasa la prueva de rango, se rellena con ceros a la
+    izquierda hasta cumplir con el argumento =padding=.
 
-  # Valid characters consist of an optional leading minus and digits.
-  # possibly including a decimal point. The range check is performed on
-  # exit. If the range maximum is less than or equal to the minimum, the
-  # range is ignored.
-  Los caracteres válidos consisten en un líder menos opcional y dígitos.
-  posiblemente incluyendo un punto decimal. La prueba de alcance se realiza en
-  Salida. Si el rango máximo es inferior o igual al mínimo, la
-  se ignora gama.
+    # A =TYPE_NUMERIC= value buffer can conveniently be interpreted with
+    # the C library function atof(3).
+    Un buffer de valor =TYPE_NUMERIC= es interpretado convenientemente
+    con la funcion de la libreria C atof(3).
 
-  # If the value passes its range check, it is padded with as many
-  # trailing zero digits as necessary to meet the padding argument.
-  Si el valor pasa su prueba de alcance, se rellena con el mayor número
-  trailing cero dígitos como sea necesario para cumplir con el argumento de relleno.
+*** =TYPE_REGEXP=
 
-  # A =TYPE_NUMERIC= value buffer can conveniently be interpreted with
-  # the C library function atof(3).
-  A = TYPE_NUMERIC = valor tampón convenientemente se puede interpretar con
-  la C atof función de libreria (3).
+    # This field type accepts data matching a regular expression. It is
+    # set up as follows:
+    Este tipo de campo acepta datos que coincidan con una expresión
+    regular. Se configura de la siguiente manera:
 
-# * =TYPE_REGEXP=
-* = TYPE_REGEXP =
+    #+BEGIN_SRC c
+      int set_field_type(FIELD *field,          /* campo a modificar   */
+                         TYPE_REGEXP,           /* tipo asociado       */
+                         char *regexp);         /* exprecion a empatar */
+    #+END_SRC
 
-  # This field type accepts data matching a regular expression. It is
-  # set up as follows:
-  Este tipo de campo acepta datos que coincidan con una expresión regular. es
-  establecido de la siguiente manera:
-
-  #+BEGIN_SRC c
-    int set_field_type(FIELD *field,          /* campo a modificar      */
-                       TYPE_REGEXP,           /* type to associate   */
-                       char *regexp);         /* expression to match */
-  #+END_SRC
-
-    int set_field_type (FIELD * El campo, / * El campo de alterar * /
-                       TYPE_REGEXP, / * Tipo de asociar * /
-                       char * regexp); / * La expresión para que coincida con * /
-
-  # The syntax for regular expressions is that of regcomp(3). The check
-  # for regular-expression match is performed on exit.
-  La sintaxis de las expresiones regulares es el de regcomp (3). El cheque
-  para regular la expresión se lleva a cabo el partido en la salida.
+    # The syntax for regular expressions is that of regcomp(3). The check
+    # for regular-expression match is performed on exit.
+    La sintaxis de las expresiones regulares es la de regcomp(3). La
+    pueba de coincidencia de la expresión regular se ejecuta a la
+    salida.
 
 # ** 18.6. Form Driver: The work horse of the forms system
-** 18.6. Forma del conductor: El caballo de trabajo del sistema de las formas
+** 18.6. Controlador del Formulario: El caballo de trabajo del sistema de formularios
 
    # As in the menu system, =form_driver()= plays a very important role
    # in forms system. All types of requests to forms system should be

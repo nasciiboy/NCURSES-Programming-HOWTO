@@ -4423,8 +4423,8 @@
 *** 18.3.6. Field Status
 
     The field status specifies whether the field has got edited or
-    not. It is initially set to FALSE and when user enters something
-    and the data buffer gets modified it becomes TRUE. So a field's
+    not. It is initially set to =FALSE= and when user enters something
+    and the data buffer gets modified it becomes =TRUE=. So a field's
     status can be queried to find out whether it has been modified or
     not. The following functions can assist in those operations.
 
@@ -4583,15 +4583,16 @@
    an example with out much explanation. The functions are similar and
    they work the same way.
 
-   [[file:ncurses_programs/basics/][*Example 28. Form Windows Example*]]
+   [[file:ncurses_programs/forms/form_win.c][*Example 28. Form Windows Example*]]
 
    #+BEGIN_SRC c
      #include <form.h>
+     #include <string.h>
 
-     void print_in_middle(WINDOW *win, int starty, int startx, int width, char *string, chtype color);
+     void print_in_middle( WINDOW *win, int starty, int startx,
+                           int width, char *string, chtype color );
 
-     int main()
-     {
+     int main(){
        FIELD *field[3];
        FORM  *my_form;
        WINDOW *my_form_win;
@@ -4602,69 +4603,69 @@
        start_color();
        cbreak();
        noecho();
-       keypad(stdscr, TRUE);
+       keypad( stdscr, TRUE );
 
        /* Initialize few color pairs */
-       init_pair(1, COLOR_RED, COLOR_BLACK);
+       init_pair( 1, COLOR_RED, COLOR_BLACK );
 
        /* Initialize the fields */
-       field[0] = new_field(1, 10, 6, 1, 0, 0);
-       field[1] = new_field(1, 10, 8, 1, 0, 0);
+       field[0] = new_field( 1, 10, 6, 1, 0, 0 );
+       field[1] = new_field( 1, 10, 8, 1, 0, 0 );
        field[2] = NULL;
 
        /* Set field options */
-       set_field_back(field[0], A_UNDERLINE);
-       field_opts_off(field[0], O_AUTOSKIP); /* Don't go to next field when this */
-       /* Field is filled up         */
-       set_field_back(field[1], A_UNDERLINE);
-       field_opts_off(field[1], O_AUTOSKIP);
+       set_field_back( field[0], A_UNDERLINE );
+       field_opts_off( field[0], O_AUTOSKIP ); /* Don't go to next field when this */
+                                               /* Field is filled up               */
+       set_field_back( field[1], A_UNDERLINE );
+       field_opts_off( field[1], O_AUTOSKIP );
 
        /* Create the form and post it */
-       my_form = new_form(field);
+       my_form = new_form( field );
 
        /* Calculate the area required for the form */
-       scale_form(my_form, &rows, &cols);
+       scale_form( my_form, &rows, &cols );
 
        /* Create the window to be associated with the form */
-       my_form_win = newwin(rows + 4, cols + 4, 4, 4);
-       keypad(my_form_win, TRUE);
+       my_form_win = newwin( rows + 4, cols + 4, 4, 4 );
+       keypad( my_form_win, TRUE );
 
        /* Set main window and sub window */
-       set_form_win(my_form, my_form_win);
-       set_form_sub(my_form, derwin(my_form_win, rows, cols, 2, 2));
+       set_form_win( my_form, my_form_win );
+       set_form_sub( my_form, derwin( my_form_win, rows, cols, 2, 2 ) );
 
        /* Print a border around the main window and print a title */
-       box(my_form_win, 0, 0);
-       print_in_middle(my_form_win, 1, 0, cols + 4, "My Form", COLOR_PAIR(1));
+       box( my_form_win, 0, 0 );
+       print_in_middle( my_form_win, 1, 0, cols + 4, "My Form", COLOR_PAIR(1) );
 
-       post_form(my_form);
-       wrefresh(my_form_win);
+       post_form( my_form );
+       wrefresh( my_form_win );
 
-       mvprintw(LINES - 2, 0, "Use UP, DOWN arrow keys to switch between fields");
+       mvprintw( LINES - 2, 0, "Use UP, DOWN arrow keys to switch between fields" );
        refresh();
 
        /* Loop through to get user requests */
-       while((ch = wgetch(my_form_win)) != KEY_F(1))
-         {   switch(ch)
-             {   case KEY_DOWN:
-                 /* Go to next field */
-                 form_driver(my_form, REQ_NEXT_FIELD);
-                 /* Go to the end of the present buffer */
-                 /* Leaves nicely at the last character */
-                 form_driver(my_form, REQ_END_LINE);
-                 break;
-             case KEY_UP:
-               /* Go to previous field */
-               form_driver(my_form, REQ_PREV_FIELD);
-               form_driver(my_form, REQ_END_LINE);
-               break;
-             default:
-               /* If this is a normal character, it gets */
-               /* Printed                */
-               form_driver(my_form, ch);
-               break;
-             }
+       while( (ch = wgetch(my_form_win)) != KEY_F(1) ){
+         switch( ch ){
+         case KEY_DOWN:
+           /* Go to next field */
+           form_driver( my_form, REQ_NEXT_FIELD );
+           /* Go to the end of the present buffer */
+           /* Leaves nicely at the last character */
+           form_driver( my_form, REQ_END_LINE );
+           break;
+         case KEY_UP:
+           /* Go to previous field */
+           form_driver( my_form, REQ_PREV_FIELD );
+           form_driver( my_form, REQ_END_LINE );
+           break;
+         default:
+           /* If this is a normal character, it gets */
+           /* Printed				  */
+           form_driver( my_form, ch );
+           break;
          }
+       }
 
        /* Un post form and free the memory */
        unpost_form(my_form);
@@ -4676,26 +4677,27 @@
        return 0;
      }
 
-     void print_in_middle(WINDOW *win, int starty, int startx, int width, char *string, chtype color)
-     {   int length, x, y;
+     void print_in_middle( WINDOW *win, int starty, int startx,
+                          int width, char *string, chtype color ){
+       int length, x, y;
        float temp;
 
-       if(win == NULL)
+       if( win == NULL )
          win = stdscr;
-       getyx(win, y, x);
-       if(startx != 0)
+       getyx( win, y, x );
+       if( startx != 0 )
          x = startx;
-       if(starty != 0)
+       if( starty != 0 )
          y = starty;
-       if(width == 0)
+       if( width == 0 )
          width = 80;
 
-       length = strlen(string);
-       temp = (width - length)/ 2;
+       length = strlen( string );
+       temp = ( width - length )/ 2;
        x = startx + (int)temp;
-       wattron(win, color);
-       mvwprintw(win, y, x, "%s", string);
-       wattroff(win, color);
+       wattron( win, color );
+       mvwprintw( win, y, x, "%s", string );
+       wattroff( win, color );
        refresh();
      }
    #+END_SRC
@@ -4736,130 +4738,131 @@
    The following are the pre-defined validation types. You can also
    specify custom validation, though it's a bit tricky and cumbersome.
 
-* =TYPE_ALPHA=
+*** =TYPE_ALPHA=
 
-  This field type accepts alphabetic data; no blanks, no digits, no
-  special characters (this is checked at character-entry time). It is
-  set up with:
+    This field type accepts alphabetic data; no blanks, no digits, no
+    special characters (this is checked at character-entry time). It
+    is set up with:
 
-  #+BEGIN_SRC c
-    int set_field_type(FIELD *field,          /* field to alter         */
-                       TYPE_ALPHA,            /* type to associate      */
-                       int width);            /* maximum width of field */
-  #+END_SRC
+    #+BEGIN_SRC c
+      int set_field_type(FIELD *field,          /* field to alter         */
+                         TYPE_ALPHA,            /* type to associate      */
+                         int width);            /* maximum width of field */
+    #+END_SRC
 
-  The width argument sets a minimum width of data. The user has to
-  enter at-least width number of characters before he can leave the
-  field.  Typically you'll want to set this to the field width; if
-  it's greater than the field width, the validation check will always
-  fail. A minimum width of zero makes field completion optional.
+    The =width= argument sets a minimum width of data. The user has to
+    enter at-least width number of characters before he can leave the
+    field.  Typically you'll want to set this to the field width; if
+    it's greater than the field width, the validation check will
+    always fail. A minimum width of zero makes field completion
+    optional.
 
-* =TYPE_ALNUM=
+*** =TYPE_ALNUM=
 
-  This field type accepts alphabetic data and digits; no blanks, no
-  special characters (this is checked at character-entry time). It is
-  set up with:
+    This field type accepts alphabetic data and digits; no blanks, no
+    special characters (this is checked at character-entry time). It
+    is set up with:
 
-  #+BEGIN_SRC c
-    int set_field_type(FIELD *field,          /* field to alter         */
-                       TYPE_ALNUM,            /* type to associate      */
-                       int width);            /* maximum width of field */
-  #+END_SRC
+    #+BEGIN_SRC c
+      int set_field_type(FIELD *field,          /* field to alter         */
+                         TYPE_ALNUM,            /* type to associate      */
+                         int width);            /* maximum width of field */
+    #+END_SRC
 
-  The width argument sets a minimum width of data. As with
-  =TYPE_ALPHA=, typically you'll want to set this to the field width;
-  if it's greater than the field width, the validation check will
-  always fail. A minimum width of zero makes field completion
-  optional.
+    The =width= argument sets a minimum width of data. As with
+    =TYPE_ALPHA=, typically you'll want to set this to the field
+    width; if it's greater than the field width, the validation check
+    will always fail. A minimum width of zero makes field completion
+    optional.
 
-* =TYPE_ENUM=
+*** =TYPE_ENUM=
 
-  This type allows you to restrict a field's values to be among a
-  specified set of string values (for example, the two-letter postal
-  codes for U.S. states). It is set up with:
+    This type allows you to restrict a field's values to be among a
+    specified set of string values (for example, the two-letter postal
+    codes for U.S. states). It is set up with:
 
-  #+BEGIN_SRC c
-    int set_field_type(FIELD *field,          /* field to alter          */
-                       TYPE_ENUM,             /* type to associate       */
-                       char **valuelist;      /* list of possible values */
-                       int checkcase;         /* case-sensitive?         */
-                       int checkunique);      /* must specify uniquely?  */
-  #+END_SRC
+    #+BEGIN_SRC c
+      int set_field_type(FIELD *field,          /* field to alter          */
+                         TYPE_ENUM,             /* type to associate       */
+                         char **valuelist;      /* list of possible values */
+                         int checkcase;         /* case-sensitive?         */
+                         int checkunique);      /* must specify uniquely?  */
+    #+END_SRC
 
-  The valuelist parameter must point at a NULL-terminated list of
-  valid strings. The checkcase argument, if true, makes comparison
-  with the string case-sensitive.
+    The =valuelist= parameter must point at a NULL-terminated list of
+    valid strings. The =checkcase= argument, if true, makes comparison
+    with the string case-sensitive.
 
-  When the user exits a =TYPE_ENUM= field, the validation procedure
-  tries to complete the data in the buffer to a valid entry. If a
-  complete choice string has been entered, it is of course valid. But
-  it is also possible to enter a prefix of a valid string and have it
-  completed for you.
+    When the user exits a =TYPE_ENUM= field, the validation procedure
+    tries to complete the data in the buffer to a valid entry. If a
+    complete choice string has been entered, it is of course valid.
+    But it is also possible to enter a prefix of a valid string and
+    have it completed for you.
 
-  By default, if you enter such a prefix and it matches more than one
-  value in the string list, the prefix will be completed to the first
-  matching value. But the checkunique argument, if true, requires
-  prefix matches to be unique in order to be valid.
+    By default, if you enter such a prefix and it matches more than
+    one value in the string list, the prefix will be completed to the
+    first matching value. But the =checkunique= argument, if true,
+    requires prefix matches to be unique in order to be valid.
 
-  The =REQ_NEXT_CHOICE= and =REQ_PREV_CHOICE= input requests can be
-  particularly useful with these fields.
+    The =REQ_NEXT_CHOICE= and =REQ_PREV_CHOICE= input requests can be
+    particularly useful with these fields.
 
-* =TYPE_INTEGER=
+*** =TYPE_INTEGER=
 
-  This field type accepts an integer. It is set up as follows:
+    This field type accepts an integer. It is set up as follows:
 
-  #+BEGIN_SRC c
-    int set_field_type(FIELD *field,          /* field to alter          */
-                       TYPE_INTEGER,          /* type to associate       */
-                       int padding,           /* # places to zero-pad to */
-                       int vmin, int vmax);   /* valid range             */
-  #+END_SRC
+    #+BEGIN_SRC c
+      int set_field_type(FIELD *field,          /* field to alter          */
+                         TYPE_INTEGER,          /* type to associate       */
+                         int padding,           /* # places to zero-pad to */
+                         int vmin, int vmax);   /* valid range             */
+    #+END_SRC
 
-  Valid characters consist of an optional leading minus and
-  digits. The range check is performed on exit. If the range maximum
-  is less than or equal to the minimum, the range is ignored.
+    Valid characters consist of an optional leading minus and digits.
+    The range check is performed on exit. If the range maximum is less
+    than or equal to the minimum, the range is ignored.
 
-  If the value passes its range check, it is padded with as many
-  leading zero digits as necessary to meet the padding argument.
+    If the value passes its range check, it is padded with as many
+    leading zero digits as necessary to meet the =padding= argument.
 
-  A =TYPE_INTEGER= value buffer can conveniently be interpreted with
-  the C library function atoi(3).
+    A =TYPE_INTEGER= value buffer can conveniently be interpreted with
+    the C library function atoi(3).
 
-* =TYPE_NUMERIC=
+*** =TYPE_NUMERIC=
 
-  This field type accepts a decimal number. It is set up as follows:
+    This field type accepts a decimal number. It is set up as follows:
 
-  #+BEGIN_SRC c
-    int set_field_type(FIELD *field,          /* field to alter        */
-                       TYPE_NUMERIC,          /* type to associate     */
-                       int padding,           /* # places of precision */
-                       int vmin, int vmax);   /* valid range           */
-  #+END_SRC
+    #+BEGIN_SRC c
+      int set_field_type(FIELD *field,          /* field to alter        */
+                         TYPE_NUMERIC,          /* type to associate     */
+                         int padding,           /* # places of precision */
+                         int vmin, int vmax);   /* valid range           */
+    #+END_SRC
 
-  Valid characters consist of an optional leading minus and digits.
-  possibly including a decimal point. The range check is performed on
-  exit. If the range maximum is less than or equal to the minimum, the
-  range is ignored.
+    Valid characters consist of an optional leading minus and digits.
+    possibly including a decimal point. The range check is performed
+    on exit. If the range maximum is less than or equal to the
+    minimum, the range is ignored.
 
-  If the value passes its range check, it is padded with as many
-  trailing zero digits as necessary to meet the padding argument.
+    If the value passes its range check, it is padded with as many
+    trailing zero digits as necessary to meet the =padding= argument.
 
-  A =TYPE_NUMERIC= value buffer can conveniently be interpreted with
-  the C library function atof(3).
+    A =TYPE_NUMERIC= value buffer can conveniently be interpreted with
+    the C library function atof(3).
 
-* =TYPE_REGEXP=
+*** =TYPE_REGEXP=
 
-  This field type accepts data matching a regular expression. It is
-  set up as follows:
+    This field type accepts data matching a regular expression. It is
+    set up as follows:
 
-  #+BEGIN_SRC c
-    int set_field_type(FIELD *field,          /* field to alter      */
-                       TYPE_REGEXP,           /* type to associate   */
-                       char *regexp);         /* expression to match */
-  #+END_SRC
+    #+BEGIN_SRC c
+      int set_field_type(FIELD *field,          /* field to alter      */
+                         TYPE_REGEXP,           /* type to associate   */
+                         char *regexp);         /* expression to match */
+    #+END_SRC
 
-  The syntax for regular expressions is that of regcomp(3). The check
-  for regular-expression match is performed on exit.
+    The syntax for regular expressions is that of regcomp(3). The
+    check for regular-expression match is performed on exit.
 
 ** 18.6. Form Driver: The work horse of the forms system
 
