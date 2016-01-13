@@ -6645,121 +6645,119 @@
    # As in the menu system, =form_driver()= plays a very important role
    # in forms system. All types of requests to forms system should be
    # funneled through =form_driver()=.
-   Al igual que en el sistema de menus, = form_driver()= juega un papel muy importante
-   en el sistema de formas. Todos los tipos de peticiones al sistema de formularios deben ser
-   canalizado a través = form_driver()=.
+   Al igual que en el sistema de menus, =form_driver()= juega un papel
+   muy importante en el sistema de formularios. Todos los tipos de
+   peticiones al sistema de formularios deben ser canalizado a través
+   =form_driver()=.
 
    #+BEGIN_SRC c
-     int form_driver(FORM *form,     /* form on which to operate     */
-                     int request)    /* form request code         */
+     int form_driver(FORM *form,     /* formulario en el que operar */
+                     int request)    /* codigo de solicitud         */
    #+END_SRC
-
-     int form_driver (FORMULARIO forma *, / * formulario en el que operar * /
-                     int petición) / * formulario de código de solicitud * /
 
    # As you have seen some of the examples above, you have to be in a
    # loop looking for user input and then decide whether it's a field
    # data or a form request. The form requests are then passed to
    # =form_driver()= to do the work.
-   Como se ha visto algunos de los ejemplos anteriores, usted tiene que estar en una
-   bucle buscando la entrada del usuario y luego decidir si se trata de un campo
-   de datos o una solicitud de formulario. Las solicitudes de formulario se pasan a
-   = form_driver()= para hacer el trabajo.
+   Como se ha visto en ejemplos anteriores, se tiene que estar en un
+   bucle en busca de entrada del usuario y luego decidir si se trata
+   de una solicitud de campo o una de formulario. Las solicitudes de
+   formulario se pasan a =form_driver()= para hacer el trabajo.
 
    # The requests roughly can be divided into following
    # categories. Different requests and their usage is explained below:
-   Las peticiones más o menos se pueden dividir en siguiente
-   categorías. Diferentes solicitudes y su uso se explica a continuación:
+   Se pueden dividir las peticiones aproximadamente en las siguientes
+   categorías. Las diferentes solicitudes y su uso se explica a
+   continuación:
 
 
 # *** 18.6.1. Page Navigation Requests
-
-*** 18.6.1. Solicitudes Page Navigation
+*** 18.6.1. Solicitudes de Navegacion por Pagina
 
     # These requests cause page-level moves through the form, triggering
     # display of a new form screen. A form can be made of multiple
     # pages. If you have a big form with lot of fields and logical
     # sections, then you can divide the form into pages. The function
     # =set_new_page()= to set a new page at the field specified.
-    Estas solicitudes causan a nivel de página se mueve a través de la forma, lo que provocó
-    visualización de una pantalla nueva forma. Una forma puede estar hecha de múltiples
-    páginas. Si usted tiene una gran forma con gran cantidad de campos y lógica
-    secciones, entonces usted puede dividir la forma en páginas. La función
-    = set_new_page()= para establecer una nueva página en el campo especificado.
+    Estas solicitudes causan que el nivel de página se mueve a través
+    de la formulario, lo que provoca la visualización de una pantalla
+    nueva de formulario. Una formulario puede estar hecho de múltiples
+    páginas. Si tiene una formulario con gran cantidad de campos y
+    secciones lógicas, puede dividir el formulario en páginas. La
+    función =set_new_page()= para establecer una página nueva en un
+    campo especifico.
 
     #+BEGIN_SRC c
-      int set_new_page(FIELD *field,/* Field at which page break to be set or unset */
-                       bool new_page_flag); /* should be TRUE to put a break */
+      int set_new_page(FIELD *field,        /* Campo en el cual poner o quitar el salto de pagina */
+                       bool new_page_flag); /* debe ser TRUE para colocar el salto                */
     #+END_SRC
-
-      int set_new_page (FIELD * El campo, / * El campo en el que salto de página para ajustar o unset * /
-                       new_page_flag bool); / * Debe ser verdadera para poner una pausa * /
 
     # The following requests allow you to move to different pages
     Las siguientes peticiones le permiten moverse a diferentes páginas
 
     # - =REQ_NEXT_PAGE= Move to the next form page.
-    - = REQ_NEXT_PAGE = moverse a la siguiente página de formulario.
+    - =REQ_NEXT_PAGE= mover a la página siguiente.
 
     # - =REQ_PREV_PAGE= Move to the previous form page.
-    - = REQ_PREV_PAGE = moverse a la página anterior formulario.
+    - =REQ_PREV_PAGE= mover a la página anterior.
 
     # - =REQ_FIRST_PAGE= Move to the first form page.
-    - = REQ_FIRST_PAGE = moverse a la primera página del formulario.
+    - =REQ_FIRST_PAGE= mover a la primer página.
 
     # - =REQ_LAST_PAGE= Move to the last form page.
-    - = REQ_LAST_PAGE = moverse a la última página del formulario.
+    - =REQ_LAST_PAGE= mover a la última página.
 
 
     # These requests treat the list as cyclic; that is, =REQ_NEXT_PAGE=
     # from the last page goes to the first, and =REQ_PREV_PAGE= from the
     # first page goes to the last.
 
-    Estas solicitudes tratar la lista como cíclica; es decir, = REQ_NEXT_PAGE =
-    desde la última página va a la primera, y = REQ_PREV_PAGE = del
-    primera página va a la última.
+    Estas solicitudes manejan la lista de forma cíclica; es decir,
+    desde la ultima pagina =REQ_NEXT_PAGE= va a la primera, y desde la
+    primer pagina =REQ_PREV_PAGE= va a la última.
 
 # *** 18.6.2. Inter-Field Navigation Requests
-*** 18.6.2. Las solicitudes Inter-Campo de Navegación
+*** 18.6.2. Solicitudes de Navegación Entre Campos
 
     # These requests handle navigation between fields on the same page.
-    Estas solicitudes manejar la navegación entre los campos en la misma página.
+    Estas solicitudes manejar la navegación entre los campos de una
+    misma página.
 
     # -  =REQ_NEXT_FIELD= Move to next field.
-    - = REQ_NEXT_FIELD = moverse al campo siguiente.
+    - =REQ_NEXT_FIELD= mover al campo siguiente.
 
     # -  =REQ_PREV_FIELD= Move to previous field.
-    - = REQ_PREV_FIELD = moverse al campo anterior.
+    - =REQ_PREV_FIELD= mover al campo anterior.
 
     # -  =REQ_FIRST_FIELD= Move to the first field.
-    - = REQ_FIRST_FIELD = moverse al primer campo.
+    - =REQ_FIRST_FIELD= mover al primer campo.
 
     # -  =REQ_LAST_FIELD= Move to the last field.
-    - = REQ_LAST_FIELD = Mover al último campo.
+    - =REQ_LAST_FIELD= Mover al último campo.
 
     # -  =REQ_SNEXT_FIELD= Move to sorted next field.
-    - = REQ_SNEXT_FIELD = Mover a ordenados siguiente campo.
+    - =REQ_SNEXT_FIELD= Mover al siguiente campo ordenado.
 
     # -  =REQ_SPREV_FIELD= Move to sorted previous field.
-    - = REQ_SPREV_FIELD = moverse al campo anterior ordenada.
+    - =REQ_SPREV_FIELD= Mover al anteriar campo ordenado.
 
     # -  =REQ_SFIRST_FIELD= Move to the sorted first field.
-    - = REQ_SFIRST_FIELD = moverse al primer campo ordenado.
+    - =REQ_SFIRST_FIELD= mover al primer campo ordenado.
 
     # -  =REQ_SLAST_FIELD= Move to the sorted last field.
-    - = REQ_SLAST_FIELD = Mover al último campo ordenado.
+    - =REQ_SLAST_FIELD= Mover al último campo ordenado.
 
     # -  =REQ_LEFT_FIELD= Move left to field.
-    - = REQ_LEFT_FIELD = Mover izquierda a campo.
+    - =REQ_LEFT_FIELD= Mover a la izquierda del campo.
 
     # -  =REQ_RIGHT_FIELD= Move right to field.
-    - = REQ_RIGHT_FIELD = Mover derecho a campo.
+    - =REQ_RIGHT_FIELD= Mover a la derecha del campo.
 
     # -  =REQ_UP_FIELD= Move up to field.
-    - = REQ_UP_FIELD = moverse hasta el campo.
+    - =REQ_UP_FIELD= mover hacia arriba un campo.
 
     # -  =REQ_DOWN_FIELD= Move down to field.
-    - = REQ_DOWN_FIELD = moverse hacia abajo para campo.
+    - =REQ_DOWN_FIELD= mover hacia abajo un campo.
 
     # These requests treat the list of fields on a page as cyclic; that
     # is, =REQ_NEXT_FIELD= from the last field goes to the first, and
@@ -6768,106 +6766,107 @@
     # =REQ_LAST_FIELD= requests) is simply the order of the field
     # pointers in the form array (as set up by =new_form()= or
     # =set_form_fields()=
-    Estas peticiones tratan a la lista de los campos en una página como cíclico; ese
-    es decir, = REQ_NEXT_FIELD = desde el último campo va a la primera, y
-    = REQ_PREV_FIELD del primer campo va a la última. El orden
-    de los campos de éstos (y = REQ_FIRST_FIELD = y
-    = REQ_LAST_FIELD solicitudes) es simplemente el fin del campo
-    punteros en la forma array (establecidos por new_form()= o
-    = set_form_field()=
+    Estas peticiones manejan la lista de campos en una página de forma
+    cíclica; ese es decir, desde el ultimo campo =REQ_NEXT_FIELD= va a
+    el primero, y desde el primer campo =REQ_PREV_FIELD= va a el
+    ultimo. El orden de los campos para estas peticiones (incluidas
+    =REQ_FIRST_FIELD= y =REQ_LAST_FIELD=) es simplemente el orden de
+    los punteros en el arreglo de formularios (establecido por
+    =new_form()= o =set_form_field()=)
 
     # It is also possible to traverse the fields as if they had been
     # sorted in screen-position order, so the sequence goes
     # left-to-right and top-to-bottom. To do this, use the second group
     # of four sorted-movement requests.
     También es posible recorrer los campos como si hubieran sido
-    ordenadas en orden pantalla de posiciones, por lo que la secuencia va
-    de izquierda a derecha y de arriba a abajo. Para ello, utilice el segundo grupo
-    de cuatro solicitudes-movimiento ordenado.
+    ordenados deacuerdo a su posicion en pantalla, por lo que la
+    secuencia va de izquierda a derecha y de arriba a abajo. Para
+    ello, utilice el segundo grupo de cuatro movimientos por orden.
 
     # Finally, it is possible to move between fields using visual
     # directions up, down, right, and left. To accomplish this, use the
     # third group of four requests. Note, however, that the position of
     # a form for purposes of these requests is its upper-left corner.
-    Por último, es posible moverse entre los campos utilizando visual
-    direcciones arriba, abajo, a la derecha, y se fueron. Para lograr esto, utilice el
-    tercer grupo de cuatro solicitudes. Nótese, sin embargo, que la posición de
-    un formulario a los efectos de estas solicitudes es la esquina superior izquierda.
+    Por último, es posible moverse entre campos utilizando las
+    direciones arriba, abajo, derecha, e izquierda. Para lograr esto,
+    utilice el tercer grupo de cuatro movimientos. Sin embargo,
+    observe que la posición de un formulario a efectos de estas
+    peticiones es la esquina superior izquierda.
 
     # For example, suppose you have a multi-line field B, and two
     # single-line fields A and C on the same line with B, with A to the
     # left of B and C to the right of B. A =REQ_MOVE_RIGHT= from A will
     # go to B only if A, B, and C all share the same first line;
     # otherwise it will skip over B to C.
-    Por ejemplo, suponga que tiene un campo de varias líneas B, y dos
-    campos de una sola línea A y C en la misma línea con B, con A a la
-    izquierdo de B y C a la derecha de B. A = REQ_MOVE_RIGHT = de A voluntad
-    ir a B sólo si A, B, y C todos comparten la misma primera línea;
-    de lo contrario, saltar sobre B a C.
+    Por ejemplo, suponga que tiene un campo B multilinea, y dos campos
+    de una sola línea A y C en la misma línea con B, A a la izquierdo
+    de B y C a la derecha de B. Desde A =REQ_MOVE_RIGHT= va a B sólo
+    si A, B, y C comparten la misma primera línea; de lo contrario,
+    saltar a C.
 
 # *** 18.6.3. Intra-Field Navigation Requests
-*** 18.6.3. Las solicitudes Intra-Campo de Navegación
+*** 18.6.3. Solicitudes de Navegacion dentro del Campo
 
     # These requests drive movement of the edit cursor within the
     # currently selected field.
-    Estas solicitudes coche movimiento del cursor de edición dentro de la
-    Actualmente campo seleccionado.
+    Estas solicitudes manejan el movimiento de el cursor de edición
+    dentro del campo artalmente seleccionado.
 
     # -  =REQ_NEXT_CHAR= Move to next character.
-    - = REQ_NEXT_CHAR = moverse al siguiente carácter.
+    - =REQ_NEXT_CHAR= Mover al carácter siguiente.
 
     # -  =REQ_PREV_CHAR= Move to previous character.
-    - = REQ_PREV_CHAR = Mover a carácter anterior.
+    - =REQ_PREV_CHAR= Mover a carácter anterior.
 
     # -  =REQ_NEXT_LINE= Move to next line.
-    - = REQ_NEXT_LINE = moverse a la siguiente línea.
+    - =REQ_NEXT_LINE= Mover a la línea siguiente.
 
     # -  =REQ_PREV_LINE= Move to previous line.
-    - = REQ_PREV_LINE = Mover a la línea anterior.
+    - =REQ_PREV_LINE= Mover a la línea anterior.
 
     # -  =REQ_NEXT_WORD= Move to next word.
-    - = REQ_NEXT_WORD = moverse a la siguiente palabra.
+    - =REQ_NEXT_WORD= Mover a la palabra siguiente.
 
     # -  =REQ_PREV_WORD= Move to previous word.
-    - = REQ_PREV_WORD = Mover a la palabra anterior.
+    - =REQ_PREV_WORD= Mover a la palabra anterior.
 
     # -  =REQ_BEG_FIELD= Move to beginning of field.
-    - = REQ_BEG_FIELD = Mover a principio del campo.
+    - =REQ_BEG_FIELD= Mover a inicio del campo.
 
     # -  =REQ_END_FIELD= Move to end of field.
-    - = REQ_END_FIELD = Mover a final de campo.
+    - =REQ_END_FIELD= Mover a final del campo.
 
     # -  =REQ_BEG_LINE= Move to beginning of line.
-    - = REQ_BEG_LINE = Mover a principio de la línea.
+    - =REQ_BEG_LINE= Mover al incio de línea.
 
     # -  =REQ_END_LINE= Move to end of line.
-    - = REQ_END_LINE = Mover a final de línea.
+    - =REQ_END_LINE= Mover a final de línea.
 
     # -  =REQ_LEFT_CHAR= Move left in field.
-    - = REQ_LEFT_CHAR = moverse a la izquierda en el campo.
+    - =REQ_LEFT_CHAR= Mover a la izquierda en el campo.
 
     # -  =REQ_RIGHT_CHAR= Move right in field.
-    - = REQ_RIGHT_CHAR = moverse a la derecha en el campo.
+    - =REQ_RIGHT_CHAR= Mover a la derecha en el campo.
 
     # -  =REQ_UP_CHAR= Move up in field.
-    - = REQ_UP_CHAR = moverse hacia arriba en el campo.
+    - =REQ_UP_CHAR= Mover hacia arriba en el campo.
 
     # -  =REQ_DOWN_CHAR= Move down in field.
-    - = REQ_DOWN_CHAR = moverse hacia abajo en el campo.
+    - =REQ_DOWN_CHAR= Mover hacia abajo en el campo.
 
 
     # Each word is separated from the previous and next characters by
     # whitespace. The commands to move to beginning and end of line or
-    # field look for the first or last non-pad character in their
+    # ¤field look for the first or last non-pad character in their
     # ranges.
 
-    Cada palabra se separa de los caracteres anteriores y siguientes por
-    espacio en blanco. Los comandos para pasar a principio y final de la línea o
-    mirada de campo para el primer o el último carácter no-pad en su
-    rangos.
+    Cada palabra se separa de los caracteres anteriores y siguientes
+    por espacio en blanco. Los comandos para mover al inicio y fin de
+    línea o camo buscan el primer o el ultimo caracter que no es de
+    relleno en sus rangos.
 
 # *** 18.6.4. Scrolling Requests
-*** 18.6.4. Desplazamiento Solicitudes
+*** 18.6.4. Solicitudes de Desplazamiento
 
     # Fields that are dynamic and have grown and fields explicitly
     # created with offscreen rows are scrollable. One-line fields scroll
@@ -6875,124 +6874,134 @@
     # is triggered by editing and intra-field movement (the library
     # scrolls the field to keep the cursor visible). It is possible to
     # explicitly request scrolling with the following requests:
-    Los campos que son dinámicos y han crecido y campos explícitamente
-    creado con filas fuera de la pantalla son desplazable. Campos a la Venta desplazarse
-    horizontalmente; campos multilínea desplazarse verticalmente. La mayoría de desplazamiento
-    se desencadena por la edición y el movimiento intra-campo (la libreria
-    desplaza el campo para mantener el cursor visible). Es posible
-    solicitar explícitamente el desplazamiento con las siguientes preguntas:
+    Los campos dinámicos y los creados explícitamente con filas fuera
+    de pantalla son desplazables. Los campos de una linea se desplazan
+    horizontalmente; los campos multilínea verticalmente. La mayoría
+    de movimientos se acciona por la edición y el movimiento dentro
+    del campo (la libreria desplaza el campo para mantener el cursor
+    visible). Es posible solicitar explícitamente el desplazamiento
+    con las siguientes solicitudes:
 
     # -  =REQ_SCR_FLINE= Scroll vertically forward a line.
-    - = REQ_SCR_FLINE Desplácese verticalmente hacia adelante una línea.
+    - =REQ_SCR_FLINE= Desplazar verticalmente hacia adelante una
+      línea.
 
     # -  =REQ_SCR_BLINE= Scroll vertically backward a line.
-    - = REQ_SCR_BLINE = Desplazarse verticalmente hacia atrás una línea.
+    - =REQ_SCR_BLINE= Desplazar verticalmente hacia atrás una línea.
 
     # -  =REQ_SCR_FPAGE= Scroll vertically forward a page.
-    - = REQ_SCR_FPAGE Desplácese verticalmente hacia adelante una página.
+    - =REQ_SCR_FPAGE= Desplazar verticalmente hacia adelante una
+      página.
 
     # -  =REQ_SCR_BPAGE= Scroll vertically backward a page.
-    - = REQ_SCR_BPAGE = Desplazarse verticalmente hacia atrás una página.
+    - =REQ_SCR_BPAGE= Desplazar verticalmente hacia atrás una página.
 
     # -  =REQ_SCR_FHPAGE= Scroll vertically forward half a page.
-    - = REQ_SCR_FHPAGE = Desplazarse verticalmente hacia adelante media página.
+    - =REQ_SCR_FHPAGE= Desplazar verticalmente hacia adelante media
+      página.
 
     # -  =REQ_SCR_BHPAGE= Scroll vertically backward half a page.
-    - = REQ_SCR_BHPAGE = Scroll medio verticalmente hacia atrás una página.
+    - =REQ_SCR_BHPAGE= Desplazar verticalmente hacia atrás media
+      página.
 
     # -  =REQ_SCR_FCHAR= Scroll horizontally forward a character.
-    - = REQ_SCR_FCHAR = Scroll horizontal hacia adelante un caracter.
+    - =REQ_SCR_FCHAR= Desplazar horizontal hacia adelante un caracter.
 
     # -  =REQ_SCR_BCHAR= Scroll horizontally backward a character.
-    - = REQ_SCR_BCHAR = Scroll horizontal hacia atrás un caracter.
+    - =REQ_SCR_BCHAR= Desplazar horizontal hacia atrás un caracter.
 
     # -  =REQ_SCR_HFLINE= Scroll horizontally one field width forward.
-    - = REQ_SCR_HFLINE = Scroll horizontal un campo ancho de adelante.
+    - =REQ_SCR_HFLINE= Desplazar horizontal el ancho de campo hacia
+      adelante.
 
     # -  =REQ_SCR_HBLINE= Scroll horizontally one field width backward.
-    - = REQ_SCR_HBLINE = Scroll horizontal de un ancho de campo hacia atrás.
+    - =REQ_SCR_HBLINE= Desplazar horizontal el ancho de campo hacia
+      atrás.
 
     # -  =REQ_SCR_HFHALF= Scroll horizontally one half field width
     #    forward.
-    - = REQ_SCR_HFHALF = Scroll horizontal mitad ancho de campo
-       reenviar.
+    - =REQ_SCR_HFHALF= Desplazar horizontal medio ancho de campo hacia
+      adelante.
 
     # -  =REQ_SCR_HBHALF= Scroll horizontally one half field width
     #    backward.
-    - = REQ_SCR_HBHALF = Scroll horizontal mitad ancho de campo
-       hacia atrás.
+    - =REQ_SCR_HBHALF= Desplazar horizontal medio ancho de campo hacia
+      atras.
 
 
     # For scrolling purposes, a page of a field is the height of its
     # visible part.
 
-    A los efectos de desplazamiento, una página de un campo es la altura de su
-    parte visible.
+    A efectos de desplazamiento, la página de un campo es la altura de
+    su parte visible.
 
 # *** 18.6.5. Editing Requests
-*** 18.6.5. Solicitudes de edición
+*** 18.6.5. Solicitudes de Edición
 
     # When you pass the forms driver an ASCII character, it is treated
     # as a request to add the character to the field's data
     # buffer. Whether this is an insertion or a replacement depends on
     # the field's edit mode (insertion is the default.
-    Cuando pase el conductor forma un carácter ASCII, se trata
-    como una solicitud para agregar el carácter a los datos del campo
-    amortiguador. Si esto es una inserción o un reemplazo depende de
-    el modo de edición del campo (inserción es el predeterminado.
+    Cuando se pasa un caracter ASCII al controlador de formulario, se
+    trata como una solicitud para agregar el carácter a buffer de
+    datos del campo. Si es un replazo o una inserción depende del modo
+    de edición del campo (por defecto es inserción).
 
     # The following requests support editing the field and changing the
     # edit mode:
-    Las siguientes solicitudes de soporte de editar el campo y el cambio de la
-    modo de edición:
+    Las siguientes solicitudes apoyan la edicion del campo y cambian
+    de modo de edición:
 
     # - =REQ_INS_MODE= Set insertion mode.
-    - = REQ_INS_MODE = modo de inserción Set.
+    - =REQ_INS_MODE= Establece modo en inserción.
 
     # - =REQ_OVL_MODE= Set overlay mode.
-    - = REQ_OVL_MODE = modo de superposición Set.
+    - =REQ_OVL_MODE= Establece modo de superposición.
 
     # - =REQ_NEW_LINE= New line request (see below for explanation).
-    - = REQ_NEW_LINE Nueva solicitud de línea (ver más abajo para la explicación).
+    - =REQ_NEW_LINE= Solicita nueva línea (ver más abajo para la
+      explicación).
 
     # - =REQ_INS_CHAR= Insert space at character location.
-    - = REQ_INS_CHAR = Insertar espacio en el lugar carácter.
+    - =REQ_INS_CHAR= Insertar espacio en la posicion de carácter.
 
     # - =REQ_INS_LINE= Insert blank line at character location.
-    - = REQ_INS_LINE = Insertar línea en blanco en la posición del carácter.
+    - =REQ_INS_LINE= Insertar línea en blanco en la posición del
+      carácter.
 
     # - =REQ_DEL_CHAR= Delete character at cursor.
-    - = REQ_DEL_CHAR = Eliminar el carácter en el cursor.
+    - =REQ_DEL_CHAR= Eliminar el carácter en el cursor.
 
     # - =REQ_DEL_PREV= Delete previous word at cursor.
-    - = REQ_DEL_PREV = Eliminar palabra anterior al cursor.
+    - =REQ_DEL_PREV= Eliminar palabra anterior al cursor.
 
     # - =REQ_DEL_LINE= Delete line at cursor.
-    - = REQ_DEL_LINE = línea Delete en el cursor.
+    - =REQ_DEL_LINE= Eliminar linea en el cursor.
 
     # - =REQ_DEL_WORD= Delete word at cursor.
-    - = REQ_DEL_WORD = Eliminar la palabra en el cursor.
+    - =REQ_DEL_WORD= Eliminar la palabra en el cursor.
 
     # - =REQ_CLR_EOL= Clear to end of line.
-    - = REQ_CLR_EOL = Borrar hasta el final de la línea.
+    - =REQ_CLR_EOL= Borrar hasta el final de la línea.
 
     # - =REQ_CLR_EOF= Clear to end of field.
-    - = REQ_CLR_EOF = Borrar hasta el final del campo.
+    - =REQ_CLR_EOF= Borrar hasta el final del campo.
 
     # - =REQ_CLR_FIELD= Clear entire field.
-    - = REQ_CLR_FIELD = Borrar campo entero.
+    - =REQ_CLR_FIELD= Borrar campo entero.
+
 
     # The behavior of the =REQ_NEW_LINE= and =REQ_DEL_PREV= requests is
     # complicated and partly controlled by a pair of forms options. The
     # special cases are triggered when the cursor is at the beginning of
     # a field, or on the last line of the field.
-    El comportamiento de los REQ_NEW_LINE = y = REQ_DEL_PREV = solicitudes es
-    complicado y en parte controlado por un par de opciones de formularios. los
-    casos especiales se activan cuando el cursor se encuentra al comienzo de
-    un campo, o en la última línea del campo.
+    El comportamiento de las peticiones =REQ_NEW_LINE= y
+    =REQ_DEL_PREV= es complicado y en parte controlado por un par de
+    opciones del formulario. Los casos especiales se activan cuando el
+    cursor se encuentra al inicio o en la última línea del campo.
 
     # First, we consider =REQ_NEW_LINE=:
-    En primer lugar, consideramos = REQ_NEW_LINE =:
+    En primer lugar, consideramos =REQ_NEW_LINE=:
 
     # The normal behavior of =REQ_NEW_LINE= in insert mode is to break
     # the current line at the position of the edit cursor, inserting the
@@ -7000,31 +7009,31 @@
     # following the current and moving the cursor to the beginning of
     # that new line (you may think of this as inserting a newline in the
     # field buffer).
-    El comportamiento normal de = REQ_NEW_LINE en modo de inserción es romper
-    la línea actual en la posición del cursor de edición, la inserción de la
-    parte de la línea actual después del cursor como una nueva línea
-    siguiendo la corriente y moviendo el cursor al principio de
-    que la nueva línea (se puede pensar en esto como la inserción de una nueva línea en el
-    tampón de campo).
+    El comportamiento normal de =REQ_NEW_LINE= en modo de inserción es
+    romper la línea actual en la posición del cursor, colocando el
+    resto de linea despues del cursor como una nueva línea y moviendo
+    el cursor al inicio de la nueva línea (puede pensar en esto como
+    la inserción de una nueva línea en el buffer de campo).
 
     # The normal behavior of =REQ_NEW_LINE= in overlay mode is to clear
     # the current line from the position of the edit cursor to end of
     # line. The cursor is then moved to the beginning of the next line.
-    El comportamiento normal de = REQ_NEW_LINE = en el modo de superposición es limpiar
-    la línea actual desde la posición del cursor de edición al final de la
-    línea. El cursor se mueve entonces hasta el principio de la línea siguiente.
+    El comportamiento normal de =REQ_NEW_LINE= en el modo de
+    superposición es limpiar la línea actual desde la posición del
+    cursor al fin de línea. El cursor se mueve entonces hasta el
+    inicio de la línea siguiente.
 
     # However, =REQ_NEW_LINE= at the beginning of a field, or on the
     # last line of a field, instead does a
     # =REQ_NEXT_FIELD=. =O_NL_OVERLOAD= option is off, this special
     # action is disabled.
-    Sin embargo, = REQ_NEW_LINE = al comienzo de un campo, o en el
-    última línea de un campo, en cambio hace un
-    = REQ_NEXT_FIELD. = O_NL_OVERLOAD opción está desactivada, este especial
-    acción está deshabilitada.
+    Sin embargo, =REQ_NEW_LINE= al incio de un campo, o sobre la
+    última línea de un campo, en cambio realiza =REQ_NEXT_FIELD=. Si
+    la opcion =O_NL_OVERLOAD= esta desactivada, se desactiva esta
+    acción especial.
 
     # Now, let us consider =REQ_DEL_PREV=:
-    Ahora, consideremos = REQ_DEL_PREV =:
+    Ahora, consideremos =REQ_DEL_PREV=:
 
     # The normal behavior of =REQ_DEL_PREV= is to delete the previous
     # character. If insert mode is on, and the cursor is at the start of
@@ -7032,44 +7041,44 @@
     # instead appends the contents of the current line to the previous
     # one and deletes the current line (you may think of this as
     # deleting a newline from the field buffer).
-    El comportamiento normal de = REQ_DEL_PREV = es eliminar el anterior
-    caracter. Si el modo de inserción está activado, y el cursor se encuentra al principio de
-    una línea, y el texto en esa línea van a caber en la anterior, se
-    lugar anexa el contenido de la línea actual a la anterior
-    Uno y borra la línea actual (se puede pensar en esto como
-    la eliminación de un salto de línea de la memoria intermedia de campo).
+    El comportamiento normal de =REQ_DEL_PREV= es eliminar el caracter
+    anterior. Si el modo de inserción está activado, y el cursor se
+    encuentra al inicio de una línea, y el texto en esa línea cabe en
+    la anterior, se anexa el contenido de la línea actual a la
+    anterior y se borra la línea actual (puede pensar en esto como la
+    eliminación de un salto de línea del buffer de campo).
 
     # However, =REQ_DEL_PREV= at the beginning of a field is instead
     # treated as a =REQ_PREV_FIELD=.
-    Sin embargo, = REQ_DEL_PREV = al comienzo de un campo es lugar
-    tratado como un REQ_PREV_FIELD =.
+    Sin embargo, =REQ_DEL_PREV= al inicio de un campo se trata como
+    =REQ_PREV_FIELD=.
 
     # If the =O_BS_OVERLOAD= option is off, this special action is
     # disabled and the forms driver just returns =E_REQUEST_DENIED=.
-    Si el O_BS_OVERLOAD = opción está desactivada, esta acción especial es
-    personas con discapacidad y el conductor formas sólo devuelve = E_REQUEST_DENIED =.
+    Si la opcion =O_BS_OVERLOAD= está desactivada, se desactiva esta
+    acción especial y el controlador devuelve sólo =E_REQUEST_DENIED=.
 
 # *** 18.6.6. Order Requests
-*** 18.6.6. Las solicitudes de pedido
+*** 18.6.6. Solicitudes de Peticion
 
-    # If the type of your field is ordered, and has associated functions
+    # ¤If the type of your field is ordered, and has associated functions
     # for getting the next and previous values of the type from a given
     # value, there are requests that can fetch that value into the field
     # buffer:
-    Si el tipo de su campo se ordenó, y se ha asociado funciones
-    para obtener los valores de siguiente y anterior del tipo de un determinado
-    valor, hay solicitudes que pueden alcanzar ese valor en el campo
-    amortiguador:
+    Si puede solicitar el contenido de un campo, y posse funciones
+    asociadas para obtener los valores siguiente y anterior de tipo de
+    un valor dado, estas son las solicitudes para obtener este valor
+    dentro del buffer del campo:
 
-    # - =REQ_NEXT_CHOICE= Place the successor value of the current value
+    # - =REQ_NEXT_CHOICE= ¤Place the successor value of the current value
     #   in the buffer.
-    - = REQ_NEXT_CHOICE = Coloque el valor sucesor del valor actual
-      en el búfer.
+    - =REQ_NEXT_CHOICE= Coloca el volor succesor del actual valor en
+      el buffer.
 
-    # - =REQ_PREV_CHOICE= Place the predecessor value of the current
+    # - =REQ_PREV_CHOICE= ¤Place the predecessor value of the current
     #   value in the buffer.
-    - = REQ_PREV_CHOICE = Coloque el valor predecesor del actual
-      valor en el buffer.
+    - =REQ_PREV_CHOICE= Coloca el valor predecesor del actual valor en
+      el buffer.
 
 
     # Of the built-in field types, only =TYPE_ENUM= has built-in
@@ -7077,13 +7086,13 @@
     # of your own (see Custom Validation Types), you can associate our
     # own ordering functions.
 
-    De los tipos de campo incorporados, solamente = TYPE_ENUM = ha incorporado
-    funciones de sucesor y predecesor. Cuando se define un tipo de campo
-    de su propia (ver Tipos personalizados de validación), puede asociar nuestra
-    funciones de ordenación propios.
+    De los tipos de campo incorporados, solamente =TYPE_ENUM= ha
+    incorporado funciones de sucesor y predecesor. Cuando define un
+    tipo de campo por usted mismo (ver Validacion de Tipos
+    Personalizados), puede asociar su propia funciones de peticion.
 
 # *** 18.6.7. Application Commands
-*** 18.6.7. Comandos de aplicaciones
+*** 18.6.7. Comandos de aplicacion
 
     # Form requests are represented as integers above the curses value
     # greater than =KEY_MAX= and less than or equal to the constant
@@ -7091,15 +7100,15 @@
     # =form_driver()=. So this can be used for any purpose by the
     # application. It can be treated as an application specific action
     # and take corresponding action.
-    Peticiones de formulario se representan como números enteros por encima del valor curses
-    mayor que KEY_MAX = y menor o igual a la constante
-    =  MAX_COMMAND. Un valor dentro de este rango es ignorada por
-    form_driver()=. Así esto puede ser utilizado para cualquier propósito por el
-    solicitud. Puede ser tratada como una acción específica de la aplicación
-    y tomar las medidas correspondientes.
+    Las peticiones de formulario se representan como números enteros
+    por encima del valor =KEY_MAX= y debajo o igual a la constante
+    =MAX_COMMAND=. Un valor dentro de este rango es ignorado por
+    =form_driver()=. Así que se puede utilizar para cualquier
+    propósito de la aplicacion. Se puede tratar como una acción
+    específica de la aplicación y tomar lao accion correspondiente.
 
 # * 19. Tools and Widget Libraries
-* 19. Herramientas y Librerias Widget
+* 19. Librerias de Widgets y Herramientas
 
   # Now that you have seen the capabilities of ncurses and its sister
   # libraries, you are rolling your sleeves up and gearing for a project
@@ -7109,14 +7118,14 @@
   # tools and widget libraries that can be used instead of writing your
   # own widgets. You can use some of them, get ideas from the code, or
   # even extend them.
-  Ahora que usted ha visto las capacidades de ncurses y su hermana
-  librerias, que están rodando las mangas y se prepara para un proyecto
-  que en gran medida manipula pantalla. Pero espera .. Puede ser muy
-  difícil de escribir y mantener los widgets GUI complejos en ncurses lisos
-  o incluso con las librerias adicionales. Hay algunos-listo para el uso
-  herramientas y librerias de widgets que se pueden utilizar en lugar de escribir su
-  propios widgets. Puede utilizar algunos de ellos, obtener ideas a partir del código, o
-  incluso extenderlas.
+  Ahora que usted ha visto las capacidades de ncurses y sus librerias
+  hermanas, se esta enrollando las mangas preparandose para un
+  proyecto con una fuerte manipulacion de pantalla. Pero espere..
+  Puede ser muy difícil escribir y mantener widgets complejos con puro
+  ncurses o incluso con las librerias adicionales. Puede utilizar
+  algunas librerias de widgets y herramientas listas para usar en
+  lugar de escribir su propios widgets. Puede utilizar algunos de
+  ellos, obtener ideas a partir del código, o incluso extenderlas.
 
 # ** 19.1. CDK (curses Development Kit)
 ** 19.1. CDK (Kit de desarrollo de curses)
@@ -7289,7 +7298,7 @@
     dada como parámetro para newCDKLabel(), se imprime la línea con
     primer plano amarillo y fondo azul. Hay otras etiquetas
     disponible para justificar la secuencia, la incrustación especial de giro
-    caracteres etc .. Por favor, consulte la página de manual = cdk_display (3X) =
+    caracteres etc .. Por favor, consulte la página de manual =cdk_display (3X) =
     para detalles. La página del manual explica el uso de ejemplos buenos.
 
 # *** 19.1.3. Conclusion
@@ -7392,7 +7401,7 @@
    # Some of my code examples are converted to perl by Anuradha
    # Ratnaweera and they are available in the =perl= directory.
    Algunos de mis ejemplos de código se convierten en perl por Anuradha
-   Ratnaweera y están disponibles en el perl = directorio.
+   Ratnaweera y están disponibles en el perl =directorio.
 
    # For more information see man pages curses(3) , curses::Form(3) and
    # curses::Widgets(3). These pages are installed only when the above
