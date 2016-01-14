@@ -7133,16 +7133,17 @@
    # In the author's words
    En palabras del autor
 
+   # #+BEGIN_ITALIC
+   #   CDK stands for 'curses Development Kit' and it currently contains
+   #   21 ready to use widgets which facilitate the speedy development
+   #   of full screen curses programs.
+   # #+END_ITALIC
+
    #+BEGIN_ITALIC
-     CDK stands for 'curses Development Kit' and it currently contains
-     21 ready to use widgets which facilitate the speedy development
-     of full screen curses programs.
+     CDK significa 'curses Development Kit' y actualmente contiene 21
+     widgets listos para usar que facilitan el rápido desarrollo de
+     programas curses a pantalla completa.
    #+END_ITALIC
-
-     CDK significa 'Kit curses Desarrollo' y contiene actualmente
-     21 listo para usar los widgets que facilitan el desarrollo rápido
-     de pantalla completa curses programas.
-
 
    # The kit provides some useful widgets, which can be used in your
    # programs directly. It's pretty well written and the documentation
@@ -7150,156 +7151,162 @@
    # place to start for beginners. The CDK can be downloaded from
    # [[http://invisible-island.net/cdk/]] . Follow the instructions in
    # README file to install it.
-   El kit proporciona algunos widgets útiles, que se pueden utilizar en su
-   programas directamente. Está muy bien escrito y la documentación
-   es muy bueno. Los ejemplos en el directorio de ejemplos pueden ser una buena
-   punto de partida para los principiantes. El CDK se puede descargar desde
-   [[http://invisible-island.net/cdk/]]. Siga las instrucciones
-   Archivo README para instalarlo.
+   El kit proporciona algunos widgets útiles, que pueden utilizarse
+   directamente en sus programas. Está muy bien escrito y la
+   documentación es muy buena. Los ejemplos en el directorio examples
+   pueden ser un buen punto de partida para los principiantes. CDK se
+   puede descargar desde [[http://invisible-island.net/cdk/]]. Siga las
+   instrucciones del archivo README para instalarlo.
 
 
 # *** 19.1.1. Widget List
-
-*** 19.1.1. Lista Widget
+*** 19.1.1. Lista de Widgets
 
     # The following is the list of widgets provided with cdk and their
     # description.
     La siguiente es la lista de widgets provista de cdk y su
     descripción.
 
+    # #+BEGIN_EXAMPLE
+    #   Widget Type           Quick Description
+    #   ===========================================================================
+    #   Alphalist             Allows a user to select from a list of words, with
+    #                         the ability to narrow the search list by typing in a
+    #                         few characters of the desired word.
+    #   Buttonbox             This creates a multiple button widget.
+    #   Calendar              Creates a little simple calendar widget.
+    #   Dialog                Prompts the user with a message, and the user
+    #                         can pick an answer from the buttons provided.
+    #   Entry                 Allows the user to enter various types of information.
+    #   File Selector         A file selector built from Cdk base widgets. This
+    #                         example shows how to create more complicated widgets
+    #                         using the Cdk widget library.
+    #   Graph                 Draws a graph.
+    #   Histogram             Draws a histogram.
+    #   Item List             Creates a pop up field which allows the user to select
+    #                         one of several choices in a small field. Very useful
+    #                         for things like days of the week or month names.
+    #   Label                 Displays messages in a pop up box, or the label can be
+    #                         considered part of the screen.
+    #   Marquee               Displays a message in a scrolling marquee.
+    #   Matrix                Creates a complex matrix with lots of options.
+    #   Menu                  Creates a pull-down menu interface.
+    #   Multiple Line Entry   A multiple line entry field. Very useful
+    #                         for long fields. (like a description
+    #                         field)
+    #   Radio List            Creates a radio button list.
+    #   Scale                 Creates a numeric scale. Used for allowing a user to
+    #                         pick a numeric value and restrict them to a range of
+    #                         values.
+    #   Scrolling List        Creates a scrolling list/menu list.
+    #   Scrolling Window      Creates a scrolling log file viewer. Can add
+    #                         information into the window while its running.
+    #                         A good widget for displaying the progress of
+    #                         something. (akin to a console window)
+    #   Selection List        Creates a multiple option selection list.
+    #   Slider                Akin to the scale widget, this widget provides a
+    #                         visual slide bar to represent the numeric value.
+    #   Template              Creates a entry field with character sensitive
+    #                         positions. Used for pre-formatted fields like
+    #                         dates and phone numbers.
+    #   Viewer                This is a file/information viewer. Very useful
+    #                         when you need to display loads of information.
+    #   ===========================================================================
+    # #+END_EXAMPLE
+
     #+BEGIN_EXAMPLE
-    Widget Type           Quick Description
-    ===========================================================================
-    Alphalist             Allows a user to select from a list of words, with
-                          the ability to narrow the search list by typing in a
-                          few characters of the desired word.
-    Buttonbox             This creates a multiple button widget.
-    Calendar              Creates a little simple calendar widget.
-    Dialog                Prompts the user with a message, and the user
-                          can pick an answer from the buttons provided.
-    Entry                 Allows the user to enter various types of information.
-    File Selector         A file selector built from Cdk base widgets. This
-                          example shows how to create more complicated widgets
-                          using the Cdk widget library.
-    Graph                 Draws a graph.
-    Histogram             Draws a histogram.
-    Item List             Creates a pop up field which allows the user to select
-                          one of several choices in a small field. Very useful
-                          for things like days of the week or month names.
-    Label                 Displays messages in a pop up box, or the label can be
-                          considered part of the screen.
-    Marquee               Displays a message in a scrolling marquee.
-    Matrix                Creates a complex matrix with lots of options.
-    Menu                  Creates a pull-down menu interface.
-    Multiple Line Entry   A multiple line entry field. Very useful
-                          for long fields. (like a description
-                          field)
-    Radio List            Creates a radio button list.
-    Scale                 Creates a numeric scale. Used for allowing a user to
-                          pick a numeric value and restrict them to a range of
-                          values.
-    Scrolling List        Creates a scrolling list/menu list.
-    Scrolling Window      Creates a scrolling log file viewer. Can add
-                          information into the window while its running.
-                          A good widget for displaying the progress of
-                          something. (akin to a console window)
-    Selection List        Creates a multiple option selection list.
-    Slider                Akin to the scale widget, this widget provides a
-                          visual slide bar to represent the numeric value.
-    Template              Creates a entry field with character sensitive
-                          positions. Used for pre-formatted fields like
-                          dates and phone numbers.
-    Viewer                This is a file/information viewer. Very useful
-                          when you need to display loads of information.
-    ===========================================================================
+      Widget                Descripcion
+      ===========================================================================
+      Alphalist             Permite seleccionar al usuario de una lista de
+                            palabras, con la capacidad de reducir la lista de
+                            búsqueda escribiendo algunos caracteres de la
+                            palabra deseada.
+      Buttonbox             Crea widgets de multiples botones.
+      Calendar              Crea un pequeño y simple widget calendario.
+      Dialog                Informa un mesaje al usuario, y el usuario puede
+                            escojer una obcion de los botones proporcionados.
+      Entry                 Permite al usuario ingresar varios tipos de datos.
+      File Selector         Un selector de ficheros construido con widgets
+                            CDK. Esta ejemplo muestra cómo crear widgets más
+                            complicados utilizando la librería CDK.
+      Graph                 Dibuja un grafico.
+      Histogram             Dibuja un histograma.
+      Item List             Crea un campo emergente que permite al usuario
+                            seleccionar una de las varias opciones en un
+                            pequeño campo. Muy útil para cosas como día de la
+                            semana o nombre de mes.
+      Label                 Muestra mensajes sobre una caja emergente, o sobre
+                            etiqueta que se considera parte de la pantalla.
+      Marquee               Muestra un mensaje sobre una marquesina con
+                            desplazamiento.
+      Matrix                Crea una compleja matrix con muchas opciones.
+      Menu                  Crea una interfaz de menu desplegable.
+      Multiple Line Entry   Un campo multilinea de entrada. Muy útil para los
+                            campos largos. (como un campo de descripción)
+      Radio List            Crea una lista de radio botones.
+      Scale                 Crea una escala numérica. Se utiliza para
+                            permitir a un usuario elegir un valor numérico y
+                            restringirlos a una serie de valores.
+      Scrolling List        Crea un menu/lista desplazable.
+      Scrolling Window      Crea un visor de registros desplazable. Puede
+                            agregar información en la ventana mientras se
+                            ejecuta. Un buen widget para visualizar el
+                            progreso de algo. (similar a una ventana de la
+                            consola)
+      Selection List        Crea una lista de opciones de seleccion multiple.
+      Slider                Similar al widget escale, este widget proporciona
+                            una barra deslizante visual para representar el
+                            valor numérico.
+      Template              Crea un campo de entrada con caracteres sensibles
+                            a una posicion. Se utiliza para pre-formatear
+                            campos como fechas y numeros de telefono.
+      Viewer                Este es un visor de ficheros/informacion. Muy util
+                            cuando se necesita mostrar un monton de informacion.
+      ===========================================================================
     #+END_EXAMPLE
-
-    Tipo Widget Descripción rápida
-    ================================================== =========================
-    Alphalist Permite al usuario seleccionar entre una lista de palabras, con
-                          la capacidad de reducir la lista de búsqueda escribiendo en un
-                          caracteres de la palabra deseada.
-    ButtonBox Esto crea un widget múltiple botón.
-    Calendario Crea un pequeño widget de calendario simple.
-    Diálogo solicita al usuario un mensaje, y el usuario
-                          puede recoger una respuesta de los botones proporcionados.
-    Entrada Permite al usuario introducir varios tipos de información.
-    Selector de presentar una selección de archivos integrado de los widgets de base Cdk. Esta
-                          ejemplo muestra cómo crear widgets de más complicadas
-                          utilizando la librería de widgets CDK.
-    Gráfico Dibuja un gráfico.
-    Histograma Dibuja un histograma.
-    Lista de elementos crea un campo emergente que permite al usuario seleccionar
-                          una de las varias opciones en un campo pequeño. Muy útil
-                          para cosas como día de la semana o mes nombres.
-    Etiqueta Muestra los mensajes en una caja pop-up, o la etiqueta puede ser
-                          considerado parte de la pantalla.
-    Marquesina Muestra un mensaje en una marquesina de desplazamiento.
-    Matrix Crea una matriz compleja con muchas opciones.
-    Menu Crea una interfaz de menu desplegable.
-    Múltiple Entrada Línea A campo de entrada de varias líneas. Muy útil
-                          para los campos largos. (como una descripción
-                          campo)
-    Lista Radio Crea una lista de botones de radio.
-    Escala Crea una escala numérica. Se utiliza para permitir a un usuario
-                          elegir un valor numérico y restringirlos a una serie de
-                          valores.
-    Desplazamiento Listado Crea una lista lista / menu desplegable.
-    Desplazamiento Ventana Crea un visor de archivos de registro de desplazamiento. Puede agregar
-                          información en la ventana mientras su funcionamiento.
-                          Un buen widget de para visualizar el progreso de
-                          algo. (similar a una ventana de la consola)
-    Lista de selección Crea una lista de selección de opción múltiple.
-    Deslizador Akin al widget escala, este widget proporciona una
-                          barra deslizante visual para representar el valor numérico.
-    Plantilla Crea un campo de entrada con el carácter sensible
-                          posiciones. Se utiliza para los campos pre-formateada como
-                          fechas y números de teléfono.
-    Visor Este es un visor de archivos / información. Muy útil
-                          cuando se necesita para mostrar un montón de información.
-    ================================================== =========================
-
 
     # A few of the widgets are modified by Thomas Dickey in recent
     # versions.
-    Algunos de los widgets son modificados por Thomas Dickey en los últimos
-    versiones.
+    Algunos de los widgets son modificados por Thomas Dickey en las
+    últimas versiones.
 
 # *** 19.1.2. Some Attractive Features
-*** 19.1.2. Algunas características atractivas
+*** 19.1.2. Algunas Características Atractivas
 
     # Apart from making our life easier with readily usable widgets, cdk
     # solves one frustrating problem with printing multi colored
     # strings, justified strings elegantly. Special formatting tags can
     # be embedded in the strings which are passed to CDK functions. For
     # Example
-    Aparte de hacer nuestra vida más fácil con widgets fácilmente utilizable, cdk
-    resuelve un problema frustrante con la impresión Colorido
-    cadenas, cuerdas justificadas elegantemente. Etiquetas de formato especiales puede
-    ser incrustado en las cuerdas que se transmiten a las funciones de CDK. por
-    Ejemplo
+    Ademas de hacer nuestra vida más fácil con widgets fácilmente
+    utilizables, cdk resuelve un problema frustrante con la impresión
+    de cadenas de colores, cadenas justificadas elegantemente.  Las
+    etiquetas con formato especial se puede incrustar en las cadenas
+    pasadas a las funciones CDK. por Ejemplo
 
     # If the string
-    Si la cadena de
+    Si la cadena
 
     #+BEGIN_EXAMPLE
       "</B/1>This line should have a yellow foreground and a blue
       background.<!1>"
     #+END_EXAMPLE
 
-      "</ B / 1> Esta línea debe tener un primer plano de color amarillo y un azul
-      de fondo. <! 1> "
+    #+BEGIN_EXAMPLE
+      "</B/1>Esta line debe tener un primer plano amarillo y un fondo azul.<!1>"
+    #+END_EXAMPLE
 
     # given as a parameter to newCDKLabel(), it prints the line with
     # yellow foreground and blue background. There are other tags
-    # available for justifying string, embedding special drawing
+    # available for justifying string, ¤embedding special drawing
     # characters etc.. Please refer to the man page =cdk_display(3X)=
     # for details. The man page explains the usage with nice examples.
-    dada como parámetro para newCDKLabel(), se imprime la línea con
+    se pasa como parámetro a =newCDKLabel()=, se imprime la línea con
     primer plano amarillo y fondo azul. Hay otras etiquetas
-    disponible para justificar la secuencia, la incrustación especial de giro
-    caracteres etc .. Por favor, consulte la página de manual =cdk_display (3X) =
-    para detalles. La página del manual explica el uso de ejemplos buenos.
+    disponibles para justificar la cadeno, dibujo de caracteres
+    especiales etc.. Por favor, consulte la página man
+    =cdk_display(3X)= para mas detalles. La página del manual explica
+    el uso con buenos ejemplos.
 
 # *** 19.1.3. Conclusion
 *** 19.1.3. Conclusión
@@ -7307,57 +7314,62 @@
     # All in all, CDK is a well-written package of widgets, which if
     # used properly can form a strong frame work for developing complex
     # GUI.
-    Con todo, CDK es un paquete bien escrito de widgets, que si
-    se utiliza correctamente puede formar un fuerte marco de trabajo para el desarrollo de complejos
-    GUI.
+    Considerando todo, CDK es un paquete de widgets bien escrito, que
+    si se utiliza correctamente puede formar un fuerte marco de
+    trabajo para el desarrollo de complejos GUI.
 
 # ** 19.2. The dialog
-** 19.2. El dialogo
+** 19.2. dialog
 
    # Long long ago, in September 1994, when few people knew linux, Jeff
    # Tranter wrote an [[http://www2.linuxjournal.com/lj-issues/issue5/2807.html][article]] on dialog in Linux Journal. He starts the
    # article with these words..
-   Hace mucho tiempo, mucho tiempo, en septiembre de 1994, cuando pocas personas sabían linux, Jeff
-   Tranter escribió un [[http://www2.linuxjournal.com/lj-issues/issue5/2807.html][article]] en diálogo en el Linux Journal. Comienza la
-   artículo con estas palabras ..
+   Hace mucho mucho tiempo, en Septiembre de 1994, cuando pocas
+   personas sabían GNU/linux, Jeff Tranter escribió un [[http://www2.linuxjournal.com/lj-issues/issue5/2807.html][articulo]] de
+   diálog en Linux Journal. El articulo comienza con estas palabras..
+
+   # #+BEGIN_ITALIC
+   #   Linux is based on the Unix operating system, but also features a
+   #   number of unique and useful kernel features and application
+   #   programs that often go beyond what is available under Unix. One
+   #   little-known gem is "dialog", a utility for creating
+   #   professional-looking dialog boxes from within shell scripts. This
+   #   article presents a tutorial introduction to the dialog utility,
+   #   and shows examples of how and where it can be used
+   # #+END_ITALIC
 
    #+BEGIN_ITALIC
-     Linux is based on the Unix operating system, but also features a
-     number of unique and useful kernel features and application
-     programs that often go beyond what is available under Unix. One
-     little-known gem is "dialog", a utility for creating
-     professional-looking dialog boxes from within shell scripts. This
-     article presents a tutorial introduction to the dialog utility,
-     and shows examples of how and where it can be used
+     Linux se basa en el sistema operativo Unix, pero cuenta también
+     con un número de características del núcleo únicas y útiles y
+     programas de aplicación que a menudo van más allá de lo que está
+     disponible en Unix. Uno joya poco conocida es "diálog", una
+     utilidad para crear cuadros de dialogo de aspecto profesional
+     desde shell scripts. Esta artículo presenta un tutorial de
+     introducción para la utilidad dialog, y muestra ejemplos de cómo
+     y dónde se puede utilizar
    #+END_ITALIC
-
-     Linux se basa en el sistema operativo Unix, pero también cuenta con una
-     número de características únicas y útiles del núcleo y la aplicación
-     programas que a menudo van más allá de lo que está disponible en Unix. Uno
-     joya poco conocida es "diálogo", una utilidad para crear
-     de aspecto profesional cuadros de diálogo desde scripts de shell. Esta
-     artículo presenta una introducción tutorial para la utilidad de diálogo,
-     y muestra ejemplos de cómo y dónde se puede utilizar
 
    # As he explains, dialog is a real gem in making professional-looking
    # dialog boxes with ease. It creates a variety of dialog boxes,
    # menus, check lists etc.. It is usually installed by default. If
    # not, you can download it from [[http://invisible-island.net/dialog/][Thomas Dickey]]'s site.
-   Como él mismo explica, de diálogo es una verdadera joya en la toma de aspecto profesional
-   cuadros de diálogo con facilidad. Crea una variedad de cuadros de diálogo,
-   menus, listas de verificación, etc .. Por lo general se instala de forma predeterminada. Si
-   no, puede descargarlo desde [[http://invisible-island.net/dialog/][Thomas Dickey]] 's sitio.
+   Como él mismo explica, dialog es una verdadera joya para crear
+   cajas de dialogo de aspecto profesional con facilidad. Crea una
+   variedad de cuadros de diálogo, menus, listas de verificación,
+   etc.. Por lo general se instala de forma predeterminada. Si no,
+   puede descargarlo desde el sitio de [[http://invisible-island.net/dialog/][Thomas Dickey]]'s.
 
    # The above-mentioned article gives a very good overview of its uses
    # and capabilites. The man page has more details. It can be used in
    # variety of situations. One good example is building of linux kernel
    # in text mode.  Linux kernel uses a modified version of dialog
    # tailored for its needs.
-   El mencionado artículo da una muy buena descripción de sus usos
-   y Capabilites. La página del manual tiene más detalles. Se puede utilizar en
-   variedad de situaciones. Un buen ejemplo es la construcción del kernel linux
-   en modo texto. Kernel de Linux utiliza una versión modificada del diálogo
-   a medida para sus necesidades.
+   El artículo mencionado da una muy buena descripción de sus usos y
+   capacidades. La página del man tiene más detalles. Se puede
+   utilizar en variedad de situaciones. Un buen ejemplo es la
+   construcción del kernel linux en modo texto. El kernel linux
+   utiliza una versión de dialog modificada a medida para sus
+   necesidades.
 
    # dialog was initially designed to be used with shell scripts. If you
    # want to use its functionality in a c program, then you can use
@@ -7366,16 +7378,17 @@
    # library. You may need to hack here and there to get the required
    # output. The source is easily customizable. I have used it on a
    # number of occasions by modifying the code.
-   diálogo fue inicialmente diseñado para ser utilizado con scripts de shell. si tu
-   desee utilizar su funcionalidad en el programa ac, entonces usted puede utilizar
-   libdialog. La documentación relativa a esta es escasa. Definitivo
-   referencia es el archivo de cabecera dialog.h que viene con el
-   libreria. Puede que tenga que cortar aquí y allá para conseguir el necesario
-   producción. La fuente es fácilmente personalizable. Lo he usado en un
-   número de ocasiones mediante la modificación del código.
+   dialog fue diseñado inicialmente para ser utilizado con shell
+   scripts. Si desea utilizar su funcionalidad en un programa c,
+   entonces puede utilizar libdialog. La documentación en este aspecto
+   es escasa. La referencia definitiva es el archivo de cabecera
+   dialog.h que viene con el libreria. Puede que tenga que cortar aquí
+   y allá para conseguir la salida necesaria. El codigo fuente es
+   fácilmente personalizable. Lo he usado en un número de ocasiones
+   mediante la modificación del código.
 
 # ** 19.3. Perl curses Modules CURSES::FORM and CURSES::WIDGETS
-** 19.3. Módulos Perl curses CURSES :: FORMULARIO y curses :: WIDGETS
+** 19.3. Módulos curses de Perl CURSES::FORM y CURSES::WIDGETS
 
    # The perl module curses, curses::Form and curses::Widgets give
    # access to curses from perl. If you have curses and basic perl is
@@ -7387,31 +7400,33 @@
    # some demo scripts to test the functionality. Though the widgets
    # provided are very rudimentary, these modules provide good access to
    # curses library from perl.
-   Las curses módulo perl, curses :: Forma y curses :: Reproductores dan
-   acceso a las curses de perl. Si usted tiene curses y perl básica es
-   instalado, puede obtener estos módulos de [[http://www.cpan.org/modules/01modules.index.html][CPAN página de todos los módulos]].
-   Obtener los tres módulos con cremallera en la categoría curses. Una vez instalada
-   puede utilizar estos módulos de scripts de Perl como cualquier otro
-   módulo. Para obtener más información sobre los módulos de perl ver al hombre perlmod
-   página. Los módulos anteriores venir con una buena documentación y tienen
-   algunos scripts de demostración para probar la funcionalidad. Aunque los widgets de
-   siempre son muy rudimentarios, estos módulos proporcionan un buen acceso a
-   curses libreria de perl.
+   Los módulos curses de perl, curses::Form y curses::Widgets dan
+   acceso a curses desde perl. Si usted tiene la instalacion basica de
+   curses y perl, puede obtener estos módulos de [[http://www.cpan.org/modules/01modules.index.html][CPAN All Modules
+   page]]. Obtener los tres módulos comprimidos en la categoría
+   curses. Una vez instalados puede utilizar estos módulos en scripts
+   de Perl como cualquier otro módulo. Para obtener más información
+   sobre los módulos vea la pagina man perlmod. Los módulos anteriores
+   vienenn con una buena documentación y tienen algunos scripts de
+   demostración para probar su funcionalidad. Aunque los widgets
+   proporcionadas son muy rudimentarios, estos módulos proporcionan un
+   buen acceso a la libreria curses desde perl.
 
    # Some of my code examples are converted to perl by Anuradha
    # Ratnaweera and they are available in the =perl= directory.
-   Algunos de mis ejemplos de código se convierten en perl por Anuradha
-   Ratnaweera y están disponibles en el perl =directorio.
+   Algunos de mis ejemplos de código fueron adaptados a perl por
+   Anuradha Ratnaweera y están disponibles en el directorio [[file:ncurses_programs/perl][perl]].
 
    # For more information see man pages curses(3) , curses::Form(3) and
    # curses::Widgets(3). These pages are installed only when the above
    # modules are acquired and installed.
-   Para obtener más información, consulte las páginas de manual curses (3), Maldice :: Formulario (3) y
-   curses :: Widgets (3). Se instalan estas páginas sólo cuando la anterior
-   módulos se adquieren y se instalan.
+   Para obtener más información, consulte las páginas de manual
+   curses(3), curses::Form(3) y curses::Widgets(3). Estas paginas se
+   instalan sólo cuando los módulos anteriores se adquieren e
+   instalan.
 
 # * 20. Just For Fun !!!
-* 20. Just For Fun !!!
+* 20. Solo Por Diversion !!!
 
   # This section contains few programs written by me just for fun. They
   # don't signify a better programming practice or the best way of using
@@ -7419,18 +7434,20 @@
   # ideas and add more programs to this section. If you have written a
   # couple of nice, simple programs in curses and want them to included
   # here, contact [[mailto:ppadala@gmail.com][me]].
-  Esta sección contiene algunos programas escritos por mí sólo por diversión. Ellos
-  no significan una mejor práctica de programación o la mejor manera de utilizar
-  ncurses. Se proporcionan aquí a fin de permitir que los principiantes a obtener
-  Ideas y añaden más programas de esta sección. Si usted ha escrito un
-  par de buenos programas, simple en las curses y los quieren incluido
-  aquí, el contacto [[mailto: ppadala@gmail.com] [me]].
+  Esta sección contiene algunos programas escritos por mí sólo por
+  diversión. Esto no significa que sean una mejor práctica de
+  programación o la mejor manera de utilizar ncurses. Se proporcionan
+  a fin de permitir que los principiantes obtegan ideas y añaden más
+  programas a esta sección. Si usted ha escrito un par de buenos
+  programas, programas sencillos en curses y los quiere incluir aquí,
+  [[mailto:ppadala@gmail.com][contacteme]].
 
 # ** 20.1. The Game of Life
 ** 20.1. El juego de la vida
 
    # Game of life is a wonder of math. In [[http://www.math.com/students/wonders/life/life.html][Paul Callahan]]'s words
-   Juego de la vida es una maravilla de la matemáticas. En [[http://www.math.com/students/wonders/life/life.html][Paul Callahan]] 's palabras
+   El Juego de la vida es una maravilla de la matemáticas. En palbras
+   de [[http://www.math.com/students/wonders/life/life.html][Paul Callahan]]
 
    #+BEGIN_EXAMPLE
      The Game of Life (or simply Life) is not a game in the conventional sense. There
@@ -7441,12 +7458,16 @@
      only way to find out is to follow the rules of the game.
    #+END_EXAMPLE
 
-     El juego de la vida (o simplemente la vida) no es un juego en el sentido convencional. Ya está
-     hay jugadores, y no ganar o perder. Una vez que las "piezas" se colocan en el
-     posición inicial, las reglas determinan todo lo que sucede después.
-     Sin embargo, la vida está llena de sorpresas! En la mayoría de los casos, es imposible mirar
-     en una posición de partida (o patrón) y ver lo que sucederá en el futuro. los
-     única manera de averiguarlo es seguir las reglas del juego.
+   #+BEGIN_EXAMPLE
+     El juego de la vida (o simplemente la vida) no es un juego en el
+     sentido convencional. Ya que tiene jugadores, y no se gana o
+     pierde. Una vez que las "piezas" se colocan en la posición
+     inicial, las reglas determinan todo lo que sucede después.
+     Sin embargo, la vida está llena de sorpresas! En la mayoría de
+     los casos, es imposible mirar un posición de inicial (o patrón) y
+     ver lo que sucederá en el futuro. La única manera de averiguarlo
+     es seguir las reglas del juego.
+   #+END_EXAMPLE
 
    # This program starts with a simple inverted U pattern and shows how
    # wonderful life works. There is a lot of room for improvement in the
@@ -7454,15 +7475,16 @@
    # take input from a file. You can also change rules and play with a
    # lot of variations. Search on [[http://www.google.com][google]] for interesting information on
    # game of life.
-   Este programa comienza con un simple patrón de U invertida y muestra cómo
-   maravillosa vida funciona. Hay mucho margen de mejora en el
-   programa. Puede dejar que el usuario introduzca el patrón de su elección o incluso
-   obtener información de un archivo. También puede cambiar las reglas y jugar con un
-   gran cantidad de variaciones. Buscar en el [[http://www.google.com] [google]] para obtener información interesante sobre
-   juego de vida.
+   Este programa comienza con un simple patrón o recambio y muestra el
+   maravilloso trabajo de la vida. Hay mucho margen de mejora en el
+   programa. Puede dejar que el usuario introduzca el patrón de su
+   elección o incluso obtener información de un archivo. También puede
+   cambiar las reglas y jugar con un gran cantidad de variaciones.
+   Realice una busqueda en [[http://www.google.com][google]] para obtener interesante información
+   sobre el juego de vida.
 
    # /File Path: JustForFun/life.c/
-   / Ruta del archivo: JustForFun / life.c /
+   Ruta del archivo: [[file:ncurses_programs/JustForFun/life.c][JustForFun/life.c]]
 
 # ** 20.2. Magic Square
 ** 20.2. Cuadrado Mágico
@@ -7471,16 +7493,17 @@
    # but very difficult to make. In a magic square sum of the numbers in
    # each row, each column is equal. Even diagnol sum can be
    # equal. There are many variations which have special properties.
-   Cuadrado Mágico, otra maravilla de matemáticas, es muy sencillo de entender
-   pero muy difícil de hacer. En una suma cuadrado mágico de los números en
-   cada fila, cada columna es igual. Incluso suma puede ser diagnol
-   igual. Hay muchas variaciones que tienen propiedades especiales.
+   Otra maravilla de las matemáticas, es muy sencillo de entender pero
+   muy difícil de hacer. En un cuadrado mágico la suma de los números
+   en cada fila, y cada columna es igual. Incluso la suma en digonal
+   puede ser igual. Hay muchas variaciones con propiedades
+   particulares.
 
    # This program creates a simple magic square of odd order.
    Este programa crea un sencillo cuadrado mágico de orden impar.
 
    # /File Path: JustForFun/magic.c/
-   / Ruta del archivo: JustForFun / magic.c /
+   Ruta del archivo: [[file:ncurses_programs/JustForFun/magic.c][JustForFun/magic.c]]
 
 # ** 20.3. Towers of Hanoi
 ** 20.3. Torres de Hanoi
@@ -7489,27 +7512,28 @@
    # the disks on the first peg to last peg, using middle peg as a
    # temporary stay. The catch is not to place a larger disk over a
    # small disk at any time.
-   Las famosas torres de hanoi solucionador. El objetivo del juego es mover
-   los discos del primero al último peg peg, utilizando paridad central como
-   estancia temporal. La captura no es colocar un disco más grande sobre un
-   pequeño disco en cualquier momento.
+   Solucionador de las famosas torres de hanoi. El objetivo del juego
+   es mover los discos de la primer a la último estaca, utilizando la
+   estaca central como temporal. No se permite tomar un disco y
+   colocarlo sobre otro mas pequeño.
 
    # /File Path: JustForFun/hanoi.c/
-   / Ruta del archivo: JustForFun / hanoi.c /
+   Ruta del archivo: [[file:ncurses_programs/JustForFun/hanoi.c][JustForFun/hanoi.c]]
 
 # ** 20.4. Queens Puzzle
-** 20.4. Queens Puzzle
+** 20.4. Rompecabezas de las Reinas
 
    # The objective of the famous N-Queen puzzle is to put N queens on a
    # N X N chess board without attacking each other.
    El objetivo del famoso rompecabezas N-reina es poner N reinas en un
-   N X N tablero de ajedrez sin atacarse unos a otros.
+   tablero de ajedrez N X N atacarse unas a otras.
 
    # This program solves it with a simple backtracking technique.
-   Este programa resuelve con una técnica de retroceso simple.
+   Este programa resuelve esto con una técnica de rastreo hacia atras
+   simple.
 
    # /File Path: JustForFun/queens.c/
-   / Ruta del archivo: JustForFun / queens.c /
+   Ruta del archivo: [[file:ncurses_programs/JustForFun/queens.c][JustForFun/queens.c]]
 
 # ** 20.5. Shuffle
 ** 20.5. Barajar
@@ -7518,37 +7542,39 @@
    Un juego divertido, si tienes tiempo para matar.
 
    # /File Path: JustForFun/shuffle.c/
-   / Ruta del archivo: JustForFun / barajar.c /
+   Ruta del archivo: [[file:ncurses_programs/JustForFun/shuffle.c][JustForFun/shuffle.c]]
 
 # ** 20.6. Typing Tutor
-** 20.6. Typing Tutor
+** 20.6. Tutor de Mecanografia
 
    # A simple typing tutor, I created more out of need than for ease of
    # use.  If you know how to put your fingers correctly on the
    # keyboard, but lack practice, this can be helpful.
-   Un tutor de mecanografía simple, he creado más por necesidad que por la facilidad de
-   usar. Si usted sabe cómo colocar los dedos correctamente en el
-   teclado, pero la práctica la falta, esto puede ser útil.
+   Un tutor de mecanografía simple, Lo he creado más por necesidad que
+   por su facilidad de uso. Si sabe cómo colocar los dedos
+   correctamente en el teclado, pero le falta práctica, puede serle
+   útil.
 
    # /File Path: JustForFun/tt.c/
-   / Ruta del archivo: JustForFun / tt.c /
+   Ruta del archivo: [[file:ncurses_programs/JustForFun/tt.c][JustForFun/tt.c]]
 
 # * 21. References
 * 21. Referencias
 
   # - NCURSES man pages
-  - Páginas man ncurses
+  - [[file:man/index.org][Páginas man]] de NCURSES
 
   # - NCURSES FAQ at
   #   [[http://invisible-island.net/ncurses/ncurses.faq.html]]
-  - Ncurses preguntas frecuentes en
+  - NCURSES FAQ en
     [[http://invisible-island.net/ncurses/ncurses.faq.html]]
 
   # - Writing programs with NCURSES by Eric Raymond and Zeyd M. Ben-Halim
   #   at [[http://invisible-island.net/ncurses/ncurses-intro.html]] -
   #   somewhat obsolete. I was inspired by this document and the structure
   #   of this HOWTO follows from the original document
-  - Programas de escritura con Ncurses por Eric Raymond y Said M. Ben-Halim
-    en [[http://invisible-island.net/ncurses/ncurses-intro.html]] -
-    algo obsoleto. Me inspiré en este documento y la estructura
-    de este COMO sigue del documento original
+  - Escribir programas con NCURSES por Eric Raymond y Zeid
+    M. Ben-Halim en
+    [[http://invisible-island.net/ncurses/ncurses-intro.html]] - algo
+    obsoleto. Me inspiré en este documento y la estructura de este
+    HOWTO sigue la del documento original

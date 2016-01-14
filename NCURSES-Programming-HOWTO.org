@@ -5176,50 +5176,50 @@
     description.
 
     #+BEGIN_EXAMPLE
-    Widget Type           Quick Description
-    ===========================================================================
-    Alphalist             Allows a user to select from a list of words, with
-                          the ability to narrow the search list by typing in a
-                          few characters of the desired word.
-    Buttonbox             This creates a multiple button widget.
-    Calendar              Creates a little simple calendar widget.
-    Dialog                Prompts the user with a message, and the user
-                          can pick an answer from the buttons provided.
-    Entry                 Allows the user to enter various types of information.
-    File Selector         A file selector built from Cdk base widgets. This
-                          example shows how to create more complicated widgets
-                          using the Cdk widget library.
-    Graph                 Draws a graph.
-    Histogram             Draws a histogram.
-    Item List             Creates a pop up field which allows the user to select
-                          one of several choices in a small field. Very useful
-                          for things like days of the week or month names.
-    Label                 Displays messages in a pop up box, or the label can be
-                          considered part of the screen.
-    Marquee               Displays a message in a scrolling marquee.
-    Matrix                Creates a complex matrix with lots of options.
-    Menu                  Creates a pull-down menu interface.
-    Multiple Line Entry   A multiple line entry field. Very useful
-                          for long fields. (like a description
-                          field)
-    Radio List            Creates a radio button list.
-    Scale                 Creates a numeric scale. Used for allowing a user to
-                          pick a numeric value and restrict them to a range of
-                          values.
-    Scrolling List        Creates a scrolling list/menu list.
-    Scrolling Window      Creates a scrolling log file viewer. Can add
-                          information into the window while its running.
-                          A good widget for displaying the progress of
-                          something. (akin to a console window)
-    Selection List        Creates a multiple option selection list.
-    Slider                Akin to the scale widget, this widget provides a
-                          visual slide bar to represent the numeric value.
-    Template              Creates a entry field with character sensitive
-                          positions. Used for pre-formatted fields like
-                          dates and phone numbers.
-    Viewer                This is a file/information viewer. Very useful
-                          when you need to display loads of information.
-    ===========================================================================
+      Widget Type           Quick Description
+      ===========================================================================
+      Alphalist             Allows a user to select from a list of words, with
+                            the ability to narrow the search list by typing in a
+                            few characters of the desired word.
+      Buttonbox             This creates a multiple button widget.
+      Calendar              Creates a little simple calendar widget.
+      Dialog                Prompts the user with a message, and the user
+                            can pick an answer from the buttons provided.
+      Entry                 Allows the user to enter various types of information.
+      File Selector         A file selector built from Cdk base widgets. This
+                            example shows how to create more complicated widgets
+                            using the Cdk widget library.
+      Graph                 Draws a graph.
+      Histogram             Draws a histogram.
+      Item List             Creates a pop up field which allows the user to select
+                            one of several choices in a small field. Very useful
+                            for things like days of the week or month names.
+      Label                 Displays messages in a pop up box, or the label can be
+                            considered part of the screen.
+      Marquee               Displays a message in a scrolling marquee.
+      Matrix                Creates a complex matrix with lots of options.
+      Menu                  Creates a pull-down menu interface.
+      Multiple Line Entry   A multiple line entry field. Very useful
+                            for long fields. (like a description
+                            field)
+      Radio List            Creates a radio button list.
+      Scale                 Creates a numeric scale. Used for allowing a user to
+                            pick a numeric value and restrict them to a range of
+                            values.
+      Scrolling List        Creates a scrolling list/menu list.
+      Scrolling Window      Creates a scrolling log file viewer. Can add
+                            information into the window while its running.
+                            A good widget for displaying the progress of
+                            something. (akin to a console window)
+      Selection List        Creates a multiple option selection list.
+      Slider                Akin to the scale widget, this widget provides a
+                            visual slide bar to represent the numeric value.
+      Template              Creates a entry field with character sensitive
+                            positions. Used for pre-formatted fields like
+                            dates and phone numbers.
+      Viewer                This is a file/information viewer. Very useful
+                            when you need to display loads of information.
+      ===========================================================================
     #+END_EXAMPLE
 
     A few of the widgets are modified by Thomas Dickey in recent
@@ -5240,7 +5240,7 @@
       background.<!1>"
     #+END_EXAMPLE
 
-    given as a parameter to newCDKLabel(), it prints the line with
+    given as a parameter to =newCDKLabel()=, it prints the line with
     yellow foreground and blue background. There are other tags
     available for justifying string, embedding special drawing
     characters etc.. Please refer to the man page =cdk_display(3X)=
@@ -5298,12 +5298,12 @@
    page. The above modules come with good documentation and they have
    some demo scripts to test the functionality. Though the widgets
    provided are very rudimentary, these modules provide good access to
-   curses library from perl.
+   curses library from [[file:ncurses_programs/perl][perl]].
 
    Some of my code examples are converted to perl by Anuradha
    Ratnaweera and they are available in the =perl= directory.
 
-   For more information see man pages Curses(3) , Curses::Form(3) and
+   For more information see man pages Curses(3), Curses::Form(3) and
    Curses::Widgets(3). These pages are installed only when the above
    modules are acquired and installed.
 
@@ -5347,7 +5347,7 @@
 
    This program creates a simple magic square of odd order.
 
-   /File Path: JustForFun/magic.c/
+   File Path: [[file:ncurses_programs/JustForFun/magic.c][JustForFun/magic.c]]
 
 ** 20.3. Towers of Hanoi
 
@@ -5356,7 +5356,7 @@
    temporary stay. The catch is not to place a larger disk over a
    small disk at any time.
 
-   /File Path: JustForFun/hanoi.c/
+   File Path: [[file:ncurses_programs/JustForFun/hanoi.c][JustForFun/hanoi.c]]
 
 ** 20.4. Queens Puzzle
 
@@ -5365,13 +5365,13 @@
 
    This program solves it with a simple backtracking technique.
 
-   /File Path: JustForFun/queens.c/
+   File Path: [[file:ncurses_programs/JustForFun/queens.c][JustForFun/queens.c]]
 
 ** 20.5. Shuffle
 
    A fun game, if you have time to kill.
 
-   /File Path: JustForFun/shuffle.c/
+   File Path: [[file:ncurses_programs/JustForFun/shuffle.c][JustForFun/shuffle.c]]
 
 ** 20.6. Typing Tutor
 
@@ -5379,11 +5379,11 @@
    use.  If you know how to put your fingers correctly on the
    keyboard, but lack practice, this can be helpful.
 
-   /File Path: JustForFun/tt.c/
+   File Path: [[file:ncurses_programs/JustForFun/tt.c][JustForFun/tt.c]]
 
 * 21. References
 
-  - NCURSES man pages
+  - NCURSES [[file:man/index.org][man pages]]
 
   - NCURSES FAQ at
     [[http://invisible-island.net/ncurses/ncurses.faq.html]]
