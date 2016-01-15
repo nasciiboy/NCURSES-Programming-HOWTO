@@ -1,4 +1,5 @@
 #include <curses.h>
+#include <stdlib.h>
 
 int STARTX = 0;
 int STARTY = 0;
@@ -20,7 +21,7 @@ void update_state(state **area, int startx, int starty, int endx, int endy);
 int main()
 {	state **workarea;
 	int i, j;
-	
+
 	initscr();
 	cbreak();
 	timeout(TIME_OUT);
@@ -32,7 +33,7 @@ int main()
 	workarea = (state **)calloc(COLS, sizeof(state *));
 	for(i = 0;i < COLS; ++i)
 		workarea[i] = (state *)calloc(LINES, sizeof(state));
-	
+
 	/* For inverted U */
 	workarea[39][15].newstate = TRUE;
 	workarea[40][15].newstate = TRUE;
@@ -42,7 +43,7 @@ int main()
 	workarea[41][16].newstate = TRUE;
 	workarea[41][17].newstate = TRUE;
 	update_state(workarea, STARTX, STARTY, ENDX, ENDY);
-	
+
 	/* For block  */
 /*
 	workarea[37][13].newstate = TRUE;
@@ -58,12 +59,12 @@ int main()
 			for(j = STARTY; j <= ENDY; ++j)
 				calc(workarea, i, j);
 		update_state(workarea, STARTX, STARTY, ENDX, ENDY);
-		display(stdscr,  workarea, STARTX, STARTY, ENDX, ENDY);	
+		display(stdscr,  workarea, STARTX, STARTY, ENDX, ENDY);
 	}
-	
+
 	endwin();
 	return 0;
-}	
+}
 
 void display(WINDOW *win, state **area, int startx, int starty, int endx, int endy)
 {	int i, j;
@@ -78,8 +79,8 @@ void display(WINDOW *win, state **area, int startx, int starty, int endx, int en
 void calc(state **area, int i, int j)
 {	int neighbours;
 	int newstate;
- 	
-	neighbours	= 
+
+	neighbours	=
 		area[(i - 1 + COLS) % COLS][j].oldstate		+
 		area[(i - 1 + COLS) % COLS][(j - 1 + LINES) % LINES].oldstate 	+
 		area[(i - 1 + COLS) % COLS][(j + 1) % LINES].oldstate 	+
@@ -88,7 +89,7 @@ void calc(state **area, int i, int j)
 		area[(i + 1) % COLS][(j + 1) % LINES].oldstate 	+
 		area[i][(j - 1 + LINES) % LINES].oldstate		+
 		area[i][(j + 1) % LINES].oldstate;
-	
+
 	newstate = FALSE;
 	if(area[i][j].oldstate == TRUE && (neighbours == 2 || neighbours == 3))
 		 newstate = TRUE;
@@ -100,8 +101,8 @@ void calc(state **area, int i, int j)
 
 void update_state(state **area, int startx, int starty, int endx, int endy)
 {	int i, j;
-	
+
 	for(i = startx; i <= endx; ++i)
 		for(j = starty; j <= endy; ++j)
 			area[i][j].oldstate = area[i][j].newstate;
-}	
+}

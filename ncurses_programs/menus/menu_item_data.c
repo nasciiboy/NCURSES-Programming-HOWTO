@@ -1,5 +1,6 @@
 #include <curses.h>
 #include <menu.h>
+#include <stdlib.h>
 
 #define ARRAY_SIZE(a) (sizeof(a) / sizeof(a[0]))
 #define CTRLD 	4
@@ -14,17 +15,17 @@ char *choices[] = {
 
 int main()
 {	ITEM **my_items;
-	int c;				
+	int c;
 	MENU *my_menu;
         int n_choices, i;
 	ITEM *cur_item;
-	
-	
+
+
 	initscr();
         cbreak();
         noecho();
 	keypad(stdscr, TRUE);
-	
+
         n_choices = ARRAY_SIZE(choices);
         my_items = (ITEM **)calloc(n_choices + 1, sizeof(ITEM *));
 
@@ -48,19 +49,18 @@ int main()
 				cur_item = current_item(my_menu);
 				move(LINES - 2, 0);
 				clrtoeol();
-				mvprintw(LINES - 2, 0, "You have chosen %d item with name %s and description %s", 
-				item_index(cur_item) + 1,  item_name(cur_item), 
+				mvprintw(LINES - 2, 0, "You have chosen %d item with name %s and description %s",
+				item_index(cur_item) + 1,  item_name(cur_item),
 				item_description(cur_item));
-				
+
 				refresh();
 				pos_menu_cursor(my_menu);
 				break;
 		}
-	}	
+	}
 
 	free_item(my_items[0]);
         free_item(my_items[1]);
 	free_menu(my_menu);
 	endwin();
 }
-	

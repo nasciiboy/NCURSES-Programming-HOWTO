@@ -1,4 +1,6 @@
 #include <curses.h>
+#include <stdlib.h>
+#include <time.h>
 
 #define STARTX 9
 #define STARTY 3
@@ -13,7 +15,7 @@ typedef struct _tile {
 }tile;
 
 void init_board(int **board, int n, tile *blank);
-void board(WINDOW *win, int starty, int startx, int lines, int cols, 
+void board(WINDOW *win, int starty, int startx, int lines, int cols,
 	   int tile_width, int tile_height);
 void shuffle_board(int **board, int n);
 void move_blank(int direction, int **s_board, int n, tile *blank);
@@ -31,7 +33,7 @@ int main(int argc, char *argv[])
 		exit(1);
 	}
 	n = atoi(argv[1]);
-	
+
 	s_board = (int **)calloc(n, sizeof(int *));
 	for(i = 0;i < n; ++i)
 		s_board[i] = (int *)calloc(n, sizeof(int));
@@ -63,7 +65,7 @@ int main(int argc, char *argv[])
 		}
 	}
 	endwin();
-	return 0;	
+	return 0;
 }
 
 void move_blank(int direction, int **s_board, int n, tile *blank)
@@ -105,7 +107,7 @@ void move_blank(int direction, int **s_board, int n, tile *blank)
 				s_board[blank->x][blank->y] = BLANK;
 			}
 		}
-		break;			
+		break;
 	}
 }
 
@@ -119,9 +121,9 @@ int check_win(int **s_board, int n, tile *blank)
 			{	s_board[blank->x][blank->y] = BLANK;
 				return FALSE;
 			}
-	
+
 	s_board[blank->x][blank->y] = BLANK;
-	return TRUE;	
+	return TRUE;
 }
 
 void init_board(int **s_board, int n, tile *blank)
@@ -131,7 +133,7 @@ void init_board(int **s_board, int n, tile *blank)
 	temp_board = (int *)calloc(n * n, sizeof(int));
 	srand(time(NULL));
 	for(i = 0;i < n * n; ++i)
-	{    
+	{
 repeat :
 		k = rand() % (n * n);
 		for(j = 0;j <= i - 1; ++j)
@@ -152,13 +154,13 @@ repeat :
 	free(temp_board);
 }
 
-void board(WINDOW *win, int starty, int startx, int lines, int cols, 
+void board(WINDOW *win, int starty, int startx, int lines, int cols,
 	   int tile_width, int tile_height)
 {	int endy, endx, i, j;
-	
+
 	endy = starty + lines * tile_height;
 	endx = startx + cols  * tile_width;
-	
+
 	for(j = starty; j <= endy; j += tile_height)
 		for(i = startx; i <= endx; ++i)
 			mvwaddch(win, j, i, ACS_HLINE);
@@ -171,7 +173,7 @@ void board(WINDOW *win, int starty, int startx, int lines, int cols,
 	mvwaddch(win, 	endy, endx, ACS_LRCORNER);
 	for(j = starty + tile_height; j <= endy - tile_height; j += tile_height)
 	{	mvwaddch(win, j, startx, ACS_LTEE);
-		mvwaddch(win, j, endx, ACS_RTEE);	
+		mvwaddch(win, j, endx, ACS_RTEE);
 		for(i = startx + tile_width; i <= endx - tile_width; i += tile_width)
 			mvwaddch(win, j, i, ACS_PLUS);
 	}
@@ -201,5 +203,3 @@ void shuffle_board(int **s_board, int n)
 					 "%-2d", s_board[i][j]);
 	refresh();
 }
-	
-

@@ -6,17 +6,17 @@
 #define WIDTH  6
 #define HEIGHT 4
 
-#define TRACE_VALUE TRACE_MAXIMUM 
+#define TRACE_VALUE TRACE_MAXIMUM
 
-void board(	WINDOW *win, int starty, int startx, int lines, int cols, 
+void board(	WINDOW *win, int starty, int startx, int lines, int cols,
 		int tile_width, int tile_height);
 void magic(int **, int);
 void print(int **, int);
 void magic_board(int **a,int n);
 
 int main(int argc, char *argv[])
-{	
-	
+{
+
 	int **a,n,i;
 
 	if(argc != 2)
@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
 		a[i] = (int *)malloc(n * sizeof(int));
 
 	magic(a,n);
-	
+
 	initscr();
 	curs_set(0);
 	noecho();
@@ -42,11 +42,11 @@ int main(int argc, char *argv[])
 	getch();
 	endwin();
 
-	return;
+	return 0;
 }
 
 void magic(int **a, int n)
-{	
+{
 	int i,j,k;
 	int row,col;
 	for(i = 0;i < n;++i)
@@ -57,9 +57,9 @@ void magic(int **a, int n)
 
 	k = 1;
 	a[row][col] = k;
-	
+
 	while(k != n * n)
-	{	
+	{
 		if(row == 0 && col != n - 1)
 		{	row = n - 1;
 			col ++;
@@ -68,26 +68,26 @@ void magic(int **a, int n)
 		else if(row != 0 && col != n - 1)
 		{	if(a[row - 1][col + 1] == -1)
 			{	row --;
-				col ++;	
+				col ++;
 				a[row][col] = ++k;
 			}
 			else
-			{	
+			{
 				row ++;
 				a[row][col] = ++k;
 			}
 		}
 		else if(row != 0 && col == n - 1)
-		{	
+		{
 			row --;
 			col = 0;
 			a[row][col] = ++k;
 		}
 		else if(row == 0 && col == n - 1)
 		{	row ++;
-			a[row][col] = ++k;	
+			a[row][col] = ++k;
 		}
-			
+
 	}
 	return;
 }
@@ -114,13 +114,13 @@ void print(int **a,int n)
 	}
 	refresh();
 }
-void board(WINDOW *win, int starty, int startx, int lines, int cols, 
+void board(WINDOW *win, int starty, int startx, int lines, int cols,
 	   int tile_width, int tile_height)
 {	int endy, endx, i, j;
-	
+
 	endy = starty + lines * tile_height;
 	endx = startx + cols  * tile_width;
-	
+
 	for(j = starty; j <= endy; j += tile_height)
 		for(i = startx; i <= endx; ++i)
 			mvwaddch(win, j, i, ACS_HLINE);
@@ -133,7 +133,7 @@ void board(WINDOW *win, int starty, int startx, int lines, int cols,
 	mvwaddch(win, 	endy, endx, ACS_LRCORNER);
 	for(j = starty + tile_height; j <= endy - tile_height; j += tile_height)
 	{	mvwaddch(win, j, startx, ACS_LTEE);
-		mvwaddch(win, j, endx, ACS_RTEE);	
+		mvwaddch(win, j, endx, ACS_RTEE);
 		for(i = startx + tile_width; i <= endx - tile_width; i += tile_width)
 			mvwaddch(win, j, i, ACS_PLUS);
 	}

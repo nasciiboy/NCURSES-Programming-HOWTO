@@ -1,7 +1,8 @@
 #include <ncurses.h>
+#include <stdlib.h>
 
 int main()
-{	
+{
 	initscr();			/* Start curses mode 		  */
 	printw("Hello World !!!\n");	/* Print Hello World		  */
 	refresh();			/* Print it on to the real screen */

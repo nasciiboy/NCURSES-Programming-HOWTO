@@ -1,4 +1,6 @@
 #include <curses.h>
+#include <stdlib.h>
+#include <string.h>
 
 #define POSX 10
 #define POSY 5
@@ -31,9 +33,9 @@ int main(int argc, char *argv[])
 	cbreak();	/* Line buffering disabled. Pass on every thing */
 	keypad(stdscr, TRUE);
 	curs_set(FALSE);
-	
+
 	print_in_middle(0, LINES / 2, COLS, welcome_string, NULL);
-	scanw("%d", &n_discs);	
+	scanw("%d", &n_discs);
 
 	timeout(TIME_OUT);
 	noecho();
@@ -64,7 +66,7 @@ void check_usr_response(peg *p_my_pegs, int n_discs)
 	ch = getch(); /* Waits for TIME_OUT milliseconds */
 	if(ch == ERR)
 		return;
-	else	
+	else
 		if(ch == KEY_F(1))
 		{	free_pegs(p_my_pegs, n_discs);
 			endwin();
@@ -81,24 +83,24 @@ void move_disc(peg *p_my_pegs, int n_discs, int src, int dst)
 		++index;
 	temp = p_my_pegs[src].sizes[index];
 	p_my_pegs[src].sizes[index] = 0;
-	
+
 	index = 0;
 	while(p_my_pegs[dst].sizes[index] == 0 && index != n_discs)
 		++index;
 	--index;
 	p_my_pegs[dst].sizes[index] = temp;
 	++p_my_pegs[dst].n_discs;
-}	
+}
 
 void init_pegs(peg *p_my_pegs, int n_discs)
 {	int size, temp, i;
 
 	p_my_pegs[0].n_discs = n_discs;
-	
-	/* Allocate memory for size array 		
+
+	/* Allocate memory for size array
 	 * atmost the number of discs on a peg can be n_discs
  	 */
-	for(i = 0; i < n_discs; ++i)	
+	for(i = 0; i < n_discs; ++i)
 		p_my_pegs[i].sizes = (int *)calloc(n_discs, sizeof(int));
 	size = 3;
 	for(i = 0;i < n_discs; ++i, size += 2)
@@ -107,23 +109,23 @@ void init_pegs(peg *p_my_pegs, int n_discs)
 	temp = (p_my_pegs[0].sizes[n_discs - 1] / 2);
  	p_my_pegs[0].bottomx = POSX + 1 + temp;
 	p_my_pegs[0].bottomy = POSY + 2 + n_discs;
-	
+
  	p_my_pegs[1].bottomx = p_my_pegs[0].bottomx + 2 + 2 * temp;
 	p_my_pegs[1].bottomy = POSY + 2 + n_discs;
-	
- 	p_my_pegs[2].bottomx = p_my_pegs[1].bottomx + 2 + 2 * temp; 
+
+ 	p_my_pegs[2].bottomx = p_my_pegs[1].bottomx + 2 + 2 * temp;
 	p_my_pegs[2].bottomy = POSY + 2 + n_discs;
-}	    
+}
 
 void show_pegs(WINDOW *win, peg *p_my_pegs, int n_discs)
 {	int i, j, k, x, y, size;
-	
+
 	wclear(win);
 	attron(A_REVERSE);
 	mvprintw(24, 0, "Press F1 to Exit");
 	attroff(A_REVERSE);
 	for(i = 0;i < 3; ++i)
-		mvwprintw(	win, p_my_pegs[i].bottomy - n_discs - 1, 
+		mvwprintw(	win, p_my_pegs[i].bottomy - n_discs - 1,
 					p_my_pegs[i].bottomx, "%c", PEG_CHAR);
 	y = p_my_pegs[0].bottomy - n_discs;
 	for(i = 0; i < 3; ++i)	/* For each peg */
@@ -134,11 +136,11 @@ void show_pegs(WINDOW *win, peg *p_my_pegs, int n_discs)
 				for(k = 0; k < size; ++k)
 					mvwprintw(win, y, x + k, "%c", DISC_CHAR);
 			}
-			else	
+			else
 				mvwprintw(win, y, p_my_pegs[i].bottomx, "%c", PEG_CHAR);
 			++y;
 		}
-		y = p_my_pegs[0].bottomy - n_discs;	
+		y = p_my_pegs[0].bottomy - n_discs;
 	}
 	wrefresh(win);
 }

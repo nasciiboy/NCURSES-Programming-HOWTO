@@ -1,18 +1,18 @@
-#include <stdio.h>
 #include <curses.h>
+#include <stdlib.h>
 
 #define QUEEN_CHAR '*'
 
 int *nqueens(int num);
 int place(int current, int *position);
 int print(int *positions, int num_queens);
-void board(WINDOW *win, int starty, int startx, int lines, int cols, 
+void board(WINDOW *win, int starty, int startx, int lines, int cols,
 	   int tile_width, int tile_height);
 
 int main(int argc, char *argv[])
 {
 	int num_queens, *positions, count;
-	
+
 	if(argc != 2)
 	{	printf("Usage: %s <number of queens (chess board order)>\n", argv[0]);
 		exit(1);
@@ -31,10 +31,10 @@ int main(int argc, char *argv[])
 int *nqueens(int num)
 {
 	int current, *position, num_solutions = 0;
-	
+
 	position = (int *) calloc(num + 1, sizeof(int));
 
-	position[1] = 0; 
+	position[1] = 0;
 	current = 1;	/* current queen is being checked	*/
 				/* position[current] is the coloumn*/
 	while(current > 0){
@@ -45,7 +45,7 @@ int *nqueens(int num)
 			if(current == num)	{
 				++num_solutions;
 				print(position, num);
-			}	
+			}
 			else {
 				current += 1;
 				position[current] = 0;
@@ -66,10 +66,10 @@ int place(int current, int *position)
 		else if(abs(position[i] - position[current]) ==
 			abs(i - current))
 			return(0);
-	
+
 	return(1);
 }
-		
+
 int print(int *positions, int num_queens)
 {	int count;
 	int y = 2, x = 2, w = 4, h = 2;
@@ -91,13 +91,13 @@ int print(int *positions, int num_queens)
 	clear();
 }
 
-void board(WINDOW *win, int starty, int startx, int lines, int cols, 
+void board(WINDOW *win, int starty, int startx, int lines, int cols,
 	   int tile_width, int tile_height)
 {	int endy, endx, i, j;
-	
+
 	endy = starty + lines * tile_height;
 	endx = startx + cols  * tile_width;
-	
+
 	for(j = starty; j <= endy; j += tile_height)
 		for(i = startx; i <= endx; ++i)
 			mvwaddch(win, j, i, ACS_HLINE);
@@ -110,7 +110,7 @@ void board(WINDOW *win, int starty, int startx, int lines, int cols,
 	mvwaddch(win, 	endy, endx, ACS_LRCORNER);
 	for(j = starty + tile_height; j <= endy - tile_height; j += tile_height)
 	{	mvwaddch(win, j, startx, ACS_LTEE);
-		mvwaddch(win, j, endx, ACS_RTEE);	
+		mvwaddch(win, j, endx, ACS_RTEE);
 		for(i = startx + tile_width; i <= endx - tile_width; i += tile_width)
 			mvwaddch(win, j, i, ACS_PLUS);
 	}
