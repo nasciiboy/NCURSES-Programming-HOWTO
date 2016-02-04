@@ -5,7 +5,7 @@
 
 * NAME
 
-  =use_screen=, =use_window= - =curses= thread support
+  =curs_threads= - =curses= thread support
 
 * SYNOPSIS
 

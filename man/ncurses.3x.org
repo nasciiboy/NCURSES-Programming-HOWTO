@@ -1,5 +1,5 @@
 #+TITLE: ncurses 3x
-#+AUTHOR:
+#+AUTHOR: Zeyd M. Ben-Halim, Eric S. Raymond, Thomas E. Dickey
 #+LANGUAGE: en
 #+STARTUP: showall
 
@@ -20,7 +20,7 @@
   This implementation is "new curses" (ncurses) and is the approved
   replacement for 4.4BSD classic =curses=, which has been
   discontinued.  This describes =ncurses= version 6.0 (patch
-  20151024).
+  20160130).
 
   The =ncurses= library emulates the =curses= library of System V
   Release 4 UNIX, and XPG4 (X/Open Portability Guide) =curses= (also

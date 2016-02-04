@@ -1,11 +1,12 @@
 #+TITLE: form_opts 3x
-#+AUTHOR:
+#+AUTHOR: Juergen Pfeifer & Eric S. Raymond.
 #+LANGUAGE: en
 #+STARTUP: showall
 
 * NAME
 
-  =form_opts= - set and get form options
+  =set_form_opts=, =form_opts_on=, =form_opts_off=, =form_opts= - set
+  and get form options
 
 * SYNOPSIS
 

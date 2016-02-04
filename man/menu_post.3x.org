@@ -5,7 +5,8 @@
 
 * NAME
 
-  =menu_post= - write or erase menus from associated subwindows
+  =post_menu=, =unpost_menu= - write or erase menus from associated
+  subwindows
 
 * SYNOPSIS
 

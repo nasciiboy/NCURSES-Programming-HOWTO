@@ -21,6 +21,7 @@
     bool can_change_color(void);
     int color_content(short  color, short *r, short *g, short *b);
     int pair_content(short pair, short *f, short *b);
+    int COLOR_PAIR(int n);
   #+END_SRC
 
 * DESCRIPTION

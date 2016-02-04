@@ -17,6 +17,8 @@
 
     chtype acs_map[];
 
+    SCREEN * SP;
+
     TERMINAL * cur_term;
 
     char ttytype[];

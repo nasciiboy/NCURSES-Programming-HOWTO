@@ -80,9 +80,18 @@
 
 ** Predefined key-codes
 
-   The following special keys, defined in =<curses.h>=, may be
-   returned by =getch= if =keypad= has been enabled.  Not all of these
-   are necessarily supported on any particular terminal.
+   The following special keys, defined in =<curses.h>=
+
+   - Except for the special case =KEY_RESIZE=, it is necessary to
+     enable =keypad= for =getch= to return these codes.
+
+   - Not all of these are necessarily supported on any particular
+     terminal.
+
+   - The naming convention may seem obscure, with some ap- parent
+     misspellings (such as "RSUME" for "resume").  The names
+     correspond to the long terminfo capability names for the keys,
+     and were defined long ago, in the 1980s.
 
    | Name            | Key name                                      |
    |-----------------+-----------------------------------------------|
@@ -195,8 +204,9 @@
    A few of these predefined values do not correspond to a real key:
 
    * =KEY_RESIZE= is returned when the =SIGWINCH= signal has been
-     detected (see [[file:curs_initscr.3x.org][curs_initscr(3x)]] and [[file:resizeterm.3x.org][resizeterm(3x)]]).  This code is
-     returned whether or not =keypad= has been enabled.
+     detected (see [[file:curs_initscr.3x.org][curs_initscr(3x)]] and [[file:resizeterm.3x.org][resizeterm(3x)]]).
+
+     This code is returned whether or not =keypad= has been enabled.
 
    * =KEY_MOUSE= is returned for mouse-events (see [[file:curs_mouse.3x.org][curs_mouse(3x)]]).
      This code relies upon whether or not [[file:curs_inopts.3x.org][keypad(3x)]] has been enabled,

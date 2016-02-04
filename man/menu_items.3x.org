@@ -5,7 +5,8 @@
 
 * NAME
 
-  =menu_items= - make and break connections between items and menus
+  =set_menu_items=, =menu_items=, =item_count= - make and break
+  connections between items and menus
 
 * SYNOPSIS
 

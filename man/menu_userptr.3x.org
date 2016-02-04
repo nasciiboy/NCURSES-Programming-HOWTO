@@ -1,11 +1,12 @@
 #+TITLE: menu_userptr 3x
-#+AUTHOR:
+#+AUTHOR: Juergen Pfeifer & Eric S. Raymond.
 #+LANGUAGE: en
 #+STARTUP: showall
 
 * NAME
 
-  =menu_userptr= - associate application data with a menu item
+  =set_menu_userptr=, =menu_userptr= - associate application data with
+  a menu item
 
 * SYNOPSIS
 

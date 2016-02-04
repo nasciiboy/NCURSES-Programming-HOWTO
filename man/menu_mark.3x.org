@@ -1,11 +1,11 @@
 #+TITLE: menu_mark 3x
-#+AUTHOR:
+#+AUTHOR: Juergen Pfeifer & Eric S. Raymond.
 #+LANGUAGE: en
 #+STARTUP: showall
 
 * NAME
 
-  =menu_mark= - get and set the menu mark string
+  =set_menu_mark=, =menu_mark= - get and set the menu mark string
 
 * SYNOPSIS
 

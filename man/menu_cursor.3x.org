@@ -1,11 +1,11 @@
 #+TITLE: menu_cursor 3x
-#+AUTHOR:
+#+AUTHOR: Juergen Pfeifer & Eric S. Raymond.
 #+LANGUAGE: en
 #+STARTUP: showall
 
 * NAME
 
-  =menu_cursor= - position a menu's cursor
+  =pos_menu_cursor= - position a menu's cursor
 
 * SYNOPSIS
 

@@ -1,11 +1,12 @@
 #+TITLE: form_requestname 3x
-#+AUTHOR:
+#+AUTHOR:  Juergen Pfeifer & Eric S. Raymond.
 #+LANGUAGE: en
 #+STARTUP: showall
 
 * NAME
 
-  =form_requestname= - handle printable form request names
+  =form_request_by_ name=, =form_request_name= - handle printable form
+  request names
 
 * SYNOPSIS
 

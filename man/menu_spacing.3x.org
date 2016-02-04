@@ -1,11 +1,12 @@
 #+TITLE: menu_spacing 3x
-#+AUTHOR:
+#+AUTHOR: Juergen Pfeifer & Eric S. Raymond.
 #+LANGUAGE: en
 #+STARTUP: showall
 
 * NAME
 
-  =menu_spacing= - Control spacing between menu items.
+  =set_menu_spacing=, =menu_spacing= - Control spacing between menu
+  items.
 
 * SYNOPSIS
 

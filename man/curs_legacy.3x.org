@@ -5,7 +5,8 @@
 
 * NAME
 
-  =getattrs= - get =curses= cursor and window coordinates, attributes
+  =curs_legacy= - get =curses= cursor and window coordinates,
+  attributes
 
 * SYNOPSIS
 

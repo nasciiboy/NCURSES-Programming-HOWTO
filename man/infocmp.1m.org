@@ -451,7 +451,7 @@
 
   http://invisible-island.net/ncurses/tctest.html
 
-  This describes =ncurses= version 6.0 (patch 20151024).
+  This describes =ncurses= version 6.0 (patch 20160130).
 
 * AUTHOR
 

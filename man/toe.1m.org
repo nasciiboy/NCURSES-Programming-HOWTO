@@ -79,4 +79,4 @@
   [[file:tic.1m.org][tic(1m)]], [[file:infocmp.1m.org][infocmp(1m)]], [[file:captoinfo.1m.org][captoinfo(1m)]], [[file:infotocap.1m.org][infotocap(1m)]], [[file:ncurses.3x.org][curses(3x)]],
   [[file:terminfo.5.org][terminfo(5)]].
 
-  This describes =ncurses= version 6.0 (patch 20151024).
+  This describes =ncurses= version 6.0 (patch 20160130).

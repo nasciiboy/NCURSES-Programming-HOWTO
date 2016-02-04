@@ -1,11 +1,12 @@
 #+TITLE: form_field_just 3x
-#+AUTHOR:
+#+AUTHOR: Juergen  Pfeifer & Eric S. Raymond.
+
 #+LANGUAGE: en
 #+STARTUP: showall
 
 * NAME
 
-  =form_field_just= - retrieve field characteristics
+  =set_field_just=, =field_just= - retrieve field characteristics
 
 * SYNOPSIS
 

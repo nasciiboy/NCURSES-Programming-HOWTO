@@ -24,4 +24,4 @@
 
   [[file:tput.1.org][tput(1)]], [[file:terminfo.5.org][terminfo(5)]]
 
-  This describes =ncurses= version 6.0 (patch 20151024).
+  This describes =ncurses= version 6.0 (patch 20160130).

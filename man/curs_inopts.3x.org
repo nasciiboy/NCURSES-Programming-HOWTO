@@ -37,11 +37,12 @@
 * DESCRIPTION
 
   The =ncurses= library provides several functions which let an
-  application change way input from the terminal is handled.  Some are
-  global, applying to all windows.  Others apply only to a specific
-  window.  Window-specific settings are not automatically applied to
-  new or derived windows.  An application must apply these to each
-  window, if the same behavior is needed.
+  application change the way input from the terminal is handled.  Some
+  are global, applying to all windows.  Others apply only to a
+  specific window.  Window-specific settings are not automatically
+  applied to new or derived windows.  An application must apply these
+  to each window, if the same behavior is needed.
+
 
 ** =cbreak=
 
@@ -76,18 +77,18 @@
    similar to =cbreak= mode in that characters typed by the user are
    immediately available to the program.  However, after blocking for
    /tenths/ tenths of seconds, =ERR= is returned if nothing has been
-   typed.  The value of =tenths= must be a number between 1 and 255.
+   typed.  The value of /tenths/ must be a number between 1 and 255.
    Use =nocbreak= to leave half-delay mode.
 
 ** =intrflush=
 
-   If the =intrflush= option is enabled, (bf is =TRUE=), when an
+   If the =intrflush= option is enabled, (bf is =TRUE=), and an
    interrupt key is pressed on the keyboard (interrupt, break, quit)
    all output in the tty driver queue will be flushed, giving the
    effect of faster response to the interrupt, but causing =curses= to
-   have the wrong idea of what is on the screen.  Disabling (bf is
-   =FALSE=), the option prevents the flush.  The default for the
-   option is inherited from the tty driver settings.  The window
+   have the wrong idea of what is on the screen.  Disabling the option
+   (bf is =FALSE=), the option prevents the flush.  The default for
+   the option is inherited from the tty driver settings.  The window
    argument is ignored.
 
 ** =keypad=

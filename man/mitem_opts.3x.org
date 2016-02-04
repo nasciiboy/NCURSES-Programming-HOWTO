@@ -1,11 +1,12 @@
 #+TITLE: mitem_opts 3x
-#+AUTHOR:
+#+AUTHOR: Juergen Pfeifer and Eric S. Raymond.
 #+LANGUAGE: en
 #+STARTUP: showall
 
 * NAME
 
-  =mitem_opts= - set and get menu item options
+  =set_item_opts=, =item_opts_on=, =item_opts_off=, =item_opts= - set
+  and get menu item options
 
 * SYNOPSIS
 

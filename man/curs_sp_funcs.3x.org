@@ -5,7 +5,7 @@
 
 * NAME
 
-  =new_prescr= - =curses= screen-pointer extension
+  =curs_sp_funcs= - =curses= screen-pointer extension
 
 * SYNOPSIS
 

@@ -7,7 +7,10 @@
 
   =is_cleared=, =is_idlok=, =is_idcok=, =is_immedok=, =is_keypad=,
   =is_leaveok=, =is_nodelay=, =is_notimeout=, =is_pad=, =is_scrollok=,
-  =is_subwin=, =is_syncok= - =curses= window properties
+  =is_subwin=, =is_syncok=, =wgetdelay=, =wgetparent=, =wgetscrreg= -
+  =curses= window properties
+
+
 
 * SYNOPSIS
 

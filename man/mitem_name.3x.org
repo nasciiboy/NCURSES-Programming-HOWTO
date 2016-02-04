@@ -1,11 +1,12 @@
 #+TITLE: mitem_name 3x
-#+AUTHOR:
+#+AUTHOR: Juergen Pfeifer and Eric S. Raymond.
 #+LANGUAGE: en
 #+STARTUP: showall
 
 * NAME
 
-  =mitem_name= - get menu item name and description fields
+  =item_name=, =item_description= - get menu item name and description
+  fields
 
 * SYNOPSIS
 

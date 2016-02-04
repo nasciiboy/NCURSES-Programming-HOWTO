@@ -5,7 +5,7 @@
 
 * NAME
 
-  =menu_format= - set and get menu sizes
+  =set_menu_format=, =menu_format= - set and get menu sizes
 
 * SYNOPSIS
 

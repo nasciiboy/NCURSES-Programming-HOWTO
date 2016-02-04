@@ -1,5 +1,5 @@
 #+TITLE: terminfo 5 File Formats
-#+AUTHOR:
+#+AUTHOR:  Zeyd M. Ben-Halim, Eric S. Raymond, Thomas E. Dickey
 #+LANGUAGE: en
 #+STARTUP: showall
 
@@ -19,7 +19,7 @@
   capabilities which they have, by specifying how to perform screen
   operations, and by specifying padding requirements and
   initialization sequences.  This describes =ncurses= version 6.0
-  (patch 20151024).
+  (patch 20160130).
 
   Entries in terminfo consist of a sequence of ',' separated fields
   (embedded commas may be escaped with a backslash or notated as

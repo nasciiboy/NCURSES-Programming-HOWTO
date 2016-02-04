@@ -1,11 +1,12 @@
 #+TITLE: menu_requestname 3x
-#+AUTHOR:
+#+AUTHOR: Juergen Pfeifer & Eric S. Raymond.
 #+LANGUAGE: en
 #+STARTUP: showall
 
 * NAME
 
-  =menu_requestname= - handle printable menu request names
+  =menu_request_by_name=, =menu_request_by_name= - handle printable
+  menu request names
 
 * SYNOPSIS
 

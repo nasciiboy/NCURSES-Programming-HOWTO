@@ -5,7 +5,7 @@
 
 * NAME
 
-  =mitem_value= - set and get menu item values
+  =set_item_value=, =item_value= - set and get menu item values
 
 * SYNOPSIS
 

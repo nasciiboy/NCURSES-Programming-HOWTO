@@ -5,7 +5,8 @@
 
 * NAME
 
-  =form_field_userptr= - associate application data with a form field
+  =set_field_userptr=, =field_userptr= - associate application data
+  with a form field
 
 * SYNOPSIS
 

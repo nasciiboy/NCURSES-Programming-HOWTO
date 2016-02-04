@@ -5,7 +5,8 @@
 
 * NAME
 
-  =form_field_info= - retrieve field characteristics
+  =dynamic_field_info=, =form_field_info= - retrieve field
+  characteristics
 
 * SYNOPSIS
 

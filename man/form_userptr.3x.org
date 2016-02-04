@@ -1,11 +1,12 @@
 #+TITLE: form_userptr 3x
-#+AUTHOR:
+#+AUTHOR:  Juergen Pfeifer & Eric S. Raymond.
 #+LANGUAGE: en
 #+STARTUP: showall
 
 * NAME
 
-  =form_userptr= - associate application data with a form item
+  =set_form_userptr=, =form_userptr= - associate application data with
+  a form item
 
 * SYNOPSIS
 

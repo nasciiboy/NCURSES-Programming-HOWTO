@@ -1,11 +1,12 @@
 #+TITLE: menu_pattern 3x
-#+AUTHOR:
+#+AUTHOR: Juergen Pfeifer & Eric S. Raymond.
 #+LANGUAGE: en
 #+STARTUP: showall
 
 * NAME
 
-  =menu_pattern= - get and set a menu's pattern buffer
+  =set_menu_pattern=, =menu_pattern= - get and set a menu's pattern
+  buffer
 
 * SYNOPSIS
 

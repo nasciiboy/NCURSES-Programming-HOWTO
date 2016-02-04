@@ -1,11 +1,12 @@
 #+TITLE: menu_opts 3x
-#+AUTHOR:
+#+AUTHOR: Juergen Pfeifer & Eric S. Raymond.
 #+LANGUAGE: en
 #+STARTUP: showall
 
 * NAME
 
-  =menu_opts= - set and get menu options
+  =set_menu_opts=, =menu_opts_on=, =menu_opts_off=, =menu_opts= - set
+  and get menu options
 
 * SYNOPSIS
 

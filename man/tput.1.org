@@ -309,4 +309,4 @@
 
   [[file:clear.1.org][clear(1)]], [[man:stty][stty(1)]], [[file:tabs.1.org][tabs(1)]], [[file:terminfo.5.org][terminfo(5)]], [[file:curs_termcap.3x.org][curs_termcap(3x)]].
 
-  This describes =ncurses= version 6.0 (patch 20151024).
+  This describes =ncurses= version 6.0 (patch 20160130).

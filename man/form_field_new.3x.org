@@ -1,11 +1,12 @@
 #+TITLE: form_field_new 3x
-#+AUTHOR:
+#+AUTHOR: Juergen Pfeifer & Eric S. Raymond.
 #+LANGUAGE: en
 #+STARTUP: showall
 
 * NAME
 
-  =form_field_new= - create and destroy form fields
+  =new_field=, =dup_field=, =link_field=, =free_field= - create and
+  destroy form fields
 
 * SYNOPSIS
 

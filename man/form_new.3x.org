@@ -5,7 +5,7 @@
 
 * NAME
 
-  =form_new= - create and destroy forms
+  =new_form=, =free_form= - create and destroy forms
 
 * SYNOPSIS
 

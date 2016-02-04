@@ -5,7 +5,7 @@
 
 * NAME
 
-  =mitem_new= - create and destroy menu items
+  =new_item=, =free_item= - create and destroy menu items
 
 * SYNOPSIS
 

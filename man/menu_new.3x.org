@@ -1,11 +1,11 @@
 #+TITLE: menu_new 3x
-#+AUTHOR:
+#+AUTHOR: Juergen Pfeifer & Eric S. Raymond.
 #+LANGUAGE: en
 #+STARTUP: showall
 
 * NAME
 
-  =menu_new= - create and destroy menus
+  =new_menu=, =free_menu= - create and destroy menus
 
 * SYNOPSIS
 

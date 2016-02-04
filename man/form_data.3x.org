@@ -5,7 +5,8 @@
 
 * NAME
 
-  =form_data= - test for off-screen data in given forms
+  =data_ahead=, =data_behind= - test for off-screen data in given
+  forms
 
 * SYNOPSIS
 

@@ -5,7 +5,9 @@
 
 * NAME
 
-  =menu_attributes= - color and attribute control for menus
+  =menu_back=, =menu_fore=, =menu_grey=, =menu_pad=, =set_menu_back=,
+  =set_menu_fore=, =set_menu_grey=, =set_menu_pad= - color and
+  attribute control for menus
 
 * SYNOPSIS
 

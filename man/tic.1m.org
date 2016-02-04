@@ -1,5 +1,5 @@
 #+TITLE: tic 1m
-#+AUTHOR:
+#+AUTHOR: Eric S. Raymond and Thomas E. Dickey
 #+LANGUAGE: en
 #+STARTUP: showall
 
@@ -370,7 +370,7 @@
   [[file:infocmp.1m.org][infocmp(1m)]], [[file:captoinfo.1m.org][captoinfo(1m)]], [[file:infotocap.1m.org][infotocap(1m)]], [[file:toe.1m.org][toe(1m)]], [[file:ncurses.3x.org][curses(3x)]],
   [[file:term.5.org][term(5)]].  [[file:terminfo.5.org][terminfo(5)]].
 
-  This describes =ncurses= version 6.0 (patch 20151024).
+  This describes =ncurses= version 6.0 (patch 20160130).
 
 * AUTHOR
 

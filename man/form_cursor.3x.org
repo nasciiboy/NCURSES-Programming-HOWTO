@@ -5,7 +5,7 @@
 
 * NAME
 
-  =form_cursor= - position a form window cursor
+  =pos_form_cursor= - position a form window cursor
 
 * SYNOPSIS
 

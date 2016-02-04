@@ -1,5 +1,5 @@
 #+TITLE: menu 3x
-#+AUTHOR:
+#+AUTHOR:  Juergen Pfeifer & Eric S. Raymond.
 #+LANGUAGE: en
 #+STARTUP: showall
 
@@ -164,4 +164,4 @@
   [[file:ncurses.3x.org][curses(3x)]] and related pages whose names begin "menu_" for detailed
   descriptions of the entry points.
 
-  This describes =ncurses= version 6.0 (patch 20151024).
+  This describes =ncurses= version 6.0 (patch 20160130).

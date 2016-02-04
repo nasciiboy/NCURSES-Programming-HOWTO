@@ -5,7 +5,7 @@
 
 * NAME
 
-  =form_new_page= - form pagination functions
+  =set_new_page=, =new_page= - form pagination functions
 
 * SYNOPSIS
 

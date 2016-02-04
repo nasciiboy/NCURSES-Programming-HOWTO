@@ -1,11 +1,12 @@
 #+TITLE: form_post 3x
-#+AUTHOR:
+#+AUTHOR: Juergen Pfeifer & Eric S. Raymond.
 #+LANGUAGE: en
 #+STARTUP: showall
 
 * NAME
 
-  =form_post= - write or erase forms from associated subwindows
+  =post_form=, =unpost_form= - write or erase forms from associated
+  subwindows
 
 * SYNOPSIS
 

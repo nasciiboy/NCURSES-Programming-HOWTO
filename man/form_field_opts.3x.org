@@ -5,7 +5,8 @@
 
 * NAME
 
-  =form_field_opts= - set and get field options
+    =set_field_opts=, =field_opts_on=, =field_opts_off=,
+    =field_opts= - set and get field options
 
 * SYNOPSIS
 
@@ -78,11 +79,17 @@
     Words that do not fit on a line are wrapped to the next line.
     Words are blank-separated.
 
-  One extension option is defined (extensions are off by default):
+
+  These extension options are defined (extensions are off by default):
 
   * =O_DYNAMIC_JUSTIFY= ::
 
     Permit dynamic fields to be justified, like static fields.
+
+  * =O_NO_LEFT_STRIP= ::
+
+    Preserve leading whitespace in the field buffer, which is normally
+    discarded.
 
 * RETURN VALUE
 
